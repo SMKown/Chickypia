@@ -19,7 +19,7 @@ public class FollowCam : MonoBehaviour
 
     virtual protected void FollowCamera()
     {
-        FixedPos = new Vector3(target.transform.position.x, 12F, target.transform.position.z);
+        FixedPos = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
         transform.position = Vector3.Lerp(transform.position, FixedPos, 0.5F);
     }
 }
