@@ -890,9 +890,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56e51a9de3a0944348272561e0634f87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  posY: 0
+  offsetX: 0
+  offsetY: 0
   offsetZ: -3
-  DelayTime: 3
+  DelayTime: 5
 --- !u!1 &1194323345
 GameObject:
   m_ObjectHideFlags: 0
@@ -1226,7 +1227,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58860d7a9391d47949e6146a96afe51a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  posY: 15
 --- !u!1 &2052620642
 GameObject:
   m_ObjectHideFlags: 0
