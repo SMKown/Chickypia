@@ -4,9 +4,15 @@ using UnityEngine;
 
 public class CookingSystem : MonoBehaviour
 {
+    private static bool mIsCooking = false;
+    public static bool isCooking
+    {
+        get { return mIsCooking; }
+    }
+
     public ParticleSystem making;
 
-    bool canCook;
+    public bool canCook;
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +44,7 @@ public class CookingSystem : MonoBehaviour
 
         if (making != null)
         {
-            Debug.Log("Have");
+            making.Play();
         }
         else
         {
