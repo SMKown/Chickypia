@@ -12,13 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c2febac446cda843a398f3da80a3970, type: 3}
   m_Name: Item 5
   m_EditorClassIdentifier: 
-  itemType: 0
-  itemId: 4
-  itemName: 
+  itemType: 2
+  itemId: 14
+  itemName: item 5
   itemDesc: 
-  itemIcon: {fileID: 0}
-  ingredients: 
-  currentHP: 0
-  baseHP: 0
-  recoverHP: 
-  fullHP: 
+  itemIcon: {fileID: 21300000, guid: d7015e1d553278f4bbe6116c58572feb, type: 3}

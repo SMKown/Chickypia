@@ -1,54 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CookingSystem : MonoBehaviour
-{
-    private static bool mIsCooking = false;
-    public static bool isCooking
-    {
-        get { return mIsCooking; }
-    }
-
+{    
     public ParticleSystem making;
 
-    public bool canCook;
+    private InventorySlot mResultItemSlot;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private Transform choicePopup;
+    private Transform makePopup;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private Button mCookButton;
 
-    void OnTriggerEnter(Collider other)
+
+    GameObject mDisableImage;
+
+    private void Awake()
     {
-        if (other.CompareTag("Player"))
+        choicePopup = transform.GetChild(1);
+        makePopup = transform.GetChild(1).GetChild(0).GetChild(1);
+
+        if (choicePopup == null)
         {
-            canCook = true;
-            if(canCook)
-            {
-                Cook(other);
-            }
+            Debug.LogError("choicePopup is not assigned.");
         }
-    }
+        if (makePopup == null)
+        {
+            Debug.LogError("makePopup is not assigned.");
+        }
+    }    
 
     void Cook(Collider other)
     {
-        making = other.gameObject.GetComponent<ParticleSystem>();
-
-        if (making != null)
-        {
-            making.Play();
-        }
-        else
-        {
-            Debug.Log("No");
-        }
+        
     }
 }

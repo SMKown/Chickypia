@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Item", menuName = "Scriptble Object/ItemData")]
 public class ItemData : ScriptableObject
 {
-    public enum ItemType { meet, fish }
+    public enum ItemType { food, meet, fish }
 
     [Header("# Main Info")]
     public ItemType itemType;
@@ -14,8 +14,4 @@ public class ItemData : ScriptableObject
     public string itemDesc;
 
     public Sprite itemIcon;
-
-
-    [Header("# Ingredients")]
-    public int[] ingredients;
 }

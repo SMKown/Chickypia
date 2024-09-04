@@ -16,9 +16,8 @@ MonoBehaviour:
   foodRecipeId: 2
   foodRecipeName: Food 2
   foodRecipeDesc: 
-  foodRecipeIcon: {fileID: 21300000, guid: ad6ad57f2b8c4ea47b2abe4559d4a986, type: 3}
+  foodRecipeIcon: {fileID: 21300000, guid: 19834f0a60889e84f99e1ea0bc507e87, type: 3}
   ingredients:
-  - {fileID: 11400000, guid: c223314bc9943094a89e75092b4c427e, type: 2}
-  - {fileID: 11400000, guid: b08836f62e81b9045ae9c859ae1773aa, type: 2}
   - {fileID: 11400000, guid: 9dd52c3359174a54d8be22385ce7415c, type: 2}
+  - {fileID: 11400000, guid: b08836f62e81b9045ae9c859ae1773aa, type: 2}
   resultItem: {fileID: 11400000, guid: db4f6fb94dbc9264f8c62261d0d7f4e4, type: 2}
