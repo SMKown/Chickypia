@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class CookingSpot : MonoBehaviour
 {
-    private static bool mIsCooking = false;
-    public static bool isCooking
+    private static bool mcanCooking = false;
+    public static bool canCooking
     {
-        get { return mIsCooking; }
+        get { return mcanCooking; }
     }    
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            mIsCooking = true;
-            Debug.Log(mIsCooking);
+            mcanCooking = true;
         }
     }
 
@@ -23,8 +22,7 @@ public class CookingSpot : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            mIsCooking = false;
-            Debug.Log(mIsCooking);
+            mcanCooking = false;
         }
     }
 }

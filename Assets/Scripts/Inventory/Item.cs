@@ -21,6 +21,7 @@ public enum ItemType
     Food,
     Tool
 }
+
 public enum ActionType
 {
     eat
