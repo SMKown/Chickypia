@@ -1,18 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Xml.Schema;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     private CharacterController cc;
-    private bool isGround = true;
-    private bool isJump = false;
 
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpForce;
     
     private float gravity;
+    private bool isJump = false;
 
     private void Start()
     {
@@ -28,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        if (!PlayerAbility.instance.shouldTurn)
+        if (!PlayerInfo.Instance.shouldTurn)
         {
             float h = Input.GetAxis("Horizontal");
             float v = Input.GetAxis("Vertical");
@@ -48,17 +46,20 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckGrounded()
     {
-        if (cc.isGrounded && !PlayerAbility.instance.shouldAttack)
+        if (cc.isGrounded)
         {
-            isGround = true;
+            PlayerInfo.Instance.isGround = true;
             isJump = false;
         }
-        else isGround = false;
+        else PlayerInfo.Instance.isGround = false;
     }
 
     private void TryJump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isGround && !isJump)
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (PlayerInfo.Instance.isGround && !PlayerInfo.Instance.shouldAttack && !isJump)
                 gravity = jumpForce;
+        }
     }
 }

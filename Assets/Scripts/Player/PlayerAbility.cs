@@ -4,20 +4,8 @@ using UnityEngine;
 
 public class PlayerAbility : MonoBehaviour
 {
-    public static PlayerAbility instance;
-    private void Awake()
-    {
-        if (instance != null)
-            Destroy(gameObject);
-        else
-            instance = this;
-    }
-
-    public bool attackMode = false;
-    public bool shouldTurn = false;
-    public bool shouldAttack = false;
-
     [SerializeField] private float rotSpeed;
+    
     private Vector3 destinationPoint;
 
     private void Update()
@@ -27,22 +15,22 @@ public class PlayerAbility : MonoBehaviour
 
     private void Attack()
     {
-        if (attackMode)
+        if (PlayerInfo.Instance.attackMode && PlayerInfo.Instance.isGround)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && !PlayerInfo.Instance.shouldAttack)
             {
-                shouldAttack = true;
+                PlayerInfo.Instance.shouldAttack = true;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
                 if (Physics.Raycast(ray, out hit, 100F))
                 {
                     destinationPoint = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-                    shouldTurn = true;
+                    PlayerInfo.Instance.shouldTurn = true;
                 }
             }
 
-            if (shouldTurn)
+            if (PlayerInfo.Instance.shouldTurn)
             {
                 Quaternion targetRot = Quaternion.LookRotation(destinationPoint - transform.position);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotSpeed * Time.deltaTime);
@@ -52,8 +40,8 @@ public class PlayerAbility : MonoBehaviour
                 {
                     // 공격 코드
 
-                    shouldTurn = false;
-                    shouldAttack = false;
+                    PlayerInfo.Instance.shouldTurn = false;
+                    PlayerInfo.Instance.shouldAttack = false;
                 }
             }
         }
