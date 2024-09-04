@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckGrounded()
     {
-        if (cc.isGrounded)
+        if (cc.isGrounded && !PlayerAbility.instance.shouldAttack)
         {
             isGround = true;
             isJump = false;
@@ -59,8 +59,6 @@ public class PlayerMovement : MonoBehaviour
     private void TryJump()
     {
         if (Input.GetKeyDown(KeyCode.Space) && isGround && !isJump)
-        {
-            gravity = jumpForce;
-        }
+                gravity = jumpForce;
     }
 }

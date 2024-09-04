@@ -15,6 +15,7 @@ public class PlayerAbility : MonoBehaviour
 
     public bool attackMode = false;
     public bool shouldTurn = false;
+    public bool shouldAttack = false;
 
     [SerializeField] private float rotSpeed;
     private Vector3 destinationPoint;
@@ -30,6 +31,7 @@ public class PlayerAbility : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
+                shouldAttack = true;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
@@ -51,6 +53,7 @@ public class PlayerAbility : MonoBehaviour
                     // 공격 코드
 
                     shouldTurn = false;
+                    shouldAttack = false;
                 }
             }
         }
