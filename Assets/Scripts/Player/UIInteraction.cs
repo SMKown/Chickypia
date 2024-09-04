@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class UIInteraction : MonoBehaviour
 {
-    public Image uiImage;
+    public Image itemImage;
+    public Image cookingImage;
     
     private GameObject interactableObj;
 
@@ -21,7 +22,13 @@ public class UIInteraction : MonoBehaviour
         {
             interactableObj = other.gameObject;
             targetPos = interactableObj.transform.position;
-            StartCoroutine(AnimateImageON(uiImage));
+            StartCoroutine(AnimateImageON(itemImage));
+        }
+        else if (other.CompareTag("CookingSpot"))
+        {
+            interactableObj = other.gameObject;
+            targetPos = interactableObj.transform.position;
+            StartCoroutine(AnimateImageON(cookingImage));
         }
     }
 
@@ -30,7 +37,12 @@ public class UIInteraction : MonoBehaviour
         if (other.CompareTag("Item"))
         {
             interactableObj = null;
-            ImageOff();
+            ImageOff(itemImage);
+        }
+        else if (other.CompareTag("CookingSpot"))
+        {
+            interactableObj = null;
+            ImageOff(cookingImage);
         }
     }
 
@@ -55,9 +67,9 @@ public class UIInteraction : MonoBehaviour
         image.transform.localScale = targetScale;
     }
 
-    public void ImageOff()
+    public void ImageOff(Image image)
     {
-        StartCoroutine(AnimateImageOFF(uiImage));
+        StartCoroutine(AnimateImageOFF(image));
     }
 
     private IEnumerator AnimateImageOFF(Image image)
