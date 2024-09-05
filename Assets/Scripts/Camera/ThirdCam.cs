@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class ThirdCam : FollowCam
 {
-    [SerializeField] private float offsetX;
-    [SerializeField] private float offsetY;
-    [SerializeField] private float offsetZ;
+    public float offsetX;
+    public float offsetY;
+    public float offsetZ;
+
     [SerializeField] private float DelayTime;
 
     override protected void FollowCamera()

@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     private CharacterController cc;
     private Animator animator;
+    private ThirdCam thirdCam;
 
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpForce;
@@ -18,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     {
         cc = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+        thirdCam = Camera.main.GetComponent<ThirdCam>();
     }
 
     private void Update()
