@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     private CharacterController cc;
     private Animator animator;
+    
     private ThirdCam thirdCam;
 
     [SerializeField] private float moveSpeed;

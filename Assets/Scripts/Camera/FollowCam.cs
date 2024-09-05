@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FollowCam : MonoBehaviour
@@ -12,7 +10,7 @@ public class FollowCam : MonoBehaviour
         target = GameObject.FindWithTag("Player");
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         FollowCamera();
     }
@@ -20,6 +18,6 @@ public class FollowCam : MonoBehaviour
     virtual protected void FollowCamera()
     {
         FixedPos = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
-        transform.position = Vector3.Lerp(transform.position, FixedPos, 0.5F);
+        transform.position = FixedPos;
     }
 }

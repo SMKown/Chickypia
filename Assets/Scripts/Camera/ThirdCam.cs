@@ -12,8 +12,7 @@ public class ThirdCam : FollowCam
 
     override protected void FollowCamera()
     {
-        Vector3 FixedPos = new Vector3(target.transform.position.x + offsetX,
-            transform.position.y + offsetY, target.transform.position.z + offsetZ);
+        FixedPos = new Vector3(target.transform.position.x + offsetX, transform.position.y + offsetY, target.transform.position.z + offsetZ);
         transform.position = Vector3.Lerp(transform.position, FixedPos, DelayTime * Time.deltaTime);
     }
 }
