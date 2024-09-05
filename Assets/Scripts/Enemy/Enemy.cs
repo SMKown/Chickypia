@@ -18,6 +18,7 @@ public abstract class Enemy : MonoBehaviour
     public int attackPower;
     public Animator animator;
     public EnemyType enemyType;
+    protected Transform player;
 
     public virtual void TakeDamage(int damage)
     {
@@ -35,7 +36,6 @@ public abstract class Enemy : MonoBehaviour
     protected virtual void Die()
     {
         animator.SetTrigger("Die");
-        animator.enabled = false;
         Destroy(gameObject, 2f);
 
         DropItem();
@@ -43,6 +43,7 @@ public abstract class Enemy : MonoBehaviour
 
     void DropItem()
     {
+        // 아이템 드롭 로직 추가
         Debug.Log("아이템 드롭");
     }
 

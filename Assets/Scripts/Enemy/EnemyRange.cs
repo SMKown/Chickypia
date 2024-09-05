@@ -4,16 +4,27 @@ using UnityEngine;
 
 public class EnemyRange : Enemy
 {
-    public GameObject BallPrefab; 
+    public GameObject BallPrefab;
+    public Transform firePoint;
 
-    // 원거리 공격 로직
     protected override void Attack()
     {
-        ShootBall(); // 투사체 발사
+        ShootBall();
     }
 
     void ShootBall()
     {
+        if (BallPrefab != null && player != null)
+        {
+            GameObject ball = Instantiate(BallPrefab, firePoint.position, firePoint.rotation);
 
+            Projectile projectile = ball.GetComponent<Projectile>();
+            if (projectile != null)
+            {
+                projectile.Initialize(player.position);
+            }
+
+            animator.SetTrigger("Attack");
+        }
     }
 }
