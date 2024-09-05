@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyRange : MonoBehaviour
+public class EnemyRange : Enemy
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject BallPrefab; 
+
+    // 원거리 공격 로직
+    protected override void Attack()
     {
-        
+        ShootBall(); // 투사체 발사
     }
 
-    // Update is called once per frame
-    void Update()
+    void ShootBall()
     {
-        
+
     }
 }

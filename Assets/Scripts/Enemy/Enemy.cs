@@ -13,7 +13,7 @@ public enum EnemyType
     RangedType3
 }
 
-public abstract class EnemyBase : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
     public int health;
     public int attackPower;
@@ -29,19 +29,18 @@ public abstract class EnemyBase : MonoBehaviour
         }
         else
         {
-            animator.SetTrigger("hit");
+            animator.SetTrigger("Damage");
         }
     }
 
     protected virtual void Die()
     {
-        animator.SetTrigger("die");
+        animator.SetTrigger("Die");
         Destroy(gameObject, 2f);
 
-        DropItem(); // 아이템 드롭
+        DropItem();
     }
 
-    // 적이 죽었을 때 아이템을 드롭하는 메서드
     void DropItem()
     {
         
