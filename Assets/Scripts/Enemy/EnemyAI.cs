@@ -32,7 +32,8 @@ public class EnemyAI : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         enemy = GetComponent<Enemy>();
-        currentState = State.Patrolling; 
+        currentState = State.Patrolling;
+        SetNextPatrolPoint();
     }
 
     void Update()
@@ -40,20 +41,20 @@ public class EnemyAI : MonoBehaviour
         switch (currentState)
         {
             case State.Idle:
-                Idle(); // 대기 상태
+                Idle();
                 break;
             case State.Patrolling:
-                Patrol(); // 순찰 상태
+                Patrol();
                 break;
             case State.Chasing:
-                Chase(); // 추적 상태
+                Chase();
                 break;
             case State.Attacking:
-                Attack(); // 공격 상태
+                Attack();
                 break;
         }
 
-        DetectPlayer(); // 플레이어 감지
+        DetectPlayer();
     }
 
     void Idle()
@@ -65,28 +66,21 @@ public class EnemyAI : MonoBehaviour
         {
             currentState = State.Patrolling;
             enemy.animator.SetBool("Idle", false);
+            SetNextPatrolPoint();
         }
-
     }
 
-    // 순찰 로직
     void Patrol()
     {
         if (patrolPoints.Length == 0) return;
 
-        if (agent.destination == patrolPoints[currentPatrolIndex].position &&
-            agent.remainingDistance < agent.stoppingDistance)
+        if (agent.remainingDistance < agent.stoppingDistance)
         {
             currentState = State.Idle;
             waitTime = Time.time;
-            return;
         }
-
-        agent.destination = patrolPoints[currentPatrolIndex].position;
-        enemy.animator.SetBool("Move", true);
     }
 
-    // 플레이어 감지 로직
     void DetectPlayer()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, detectionRadius, playerLayer);
@@ -96,14 +90,14 @@ public class EnemyAI : MonoBehaviour
             isPlayerDetected = true;
             currentState = State.Chasing;
         }
-        else
+        else if (currentState == State.Chasing)
         {
             isPlayerDetected = false;
             currentState = State.Patrolling;
+            SetNextPatrolPoint();
         }
     }
 
-    // 추적 로직
     void Chase()
     {
         if (player == null) return;
@@ -117,12 +111,20 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    // 공격 로직
     void Attack()
     {
         if (Time.time - lastAttackTime < attackCooldown) return;
 
         enemy.animator.SetTrigger("Attack");
         lastAttackTime = Time.time;
+    }
+
+    void SetNextPatrolPoint()
+    {
+        if (patrolPoints.Length == 0) return;
+
+        currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
+        agent.destination = patrolPoints[currentPatrolIndex].position;
+        enemy.animator.SetBool("Move", true);
     }
 }

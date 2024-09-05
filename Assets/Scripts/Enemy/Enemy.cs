@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public enum EnemyType
 {
     MeleeType1,
@@ -36,6 +35,7 @@ public abstract class Enemy : MonoBehaviour
     protected virtual void Die()
     {
         animator.SetTrigger("Die");
+        animator.enabled = false;
         Destroy(gameObject, 2f);
 
         DropItem();
@@ -43,7 +43,8 @@ public abstract class Enemy : MonoBehaviour
 
     void DropItem()
     {
-        
+        Debug.Log("아이템 드롭");
     }
+
     protected abstract void Attack();
 }
