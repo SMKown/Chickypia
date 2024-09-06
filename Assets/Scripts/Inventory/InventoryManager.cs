@@ -1,53 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-    public GameObject MainInvetory;
+    public GameObject MainInventory;
     public GameObject HotbarInventory;
     public int maxItem = 10;
-    public InventorySlot[] inventoryslots;
+    public InventorySlot[] inventorySlots; // 인벤토리 슬롯 배열
+    public InventorySlot[] hotbarSlots; // 핫바 슬롯 배열
     public GameObject inventoryItemPrefab;
 
     private bool isInventoryOpen = false;
     private int selectedSlot = -1;
-    private int InvenSelectedSlot = -1;
-    private int HotbarSelectedSlot = -1;
 
     private void Start()
     {
-        ChangeSelectedSlot(33);
+        ChangeSelectedSlot(33); // 초기 선택 슬롯을 핫바의 첫 번째 슬롯으로 설정
+        MainInventory.SetActive(false); // 게임 시작 시 인벤토리를 꺼진 상태로 설정
+        HotbarInventory.SetActive(true); // 핫바는 켜진 상태로 설정
     }
 
     private void Update()
     {
         OnInventory();
 
-        if (isInventoryOpen)
+        // 인벤토리에 있는 모든 아이템과 그 개수 출력
+        if (Input.GetKeyDown(KeyCode.T))
         {
-            for (int i = 0; i < 6; i++)
+            List<(Item item, int count)> items = GetInventoryItems();
+            foreach (var itemData in items)
             {
-                if (Input.GetKeyDown(KeyCode.Alpha1 + i))
-                {
-                    InvenSelectedSlot = i;
-                    ChangeSelectedSlot(InvenSelectedSlot);
-                    break;
-                }
+                Debug.Log($"Item: {itemData.item.name}, Count: {itemData.count}");
             }
         }
-        else
+
+        for (int i = 0; i < 6; i++)
         {
-            for (int i = 0; i < 6; i++)
+            if (Input.GetKeyDown(KeyCode.Alpha1 + i))
             {
-                if (Input.GetKeyDown(KeyCode.Alpha1 + i))
-                {
-                    HotbarSelectedSlot = i + 33;
-                    ChangeSelectedSlot(HotbarSelectedSlot);
-                    break;
-                }
+                ChangeSelectedSlot(i + (isInventoryOpen ? 0 : 33));
+                break;
             }
         }
     }
@@ -57,41 +50,47 @@ public class InventoryManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             isInventoryOpen = !isInventoryOpen;
-            MainInvetory.SetActive(isInventoryOpen);
+            MainInventory.SetActive(isInventoryOpen);
             HotbarInventory.SetActive(!isInventoryOpen);
 
             if (isInventoryOpen)
             {
-                InvenSelectedSlot = HotbarSelectedSlot - 33;
-                ChangeSelectedSlot(InvenSelectedSlot);
+                ChangeSelectedSlot(selectedSlot - 33); // 핫바에서 인벤토리로 전환 시
             }
             else
             {
-                HotbarSelectedSlot = InvenSelectedSlot + 33;
-                ChangeSelectedSlot(HotbarSelectedSlot);
+                ChangeSelectedSlot(selectedSlot + 33); // 인벤토리에서 핫바로 전환 시
             }
         }
     }
 
     private void ChangeSelectedSlot(int newValue)
     {
-        if (selectedSlot >= 0 && selectedSlot < inventoryslots.Length)
+        if (selectedSlot >= 0 && selectedSlot < inventorySlots.Length)
         {
-            inventoryslots[selectedSlot].DeSelect();
+            inventorySlots[selectedSlot].DeSelect();
+        }
+        else if (selectedSlot >= 33 && selectedSlot < 33 + hotbarSlots.Length)
+        {
+            hotbarSlots[selectedSlot - 33].DeSelect();
         }
 
-        if (newValue >= 0 && newValue < inventoryslots.Length)
+        if (newValue >= 0 && newValue < inventorySlots.Length)
         {
-            inventoryslots[newValue].Select();
+            inventorySlots[newValue].Select();
+            selectedSlot = newValue;
+        }
+        else if (newValue >= 33 && newValue < 33 + hotbarSlots.Length)
+        {
+            hotbarSlots[newValue - 33].Select();
             selectedSlot = newValue;
         }
     }
 
-
     // 아이템을 인벤토리에 추가하는 함수
     public bool AddItem(Item item)
     {
-        foreach (InventorySlot slot in inventoryslots)
+        foreach (InventorySlot slot in inventorySlots)
         {
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
             if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < maxItem)
@@ -103,7 +102,7 @@ public class InventoryManager : MonoBehaviour
         }
 
         // 빈 슬롯을 찾아 새로운 아이템을 생성함
-        foreach (InventorySlot slot in inventoryslots)
+        foreach (InventorySlot slot in inventorySlots)
         {
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
             if (itemInSlot == null)
@@ -129,9 +128,15 @@ public class InventoryManager : MonoBehaviour
     // 현재 선택된 슬롯의 아이템을 반환하는 함수
     public Item GetSelectedItem()
     {
-        if (selectedSlot >= 0 && selectedSlot < inventoryslots.Length)
+        if (selectedSlot >= 0 && selectedSlot < inventorySlots.Length)
         {
-            InventorySlot slot = inventoryslots[selectedSlot];
+            InventorySlot slot = inventorySlots[selectedSlot];
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            if (itemInSlot != null) return itemInSlot.item;
+        }
+        else if (selectedSlot >= 33 && selectedSlot < 33 + hotbarSlots.Length)
+        {
+            InventorySlot slot = hotbarSlots[selectedSlot - 33];
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
             if (itemInSlot != null) return itemInSlot.item;
         }
@@ -189,5 +194,31 @@ public class InventoryManager : MonoBehaviour
             draggedItem.transform.localPosition = Vector3.zero;
             draggedItem.parentAfterDrag = newSlot.transform;
         }
+    }
+
+    // 인벤토리 안에 있는 아이템 데이터 리스트
+    public List<(Item item, int count)> GetInventoryItems()
+    {
+        List<(Item item, int count)> items = new List<(Item item, int count)>();
+
+        foreach (InventorySlot slot in inventorySlots)
+        {
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            if (itemInSlot != null)
+            {
+                items.Add((itemInSlot.item, itemInSlot.count));
+            }
+        }
+
+        foreach (InventorySlot slot in hotbarSlots)
+        {
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            if (itemInSlot != null)
+            {
+                items.Add((itemInSlot.item, itemInSlot.count));
+            }
+        }
+
+        return items;
     }
 }
