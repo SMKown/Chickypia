@@ -11,24 +11,15 @@ public class EnemyAI : MonoBehaviour
     [Header("공격 쿨타임")] public float attackCooldown = 1.5f;
     [Header("이동 전 대기 시간")] public float waitTimeNextPatrol = 3f;
 
-    // 현재 순찰 지점 인덱스
     private int currentPatrolIndex;
-    // NavMeshAgent 컴포넌트
     private NavMeshAgent agent;
-    // 플레이어 Transform
     private Transform player;
-    // 플레이어 탐지 여부
     private bool isPlayerDetected;
-    // 현재 상태
     private State currentState;
-    // Enemy 컴포넌트
     private Enemy enemy;
-    // 마지막 공격 시간
     private float lastAttackTime;
-    // 대기 시간
     private float waitTime;
 
-    // 적의 상태를 나타내는 열거형
     private enum State
     {
         Idle,
@@ -40,6 +31,7 @@ public class EnemyAI : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        agent.updatePosition = true;
         agent.updateRotation = true;
         enemy = GetComponent<Enemy>();
         currentState = State.Patrolling;
@@ -48,6 +40,7 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
+        Debug.Log("Current State: " + currentState);
         switch (currentState) //상태
         {
             case State.Idle:
@@ -115,16 +108,17 @@ public class EnemyAI : MonoBehaviour
 
     void Chase()
     {
-        // 플레이어가 없으면 리턴
         if (player == null) return;
 
-        // 플레이어를 목표 지점으로 설정
         agent.destination = player.position;
         enemy.animator.SetBool("Move", true);
 
-        // 플레이어와의 거리가 가까워지면 공격 상태로 전환
-        if (Vector3.Distance(transform.position, player.position) < agent.stoppingDistance)
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        Debug.Log("Distance to Player: " + distanceToPlayer);
+
+        if (distanceToPlayer < agent.stoppingDistance)
         {
+            Debug.Log("공격모드 전환");
             currentState = State.Attacking;
         }
     }
@@ -136,6 +130,7 @@ public class EnemyAI : MonoBehaviour
         enemy.animator.SetTrigger("Attack");
         lastAttackTime = Time.time;
     }
+
 
     void SetNextPatrolPoint()
     {
