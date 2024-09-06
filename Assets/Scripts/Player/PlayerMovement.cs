@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         cc = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
         thirdCam = Camera.main.GetComponent<ThirdCam>();
     }
 
