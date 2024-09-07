@@ -9,7 +9,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     [Header("UI")]
     public Image image;
     public Text countText;
-    public Item item;
+    public ItemData item;
 
     [HideInInspector] public int count = 1;
     [HideInInspector] public Transform parentAfterDrag;
@@ -23,10 +23,10 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     }
 
     // 아이템을 초기화하는 함수
-    public void InitialiseItem(Item newItem)
+    public void InitialiseItem(ItemData newItem)
     {
         item = newItem;
-        image.sprite = newItem.image;
+        image.sprite = newItem.itemIcon;
         ItemCount();
     }
 

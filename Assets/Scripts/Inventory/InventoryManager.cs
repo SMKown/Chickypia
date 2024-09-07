@@ -28,7 +28,7 @@ public class InventoryManager : MonoBehaviour
         // 인벤토리에 있는 모든 아이템과 그 개수 출력
         if (Input.GetKeyDown(KeyCode.T))
         {
-            List<(Item item, int count)> items = GetInventoryItems();
+            List<(ItemData item, int count)> items = GetInventoryItems();
             foreach (var itemData in items)
             {
                 Debug.Log($"Item: {itemData.item.name}, Count: {itemData.count}");
@@ -88,7 +88,7 @@ public class InventoryManager : MonoBehaviour
     }
 
     // 아이템을 인벤토리에 추가하는 함수
-    public bool AddItem(Item item)
+    public bool AddItem(ItemData item)
     {
         foreach (InventorySlot slot in inventorySlots)
         {
@@ -115,7 +115,7 @@ public class InventoryManager : MonoBehaviour
     }
 
     // 새로운 아이템을 생성하여 지정된 슬롯에 배치하는 함수
-    public InventoryItem SpawnNewItem(Item item, InventorySlot slot, int count = 1)
+    public InventoryItem SpawnNewItem(ItemData item, InventorySlot slot, int count = 1)
     {
         GameObject newItem = Instantiate(inventoryItemPrefab, slot.transform);
         InventoryItem inventoryItem = newItem.GetComponent<InventoryItem>();
@@ -126,7 +126,7 @@ public class InventoryManager : MonoBehaviour
     }
 
     // 현재 선택된 슬롯의 아이템을 반환하는 함수
-    public Item GetSelectedItem()
+    public ItemData GetSelectedItem()
     {
         if (selectedSlot >= 0 && selectedSlot < inventorySlots.Length)
         {
@@ -197,9 +197,9 @@ public class InventoryManager : MonoBehaviour
     }
 
     // 인벤토리 안에 있는 아이템 데이터 리스트
-    public List<(Item item, int count)> GetInventoryItems()
+    public List<(ItemData item, int count)> GetInventoryItems()
     {
-        List<(Item item, int count)> items = new List<(Item item, int count)>();
+        List<(ItemData item, int count)> items = new List<(ItemData item, int count)>();
 
         foreach (InventorySlot slot in inventorySlots)
         {

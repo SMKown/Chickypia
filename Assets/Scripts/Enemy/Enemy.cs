@@ -16,6 +16,7 @@ public abstract class Enemy : MonoBehaviour
 {
     public int health;
     public int attackPower;
+    public float attackDistance;
     public Animator animator;
     public EnemyType enemyType;
     protected Transform player;
