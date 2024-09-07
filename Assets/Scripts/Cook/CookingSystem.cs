@@ -99,6 +99,7 @@ public class CookingSystem : MonoBehaviour
     void StopCook()
     {
         choicePopup.gameObject.SetActive(false);
+        makePopup.gameObject.SetActive(false);
         isCooking = false;
     }
 
