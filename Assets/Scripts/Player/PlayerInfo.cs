@@ -19,21 +19,4 @@ public class PlayerInfo : MonoBehaviour
     public bool shouldTurn = false;
     public bool shouldAttack = false;
     public bool isGround = true;
-
-    // private string prefabPath = "Prefabs/Player/Model"; // Resources 폴더 내의 경로 (확장자 제외)
-
-    // private void Start()
-    // {
-    //     GameObject prefab = Resources.Load<GameObject>(prefabPath);
-
-    //     if (prefab != null)
-    //     {
-    //         GameObject instance = Instantiate(prefab, transform);
-    //         instance.transform.SetParent(transform);
-    //     }
-    //     else
-    //     {
-    //         Debug.LogError("Prefab not found at path: " + prefabPath);
-    //     }
-    // }
 }

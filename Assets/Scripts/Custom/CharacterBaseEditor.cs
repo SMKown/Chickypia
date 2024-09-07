@@ -14,10 +14,5 @@ public class CharacterBaseEditor : Editor
         {
             character.SetRandom();
         }
-
-        if (GUILayout.Button("SavePrefab"))
-        {
-            character.SavePrefab();
-        }
     }
 }

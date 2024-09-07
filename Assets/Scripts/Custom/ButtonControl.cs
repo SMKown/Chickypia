@@ -35,6 +35,8 @@ public class ButtonControl : MonoBehaviour
                 CharacterBase.Instance.SetItem(CurrentPartType, idx % _parts.Length);
             }
         }
+        
+        CharacterBase.Instance.LoadInfo();
     }
 
     public void OnClick_Next()

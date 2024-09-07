@@ -1,6 +1,6 @@
+using System.IO;
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -18,9 +18,26 @@ public enum PartsType
     Body
 }
 
+[Serializable]
+public class CharacterData
+{
+    public int HairIndex;
+    public int FaceIndex;
+    public int HeadGearIndex;
+    public int TopIndex;
+    public int BottomIndex;
+    public int EyewearIndex;
+    public int BagIndex;
+    public int ShoesIndex;
+    public int GloveIndex;
+}
+
 public class CharacterBase : MonoBehaviour
 {
     public static CharacterBase Instance;
+    
+    private string filePath;
+    
     private void Awake()
     {
         if (Instance != null)
@@ -31,8 +48,9 @@ public class CharacterBase : MonoBehaviour
         Instance = this;
 
         SetRoot();
+        filePath = Path.Combine(Application.persistentDataPath, "characterData.json");
     }
-
+    
     public List<GameObject> PartsBody { get; set; } = new();
     public List<GameObject> PartsHair { get; set; } = new();
     public List<GameObject> PartsFace { get; set; } = new();
@@ -155,25 +173,53 @@ public class CharacterBase : MonoBehaviour
         CheckBody();
     }
 
-    public void SavePrefab()
+    public void SaveInfo()
     {
-        #if UNITY_EDITOR
-        string localPath = "Assets/Layer lab/3D Props Casual Character Pack1/Prefabs/"+ gameObject.name +".prefab";
-        bool isPrefabSuccess;
+        var characterData = new CharacterData
+        {
+            HairIndex = GetActiveIndex(PartsHair),
+            FaceIndex = GetActiveIndex(PartsFace),
+            HeadGearIndex = GetActiveIndex(PartsHeadGear),
+            TopIndex = GetActiveIndex(PartsTop),
+            BottomIndex = GetActiveIndex(PartsBottom),
+            EyewearIndex = GetActiveIndex(PartsEyewear),
+            BagIndex = GetActiveIndex(PartsBag),
+            ShoesIndex = GetActiveIndex(PartsShoes),
+            GloveIndex = GetActiveIndex(PartsGlove)
+        };
 
-        GameObject instanceObject = Instantiate(gameObject);
-        instanceObject.transform.localPosition = Vector3.zero;
-        instanceObject.transform.rotation = Quaternion.identity;
-        instanceObject.transform.localScale = Vector3.one;
-        
-        PrefabUtility.SaveAsPrefabAsset(instanceObject, localPath, out isPrefabSuccess);
-        if (isPrefabSuccess)
-            Debug.Log("Prefab was saved successfully");
-        else
-            Debug.Log("Prefab failed to save" + isPrefabSuccess);
-        
-        Destroy(instanceObject);
-        AssetDatabase.Refresh();
-        #endif
+        string json = JsonUtility.ToJson(characterData);
+        File.WriteAllText(filePath, json);
+    }
+
+    private int GetActiveIndex(List<GameObject> parts)
+    {
+        for (int i = 0; i < parts.Count; i++)
+        {
+            if (parts[i].activeInHierarchy)
+                return i;
+        }
+        return -1;
+    }
+
+    public void LoadInfo()
+    {
+        if (File.Exists(filePath))
+        {
+            string json = File.ReadAllText(filePath); // 파일 읽기
+            CharacterData characterData = JsonUtility.FromJson<CharacterData>(json);
+
+            Debug.Log($"Loaded Data: HairIndex={characterData.HairIndex}, FaceIndex={characterData.FaceIndex}, HeadGearIndex={characterData.HeadGearIndex}, TopIndex={characterData.TopIndex}, BottomIndex={characterData.BottomIndex}, EyewearIndex={characterData.EyewearIndex}, BagIndex={characterData.BagIndex}, ShoesIndex={characterData.ShoesIndex}, GloveIndex={characterData.GloveIndex}");
+
+            SetItem(PartsType.Hair, characterData.HairIndex);
+            SetItem(PartsType.Face, characterData.FaceIndex);
+            SetItem(PartsType.Headgear, characterData.HeadGearIndex);
+            SetItem(PartsType.Top, characterData.TopIndex);
+            SetItem(PartsType.Bottom, characterData.BottomIndex);
+            SetItem(PartsType.Eyewear, characterData.EyewearIndex);
+            SetItem(PartsType.Bag, characterData.BagIndex);
+            SetItem(PartsType.Shoes, characterData.ShoesIndex);
+            SetItem(PartsType.Glove, characterData.GloveIndex);
+        }
     }
 }
