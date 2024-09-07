@@ -11,5 +11,13 @@ public class ItemData : ScriptableObject
     public string itemName;
     public string itemDesc;
 
+    public bool stackable = true;
+
     public Sprite itemIcon;
+}
+
+public enum ItemType
+{
+    Food,
+    Tool
 }
