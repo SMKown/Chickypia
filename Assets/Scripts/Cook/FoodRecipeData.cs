@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,9 +17,9 @@ namespace Cookingsystem
         [Header("# Main Info")]
         public FoodType foodType;
         public int foodRecipeId;
-        public string foodRecipeName;
-        public string foodRecipeDesc;
-        public Sprite foodRecipeIcon;
+        public string foodName;
+        public string foodDesc;
+        public Sprite foodIcon;
 
         [Header("# Ingredients")]
         public ItemData[] ingredients;
@@ -30,7 +31,7 @@ namespace Cookingsystem
         {
             if (resultItem != null && resultItem.itemIcon != null)
             {
-                foodRecipeIcon = resultItem.itemIcon;
+                foodIcon = resultItem.itemIcon;
             }
             else
             {

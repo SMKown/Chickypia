@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   foodType: 0
   foodRecipeId: 1
-  foodRecipeName: Food 1
-  foodRecipeDesc: 
-  foodRecipeIcon: {fileID: 21300000, guid: 45348408bc471104c96e9d9e89abb42c, type: 3}
+  foodName: Food1
+  foodDesc: 
+  foodIcon: {fileID: 21300000, guid: 45348408bc471104c96e9d9e89abb42c, type: 3}
   ingredients:
   - {fileID: 11400000, guid: cd38864873ed8c947b2c208145abefa9, type: 2}
   - {fileID: 11400000, guid: 9dd52c3359174a54d8be22385ce7415c, type: 2}
