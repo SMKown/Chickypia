@@ -127,4 +127,8 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             fallbackItem.countText.raycastTarget = true;
         }
     }
+    public ItemData GetItemData()
+    {
+        return item;
+    }
 }
