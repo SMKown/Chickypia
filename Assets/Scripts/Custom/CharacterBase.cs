@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using UnityEngine.SceneManagement;
 
 public enum PartsType
 {
@@ -34,9 +35,6 @@ public class CharacterData
 public class CharacterBase : MonoBehaviour
 {
     public static CharacterBase Instance;
-    
-    private string filePath;
-    
     private void Awake()
     {
         if (Instance != null)
@@ -45,9 +43,16 @@ public class CharacterBase : MonoBehaviour
             return;
         }
         Instance = this;
+    }
 
+    private string filePath;
+    private void Start()
+    {
         SetRoot();
         filePath = Path.Combine(Application.persistentDataPath, "characterData.json");
+        
+        if (SceneManager.GetActiveScene().name == "NayunWork")
+            LoadInfo();
     }
     
     public List<GameObject> PartsBody { get; set; } = new();
