@@ -10,16 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7eb02000bc37184eac42556e6963406, type: 3}
-  m_Name: FoodRecipe 1
+  m_Name: FoodRecipe 6
   m_EditorClassIdentifier: 
-  foodType: 0
-  foodRecipeId: 1
-  foodName: Food 1
+  foodType: 1
+  foodRecipeId: 6
+  foodName: Food6
   foodDesc: 
-  foodIcon: {fileID: 21300000, guid: 11d292cc2a1566b46a6f4506a642bee4, type: 3}
+  foodIcon: {fileID: 21300000, guid: 1696bb941e27cff4784b56bf9f4f9415, type: 3}
   ingredients:
   - item: {fileID: 11400000, guid: cd38864873ed8c947b2c208145abefa9, type: 2}
-    count: 3
-  - item: {fileID: 11400000, guid: 9dd52c3359174a54d8be22385ce7415c, type: 2}
     count: 1
-  resultItem: {fileID: 11400000, guid: cd7df8e9c2998794aaf0a061d69082b1, type: 2}
+  - item: {fileID: 11400000, guid: 827bc9789bbc2824ebf97c8c949709fd, type: 2}
+    count: 1
+  - item: {fileID: 11400000, guid: 9bb4a41b33f1d624bbc72a3492df0924, type: 2}
+    count: 1
+  resultItem: {fileID: 11400000, guid: a0fb40d50a83d1b4e8e42c9d2ba27361, type: 2}

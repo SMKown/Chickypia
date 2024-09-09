@@ -15,10 +15,15 @@ public class ItemData : ScriptableObject
 
     public Sprite itemIcon;
     public GameObject itemModel;
+
+    [Header("# Effect")]
+    private float moveSpeed;
+    private float jumpForce;
 }
 
 public enum ItemType
 {
     Food,
-    Tool
+    Tool,
+    Ingredient
 }

@@ -16,4 +16,5 @@ MonoBehaviour:
   itemId: 2
   itemName: Food2
   itemDesc: 
-  itemIcon: {fileID: 21300000, guid: 19834f0a60889e84f99e1ea0bc507e87, type: 3}
+  stackable: 1
+  itemIcon: {fileID: 21300000, guid: f3cb1eaf1270dfa4ba43397cd3db0639, type: 3}

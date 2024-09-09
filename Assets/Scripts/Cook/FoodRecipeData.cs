@@ -16,26 +16,27 @@ namespace Cookingsystem
 
         [Header("# Main Info")]
         public FoodType foodType;
+
+        [SerializeField]
         public int foodRecipeId;
         public string foodName;
         public string foodDesc;
         public Sprite foodIcon;
 
         [Header("# Ingredients")]
-        public ItemData[] ingredients;
+        [SerializeField]
+        public IngredientsInfo[] ingredients;
 
         [Header("# Result Item")]
         public ItemData resultItem;
 
         private void OnEnable()
         {
-            if (resultItem != null && resultItem.itemIcon != null)
+            if (resultItem && resultItem.itemIcon && resultItem.itemName != null)
             {
                 foodIcon = resultItem.itemIcon;
-            }
-            else
-            {
-                Debug.LogWarning("itemIcon is not assigned.");
+                foodName = resultItem.itemName;
+                foodRecipeId = resultItem.itemId;
             }
         }
     }
@@ -43,7 +44,7 @@ namespace Cookingsystem
     [System.Serializable]
     public struct IngredientsInfo
     {
-        [SerializeField] public ItemData item;
-        [SerializeField] public int count;
+        public ItemData item;
+        public int count;
     }
 }

@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Item 5
   m_EditorClassIdentifier: 
   itemType: 2
-  itemId: 14
+  itemId: 15
   itemName: item 5
   itemDesc: 
-  itemIcon: {fileID: 21300000, guid: d7015e1d553278f4bbe6116c58572feb, type: 3}
+  stackable: 1
+  itemIcon: {fileID: 21300000, guid: a12b513706dca2e4ea46a3f87458fe37, type: 3}
+  itemModel: {fileID: 0}

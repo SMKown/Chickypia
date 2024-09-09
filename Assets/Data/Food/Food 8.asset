@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c2febac446cda843a398f3da80a3970, type: 3}
-  m_Name: Item 3
+  m_Name: Food 8
   m_EditorClassIdentifier: 
-  itemType: 2
-  itemId: 12
-  itemName: item 3
+  itemType: 0
+  itemId: 8
+  itemName: Food8
   itemDesc: 
   stackable: 1
-  itemIcon: {fileID: 21300000, guid: 2845a0cfe3dd4dd42bb2e50d5f572711, type: 3}
+  itemIcon: {fileID: 21300000, guid: b7672c011db748c4c9f379b1ead92d3e, type: 3}
+  itemModel: {fileID: 0}

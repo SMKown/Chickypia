@@ -16,4 +16,5 @@ MonoBehaviour:
   itemId: 11
   itemName: item 2
   itemDesc: 
-  itemIcon: {fileID: 21300000, guid: dd612f1669649ff4d9e4a060238e350d, type: 3}
+  stackable: 1
+  itemIcon: {fileID: 21300000, guid: 3f144ecf58b79514cb6d2ec56c43b1ed, type: 3}
