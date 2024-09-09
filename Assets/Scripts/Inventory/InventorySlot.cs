@@ -24,7 +24,6 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         image.color = notSelectedColor;
     }
 
-    // 드래그된 아이템이 이 슬롯에 드롭되었을 때 호출되는 함수
     public void OnDrop(PointerEventData eventData)
     {
         InventoryItem draggedItem = eventData.pointerDrag?.GetComponent<InventoryItem>();

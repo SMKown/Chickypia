@@ -14,6 +14,7 @@ public class ItemData : ScriptableObject
     public bool stackable = true;
 
     public Sprite itemIcon;
+    public GameObject itemModel;
 }
 
 public enum ItemType

@@ -10,27 +10,34 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public Image image;
     public Text countText;
     public ItemData item;
+    public RectTransform inventoryUIRectTransform; // 인벤토리 UI RectTransform 추가
 
     [HideInInspector] public int count = 1;
     [HideInInspector] public Transform parentAfterDrag;
 
-    private bool isRightClick = false;
-    private bool isDragging = false;
+    private GameObject itemModelInstance; // 3D 모델 인스턴스
+    private bool isDragging = false; // 드래그 상태를 나타내는 변수 추가
 
     private void Start()
     {
         InitialiseItem(item);
     }
 
-    // 아이템을 초기화하는 함수
     public void InitialiseItem(ItemData newItem)
     {
         item = newItem;
         image.sprite = newItem.itemIcon;
         ItemCount();
+
+        // 3D 모델 인스턴스화
+        if (itemModelInstance != null)
+        {
+            Destroy(itemModelInstance);
+        }
+        itemModelInstance = Instantiate(newItem.itemModel, transform);
+        itemModelInstance.SetActive(false); // 인벤토리에서는 보이지 않도록 설정
     }
 
-    // 아이템의 개수를 업데이트하고 텍스트 활성화/비활성화
     public void ItemCount()
     {
         countText.text = count.ToString();
@@ -38,44 +45,54 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         countText.gameObject.SetActive(textActive);
     }
 
-    // 드래그 시작 시 호출되는 함수
     public void OnBeginDrag(PointerEventData eventData)
     {
-        // 드래그 중 이미지와 개수 텍스트의 레이캐스트를 비활성화
         image.raycastTarget = false;
         countText.raycastTarget = false;
 
         parentAfterDrag = transform.parent;
         transform.SetParent(transform.root);
 
-        isRightClick = eventData.button == PointerEventData.InputButton.Right;
-        isDragging = true;
+        if (itemModelInstance != null)
+        {
+            itemModelInstance.SetActive(true); // 드래그 중에는 3D 모델을 보이도록 설정
+        }
+
+        isDragging = true; // 드래그 시작
     }
 
-    // 드래그 중 호출되는 함수
     public void OnDrag(PointerEventData eventData)
     {
-        // 마우스 위치에 아이템을 이동
         transform.position = Input.mousePosition;
     }
 
-    // 드래그 종료 시 호출되는 함수
     public void OnEndDrag(PointerEventData eventData)
     {
-        // 드래그 중 이미지와 개수 텍스트의 레이캐스트를 재활성화
         image.raycastTarget = true;
         countText.raycastTarget = true;
 
-        transform.SetParent(parentAfterDrag);
+        if (RectTransformUtility.RectangleContainsScreenPoint(inventoryUIRectTransform, Input.mousePosition))
+        {
+            transform.SetParent(parentAfterDrag);
+            transform.localPosition = Vector3.zero;
+        }
+        else
+        {
+            InventoryManager inventoryManager = FindObjectOfType<InventoryManager>();
+            inventoryManager.DropItem(item);
+            Destroy(gameObject);
+        }
 
-        LeftClickDrag();
+        if (itemModelInstance != null)
+        {
+            itemModelInstance.SetActive(false); // 드래그가 끝나면 3D 모델을 숨김
+        }
 
-        isDragging = false;
+        isDragging = false; // 드래그 종료
     }
 
     private void Update()
     {
-        // 드래그 중이고 오른쪽 마우스 버튼을 클릭하면 아이템 하나 배치
         if (isDragging && Input.GetMouseButtonDown(1))
         {
             PlaceOneItem();
@@ -84,7 +101,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private void LeftClickDrag() { }
 
-    // 아이템 하나를 새로운 슬롯에 배치하는 함수
     private void PlaceOneItem()
     {
         if (count > 1)
@@ -92,7 +108,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             count -= 1;
             ItemCount();
 
-            // 현재 마우스 위치에서 레이캐스트를 수행하여 슬롯을 찾음
             PointerEventData pointerData = new PointerEventData(EventSystem.current) { position = Input.mousePosition };
             List<RaycastResult> results = new List<RaycastResult>();
             EventSystem.current.RaycastAll(pointerData, results);
@@ -103,14 +118,14 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 if (slot != null)
                 {
                     InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-                    if (itemInSlot != null && itemInSlot.item == item)  // 같은 아이템이 슬롯에 있으면 개수 증가
+                    if (itemInSlot != null && itemInSlot.item == item)
                     {
                         itemInSlot.count += 1;
                         itemInSlot.ItemCount();
                         itemInSlot.image.raycastTarget = true;
                         itemInSlot.countText.raycastTarget = true;
                     }
-                    else // 슬롯에 다른 아이템이 있으면 새 아이템 생성
+                    else
                     {
                         InventoryManager inventoryManager = FindObjectOfType<InventoryManager>();
                         InventoryItem newItem = inventoryManager.SpawnNewItem(item, slot, 1);
@@ -120,13 +135,14 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                     return;
                 }
             }
-            // 슬롯을 찾지 못하면 원래 부모로 돌아감
+
             InventoryManager fallbackInventoryManager = FindObjectOfType<InventoryManager>();
             InventoryItem fallbackItem = fallbackInventoryManager.SpawnNewItem(item, parentAfterDrag.GetComponent<InventorySlot>(), 1);
             fallbackItem.image.raycastTarget = true;
             fallbackItem.countText.raycastTarget = true;
         }
     }
+
     public ItemData GetItemData()
     {
         return item;
