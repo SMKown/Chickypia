@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,26 +34,19 @@ public class ButtonControl : MonoBehaviour
                 CharacterBase.Instance.SetItem(CurrentPartType, idx % _parts.Length);
             }
         }
-        
-        CharacterBase.Instance.LoadInfo();
     }
 
     public void OnClick_Next()
     {
         idx++;
         if (idx >= _parts.Length) idx = IsEmpty ? -1 : 0;
-        _SetParts();
+        CharacterBase.Instance.SetItem(CurrentPartType, idx);
     }
 
     public void OnClick_Previous()
     {
         idx--;
         if (idx < (IsEmpty ? -1 : 0)) idx = _parts.Length - 1;
-        _SetParts();
-    }
-
-    private void _SetParts()
-    {
         CharacterBase.Instance.SetItem(CurrentPartType, idx);
     }
 }

@@ -18,7 +18,6 @@ public enum PartsType
     Body
 }
 
-[Serializable]
 public class CharacterData
 {
     public int HairIndex;
@@ -206,7 +205,7 @@ public class CharacterBase : MonoBehaviour
     {
         if (File.Exists(filePath))
         {
-            string json = File.ReadAllText(filePath); // 파일 읽기
+            string json = File.ReadAllText(filePath);
             CharacterData characterData = JsonUtility.FromJson<CharacterData>(json);
 
             Debug.Log($"Loaded Data: HairIndex={characterData.HairIndex}, FaceIndex={characterData.FaceIndex}, HeadGearIndex={characterData.HeadGearIndex}, TopIndex={characterData.TopIndex}, BottomIndex={characterData.BottomIndex}, EyewearIndex={characterData.EyewearIndex}, BagIndex={characterData.BagIndex}, ShoesIndex={characterData.ShoesIndex}, GloveIndex={characterData.GloveIndex}");

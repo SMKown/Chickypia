@@ -22,6 +22,7 @@ public class CustomControl : MonoBehaviour
         SpawnPartsButton(PartsType.Eyewear, CharacterBase.Instance.PartsEyewear.ToArray(), "eyewear", true);
 
         button.gameObject.SetActive(false);
+        CharacterBase.Instance.LoadInfo();
     }
 
     private Sprite GetSprite(string name)
