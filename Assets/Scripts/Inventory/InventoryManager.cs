@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class InventoryManager : MonoBehaviour
     public InventorySlot[] inventorySlots; // 인벤토리 슬롯 배열
     public InventorySlot[] hotbarSlots; // 핫바 슬롯 배열
     public GameObject inventoryItemPrefab;
+    public GameObject itemPrefab; // 드롭할 아이템 프리팹
+    public Transform player; // 플레이어의 Transform
 
     private bool isInventoryOpen = false;
     private int selectedSlot = -1;
@@ -24,6 +27,16 @@ public class InventoryManager : MonoBehaviour
     private void Update()
     {
         OnInventory();
+
+        if (Input.GetKeyDown(KeyCode.G) && !isInventoryOpen)
+        {
+            ItemData selectedItem = GetSelectedItem();
+            if (selectedItem != null)
+            {
+                DropItem(selectedItem);
+                RemoveItemFromSlot(selectedSlot);
+            }
+        }
 
         // 인벤토리에 있는 모든 아이템과 그 개수 출력
         if (Input.GetKeyDown(KeyCode.T))
@@ -220,5 +233,35 @@ public class InventoryManager : MonoBehaviour
         }
 
         return items;
+    }
+
+    // 아이템을 버리는 함수
+    public void DropItem(ItemData item)
+    {
+        Vector3 dropPosition = player.transform.position + player.transform.forward;
+        GameObject droppedItem = Instantiate(item.itemModel, dropPosition, Quaternion.identity);
+    }
+
+    // 슬롯에서 아이템을 제거하는 함수
+    public void RemoveItemFromSlot(int slotIndex)
+    {
+        if (slotIndex >= 0 && slotIndex < inventorySlots.Length)
+        {
+            InventorySlot slot = inventorySlots[slotIndex];
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            if (itemInSlot != null)
+            {
+                Destroy(itemInSlot.gameObject);
+            }
+        }
+        else if (slotIndex >= 33 && slotIndex < 33 + hotbarSlots.Length)
+        {
+            InventorySlot slot = hotbarSlots[slotIndex - 33];
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            if (itemInSlot != null)
+            {
+                Destroy(itemInSlot.gameObject);
+            }
+        }
     }
 }
