@@ -1472,6 +1472,8 @@ MonoBehaviour:
   - {fileID: 944188815}
   - {fileID: 844750024}
   inventoryItemPrefab: {fileID: 6195635999288740944, guid: 178aed157a3ec2840bb25971e0ff75c0, type: 3}
+  itemPrefab: {fileID: 6195635999288740944, guid: 178aed157a3ec2840bb25971e0ff75c0, type: 3}
+  player: {fileID: 1780656603}
 --- !u!1 &229416916
 GameObject:
   m_ObjectHideFlags: 0
@@ -2720,13 +2722,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a3e663b0c0427841af6b75daa4fa5d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemPrefab: {fileID: 2946765486653537739, guid: beba8b86e60c0e240a07ebc012bd96a6, type: 3}
+  itemPrefab: {fileID: 1833268569700943097, guid: beba8b86e60c0e240a07ebc012bd96a6, type: 3}
   itemDatas:
   - {fileID: 11400000, guid: cd38864873ed8c947b2c208145abefa9, type: 2}
   - {fileID: 11400000, guid: 9dd52c3359174a54d8be22385ce7415c, type: 2}
   - {fileID: 11400000, guid: b08836f62e81b9045ae9c859ae1773aa, type: 2}
   - {fileID: 11400000, guid: c223314bc9943094a89e75092b4c427e, type: 2}
-  - {fileID: 11400000, guid: 897111613f738bf43a82d6874945d7af, type: 2}
   numberOfItems: 10
   spawnRange: 10
 --- !u!4 &496782800
