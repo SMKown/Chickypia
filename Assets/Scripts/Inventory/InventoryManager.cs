@@ -20,7 +20,9 @@ public class InventoryManager : MonoBehaviour
     private bool isInventoryOpen = false;
     private int selectedSlot = -1;
     public ItemData selectedItem;
-    public GameObject currentSelected;
+
+    public InventorySlot currentSelectedSlot;
+    public InventoryItem currentSelectedItem;
 
     private void Start()
     {
@@ -100,12 +102,12 @@ public class InventoryManager : MonoBehaviour
         }
         else if (newValue >= 33 && newValue < 33 + hotbarSlots.Length)
         {
-            hotbarSlots[newValue - 33].Select();
-            selectedSlot = newValue;
-            Debug.Log(hotbarSlots[newValue - 33].name);
-            //selectedItem = transform.hotbarSlot.gameObject;
-            //Debug.Log(selectedItem.itemName);
-            //foodEffect.GetFood(selectedItem);
+            currentSelectedSlot = hotbarSlots[newValue - 33];
+            currentSelectedSlot.Select();
+            selectedSlot = newValue;            
+            currentSelectedItem = currentSelectedSlot.transform.GetChild(0).GetComponent<InventoryItem>();
+            Debug.Log(currentSelectedItem.item.name);
+            foodEffect.GetFood(currentSelectedItem);
         }
     }
 
