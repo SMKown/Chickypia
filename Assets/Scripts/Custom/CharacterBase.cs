@@ -45,8 +45,8 @@ public class CharacterBase : MonoBehaviour
         Instance = this;
     }
 
-    private string filePath;
     public CustomControl customControl;
+    private string filePath;
 
     private void Start()
     {
@@ -179,7 +179,9 @@ public class CharacterBase : MonoBehaviour
         }
 
         CheckBody();
-        customControl.Input_Button_IDX(partsType, idx);
+
+        if (customControl != null)
+            customControl.Input_Button_IDX(partsType, idx);
     }
 
     public void SaveInfo()
