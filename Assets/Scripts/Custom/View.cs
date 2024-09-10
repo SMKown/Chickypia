@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 public class View : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
-    [SerializeField] private float rotationSpeed = 0.18f;
+    private float rotSpeed = 0.2F;
     private bool isDrag;
     private Vector2 startDragPos;
 
@@ -19,7 +19,7 @@ public class View : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUp
             Vector2 currentDragPos = eventData.position;
             Vector2 dragDelta = currentDragPos - startDragPos;
 
-            float rotationX = dragDelta.x * rotationSpeed;
+            float rotationX = dragDelta.x * rotSpeed;
             CharacterBase.Instance.transform.Rotate(Vector3.up, -rotationX, Space.World);
 
             startDragPos = currentDragPos;

@@ -50,7 +50,8 @@ public class CharacterBase : MonoBehaviour
     {
         SetRoot();
         filePath = Path.Combine(Application.persistentDataPath, "characterData.json");
-        
+        // C:\Users\[user name]\AppData\LocalLow\[company name]\[product name]
+
         if (SceneManager.GetActiveScene().name == "MainScene")
             LoadInfo();
     }
