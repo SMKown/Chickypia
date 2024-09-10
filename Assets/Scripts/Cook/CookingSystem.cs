@@ -188,6 +188,7 @@ public class CookingSystem : MonoBehaviour
     {
         if(isCooking)
         {
+            Debug.Log("Cooking...");
             choicePopup.gameObject.SetActive(false);
             makePopup.gameObject.SetActive(false);
             StartCoroutine(Cooking(recipe));

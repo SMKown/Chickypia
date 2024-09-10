@@ -17,13 +17,14 @@ public class ItemData : ScriptableObject
     public GameObject itemModel;
 
     [Header("# Effect")]
-    private float moveSpeed;
-    private float jumpForce;
+    public float moveSpeed;
+    public float jumpForce;
+    public int hp;
+    public int hpMax;
 }
 
 public enum ItemType
 {
     Food,
-    Tool,
     Ingredient
 }
