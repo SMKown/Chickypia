@@ -51,7 +51,7 @@ public class CharacterBase : MonoBehaviour
         SetRoot();
         filePath = Path.Combine(Application.persistentDataPath, "characterData.json");
         
-        if (SceneManager.GetActiveScene().name == "NayunWork")
+        if (SceneManager.GetActiveScene().name == "MainScene")
             LoadInfo();
     }
     

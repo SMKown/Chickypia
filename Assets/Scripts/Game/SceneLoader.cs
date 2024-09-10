@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class SceneLoader : MonoBehaviour
 {
-    public void NayunScene()
+    public void MainScene()
     {
-        LoadingSceneManager.LoadScene("NayunWork");
+        LoadingSceneManager.LoadScene("MainScene");
     }
 
     public void CustomScene()
