@@ -14,7 +14,6 @@ public class PlayerMovement : MonoBehaviour
     
     private float gravity;
     private bool tryJump = false;
-    private bool jumpQueued = false;
 
     private void Start()
     {
@@ -58,15 +57,7 @@ public class PlayerMovement : MonoBehaviour
         if (cc.isGrounded)
         {
             PlayerInfo.Instance.isGround = true;
-            tryJump = false;
-            gravity = 0;
             animator.ResetTrigger("Jump");
-
-            if (jumpQueued)
-            {
-                jumpQueued = false;
-                tryJump = true;
-            }
         }
         else
         {
@@ -84,17 +75,12 @@ public class PlayerMovement : MonoBehaviour
                 gravity = jumpForce;
                 animator.SetTrigger("Jump");
             }
-            else if (!PlayerInfo.Instance.isGround)
-            {
-                jumpQueued = true;
-            }
         }
 
         if (tryJump)
         {
             if (PlayerInfo.Instance.isGround)
             {
-                cc.Move(Vector3.up * jumpForce * Time.deltaTime);
                 tryJump = false;
                 gravity = 0;
             }
