@@ -43,4 +43,12 @@ public class CustomControl : MonoBehaviour
         buttonControl.SetButton(partsType, parts, GetSprite(name), isEmpty);
         buttons.Add(buttonControl);
     }
+
+    public void Input_Button_IDX(PartsType partsType, int inputidx)
+    {
+        for (int i = 0; i < buttons.Count; i++)
+        {
+            buttons[i].SetIdx(partsType, inputidx);
+        }
+    }
 }

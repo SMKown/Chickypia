@@ -5,6 +5,17 @@ using UnityEngine;
 
 public class UIInteraction : MonoBehaviour
 {
+    public static UIInteraction Instance;
+    private void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
+
     public Image itemImage;
     public Image cookingImage;
     

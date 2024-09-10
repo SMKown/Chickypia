@@ -49,4 +49,12 @@ public class ButtonControl : MonoBehaviour
         if (idx < (IsEmpty ? -1 : 0)) idx = _parts.Length - 1;
         CharacterBase.Instance.SetItem(CurrentPartType, idx);
     }
+
+    public void SetIdx(PartsType partsType, int inputidx)
+    {
+        if(partsType == CurrentPartType)
+        {
+            idx = inputidx;
+        }
+    }
 }

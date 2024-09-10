@@ -14,14 +14,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpForce;
 
-    public float pickupRange = 2f; // 아이템을 주울 수 있는 범위
+    public float pickupRange = 2F; // 아이템을 주울 수 있는 범위
     private float gravity;
     private bool tryJump = false;
 
-    private GameObject itemInRange; // 범위 내에 있는 아이템
-
     public GameObject pickupImage;
-
+    private GameObject itemInRange; // 범위 내에 있는 아이템
 
     private void Start()
     {
@@ -125,6 +123,7 @@ public class PlayerMovement : MonoBehaviour
             inventoryManager.AddItem(item.GetItemData());
             // 아이템 제거
             Destroy(itemInRange);
+            UIInteraction.Instance.ImageOff(UIInteraction.Instance.itemImage);
             itemInRange = null;
         }
     }

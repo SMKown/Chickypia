@@ -46,6 +46,8 @@ public class CharacterBase : MonoBehaviour
     }
 
     private string filePath;
+    public CustomControl customControl;
+
     private void Start()
     {
         SetRoot();
@@ -175,7 +177,9 @@ public class CharacterBase : MonoBehaviour
             default:
                 throw new ArgumentOutOfRangeException(nameof(partsType), partsType, null);
         }
+
         CheckBody();
+        customControl.Input_Button_IDX(partsType, idx);
     }
 
     public void SaveInfo()
