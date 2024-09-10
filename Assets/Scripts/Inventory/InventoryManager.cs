@@ -55,7 +55,7 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 6; i++)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1 + i))
             {
@@ -64,6 +64,8 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
+
+
 
     public void OnInventory()
     {
@@ -75,11 +77,38 @@ public class InventoryManager : MonoBehaviour
 
             if (isInventoryOpen)
             {
+                //SynInvenSlotHotbar();
                 ChangeSelectedSlot(selectedSlot - 33); // 핫바에서 인벤토리로 전환 시
             }
             else
             {
                 ChangeSelectedSlot(selectedSlot + 33); // 인벤토리에서 핫바로 전환 시
+            }
+        }
+    }
+
+    private void SynInvenSlotHotbar()
+    {
+        for (int i = 0; i < hotbarSlots.Length; i++)
+        {
+            InventoryItem hotbarItem = hotbarSlots[i].GetComponentInChildren<InventoryItem>();
+            InventoryItem intventoryItem = inventorySlots[i].GetComponentInChildren<InventoryItem>();
+            if (hotbarItem != null)
+            {
+                if (intventoryItem == null)
+                {
+                    SpawnNewItem(hotbarItem.item, inventorySlots[i], hotbarItem.count);
+                }
+                else
+                {
+                    intventoryItem.InitialiseItem(hotbarItem.item);
+                    intventoryItem.count = hotbarItem.count;
+                    intventoryItem.ItemCount();
+                }
+            }
+            else
+            {
+
             }
         }
     }
