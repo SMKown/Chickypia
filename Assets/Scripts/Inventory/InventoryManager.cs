@@ -5,8 +5,11 @@ using static UnityEditor.Progress;
 
 public class InventoryManager : MonoBehaviour
 {
+    public FoodEffect foodEffect;
+
     public GameObject MainInventory;
     public GameObject HotbarInventory;
+
     public int maxItem = 10;
     public InventorySlot[] inventorySlots; // ÀÎº¥Åä¸® ½½·Ô ¹è¿­
     public InventorySlot[] hotbarSlots; // ÇÖ¹Ù ½½·Ô ¹è¿­
@@ -16,6 +19,8 @@ public class InventoryManager : MonoBehaviour
 
     private bool isInventoryOpen = false;
     private int selectedSlot = -1;
+
+    public ItemData selectedItem;
 
     private void Start()
     {
@@ -30,7 +35,7 @@ public class InventoryManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.G) && !isInventoryOpen)
         {
-            ItemData selectedItem = GetSelectedItem();
+            selectedItem = GetSelectedItem();
             if (selectedItem != null)
             {
                 DropItem(selectedItem);
@@ -92,6 +97,8 @@ public class InventoryManager : MonoBehaviour
         {
             inventorySlots[newValue].Select();
             selectedSlot = newValue;
+            selectedItem = GetSelectedItem();
+            foodEffect.GetFood(selectedItem);
         }
         else if (newValue >= 33 && newValue < 33 + hotbarSlots.Length)
         {
