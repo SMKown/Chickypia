@@ -19,7 +19,6 @@ public class InventoryManager : MonoBehaviour
 
     private bool isInventoryOpen = false;
     private int selectedSlot = -1;
-
     public ItemData selectedItem;
     public GameObject currentSelected;
 
@@ -54,7 +53,7 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 10; i++)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1 + i))
             {
