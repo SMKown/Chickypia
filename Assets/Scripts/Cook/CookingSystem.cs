@@ -13,7 +13,7 @@ public class CookingSystem : MonoBehaviour
     public FoodRecipeData[] foodRecipeData;   
 
     private InventoryManager inventoryManager;
-    private InventoryItem resultItemSlot;
+    private InventorySlot resultItemSlot;
 
     private Transform choicePopup;
     private Transform makePopup;

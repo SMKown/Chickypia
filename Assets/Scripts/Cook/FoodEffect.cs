@@ -8,7 +8,7 @@ public class FoodEffect : MonoBehaviour
     public PlayerMovement playerMovement; 
     private ItemData itemData;
 
-    public void GetFood(InventoryItem selectedItem)
+    public void GetFood(InventorySlot selectedItem)
     {
         itemData = selectedItem.item;
 

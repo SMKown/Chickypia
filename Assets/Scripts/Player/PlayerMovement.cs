@@ -18,8 +18,8 @@ public class PlayerMovement : MonoBehaviour
     private float gravity;
     private bool tryJump = false;
 
+    private GameObject itemInRange;
     public GameObject pickupImage;
-    private GameObject itemInRange; // 범위 내에 있는 아이템
 
     private void Start()
     {
@@ -34,11 +34,6 @@ public class PlayerMovement : MonoBehaviour
         CheckGrounded();
         TryJump();
         CheckForItemInRange();
-        if (Input.GetKeyDown(KeyCode.E) && itemInRange != null)
-        {
-            PickupItem();
-        }
-
     }
 
     private void Move()
@@ -114,17 +109,20 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void PickupItem()
+    private void PickUpItem()
     {
-        InventoryItem item = itemInRange.GetComponent<InventoryItem>();
-        if (item != null)
+        if (Input.GetKeyDown(KeyCode.E) && itemInRange != null)
         {
-            // 인벤토리에 아이템 추가
-            inventoryManager.AddItem(item.GetItemData());
-            // 아이템 제거
-            Destroy(itemInRange);
-            UIInteraction.Instance.ImageOff(UIInteraction.Instance.itemImage);
-            itemInRange = null;
+            InventorySlot itemSlot = itemInRange.GetComponent<InventorySlot>();
+            if (itemSlot != null)
+            {
+                if (inventoryManager != null)
+                {
+                    inventoryManager.AddItem(itemSlot.GetItemData());
+                    Destroy(itemInRange);
+                }
+                itemInRange = null;
+            }
         }
     }
 }
