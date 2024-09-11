@@ -77,8 +77,12 @@ Preset:
     value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: m_QualitySettings.Array.data[0].textureQuality
+    propertyPath: m_QualitySettings.Array.data[0].globalTextureMipmapLimit
     value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].textureMipmapLimitSettings.Array.size
+    value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[0].anisotropicTextures
@@ -105,8 +109,16 @@ Preset:
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].useLegacyDetailDistribution
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[0].vSyncCount
     value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].realtimeGICPUUsage
+    value: 25
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[0].lodBias
@@ -115,6 +127,10 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[0].maximumLODLevel
     value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].enableLODCrossFade
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[0].streamingMipmapsActive
@@ -163,6 +179,42 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[0].customRenderPipeline
     value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].terrainQualityOverrides
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].terrainPixelError
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].terrainDetailDensityScale
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].terrainBasemapDistance
+    value: 1000
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].terrainDetailDistance
+    value: 80
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].terrainTreeDistance
+    value: 5000
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].terrainBillboardStart
+    value: 50
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].terrainFadeLength
+    value: 5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[0].terrainMaxTrees
+    value: 50
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[0].excludedTargetPlatforms.Array.size
@@ -225,7 +277,11 @@ Preset:
     value: 2
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: m_QualitySettings.Array.data[1].textureQuality
+    propertyPath: m_QualitySettings.Array.data[1].globalTextureMipmapLimit
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].textureMipmapLimitSettings.Array.size
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
@@ -253,8 +309,16 @@ Preset:
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].useLegacyDetailDistribution
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[1].vSyncCount
     value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].realtimeGICPUUsage
+    value: 25
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[1].lodBias
@@ -263,6 +327,10 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[1].maximumLODLevel
     value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].enableLODCrossFade
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[1].streamingMipmapsActive
@@ -311,6 +379,42 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[1].customRenderPipeline
     value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].terrainQualityOverrides
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].terrainPixelError
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].terrainDetailDensityScale
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].terrainBasemapDistance
+    value: 1000
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].terrainDetailDistance
+    value: 80
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].terrainTreeDistance
+    value: 5000
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].terrainBillboardStart
+    value: 50
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].terrainFadeLength
+    value: 5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[1].terrainMaxTrees
+    value: 50
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[1].excludedTargetPlatforms.Array.size
@@ -373,7 +477,11 @@ Preset:
     value: 2
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: m_QualitySettings.Array.data[2].textureQuality
+    propertyPath: m_QualitySettings.Array.data[2].globalTextureMipmapLimit
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].textureMipmapLimitSettings.Array.size
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
@@ -401,8 +509,16 @@ Preset:
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].useLegacyDetailDistribution
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[2].vSyncCount
     value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].realtimeGICPUUsage
+    value: 25
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[2].lodBias
@@ -411,6 +527,10 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[2].maximumLODLevel
     value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].enableLODCrossFade
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[2].streamingMipmapsActive
@@ -459,6 +579,42 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[2].customRenderPipeline
     value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].terrainQualityOverrides
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].terrainPixelError
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].terrainDetailDensityScale
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].terrainBasemapDistance
+    value: 1000
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].terrainDetailDistance
+    value: 80
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].terrainTreeDistance
+    value: 5000
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].terrainBillboardStart
+    value: 50
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].terrainFadeLength
+    value: 5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[2].terrainMaxTrees
+    value: 50
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[2].excludedTargetPlatforms.Array.size
@@ -521,7 +677,11 @@ Preset:
     value: 2
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: m_QualitySettings.Array.data[3].textureQuality
+    propertyPath: m_QualitySettings.Array.data[3].globalTextureMipmapLimit
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].textureMipmapLimitSettings.Array.size
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
@@ -549,8 +709,16 @@ Preset:
     value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].useLegacyDetailDistribution
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[3].vSyncCount
     value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].realtimeGICPUUsage
+    value: 50
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[3].lodBias
@@ -559,6 +727,10 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[3].maximumLODLevel
     value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].enableLODCrossFade
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[3].streamingMipmapsActive
@@ -607,6 +779,42 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[3].customRenderPipeline
     value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].terrainQualityOverrides
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].terrainPixelError
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].terrainDetailDensityScale
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].terrainBasemapDistance
+    value: 1000
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].terrainDetailDistance
+    value: 80
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].terrainTreeDistance
+    value: 5000
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].terrainBillboardStart
+    value: 50
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].terrainFadeLength
+    value: 5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[3].terrainMaxTrees
+    value: 50
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[3].excludedTargetPlatforms.Array.size
@@ -669,7 +877,11 @@ Preset:
     value: 4
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: m_QualitySettings.Array.data[4].textureQuality
+    propertyPath: m_QualitySettings.Array.data[4].globalTextureMipmapLimit
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].textureMipmapLimitSettings.Array.size
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
@@ -697,8 +909,16 @@ Preset:
     value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].useLegacyDetailDistribution
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[4].vSyncCount
     value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].realtimeGICPUUsage
+    value: 50
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[4].lodBias
@@ -707,6 +927,10 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[4].maximumLODLevel
     value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].enableLODCrossFade
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[4].streamingMipmapsActive
@@ -755,6 +979,42 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[4].customRenderPipeline
     value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].terrainQualityOverrides
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].terrainPixelError
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].terrainDetailDensityScale
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].terrainBasemapDistance
+    value: 1000
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].terrainDetailDistance
+    value: 80
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].terrainTreeDistance
+    value: 5000
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].terrainBillboardStart
+    value: 50
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].terrainFadeLength
+    value: 5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[4].terrainMaxTrees
+    value: 50
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[4].excludedTargetPlatforms.Array.size
@@ -817,7 +1077,11 @@ Preset:
     value: 4
     objectReference: {fileID: 0}
   - target: {fileID: 0}
-    propertyPath: m_QualitySettings.Array.data[5].textureQuality
+    propertyPath: m_QualitySettings.Array.data[5].globalTextureMipmapLimit
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].textureMipmapLimitSettings.Array.size
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
@@ -845,8 +1109,16 @@ Preset:
     value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].useLegacyDetailDistribution
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[5].vSyncCount
     value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].realtimeGICPUUsage
+    value: 100
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[5].lodBias
@@ -855,6 +1127,10 @@ Preset:
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[5].maximumLODLevel
     value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].enableLODCrossFade
+    value: 1
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[5].streamingMipmapsActive
@@ -905,12 +1181,52 @@ Preset:
     value: 
     objectReference: {fileID: 0}
   - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].terrainQualityOverrides
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].terrainPixelError
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].terrainDetailDensityScale
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].terrainBasemapDistance
+    value: 1000
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].terrainDetailDistance
+    value: 80
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].terrainTreeDistance
+    value: 5000
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].terrainBillboardStart
+    value: 50
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].terrainFadeLength
+    value: 5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_QualitySettings.Array.data[5].terrainMaxTrees
+    value: 50
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
     propertyPath: m_QualitySettings.Array.data[5].excludedTargetPlatforms.Array.size
     value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
+    propertyPath: m_TextureMipmapLimitGroupNames.Array.size
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
     propertyPath: m_PerPlatformDefaultQuality.Array.size
-    value: 12
+    value: 13
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_PerPlatformDefaultQuality.Array.data[0].first
@@ -962,31 +1278,31 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_PerPlatformDefaultQuality.Array.data[6].first
-    value: Standalone
+    value: Server
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_PerPlatformDefaultQuality.Array.data[6].second
-    value: 5
+    value: 0
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_PerPlatformDefaultQuality.Array.data[7].first
-    value: WebGL
+    value: Standalone
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_PerPlatformDefaultQuality.Array.data[7].second
-    value: 3
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_PerPlatformDefaultQuality.Array.data[8].first
-    value: Windows Store Apps
-    objectReference: {fileID: 0}
-  - target: {fileID: 0}
-    propertyPath: m_PerPlatformDefaultQuality.Array.data[8].second
     value: 5
     objectReference: {fileID: 0}
   - target: {fileID: 0}
+    propertyPath: m_PerPlatformDefaultQuality.Array.data[8].first
+    value: WebGL
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_PerPlatformDefaultQuality.Array.data[8].second
+    value: 3
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
     propertyPath: m_PerPlatformDefaultQuality.Array.data[9].first
-    value: XboxOne
+    value: Windows Store Apps
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_PerPlatformDefaultQuality.Array.data[9].second
@@ -994,17 +1310,26 @@ Preset:
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_PerPlatformDefaultQuality.Array.data[10].first
-    value: iPhone
+    value: XboxOne
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_PerPlatformDefaultQuality.Array.data[10].second
-    value: 2
+    value: 5
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_PerPlatformDefaultQuality.Array.data[11].first
-    value: tvOS
+    value: iPhone
     objectReference: {fileID: 0}
   - target: {fileID: 0}
     propertyPath: m_PerPlatformDefaultQuality.Array.data[11].second
     value: 2
     objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_PerPlatformDefaultQuality.Array.data[12].first
+    value: tvOS
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_PerPlatformDefaultQuality.Array.data[12].second
+    value: 2
+    objectReference: {fileID: 0}
+  m_ExcludedProperties: []
