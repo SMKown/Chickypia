@@ -57,12 +57,81 @@ public class InventoryManager : MonoBehaviour
             isInventoryOpen = !isInventoryOpen;
             MainInventory.SetActive(isInventoryOpen);
             HotBar.SetActive(!isInventoryOpen);
+            if (isInventoryOpen)
+            {
+                SyncHotBarToInventory();
+            }
+            else
+            {
+                SyncInventoryToHotBar();
+            }
         }
     }
 
-    public void syncInvetory()
+    private void SyncHotBarToInventory()
     {
+        for (int i = 0; i < 5; i++)
+        {
+            InventorySlot hotBarSlot = HotBar.transform.GetChild(i).GetComponent<InventorySlot>();
+            InventorySlot inventorySlot = inventorySlots[i + 5];
 
+            InventoryItem hotBarItem = hotBarSlot.GetComponentInChildren<InventoryItem>();
+            InventoryItem inventoryItem = inventorySlot.GetComponentInChildren<InventoryItem>();
+
+            if (hotBarItem != null)
+            {
+                if (inventoryItem != null)
+                {
+                    // 아이템을 인벤토리 슬롯에 복사
+                    inventoryItem.item = hotBarItem.item;
+                    inventoryItem.count = hotBarItem.count;
+                    inventoryItem.ItemCount();
+                }
+                else
+                {
+                    // 새로운 아이템을 인벤토리 슬롯에 생성
+                    SpawnNewItem(hotBarItem.item, inventorySlot, hotBarItem.count);
+                }
+            }
+            else if (inventoryItem != null)
+            {
+                // 핫바 슬롯에 아이템이 없으면 삭제
+                Destroy(inventoryItem.gameObject);
+            }
+        }
+    }
+
+    private void SyncInventoryToHotBar()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            InventorySlot hotBarSlot = HotBar.transform.GetChild(i).GetComponent<InventorySlot>();
+            InventorySlot inventorySlot = inventorySlots[i + 5];
+
+            InventoryItem inventoryItem = inventorySlot.GetComponentInChildren<InventoryItem>();
+            InventoryItem hotBarItem = hotBarSlot.GetComponentInChildren<InventoryItem>();
+
+            if (inventoryItem != null)
+            {
+                if (hotBarItem != null)
+                {
+                    // 아이템을 핫바 슬롯에 복사
+                    hotBarItem.item = inventoryItem.item;
+                    hotBarItem.count = inventoryItem.count;
+                    hotBarItem.ItemCount();
+                }
+                else
+                {
+                    // 새로운 아이템을 핫바 슬롯에 생성
+                    SpawnNewItem(inventoryItem.item, hotBarSlot, inventoryItem.count);
+                }
+            }
+            else if (hotBarItem != null)
+            {
+                // 인벤토리 슬롯에 아이템이 없으면 삭제
+                Destroy(hotBarItem.gameObject);
+            }
+        }
     }
 
     void ChangeSelectedSlot(int newValue)
