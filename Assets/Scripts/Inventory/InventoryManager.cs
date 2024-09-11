@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Collections.LowLevel.Unsafe;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
@@ -197,7 +195,6 @@ public class InventoryManager : MonoBehaviour
         InventoryItem existingItem = newSlot.GetComponentInChildren<InventoryItem>();
         if (existingItem != null)
         {
-
             if (existingItem.item == draggedItem.item)
             {
                 // 같은 아이템일 경우 병합
