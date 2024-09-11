@@ -32,7 +32,8 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void ItemCount()
     {
         countText.text = count.ToString();
-        countText.gameObject.SetActive(count > 1);
+        bool textActive = count > 1;
+        countText.gameObject.SetActive(textActive);
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -54,27 +55,26 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         image.raycastTarget = true;
         countText.raycastTarget = true;
 
-        if (parentAfterDrag == null)
-        {
-            transform.SetParent(parentAfterDrag);
-            transform.localPosition = Vector3.zero;
-        }
-
         transform.SetParent(parentAfterDrag);
-        transform.localPosition = Vector3.zero;
 
-        if (isRightClick)
-        {
-            PlaceOneItem();
-        }
+        LeftClickDrag();
+
         isDragging = false;
     }
 
     private void LeftClickDrag() { }
+    private void Update()
+    {
+        // 드래그 중이고 오른쪽 마우스 버튼을 클릭하면 아이템 하나 배치
+        if (isDragging && Input.GetMouseButtonDown(1))
+        {
+            PlaceOneItem();
+        }
+    }
 
     private void PlaceOneItem()
     {
-        if (count <= 1) return;
+        if (count > 1)
         {
             count -= 1;
             ItemCount();
@@ -86,19 +86,23 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
             foreach (RaycastResult result in results)
             {
-                InventoryItem slot = result.gameObject.GetComponent<InventoryItem>();
+                InventorySlot slot = result.gameObject.GetComponent<InventorySlot>();
                 if (slot != null)
                 {
-                    //InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-                    if (slot.item == item)  // 같은 아이템이 슬롯에 있으면 개수 증가
+                    InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+                    if (itemInSlot != null && itemInSlot.item == item)  // 같은 아이템이 슬롯에 있으면 개수 증가
                     {
-                        slot.count += 1;
-                        slot.ItemCount();
+                        itemInSlot.count += 1;
+                        itemInSlot.ItemCount();
+                        itemInSlot.image.raycastTarget = true;
+                        itemInSlot.countText.raycastTarget = true;
                     }
                     else // 슬롯에 다른 아이템이 있으면 새 아이템 생성
                     {
                         InventoryManager inventoryManager = FindObjectOfType<InventoryManager>();
-                        //inventoryManager.SpawnNewItem(item, slot, 1);
+                        InventoryItem newItem = inventoryManager.SpawnNewItem(item, slot, 1);
+                        newItem.image.raycastTarget = true;
+                        newItem.countText.raycastTarget = true;
                     }
                     return;
                 }
@@ -106,9 +110,10 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             // 슬롯을 찾지 못하면 원래 부모로 돌아감
             InventoryManager fallbackInventoryManager = FindObjectOfType<InventoryManager>();
             InventoryItem fallbackItem = fallbackInventoryManager.SpawnNewItem(item, parentAfterDrag.GetComponent<InventorySlot>(), 1);
+            fallbackItem.image.raycastTarget = true;
+            fallbackItem.countText.raycastTarget = true;
         }
     }
-
     public ItemData GetItemData()
     {
         return item;

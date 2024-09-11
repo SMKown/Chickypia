@@ -77,9 +77,8 @@ public class InventoryManager : MonoBehaviour
 
     public bool AddItem(ItemData item)
     {
-        for (int i = 0; i < inventorySlots.Length; i++)
+        foreach (InventorySlot slot in inventorySlots)
         {
-            InventorySlot slot = inventorySlots[i];
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
             if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < maxStack)
             {
@@ -89,20 +88,19 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < inventorySlots.Length; i++)
+        foreach (InventorySlot slot in inventorySlots)
         {
-            InventorySlot slot = inventorySlots[i];
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
             if (itemInSlot == null)
             {
-                SpawnNewItem(item, slot, 1);
+                SpawnNewItem(item, slot);
                 return true;
             }
         }
         return false;
     }
 
-    public InventoryItem SpawnNewItem(ItemData item, InventorySlot slot, int count)
+    public InventoryItem SpawnNewItem(ItemData item, InventorySlot slot, int count = 1)
     {
         GameObject newItemGo = Instantiate(inventoryItemPrefab, slot.transform);
         InventoryItem invItem = newItemGo.GetComponent<InventoryItem>();
@@ -143,16 +141,24 @@ public class InventoryManager : MonoBehaviour
                 }
                 else
                 {
-                    // 최대 스택 수에 맞게 아이템 분할
+                    int remaining = combinedCount - maxStack;
                     existingItem.count = maxStack;
                     existingItem.ItemCount();
-                    draggedItem.count = combinedCount - maxStack;
+                    draggedItem.count = remaining;
                     draggedItem.ItemCount();
+                    draggedItem.transform.SetParent(draggedItem.parentAfterDrag);
+                    draggedItem.transform.localPosition = Vector3.zero;
                 }
             }
             else //다른 아이템일 경우 교환
             {
-                SwapItems(draggedItem, existingItem);
+                existingItem.transform.SetParent(draggedItem.parentAfterDrag);
+                existingItem.transform.localPosition = Vector3.zero;
+                existingItem.ItemCount();
+
+                draggedItem.transform.SetParent(newSlot.transform);
+                draggedItem.transform.localPosition = Vector3.zero;
+                draggedItem.parentAfterDrag = newSlot.transform;
             }
         }
         else
@@ -163,22 +169,6 @@ public class InventoryManager : MonoBehaviour
             draggedItem.parentAfterDrag = newSlot.transform;
         }
     }
-
-    private void SwapItems(InventoryItem draggedItem, InventoryItem existingItem)
-    {
-        Transform draggedItemParent = draggedItem.transform.parent;
-        Transform existingItemParent = existingItem.transform.parent;
-
-        draggedItem.transform.SetParent(existingItemParent);
-        draggedItem.transform.localPosition = Vector3.zero;
-
-        existingItem.transform.SetParent(draggedItemParent);
-        existingItem.transform.localPosition = Vector3.zero;
-
-        draggedItem.parentAfterDrag = draggedItem.transform.parent;
-        existingItem.parentAfterDrag = existingItem.transform.parent;
-    }
-
 
     public List<(ItemData item, int count)> GetInventoryItems()
     {

@@ -26,10 +26,13 @@ public class InventorySlot : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
-        if (transform.childCount == 0)
+        InventoryItem draggedItem = eventData.pointerDrag?.GetComponent<InventoryItem>();
+        if (draggedItem == null) return;
+
+        InventoryManager inventoryManager = FindObjectOfType<InventoryManager>();
+        if (inventoryManager != null)
         {
-            InventoryItem invItem = eventData.pointerDrag.GetComponent<InventoryItem>();
-            invItem.parentAfterDrag = transform;
+            inventoryManager.OnItemSwapped(draggedItem, this);
         }
     }
 }
