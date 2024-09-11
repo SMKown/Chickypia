@@ -1,36 +1,32 @@
+using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
     public FoodEffect foodEffect;
 
-    public GameObject MainInventory;
-    public GameObject HotbarInventory;
-
-    private const int InventorySlotCount = 30;
-    private const int HotbarSlotCount = 5;
-
-    public int maxItem = 10;
+    public int maxStack = 10;
+    public GameObject MainInventiroy;
     public InventorySlot[] inventorySlots;
-    public InventorySlot[] hotbarSlots;
+
+    public GameObject inventoryItemPrefab;
     public Transform player;
 
     private bool isInventoryOpen = false;
-    private int selectedSlot = -1;
+    int selectedSlot = -1;
     public ItemData selectedItem;
 
     private void Start()
     {
         ChangeSelectedSlot(0);
-        MainInventory.SetActive(false);
-        HotbarInventory.SetActive(true);
+        MainInventiroy.SetActive(false);
     }
 
     private void Update()
     {
         OnInventory();
-
         if (Input.GetKeyDown(KeyCode.T))
         {
             List<(ItemData item, int count)> items = GetInventoryItems();
@@ -40,12 +36,12 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < HotbarSlotCount; i++)
+        if (Input.inputString != null)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1 + i))
+            bool isNumber = int.TryParse(Input.inputString, out int number);
+            if (isNumber && number > 0 && number < 6)
             {
-                ChangeSelectedSlot(i);
-                break;
+                ChangeSelectedSlot(number - 1);
             }
         }
     }
@@ -55,98 +51,123 @@ public class InventoryManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             isInventoryOpen = !isInventoryOpen;
-            MainInventory.SetActive(isInventoryOpen);
-            HotbarInventory.SetActive(!isInventoryOpen);
-
-            SynInvenSlotHotbar();
+            MainInventiroy.SetActive(isInventoryOpen);
         }
     }
-
-    private void SynInvenSlotHotbar()
+    void ChangeSelectedSlot(int newValue)
     {
-        for (int i = 0; i < hotbarSlots.Length; i++)
+        if (selectedSlot >= 0)
         {
-            InventorySlot hotbarSlot = hotbarSlots[i];
-            InventorySlot inventorySlot = inventorySlots[i];
-
-            if (hotbarSlot.item != null)
-            {
-                if (inventorySlot.item == null)
-                {
-                    SpawnNewItem(hotbarSlot.item, inventorySlot, hotbarSlot.count);
-                }
-                else
-                {
-                    inventorySlot.InitialiseItem(hotbarSlot.item);
-                    inventorySlot.count = hotbarSlot.count;
-                    inventorySlot.ItemCount();
-                }
-            }
-            else
-            {
-                if (inventorySlot.item != null)
-                {
-                    SpawnNewItem(inventorySlot.item, hotbarSlot, inventorySlot.count);
-                    inventorySlot.InitialiseItem(null);
-                }
-            }
+            inventorySlots[selectedSlot].DeSelect();
         }
-    }
-
-    private void ChangeSelectedSlot(int newValue)
-    {
-        if (newValue >= 0 && newValue < HotbarSlotCount)
-        {
-            if (selectedSlot >= 0 && selectedSlot < HotbarSlotCount)
-            {
-                hotbarSlots[selectedSlot].DeSelect();
-            }
-            hotbarSlots[newValue].Select();
-            selectedSlot = newValue;
-        }
+        inventorySlots[newValue].Select();
+        selectedSlot = newValue;
     }
 
     public bool AddItem(ItemData item)
     {
-        if (TryAddItemToSlot(hotbarSlots, item)) return true;
-        if (TryAddItemToSlot(inventorySlots, item)) return true;
-        return TryAddItemToEmptySlot(inventorySlots, item);
-    }
-
-    private bool TryAddItemToSlot(InventorySlot[] slots, ItemData item)
-    {
-        foreach (InventorySlot slot in slots)
+        for (int i = 0; i < inventorySlots.Length; i++)
         {
-            if (slot.item == item && slot.count < maxItem)
+            InventorySlot slot = inventorySlots[i];
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < maxStack)
             {
-                slot.count++;
-                slot.ItemCount();
+                itemInSlot.count++;
+                itemInSlot.ItemCount();
+                return true;
+            }
+        }
+
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
+            InventorySlot slot = inventorySlots[i];
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            if (itemInSlot == null)
+            {
+                SpawnNewItem(item, slot, 1);
                 return true;
             }
         }
         return false;
     }
 
-    private bool TryAddItemToEmptySlot(InventorySlot[] slots, ItemData item)
+    public InventoryItem SpawnNewItem(ItemData item, InventorySlot slot, int count)
     {
-        foreach (InventorySlot slot in slots)
-        {
-            if (slot.item == null)
-            {
-                SpawnNewItem(item, slot);
-                return true;
-            }
-        }
-        return false;
+        GameObject newItemGo = Instantiate(inventoryItemPrefab, slot.transform);
+        InventoryItem invItem = newItemGo.GetComponent<InventoryItem>();
+        invItem.InitialiseItem(item);
+        invItem.count = count;
+        invItem.ItemCount();
+        return invItem;
     }
 
-    public InventorySlot SpawnNewItem(ItemData item, InventorySlot slot, int count = 1)
+    public ItemData GetSelectedItem()
     {
-        slot.InitialiseItem(item);
-        slot.count = count;
-        slot.ItemCount();
-        return slot;
+        if (selectedSlot >= 0 && selectedSlot < inventorySlots.Length)
+        {
+            InventoryItem itemInSlot = inventorySlots[selectedSlot].GetComponentInChildren<InventoryItem>();
+            return itemInSlot != null ? itemInSlot.item : null;
+        }
+        return null;
     }
+
+    public void OnItemSwapped(InventoryItem draggedItem, InventorySlot newSlot)
+    {
+        if (draggedItem == null || newSlot == null) return;
+
+        // 새로운 슬롯에 이미 아이템이 있는 경우 처리
+        InventoryItem existingItem = newSlot.GetComponentInChildren<InventoryItem>();
+        if (existingItem != null)
+        {
+
+            if (existingItem.item == draggedItem.item)
+            {
+                // 같은 아이템일 경우 병합
+                int combinedCount = existingItem.count + draggedItem.count;
+                if (combinedCount <= maxStack)
+                {
+                    existingItem.count = combinedCount;
+                    existingItem.ItemCount();
+                    Destroy(draggedItem.gameObject);
+                }
+                else
+                {
+                    // 최대 스택 수에 맞게 아이템 분할
+                    existingItem.count = maxStack;
+                    existingItem.ItemCount();
+                    draggedItem.count = combinedCount - maxStack;
+                    draggedItem.ItemCount();
+                }
+            }
+            else //다른 아이템일 경우 교환
+            {
+                SwapItems(draggedItem, existingItem);
+            }
+        }
+        else
+        {
+            // 슬롯이 비어있으면 드래그한 아이템을 이동
+            draggedItem.transform.SetParent(newSlot.transform);
+            draggedItem.transform.localPosition = Vector3.zero;
+            draggedItem.parentAfterDrag = newSlot.transform;
+        }
+    }
+
+    private void SwapItems(InventoryItem draggedItem, InventoryItem existingItem)
+    {
+        Transform draggedItemParent = draggedItem.transform.parent;
+        Transform existingItemParent = existingItem.transform.parent;
+
+        draggedItem.transform.SetParent(existingItemParent);
+        draggedItem.transform.localPosition = Vector3.zero;
+
+        existingItem.transform.SetParent(draggedItemParent);
+        existingItem.transform.localPosition = Vector3.zero;
+
+        draggedItem.parentAfterDrag = draggedItem.transform.parent;
+        existingItem.parentAfterDrag = existingItem.transform.parent;
+    }
+
 
     public List<(ItemData item, int count)> GetInventoryItems()
     {
@@ -154,34 +175,12 @@ public class InventoryManager : MonoBehaviour
 
         foreach (InventorySlot slot in inventorySlots)
         {
-            if (slot.item != null)
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            if (itemInSlot != null)
             {
-                items.Add((slot.item, slot.count));
+                items.Add((itemInSlot.item, itemInSlot.count));
             }
         }
-
         return items;
-    }
-
-    public void OnItemSwapped(InventorySlot draggedSlot, InventorySlot targetSlot)
-    {
-        if (targetSlot.item != null && targetSlot.item == draggedSlot.item)
-        {
-            targetSlot.count += draggedSlot.count;
-            targetSlot.ItemCount();
-        }
-        else
-        {
-            ItemData tempItem = targetSlot.item;
-            int tempCount = targetSlot.count;
-
-            targetSlot.InitialiseItem(draggedSlot.item);
-            targetSlot.count = draggedSlot.count;
-            targetSlot.ItemCount();
-
-            draggedSlot.InitialiseItem(tempItem);
-            draggedSlot.count = tempCount;
-            draggedSlot.ItemCount();
-        }
     }
 }

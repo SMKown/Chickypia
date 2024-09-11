@@ -113,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E) && itemInRange != null)
         {
-            InventorySlot itemSlot = itemInRange.GetComponent<InventorySlot>();
+            InventoryItem itemSlot = itemInRange.GetComponent<InventoryItem>();
             if (itemSlot != null)
             {
                 if (inventoryManager != null)
