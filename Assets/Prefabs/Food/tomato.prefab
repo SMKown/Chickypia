@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8831662842157975327}
   - component: {fileID: 8635284777760096720}
   - component: {fileID: 60450581546918476}
+  - component: {fileID: -4982812036389364607}
   m_Layer: 0
   m_Name: tomato
   m_TagString: Item
@@ -105,3 +106,20 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.25
   m_Center: {x: 0, y: 0.15, z: 0}
+--- !u!114 &-4982812036389364607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7612420171527133540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0769843f530d40f46a47794c823f0414, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 0}
+  countText: {fileID: 0}
+  item: {fileID: 11400000, guid: 6e1ca467aa7e244d8b81c4d9a7831873, type: 2}
+  count: 1
+  parentAfterDrag: {fileID: 0}

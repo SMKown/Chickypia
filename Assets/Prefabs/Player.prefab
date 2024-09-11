@@ -9602,7 +9602,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1
+  m_Radius: 1.3
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1499654659655495068
 Rigidbody:
@@ -11108,8 +11108,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2efb3ee5f3248dc836a9408f664a91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryManager: {fileID: 0}
   moveSpeed: 3
   jumpForce: 3
+  pickupRange: 2
+  pickupImage: {fileID: 0}
 --- !u!143 &9169305218338535672
 CharacterController:
   m_ObjectHideFlags: 0
@@ -30295,6 +30298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f619bfe2454e242babd7c01bc98b9818, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  customControl: {fileID: 0}
 --- !u!1 &8331168522964911113
 GameObject:
   m_ObjectHideFlags: 0

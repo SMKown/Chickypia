@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
         CheckGrounded();
         TryJump();
         CheckForItemInRange();
+        PickUpItem();
     }
 
     private void Move()
@@ -120,6 +121,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     inventoryManager.AddItem(itemSlot.GetItemData());
                     Destroy(itemInRange);
+                    UIInteraction.Instance.ImageOff(UIInteraction.Instance.itemImage);
                 }
                 itemInRange = null;
             }
