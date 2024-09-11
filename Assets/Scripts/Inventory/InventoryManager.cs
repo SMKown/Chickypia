@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -8,7 +9,8 @@ public class InventoryManager : MonoBehaviour
     public FoodEffect foodEffect;
 
     public int maxStack = 10;
-    public GameObject MainInventiroy;
+    public GameObject MainInventory;
+    public GameObject HotBar;
     public InventorySlot[] inventorySlots;
 
     public GameObject inventoryItemPrefab;
@@ -21,12 +23,14 @@ public class InventoryManager : MonoBehaviour
     private void Start()
     {
         ChangeSelectedSlot(0);
-        MainInventiroy.SetActive(false);
+        MainInventory.SetActive(false);
     }
 
     private void Update()
     {
+
         OnInventory();
+
         if (Input.GetKeyDown(KeyCode.T))
         {
             List<(ItemData item, int count)> items = GetInventoryItems();
@@ -51,9 +55,16 @@ public class InventoryManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             isInventoryOpen = !isInventoryOpen;
-            MainInventiroy.SetActive(isInventoryOpen);
+            MainInventory.SetActive(isInventoryOpen);
+            HotBar.SetActive(!isInventoryOpen);
         }
     }
+
+    public void syncInvetory()
+    {
+
+    }
+
     void ChangeSelectedSlot(int newValue)
     {
         if (selectedSlot >= 0)

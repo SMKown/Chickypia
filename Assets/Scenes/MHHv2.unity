@@ -7544,7 +7544,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   foodEffect: {fileID: 0}
   maxStack: 10
-  MainInventiroy: {fileID: 1152291464}
+  MainInventory: {fileID: 1152291464}
+  HotBar: {fileID: 1754673749}
   inventorySlots:
   - {fileID: 1734240660}
   - {fileID: 1496703812}

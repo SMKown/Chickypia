@@ -54,6 +54,12 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         image.raycastTarget = true;
         countText.raycastTarget = true;
 
+        if (parentAfterDrag == null)
+        {
+            transform.SetParent(parentAfterDrag);
+            transform.localPosition = Vector3.zero;
+        }
+
         transform.SetParent(parentAfterDrag);
         transform.localPosition = Vector3.zero;
 
