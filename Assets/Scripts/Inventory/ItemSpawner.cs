@@ -9,7 +9,7 @@ public class ItemSpawner : MonoBehaviour
     //public int numberOfItems = 10;
     //public Vector3 spawnAreaMin;
     //public Vector3 spawnAreaMax;
-    //public ItemData[] itemDataArray;  // ╬фюлеш ╣╔юлем ╧Х©╜ цъ╟║
+    //public ItemData[] itemDataArray;  // О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫ О©╫Х©╜ О©╫ъ╟О©╫
 
 
     //private void Start()
@@ -26,13 +26,13 @@ public class ItemSpawner : MonoBehaviour
     //            Random.Range(spawnAreaMin.y, spawnAreaMax.y),
     //            Random.Range(spawnAreaMin.z, spawnAreaMax.z));
 
-    //        // ╬фюлеш ╣╔юлем ╧╚юшю╖ ╪╠ец
+    //        // О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫
     //        ItemData selectedItemData = itemDataArray[Random.Range(0, itemDataArray.Length)];
 
-    //        // ╬фюлеш ╩Щ╪╨
+    //        // О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫
     //        GameObject itemObject = Instantiate(itemPrefab, spawnPosition, Quaternion.identity);
 
-    //        // Item ддфВЁмф╝╦╕ цё╬ф╪╜ ╬фюлеш ╣╔юлем ╪Ёа╓
+    //        // Item О©╫О©╫О©╫О©╫О©╫О©╫ф╝О©╫О©╫ цёО©╫ф╪О©╫ О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫
     //        Item itemComponent = itemObject.GetComponent<Item>();
     //        if (itemComponent != null)
     //        {

@@ -26,7 +26,6 @@ public class InventoryManager : MonoBehaviour
 
     private void Update()
     {
-
         OnInventory();
 
         if (Input.GetKeyDown(KeyCode.T))
@@ -80,20 +79,20 @@ public class InventoryManager : MonoBehaviour
             {
                 if (inventoryItem != null)
                 {
-                    // ¾ÆÀÌÅÛÀ» ÀÎº¥Åä¸® ½½·Ô¿¡ º¹»ç
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸® ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½
                     inventoryItem.item = hotBarItem.item;
                     inventoryItem.count = hotBarItem.count;
                     inventoryItem.ItemCount();
                 }
                 else
                 {
-                    // »õ·Î¿î ¾ÆÀÌÅÛÀ» ÀÎº¥Åä¸® ½½·Ô¿¡ »ý¼º
+                    // ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸® ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½
                     SpawnNewItem(hotBarItem.item, inventorySlot, hotBarItem.count);
                 }
             }
             else if (inventoryItem != null)
             {
-                // ÇÖ¹Ù ½½·Ô¿¡ ¾ÆÀÌÅÛÀÌ ¾øÀ¸¸é »èÁ¦
+                // ï¿½Ö¹ï¿½ ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 Destroy(inventoryItem.gameObject);
             }
         }
@@ -113,20 +112,20 @@ public class InventoryManager : MonoBehaviour
             {
                 if (hotBarItem != null)
                 {
-                    // ¾ÆÀÌÅÛÀ» ÇÖ¹Ù ½½·Ô¿¡ º¹»ç
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¹ï¿½ ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½
                     hotBarItem.item = inventoryItem.item;
                     hotBarItem.count = inventoryItem.count;
                     hotBarItem.ItemCount();
                 }
                 else
                 {
-                    // »õ·Î¿î ¾ÆÀÌÅÛÀ» ÇÖ¹Ù ½½·Ô¿¡ »ý¼º
+                    // ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¹ï¿½ ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½
                     SpawnNewItem(inventoryItem.item, hotBarSlot, inventoryItem.count);
                 }
             }
             else if (hotBarItem != null)
             {
-                // ÀÎº¥Åä¸® ½½·Ô¿¡ ¾ÆÀÌÅÛÀÌ ¾øÀ¸¸é »èÁ¦
+                // ï¿½Îºï¿½ï¿½ä¸® ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 Destroy(hotBarItem.gameObject);
             }
         }
@@ -191,13 +190,13 @@ public class InventoryManager : MonoBehaviour
     {
         if (draggedItem == null || newSlot == null) return;
 
-        // »õ·Î¿î ½½·Ô¿¡ ÀÌ¹Ì ¾ÆÀÌÅÛÀÌ ÀÖ´Â °æ¿ì Ã³¸®
+        // ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
         InventoryItem existingItem = newSlot.GetComponentInChildren<InventoryItem>();
         if (existingItem != null)
         {
             if (existingItem.item == draggedItem.item)
             {
-                // °°Àº ¾ÆÀÌÅÛÀÏ °æ¿ì º´ÇÕ
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 int combinedCount = existingItem.count + draggedItem.count;
                 if (combinedCount <= maxStack)
                 {
@@ -216,7 +215,7 @@ public class InventoryManager : MonoBehaviour
                     draggedItem.transform.localPosition = Vector3.zero;
                 }
             }
-            else //´Ù¸¥ ¾ÆÀÌÅÛÀÏ °æ¿ì ±³È¯
+            else //ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
             {
                 existingItem.transform.SetParent(draggedItem.parentAfterDrag);
                 existingItem.transform.localPosition = Vector3.zero;
@@ -229,7 +228,7 @@ public class InventoryManager : MonoBehaviour
         }
         else
         {
-            // ½½·ÔÀÌ ºñ¾îÀÖÀ¸¸é µå·¡±×ÇÑ ¾ÆÀÌÅÛÀ» ÀÌµ¿
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½å·¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
             draggedItem.transform.SetParent(newSlot.transform);
             draggedItem.transform.localPosition = Vector3.zero;
             draggedItem.parentAfterDrag = newSlot.transform;

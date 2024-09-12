@@ -20,7 +20,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
-        InitialiseItem(item);
+        //InitialiseItem(item);
     }
 
     public void InitialiseItem(ItemData newItem)
@@ -73,7 +73,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private void Update()
     {
-        // µå·¡±× ÁßÀÌ°í ¿À¸¥ÂÊ ¸¶¿ì½º ¹öÆ°À» Å¬¸¯ÇÏ¸é ¾ÆÀÌÅÛ ÇÏ³ª ¹èÄ¡
+        // ï¿½å·¡ï¿½ï¿½ ï¿½ï¿½ï¿½Ì°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Æ°ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½ ï¿½ï¿½Ä¡
         if (isDragging && Input.GetMouseButtonDown(1))
         {
             PlaceOneItem();
@@ -84,7 +84,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         if (count > 1)
         {
-            // ÇöÀç ¸¶¿ì½º À§Ä¡¿¡¼­ ·¹ÀÌÄ³½ºÆ®¸¦ ¼öÇàÇÏ¿© ½½·ÔÀ» Ã£À½
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ì½º ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½
             PointerEventData pointerData = new PointerEventData(EventSystem.current) { position = Input.mousePosition };
             List<RaycastResult> results = new List<RaycastResult>();
             EventSystem.current.RaycastAll(pointerData, results);
@@ -95,29 +95,29 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 if (slot != null)
                 {
                     InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-                    if (itemInSlot == null) // ½½·Ô¿¡ ¾ÆÀÌÅÛÀÌ ¾ø´Â °æ¿ì »õ ¾ÆÀÌÅÛ »ý¼º
+                    if (itemInSlot == null) // ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                     {
                         InventoryManager inventoryManager = FindObjectOfType<InventoryManager>();
                         InventoryItem newItem = inventoryManager.SpawnNewItem(item, slot, 1);
                         newItem.image.raycastTarget = true;
                         newItem.countText.raycastTarget = true;
-                        count -= 1; // ¾ÆÀÌÅÛÀ» ³õÀ» ¶§¸¸ °³¼ö °¨¼Ò
+                        count -= 1; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                         ItemCount();
                         return;
                     }
-                    else if (itemInSlot.item == item) // ½½·Ô¿¡ °°Àº ¾ÆÀÌÅÛÀÌ ÀÖ´Â °æ¿ì °³¼ö Áõ°¡
+                    else if (itemInSlot.item == item) // ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                     {
                         itemInSlot.count += 1;
                         itemInSlot.ItemCount();
-                        count -= 1; // ¾ÆÀÌÅÛÀ» ³õÀ» ¶§¸¸ °³¼ö °¨¼Ò
+                        count -= 1; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                         ItemCount();
                         return;
                     }
-                    // ½½·Ô¿¡ ´Ù¸¥ ¾ÆÀÌÅÛÀÌ ÀÖ´Â °æ¿ì ¾Æ¹« ÀÛ¾÷µµ ÇÏÁö ¾ÊÀ½
+                    // ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ ï¿½Æ¹ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                     return;
                 }
             }
-            // ½½·ÔÀ» Ã£Áö ¸øÇÏ¸é ¾Æ¹« ÀÛ¾÷µµ ÇÏÁö ¾ÊÀ½
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½Æ¹ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
     }
 
