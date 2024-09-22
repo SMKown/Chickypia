@@ -1,30 +1,53 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class EnemyRange : Enemy
 {
-    public GameObject BallPrefab;
-    public Transform firePoint;
+    public GameObject projectilePrefab;
+    public float projectileSpeed = 20f;
+    public float attackCooldown = 2f;
+    public int projectileDamage = 1;
+    private bool alreadyAttacked;
 
-    protected override void Attack()
+    private ProjectilePool projectilePool;
+
+    protected override void Awake()
     {
-        ShootBall();
+        base.Awake();
+        projectilePool = FindObjectOfType<ProjectilePool>();
     }
 
-    void ShootBall()
+    public override void Attack()
     {
-        if (BallPrefab != null && player != null)
+        if (!alreadyAttacked)
         {
-            GameObject ball = Instantiate(BallPrefab, firePoint.position, firePoint.rotation);
-
-            Projectile projectile = ball.GetComponent<Projectile>();
-            if (projectile != null)
-            {
-                projectile.Initialize(player.position);
-            }
-
-            animator.SetTrigger("Attack");
+            StartCoroutine(AttackCoroutine());
         }
+    }
+
+    private IEnumerator AttackCoroutine()
+    {
+        SetAnimationTrigger("Attack");
+        agent.SetDestination(transform.position);
+        transform.LookAt(player);
+
+
+        GameObject projectile = projectilePool.GetProjectile();
+        projectile.transform.position = transform.position + Vector3.up * 1.5f;
+
+
+        Projectile projectileComponent = projectile.GetComponent<Projectile>();
+        if (projectileComponent != null)
+        {
+            projectileComponent.damage = projectileDamage;
+        }
+
+        Rigidbody rb = projectile.GetComponent<Rigidbody>();
+        rb.velocity = Vector3.zero;
+        rb.AddForce(transform.forward * projectileSpeed, ForceMode.Impulse);
+
+        alreadyAttacked = true;
+        yield return new WaitForSeconds(attackCooldown - 0.1f);
+        alreadyAttacked = false;
     }
 }

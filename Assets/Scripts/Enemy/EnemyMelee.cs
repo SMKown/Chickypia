@@ -1,15 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class EnemyMelee : Enemy
 {
-    protected override void Attack()
-    {
-        Debug.Log("EnemyMelee Attack triggered");
-        animator.SetTrigger("Attack");
+    public int attackDamage;
+    public float attackCooldown = 1f;
+    private bool alreadyAttacked;
 
-        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        Debug.Log("Animator State: " + stateInfo.IsName("Attack"));
+    public override void Attack()
+    {
+        if (!alreadyAttacked)
+        {
+            StartCoroutine(AttackCoroutine());
+        }
+    }
+
+    private IEnumerator AttackCoroutine()
+    {
+        SetAnimationTrigger("Attack");
+        agent.SetDestination(transform.position);
+        transform.LookAt(player);
+
+        if (Vector3.Distance(transform.position, player.position) <= attackRange)
+        {
+            //PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+            //if (playerHealth != null)
+            //{
+            //    playerHealth.TakeDamage(attackDamage);
+            //}
+        }
+
+        alreadyAttacked = true;
+        yield return new WaitForSeconds(attackCooldown - 0.1f);
+        alreadyAttacked = false;
     }
 }

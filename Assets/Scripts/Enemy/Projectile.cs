@@ -1,32 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public float speed = 10f;
-    public int damage = 10;
-    private Vector3 targetPosition;
-
-    public void Initialize(Vector3 target)
+    public int damage;
+    private void OnCollisionEnter(Collision collision)
     {
-        targetPosition = target;
-        Destroy(gameObject, 5f);
-    }
-
-    void Update()
-    {
-        float step = speed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
-
-        if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
+        if (collision.gameObject.CompareTag("Player"))
         {
-            HitTarget();
-        }
-    }
+            //PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
+            //if (playerHealth != null)
+            //{
+            //    playerHealth.TakeDamage(damage);
+            //}
 
-    void HitTarget()
-    {
-        
+            ProjectilePool pool = FindObjectOfType<ProjectilePool>();
+            if (pool != null)
+            {
+                pool.ReturnProjectile(gameObject);
+            }
+        }
+        else
+        {
+            ProjectilePool pool = FindObjectOfType<ProjectilePool>();
+            if (pool != null)
+            {
+                pool.ReturnProjectile(gameObject);
+            }
+        }
     }
 }

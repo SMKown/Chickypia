@@ -1,184 +1,160 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    public LayerMask playerLayer;
-    [Header("공격 쿨타임")] public float attackCooldown = 1.5f;
-    [Header("이동 전 대기 시간")] public float waitTimeNextMove = 3f;
+    public NavMeshAgent agent;
+    public Transform player;
+    public LayerMask Player;
+    public float patrolRange = 15f;               // 순찰 범위
+    public float minpatrolRange = 5f;             // 순찰 최소 범위
+    public float fleeDistance = 20f;              // 도망 범위
+    public EnemyLevel enemyLevel;                 // 적의 레벨
 
-    [Header("활동 구역")] public Transform zoneCenter;
-    [Header("활동 구역 반경")] public float zoneRadius = 20f;
+    private Vector3 patrolPoint;                  // 순찰 지점
+    private bool patrolPointSet;
 
-    private NavMeshAgent agent;
-    private Transform player;
-    private bool isPlayerDetected;
-    private State currentState;
+    public EnemyState currentState;
+    private bool isTransitioningState;
+
     private Enemy enemy;
-    private float lastAttackTime;
-    private float waitTime;
 
-    private enum State
+    public Enemy GetEnemy()
     {
-        Idle,
-        Roaming,
-        Chasing,
-        Attacking
+        return enemy;
     }
 
-    void Start()
+    private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
-        agent.updatePosition = true;
-        agent.updateRotation = true;
         enemy = GetComponent<Enemy>();
-        currentState = State.Roaming;
-        SetRandomDestination();
+        player = GameObject.Find("Player").transform;
+        agent = GetComponent<NavMeshAgent>();
     }
 
-    void Update()
+    private void Start()
     {
-        DetectPlayer();
-        Debug.Log("Current State: " + currentState);
-        switch (currentState) // 상태
-        {
-            case State.Idle:
-                Idle(); // 대기
-                break;
-            case State.Roaming:
-                Roam(); // 자유롭게 이동
-                break;
-            case State.Chasing:
-                Chase(); // 추격
-                break;
-            case State.Attacking:
-                Attack(); // 공격
-                break;
-        }
-        
+        currentState = new PatrollingState(this);
+        currentState.EnterState();
     }
 
-    void Idle()
+    private void Update()
     {
-        enemy.animator.SetBool("Move", false);
-        enemy.animator.SetBool("Idle", true);
-
-        // 대기 시간이 지나면 자유롭게 이동 상태로 전환
-        if (Time.time - waitTime >= waitTimeNextMove)
+        if (!isTransitioningState)
         {
-            currentState = State.Roaming;
-            enemy.animator.SetBool("Idle", false);
-            SetRandomDestination();
-        }
-    }
+            currentState.UpdateState();
 
-    void Roam()
-    {
-        // 목표 지점에 도달하면 대기 상태로 전환
-        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
-        {
-            currentState = State.Idle;
-            waitTime = Time.time;
-        }
-    }
-
-    void DetectPlayer()
-    {
-        if (IsPlayerInZone())
-        {
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, zoneRadius, playerLayer);
-            if (hitColliders.Length > 0)
+            EnemyState nextState = currentState.CheckStateTransitions();
+            if (nextState != currentState)
             {
-                player = hitColliders[0].transform;
-                if (!isPlayerDetected) // 이전에 플레이어를 감지하지 않았을 때
-                {
-                    isPlayerDetected = true;
-                    currentState = State.Chasing;
-                }
+                SwitchState(nextState);
             }
         }
-        else if (isPlayerDetected) // 플레이어가 구역을 벗어나면
+    }
+
+    // 상태 전환
+    public void SwitchState(EnemyState newState)
+    {
+        if (!isTransitioningState)
         {
-            currentState = State.Roaming;
-            isPlayerDetected = false;
-            SetRandomDestination();
+            isTransitioningState = true;
+
+            currentState.ExitState();
+            currentState = newState;
+            currentState.EnterState();
+
+            isTransitioningState = false;
         }
     }
 
-
-    bool IsPlayerInZone()
+    // 플레이어 추적
+    public void ChasePlayer()
     {
-        if (player == null)
-        {
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, zoneRadius, playerLayer);
-            if (hitColliders.Length > 0)
-            {
-                player = hitColliders[0].transform;
-            }
-        }
-
-        if (player == null) return false;
-
-        float distanceToZoneCenter = Vector3.Distance(player.position, zoneCenter.position);
-        return distanceToZoneCenter <= zoneRadius;
+        Vector3 playerVelocity = player.GetComponent<Rigidbody>().velocity;
+        Vector3 predictedPosition = player.position + playerVelocity * 0.5f;
+        enemy.ChasePlayer(predictedPosition);
     }
 
-
-    void Chase()
+    // 플레이어로부터 도망
+    public void FleeFromPlayer()
     {
-        if (player == null) return;
-
-        // 플레이어가 구역을 벗어났는지 확인
-        if (!IsPlayerInZone())
-        {
-            currentState = State.Roaming;  // 플레이어가 구역을 벗어나면 자유롭게 돌아다니는 상태로 전환
-            isPlayerDetected = false;
-            SetRandomDestination();  // 새로운 랜덤 목적지를 설정
-            return;
-        }
-
-        // 플레이어가 구역 안에 있으면 추적 계속
-        agent.destination = player.position;
-        enemy.animator.SetBool("Move", true);
-
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-        Debug.Log("Distance to Player: " + distanceToPlayer);
-
-        if (distanceToPlayer < enemy.attackDistance)
-        {
-            Debug.Log("공격모드 전환");
-            currentState = State.Attacking;
-        }
-    }
-
-    void Attack()
-    {
-        if (Time.time - lastAttackTime < attackCooldown) return;
-
-        enemy.animator.SetTrigger("Attack");
-        lastAttackTime = Time.time;
-    }
-
-    void SetRandomDestination()
-    {
-        // 구역 내 랜덤 위치 선택
-        Vector3 randomDirection = Random.insideUnitSphere * zoneRadius;
-        randomDirection += zoneCenter.position;
+        Vector3 directionAwayFromPlayer = (transform.position - player.position).normalized;
+        Vector3 fleePosition = transform.position + directionAwayFromPlayer * patrolRange;
 
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(randomDirection, out hit, zoneRadius, 1))
+        if (NavMesh.SamplePosition(fleePosition, out hit, patrolRange, NavMesh.AllAreas))
         {
-            agent.destination = hit.position;
-            agent.updateRotation = true;
-            enemy.animator.SetBool("Move", true);
+            enemy.FleeFromPlayer(hit.position);
+        }
+        else
+        {
+            SwitchState(new PatrollingState(this));
         }
     }
 
-    void OnDrawGizmosSelected() // 구역 반경
+    // 플레이어와 일정 거리 이상 떨어졌는지 확인
+    public bool PlayerMovedFar()
     {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(zoneCenter.position, zoneRadius);
+        return Vector3.Distance(transform.position, player.position) > fleeDistance;
+    }
+
+    // 플레이어가 시야 범위에 있는지 확인
+    public bool PlayerInSightRange()
+    {
+        return Physics.CheckSphere(transform.position, enemy.sightRange, Player);
+    }
+
+    // 플레이어가 공격 범위에 있는지 확인
+    public bool PlayerInAttackRange()
+    {
+        return Physics.CheckSphere(transform.position, enemy.attackRange, Player);
+    }
+
+    public void SetDestinationRandomPoint()
+    {
+        int maxAttempts = 30;
+        patrolPointSet = false;
+
+        for (int i = 0; i < maxAttempts; i++)
+        {
+            SearchPatrolPoint();
+
+            if (Vector3.Distance(enemy.initialPosition, patrolPoint) <= enemy.patrolRange && Vector3.Distance(transform.position, patrolPoint) >= minpatrolRange)
+            {
+                patrolPointSet = true;
+                agent.SetDestination(patrolPoint);
+                enemy.SetAnimationState("Move", true);
+                break;
+            }
+        }
+    }
+
+    // 순찰할 랜덤한 지점을 찾기
+    private void SearchPatrolPoint()
+    {
+        float randomZ = Random.Range(-patrolRange, patrolRange);
+        float randomX = Random.Range(-patrolRange, patrolRange);
+
+        Vector3 randomPoint = new Vector3(enemy.initialPosition.x + randomX, enemy.initialPosition.y, enemy.initialPosition.z + randomZ);
+
+        // 랜덤한 지점이 유효한 위치인지 확인
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(randomPoint, out hit, 2f, NavMesh.AllAreas))
+        {
+            patrolPoint = hit.position;
+        }
+    }
+
+    // 공격 상태로 전환
+    public void SwitchToAttackState()
+    {
+        switch (enemyLevel)
+        {
+            case EnemyLevel.Level2:
+                SwitchState(new AttackState(this));
+                break;
+            case EnemyLevel.Level3:
+                SwitchState(new RangedAttackState(this));
+                break;
+        }
     }
 }
