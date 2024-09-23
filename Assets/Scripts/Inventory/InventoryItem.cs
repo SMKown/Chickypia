@@ -73,7 +73,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private void Update()
     {
-        // �巡�� ���̰� ������ ���콺 ��ư�� Ŭ���ϸ� ������ �ϳ� ��ġ
         if (isDragging && Input.GetMouseButtonDown(1))
         {
             PlaceOneItem();
@@ -84,7 +83,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         if (count > 1)
         {
-            // ���� ���콺 ��ġ���� ����ĳ��Ʈ�� �����Ͽ� ������ ã��
             PointerEventData pointerData = new PointerEventData(EventSystem.current) { position = Input.mousePosition };
             List<RaycastResult> results = new List<RaycastResult>();
             EventSystem.current.RaycastAll(pointerData, results);
@@ -95,29 +93,27 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 if (slot != null)
                 {
                     InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-                    if (itemInSlot == null) // ���Կ� �������� ���� ��� �� ������ ����
+                    if (itemInSlot == null)
                     {
                         InventoryManager inventoryManager = FindObjectOfType<InventoryManager>();
                         InventoryItem newItem = inventoryManager.SpawnNewItem(item, slot, 1);
                         newItem.image.raycastTarget = true;
                         newItem.countText.raycastTarget = true;
-                        count -= 1; // �������� ���� ���� ���� ����
+                        count -= 1;
                         ItemCount();
                         return;
                     }
-                    else if (itemInSlot.item == item) // ���Կ� ���� �������� �ִ� ��� ���� ����
+                    else if (itemInSlot.item == item)
                     {
                         itemInSlot.count += 1;
                         itemInSlot.ItemCount();
-                        count -= 1; // �������� ���� ���� ���� ����
+                        count -= 1;
                         ItemCount();
                         return;
                     }
-                    // ���Կ� �ٸ� �������� �ִ� ��� �ƹ� �۾��� ���� ����
                     return;
                 }
             }
-            // ������ ã�� ���ϸ� �ƹ� �۾��� ���� ����
         }
     }
 

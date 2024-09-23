@@ -79,20 +79,17 @@ public class InventoryManager : MonoBehaviour
             {
                 if (inventoryItem != null)
                 {
-                    // �������� �κ��丮 ���Կ� ����
                     inventoryItem.item = hotBarItem.item;
                     inventoryItem.count = hotBarItem.count;
                     inventoryItem.ItemCount();
                 }
                 else
                 {
-                    // ���ο� �������� �κ��丮 ���Կ� ����
                     SpawnNewItem(hotBarItem.item, inventorySlot, hotBarItem.count);
                 }
             }
             else if (inventoryItem != null)
             {
-                // �ֹ� ���Կ� �������� ������ ����
                 Destroy(inventoryItem.gameObject);
             }
         }
@@ -112,20 +109,17 @@ public class InventoryManager : MonoBehaviour
             {
                 if (hotBarItem != null)
                 {
-                    // �������� �ֹ� ���Կ� ����
                     hotBarItem.item = inventoryItem.item;
                     hotBarItem.count = inventoryItem.count;
                     hotBarItem.ItemCount();
                 }
                 else
                 {
-                    // ���ο� �������� �ֹ� ���Կ� ����
                     SpawnNewItem(inventoryItem.item, hotBarSlot, inventoryItem.count);
                 }
             }
             else if (hotBarItem != null)
             {
-                // �κ��丮 ���Կ� �������� ������ ����
                 Destroy(hotBarItem.gameObject);
             }
         }
@@ -190,13 +184,11 @@ public class InventoryManager : MonoBehaviour
     {
         if (draggedItem == null || newSlot == null) return;
 
-        // ���ο� ���Կ� �̹� �������� �ִ� ��� ó��
         InventoryItem existingItem = newSlot.GetComponentInChildren<InventoryItem>();
         if (existingItem != null)
         {
             if (existingItem.item == draggedItem.item)
             {
-                // ���� �������� ��� ����
                 int combinedCount = existingItem.count + draggedItem.count;
                 if (combinedCount <= maxStack)
                 {
@@ -215,7 +207,7 @@ public class InventoryManager : MonoBehaviour
                     draggedItem.transform.localPosition = Vector3.zero;
                 }
             }
-            else //�ٸ� �������� ��� ��ȯ
+            else
             {
                 existingItem.transform.SetParent(draggedItem.parentAfterDrag);
                 existingItem.transform.localPosition = Vector3.zero;
@@ -228,7 +220,6 @@ public class InventoryManager : MonoBehaviour
         }
         else
         {
-            // ������ ��������� �巡���� �������� �̵�
             draggedItem.transform.SetParent(newSlot.transform);
             draggedItem.transform.localPosition = Vector3.zero;
             draggedItem.parentAfterDrag = newSlot.transform;

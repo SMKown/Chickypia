@@ -9,7 +9,7 @@ public class ItemSpawner : MonoBehaviour
     //public int numberOfItems = 10;
     //public Vector3 spawnAreaMin;
     //public Vector3 spawnAreaMax;
-    //public ItemData[] itemDataArray;  // ������ ������ �迭 �߰�
+    //public ItemData[] itemDataArray;
 
 
     //private void Start()
@@ -26,13 +26,10 @@ public class ItemSpawner : MonoBehaviour
     //            Random.Range(spawnAreaMin.y, spawnAreaMax.y),
     //            Random.Range(spawnAreaMin.z, spawnAreaMax.z));
 
-    //        // ������ ������ ������ ����
     //        ItemData selectedItemData = itemDataArray[Random.Range(0, itemDataArray.Length)];
 
-    //        // ������ ����
     //        GameObject itemObject = Instantiate(itemPrefab, spawnPosition, Quaternion.identity);
 
-    //        // Item ������Ʈ�� ã�Ƽ� ������ ������ ����
     //        Item itemComponent = itemObject.GetComponent<Item>();
     //        if (itemComponent != null)
     //        {
