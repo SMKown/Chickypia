@@ -79,7 +79,7 @@ Material:
     m_Floats:
     - _AlphaCutoff: 0.5
     - _BumpScale: 1
-    - _CoastOpacity: 0.4
+    - _CoastOpacity: 0.44
     - _Cutoff: 0.5
     - _DepthDistance: 1.7
     - _DetailNormalMapScale: 1
@@ -99,19 +99,19 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _RefractionScale: 0.2
-    - _Smoothness: 0.91
+    - _Smoothness: 0.8
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
     - _WavesNormalIntensity: 0.25
-    - _WavesSpeed: 0.18
+    - _WavesSpeed: 0.2
     - _WavesTile: 0.1
     - _ZWrite: 1
     - __dirty: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color1: {r: 0.3434941, g: 0.6981015, b: 0.7830188, a: 0}
-    - _Color2: {r: 0.05490196, g: 0.45894897, b: 0.5764706, a: 0}
+    - _Color2: {r: 0, g: 0.5882353, b: 0.78431374, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
