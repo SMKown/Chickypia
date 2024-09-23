@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public InventoryManager inventoryManager; // �κ��丮 �Ŵ���
+    public InventoryManager inventoryManager;
 
     private CharacterController cc;
     private Animator animator;
@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpForce;
 
-    public float pickupRange = 2F; // �������� �ֿ� �� �ִ� ����
+    public float pickupRange = 2F;
     private float gravity;
     private bool tryJump = false;
 

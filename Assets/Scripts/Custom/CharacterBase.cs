@@ -54,7 +54,7 @@ public class CharacterBase : MonoBehaviour
         filePath = Path.Combine(Application.persistentDataPath, "characterData.json");
         // C:\Users\[user name]\AppData\LocalLow\[company name]\[product name]
 
-        if (SceneManager.GetActiveScene().name == "MainScene")
+        if (SceneManager.GetActiveScene().name != "CustomScene")
             LoadInfo();
     }
     
@@ -220,7 +220,7 @@ public class CharacterBase : MonoBehaviour
             string json = File.ReadAllText(filePath);
             CharacterData characterData = JsonUtility.FromJson<CharacterData>(json);
 
-            Debug.Log($"Loaded Data: HairIndex={characterData.HairIndex}, FaceIndex={characterData.FaceIndex}, HeadGearIndex={characterData.HeadGearIndex}, TopIndex={characterData.TopIndex}, BottomIndex={characterData.BottomIndex}, EyewearIndex={characterData.EyewearIndex}, BagIndex={characterData.BagIndex}, ShoesIndex={characterData.ShoesIndex}, GloveIndex={characterData.GloveIndex}");
+            Debug.Log($"Loaded: Hair={characterData.HairIndex}, Face={characterData.FaceIndex}, HeadGear={characterData.HeadGearIndex}, Top={characterData.TopIndex}, Bottom={characterData.BottomIndex}, Eyewear={characterData.EyewearIndex}, Bag={characterData.BagIndex}, Shoes={characterData.ShoesIndex}, Glove={characterData.GloveIndex}");
 
             SetItem(PartsType.Hair, characterData.HairIndex);
             SetItem(PartsType.Face, characterData.FaceIndex);
