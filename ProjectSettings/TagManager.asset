@@ -7,7 +7,13 @@ TagManager:
   - Slot
   - Item
   - CookingSpot
+<<<<<<< Updated upstream
   - Gatherable
+=======
+  - Fish
+  - CatchingBar
+  - Ground
+>>>>>>> Stashed changes
   layers:
   - Default
   - TransparentFX

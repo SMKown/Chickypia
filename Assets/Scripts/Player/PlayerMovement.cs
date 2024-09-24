@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        if (!PlayerInfo.Instance.shouldTurn)
+        if (!PlayerInfo.Instance.shouldTurn && !PlayerInfo.Instance.fishingMode)
         {
             float h = Input.GetAxis("Horizontal");
             float v = Input.GetAxis("Vertical");
@@ -60,6 +60,8 @@ public class PlayerMovement : MonoBehaviour
             else
                 animator.SetBool("isWalk", false);
         }
+        else
+            animator.SetBool("isWalk", false);
     }
 
     private void CheckGrounded()
