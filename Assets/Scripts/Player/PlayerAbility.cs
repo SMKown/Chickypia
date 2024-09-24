@@ -7,7 +7,7 @@ public class PlayerAbility : MonoBehaviour
     [SerializeField] private float rotSpeed;
     
     private Vector3 destinationPoint;
-    private bool rotating = false;
+    private bool isRotating = false;
 
     private void Update()
     {
@@ -16,34 +16,33 @@ public class PlayerAbility : MonoBehaviour
 
     private void Attack()
     {
-        if (PlayerInfo.Instance.attackMode && PlayerInfo.Instance.isGround)
+        if (!PlayerInfo.Instance.attackMode || !PlayerInfo.Instance.isGround) return;
+
+        if (Input.GetMouseButtonDown(0) && !PlayerInfo.Instance.attacking)
         {
-            if (Input.GetMouseButtonDown(0) && !PlayerInfo.Instance.attacking)
-            {
-                PlayerInfo.Instance.attacking = true;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
+            PlayerInfo.Instance.attacking = true;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
 
-                if (Physics.Raycast(ray, out hit, 100F))
-                {
-                    destinationPoint = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-                    rotating = true;
-                }
+            if (Physics.Raycast(ray, out hit, 100F))
+            {
+                destinationPoint = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+                isRotating = true;
             }
+        }
 
-            if (rotating)
+        if (isRotating)
+        {
+            Quaternion targetRot = Quaternion.LookRotation(destinationPoint - transform.position);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotSpeed * Time.deltaTime);
+
+            float angle = Quaternion.Angle(transform.rotation, targetRot);
+            if (angle <= 0)
             {
-                Quaternion targetRot = Quaternion.LookRotation(destinationPoint - transform.position);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotSpeed * Time.deltaTime);
+                // 공격 코드
 
-                float angle = Quaternion.Angle(transform.rotation, targetRot);
-                if (angle <= 0)
-                {
-                    // 공격 코드
-
-                    rotating = false;
-                    PlayerInfo.Instance.attacking = false;
-                }
+                isRotating = false;
+                PlayerInfo.Instance.attacking = false;
             }
         }
     }

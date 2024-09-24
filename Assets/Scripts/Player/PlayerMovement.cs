@@ -53,10 +53,14 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.Euler(0F, angle, 0F);
             cc.Move(dir * moveSpeed * Time.deltaTime);
 
+            PlayerInfo.Instance.moving = true;
             animator.SetBool("isWalk", true);
         }
         else
+        {
+            PlayerInfo.Instance.moving = false;
             animator.SetBool("isWalk", false);
+        }
     }
 
     private void CheckGround()

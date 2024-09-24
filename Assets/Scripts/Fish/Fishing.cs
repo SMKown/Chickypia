@@ -5,19 +5,40 @@ using Random = UnityEngine.Random;
 
 public class Fishing : MonoBehaviour
 {
-    private bool nibble = false; // 물고기 물음
-    private Fish fishtype; // 물고기
-
-    [SerializeField] private GameObject thoughtBubbles;
-
-    private KeyCode fishingKey = KeyCode.E; // 낚시 키
-
-
     public Transform bobber;
     public Transform originPos;
 
+    private Animator animator;
+
+    private Fish fishtype;
+    private bool nibble = false;
+    [SerializeField] private GameObject thoughtBubbles;
+
+    private KeyCode fishingKey = KeyCode.E;
+    private float maxCastDistance = 5F;
+
+    private Vector3 initialPos;
+    private Vector3 targetPos;
+    private float startTime;
+    private float lerpTime = 0.8F;
+    private bool isCasting = false;
+
+    private void Start()
+    {
+        animator = GetComponentInChildren<Animator>();
+    }
+
     private void Update()
-	{
+    {
+        HandleInput();
+        UpdateBobberPosition();
+        HandleFishingInput();
+    }
+
+    private void HandleInput()
+    {
+        if (PlayerInfo.Instance.moving || !PlayerInfo.Instance.isGround) return;
+
         if (Input.GetMouseButtonDown(0) && !PlayerInfo.Instance.fishing)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -26,94 +47,146 @@ public class Fishing : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 MeshRenderer meshRenderer = hit.collider.GetComponent<MeshRenderer>();
-
-                if (meshRenderer != null)
+                if (meshRenderer != null && meshRenderer.material.name.Contains("Water"))
                 {
-                    if (meshRenderer.material.name.Contains("Water"))
-                    {
-                        Debug.Log("This is water!");
-
-                        if (bobber != null)
-                        {
-                            bobber.position = hit.point;
-                            CastLine();
-
-                            Debug.Log("Bobber moved to: " + hit.point);
-                        }
-                    }
+                    TryCastLine(hit.point);
                 }
             }
         }
+    }
 
-		if (Input.GetKeyDown(fishingKey) && PlayerInfo.Instance.fishing && !nibble) // 물기 전 회수
-		{
-            if (bobber != null)
-            {
-                bobber.position = originPos.position;
-            }
+    private void TryCastLine(Vector3 hitPoint)
+    {
+        Debug.Log("물 인식!");
 
-            StopAllCoroutines();
-            PlayerInfo.Instance.fishing = false;
-                
-            // 생각 풍선 초기화
-            thoughtBubbles.GetComponent<Animator>().SetTrigger("Reset");
-            thoughtBubbles.SetActive(false);
-                
+        float distanceToHit = Vector3.Distance(originPos.position, hitPoint);
+        if (distanceToHit <= maxCastDistance)
+        {
+            StartCasting(hitPoint);
         }
-		else if (Input.GetKeyDown(fishingKey) && PlayerInfo.Instance.fishing && nibble) // 물고 잡음
-		{
-            if (bobber != null)
-            {
-                bobber.position = originPos.position;
-            }
-
-            StopAllCoroutines();
-
-            // 물고기 잡기 코드
-            FishCaught();
+        else
+        {
+            Debug.Log("범위 초과");
         }
     }
-    
-    // 줄 던지기 호출
+
+    private void StartCasting(Vector3 hitPoint)
+    {
+        if (bobber != null)
+        {
+            bobber.SetParent(null);
+            initialPos = bobber.position;
+            targetPos = hitPoint;
+            startTime = Time.time;
+            isCasting = true;
+
+            // 플레이어 회전
+            RotatePlayerToTarget(hitPoint);
+            animator.SetBool("isFishing", true);
+        }
+    }
+
+    private void RotatePlayerToTarget(Vector3 targetPoint)
+    {
+        Vector3 dir = targetPoint - transform.position;
+        Quaternion targetRot = Quaternion.LookRotation(dir);
+        transform.rotation = Quaternion.Euler(0, targetRot.eulerAngles.y, 0);
+    }
+
+    private void UpdateBobberPosition()
+    {
+        if (isCasting)
+        {
+            float t = (Time.time - startTime) / lerpTime;
+            if (t > 1F)
+            {
+                t = 1F;
+                isCasting = false;
+                CastLine();
+            }
+
+            bobber.position = Vector3.Slerp(initialPos, targetPos, t);
+            bobber.position += new Vector3(0, Mathf.Sin(t * Mathf.PI) * 1F, 0);
+        }
+    }
+
+    private void HandleFishingInput()
+    {
+        if (Input.GetKeyDown(fishingKey) && PlayerInfo.Instance.fishing)
+        {
+            if (!nibble) // 물기 전 회수
+            {
+                RetractLine();
+            }
+            else // 물고 잡음
+            {
+                CatchFish();
+            }
+        }
+    }
+
+    private void RetractLine()
+    {
+        StopAllCoroutines();
+        PlayerInfo.Instance.fishing = false;
+
+        thoughtBubbles.GetComponent<Animator>().SetTrigger("Reset");
+        thoughtBubbles.SetActive(false);
+
+        bobber.position = originPos.position;
+        bobber.SetParent(originPos);
+        animator.SetBool("isFishing", false);
+    }
+
+    private void CatchFish()
+    {
+        StopAllCoroutines();
+        FishCaught();
+
+        bobber.position = originPos.position;
+        bobber.SetParent(originPos);
+        animator.SetBool("isFishing", false);
+    }
+
     private void CastLine()
-	{
+    {
         PlayerInfo.Instance.fishing = true;
-        thoughtBubbles.SetActive(true); // 생각 풍선 활성화
-        StartCoroutine(WaitForNibble(10)); // 물기를 기다리는 코루틴 시작
+        thoughtBubbles.SetActive(true);
+        StartCoroutine(WaitForNibble(10));
     }
-    
-    // 무작위 시간 대기
+
     private IEnumerator WaitForNibble(float maxWaitTime)
-	{
-        yield return new WaitForSeconds(Random.Range(maxWaitTime * 0.25f, maxWaitTime)); // 최대 대기 시간 사이의 무작위 시간 대기
-        thoughtBubbles.GetComponent<Animator>().SetTrigger("Alert"); // 알림 생각 풍선 표시
-        nibble = true; 
-        StartCoroutine(LineBreak(2)); // 반응 대기 후 줄이 끊어짐
+    {
+        yield return new WaitForSeconds(Random.Range(maxWaitTime * 0.25F, maxWaitTime));
+        thoughtBubbles.GetComponent<Animator>().SetTrigger("Alert");
+        nibble = true;
+        StartCoroutine(LineBreak(2));
     }
-    
-    // 반응 시간 초과 시 줄이 끊어짐
+
     private IEnumerator LineBreak(float lineBreakTime)
-	{
-        yield return new WaitForSeconds(lineBreakTime); // 대기 시간
-        Debug.Log("물고기 놓침"); // 줄 끊어짐 로그 출력
-        
-        // 생각 풍선 비활성화
+    {
+        yield return new WaitForSeconds(lineBreakTime);
+        Debug.Log("물고기 놓침");
+
+
         thoughtBubbles.GetComponent<Animator>().SetTrigger("Reset");
         thoughtBubbles.SetActive(false);
 
         PlayerInfo.Instance.fishing = false;
         nibble = false;
+
+        bobber.position = originPos.position;
+        bobber.SetParent(originPos);
+        animator.SetBool("isFishing", false);
     }
 
     public void FishCaught()
-	{
+    {
         PlayerInfo.Instance.fishing = false;
         nibble = false;
 
         fishtype = FishManager.GetRandomFish();
-
-        Debug.Log($"잡은 물고기 : {fishtype.name}"); // 잡힌 물고기 로그 출력
-        // 생각 풍선 초기화
+        Debug.Log($"잡은 물고기 : {fishtype.name}");
         thoughtBubbles.SetActive(false);
         thoughtBubbles.GetComponent<Animator>().SetTrigger("Reset");
     }

@@ -17,6 +17,7 @@ public class PlayerInfo : MonoBehaviour
 
     public bool attackMode = false;
 
+    public bool moving = false;
     public bool interacting = false;
     public bool attacking = false;
     public bool fishing = false;
