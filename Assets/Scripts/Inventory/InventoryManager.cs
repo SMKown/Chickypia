@@ -8,7 +8,6 @@ public class InventoryManager : MonoBehaviour
 
     public int maxStack = 10;
     public GameObject MainInventory;
-    public GameObject HotBar;
     public InventorySlot[] inventorySlots;
 
     public GameObject inventoryItemPrefab;
@@ -20,7 +19,6 @@ public class InventoryManager : MonoBehaviour
 
     private void Start()
     {
-        ChangeSelectedSlot(0);
         MainInventory.SetActive(false);
     }
 
@@ -36,15 +34,6 @@ public class InventoryManager : MonoBehaviour
                 Debug.Log($"Item: {itemData.item.name}, Count: {itemData.count}");
             }
         }
-
-        if (Input.inputString != null)
-        {
-            bool isNumber = int.TryParse(Input.inputString, out int number);
-            if (isNumber && number > 0 && number < 6)
-            {
-                ChangeSelectedSlot(number - 1);
-            }
-        }
     }
 
     public void OnInventory()
@@ -53,86 +42,7 @@ public class InventoryManager : MonoBehaviour
         {
             isInventoryOpen = !isInventoryOpen;
             MainInventory.SetActive(isInventoryOpen);
-            HotBar.SetActive(!isInventoryOpen);
-            if (isInventoryOpen)
-            {
-                SyncHotBarToInventory();
-            }
-            else
-            {
-                SyncInventoryToHotBar();
-            }
         }
-    }
-
-    private void SyncHotBarToInventory()
-    {
-        for (int i = 0; i < 5; i++)
-        {
-            InventorySlot hotBarSlot = HotBar.transform.GetChild(i).GetComponent<InventorySlot>();
-            InventorySlot inventorySlot = inventorySlots[i + 5];
-
-            InventoryItem hotBarItem = hotBarSlot.GetComponentInChildren<InventoryItem>();
-            InventoryItem inventoryItem = inventorySlot.GetComponentInChildren<InventoryItem>();
-
-            if (hotBarItem != null)
-            {
-                if (inventoryItem != null)
-                {
-                    inventoryItem.item = hotBarItem.item;
-                    inventoryItem.count = hotBarItem.count;
-                    inventoryItem.ItemCount();
-                }
-                else
-                {
-                    SpawnNewItem(hotBarItem.item, inventorySlot, hotBarItem.count);
-                }
-            }
-            else if (inventoryItem != null)
-            {
-                Destroy(inventoryItem.gameObject);
-            }
-        }
-    }
-
-    private void SyncInventoryToHotBar()
-    {
-        for (int i = 0; i < 5; i++)
-        {
-            InventorySlot hotBarSlot = HotBar.transform.GetChild(i).GetComponent<InventorySlot>();
-            InventorySlot inventorySlot = inventorySlots[i + 5];
-
-            InventoryItem inventoryItem = inventorySlot.GetComponentInChildren<InventoryItem>();
-            InventoryItem hotBarItem = hotBarSlot.GetComponentInChildren<InventoryItem>();
-
-            if (inventoryItem != null)
-            {
-                if (hotBarItem != null)
-                {
-                    hotBarItem.item = inventoryItem.item;
-                    hotBarItem.count = inventoryItem.count;
-                    hotBarItem.ItemCount();
-                }
-                else
-                {
-                    SpawnNewItem(inventoryItem.item, hotBarSlot, inventoryItem.count);
-                }
-            }
-            else if (hotBarItem != null)
-            {
-                Destroy(hotBarItem.gameObject);
-            }
-        }
-    }
-
-    void ChangeSelectedSlot(int newValue)
-    {
-        if (selectedSlot >= 0)
-        {
-            inventorySlots[selectedSlot].DeSelect();
-        }
-        inventorySlots[newValue].Select();
-        selectedSlot = newValue;
     }
 
     public bool AddItem(ItemData item)

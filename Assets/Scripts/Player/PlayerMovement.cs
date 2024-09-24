@@ -18,8 +18,12 @@ public class PlayerMovement : MonoBehaviour
     private float gravity;
     private bool tryJump = false;
 
-    private GameObject itemInRange;
-    public GameObject pickupImage;
+    private GameObject gatherableObject;
+    private GameObject pickupObject;
+    private GatherableObject currentGatherScript;
+
+    private float gatherHoldTime = 0f;
+    private float gatherThreshold = 1f;
 
     private void Start()
     {
@@ -33,8 +37,9 @@ public class PlayerMovement : MonoBehaviour
         Move();
         CheckGrounded();
         TryJump();
-        CheckForItemInRange();
+        CheckForObjectsInRange();
         PickUpItem();
+        GatherableItem();
     }
 
     private void Move()
@@ -95,35 +100,67 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void CheckForItemInRange()
+    private void CheckForObjectsInRange()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, pickupRange);
 
-        itemInRange = null;
-        foreach (Collider collider in colliders)
+        gatherableObject = null;
+        pickupObject = null;
+        currentGatherScript = null;
+
+        foreach(Collider collider in colliders)
         {
-            if (collider.CompareTag("Item"))
+            if(collider.CompareTag("Gatherable"))
             {
-                itemInRange = collider.gameObject;
-                return;
+                gatherableObject = collider.gameObject;
+                currentGatherScript = gatherableObject.GetComponent<GatherableObject>();
+            }
+            else if( collider.CompareTag("Item"))
+            {
+                pickupObject = collider.gameObject;
             }
         }
     }
 
     private void PickUpItem()
     {
-        if (Input.GetKeyDown(KeyCode.E) && itemInRange != null)
+        if (Input.GetKeyDown(KeyCode.E) && pickupObject != null)
         {
-            InventoryItem itemSlot = itemInRange.GetComponent<InventoryItem>();
+            InventoryItem itemSlot = pickupObject.GetComponent<InventoryItem>();
             if (itemSlot != null)
             {
                 if (inventoryManager != null)
                 {
                     inventoryManager.AddItem(itemSlot.GetItemData());
-                    Destroy(itemInRange);
+                    Destroy(pickupObject);
                     UIInteraction.Instance.ImageOff(UIInteraction.Instance.itemImage);
                 }
-                itemInRange = null;
+                pickupObject = null;
+            }
+        }
+    }
+    public void GatherableItem()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && currentGatherScript != null)
+        {
+            currentGatherScript.StartGathering(this);
+        }
+        else if (Input.GetKeyUp(KeyCode.E) && currentGatherScript != null)
+        {
+            currentGatherScript.StopGathering();
+        }
+    }
+
+public void CollectItem(ItemData item, int amount)
+    {
+        if (item != null && inventoryManager != null)
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                if (!inventoryManager.AddItem(item))
+                {
+                    break;
+                }
             }
         }
     }

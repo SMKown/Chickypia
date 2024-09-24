@@ -18,7 +18,7 @@ public class UIInteraction : MonoBehaviour
 
     public Image itemImage;
     public Image cookingImage;
-    
+    public Image gatherProgressCircle;
     private GameObject interactableObj;
 
     private Vector3 startScale;
@@ -35,6 +35,12 @@ public class UIInteraction : MonoBehaviour
             targetPos = interactableObj.transform.position;
             StartCoroutine(AnimateImageON(itemImage));
         }
+        else if (other.CompareTag("Gatherable"))
+        {
+            interactableObj = other.gameObject;
+            targetPos = interactableObj.transform.position;
+            StartCoroutine(AnimateImageON(itemImage));
+        }
         else if (other.CompareTag("CookingSpot"))
         {
             interactableObj = other.gameObject;
@@ -46,6 +52,11 @@ public class UIInteraction : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Item"))
+        {
+            interactableObj = null;
+            ImageOff(itemImage);
+        }
+        else if (other.CompareTag("Gatherable"))
         {
             interactableObj = null;
             ImageOff(itemImage);
@@ -102,4 +113,42 @@ public class UIInteraction : MonoBehaviour
         image.transform.localScale = targetScale;
         image.enabled = false;
     }
+
+    public void ShowGatherProgress(float duration)
+    {
+        StartCoroutine(GatherProgress(duration));
+    }
+
+    private IEnumerator GatherProgress(float duration)
+    {
+        float elapsedTime = 0f;
+        gatherProgressCircle.fillAmount = 0f;
+        gatherProgressCircle.gameObject.SetActive(true);
+
+        while (elapsedTime < duration)
+        {
+            if (Input.GetKey(KeyCode.E))
+            {
+                elapsedTime += Time.deltaTime;
+                gatherProgressCircle.fillAmount = elapsedTime / duration;
+            }
+            else
+            {
+                gatherProgressCircle.fillAmount = 0f;
+                gatherProgressCircle.gameObject.SetActive(false);
+                yield break;
+            }
+
+            yield return null;
+        }
+
+        gatherProgressCircle.fillAmount = 1f;
+    }
+
+    public void HideGatherProgress()
+    {
+        gatherProgressCircle.fillAmount = 0f;
+        gatherProgressCircle.gameObject.SetActive(false);
+    }
+
 }
