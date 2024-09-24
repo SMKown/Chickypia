@@ -7,6 +7,7 @@ public class PlayerAbility : MonoBehaviour
     [SerializeField] private float rotSpeed;
     
     private Vector3 destinationPoint;
+    private bool rotating = false;
 
     private void Update()
     {
@@ -17,20 +18,20 @@ public class PlayerAbility : MonoBehaviour
     {
         if (PlayerInfo.Instance.attackMode && PlayerInfo.Instance.isGround)
         {
-            if (Input.GetMouseButtonDown(0) && !PlayerInfo.Instance.shouldAttack)
+            if (Input.GetMouseButtonDown(0) && !PlayerInfo.Instance.attacking)
             {
-                PlayerInfo.Instance.shouldAttack = true;
+                PlayerInfo.Instance.attacking = true;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
                 if (Physics.Raycast(ray, out hit, 100F))
                 {
                     destinationPoint = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-                    PlayerInfo.Instance.shouldTurn = true;
+                    rotating = true;
                 }
             }
 
-            if (PlayerInfo.Instance.shouldTurn)
+            if (rotating)
             {
                 Quaternion targetRot = Quaternion.LookRotation(destinationPoint - transform.position);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, rotSpeed * Time.deltaTime);
@@ -40,8 +41,8 @@ public class PlayerAbility : MonoBehaviour
                 {
                     // 공격 코드
 
-                    PlayerInfo.Instance.shouldTurn = false;
-                    PlayerInfo.Instance.shouldAttack = false;
+                    rotating = false;
+                    PlayerInfo.Instance.attacking = false;
                 }
             }
         }

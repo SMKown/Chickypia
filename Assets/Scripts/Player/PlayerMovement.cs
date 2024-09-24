@@ -4,84 +4,74 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public InventoryManager inventoryManager;
-
     private CharacterController cc;
     private Animator animator;
-
-    private ThirdCam thirdCam;
-
+    
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpForce;
 
-    public float pickupRange = 2F;
     private float gravity;
     private bool tryJump = false;
 
-    private GameObject gatherableObject;
-    private GameObject pickupObject;
-    private GatherableObject currentGatherScript;
+    public InventoryManager inventoryManager;
+    private InventoryItem inventoryItem;
+    private GatherableObject gatherableObject;
 
     private void Start()
     {
         cc = GetComponent<CharacterController>();
         animator = GetComponentInChildren<Animator>();
-        thirdCam = Camera.main.GetComponent<ThirdCam>();
     }
 
     private void Update()
     {
         Move();
-        CheckGrounded();
+        CheckGround();
         TryJump();
-        CheckForObjectsInRange();
-        PickUpItem();
-        GatherableItem();
+
+        GetItem();
     }
 
     private void Move()
     {
-        if (!PlayerInfo.Instance.shouldTurn && !PlayerInfo.Instance.fishingMode)
+        if (PlayerInfo.Instance.UnableMove())
         {
-            float h = Input.GetAxis("Horizontal");
-            float v = Input.GetAxis("Vertical");
-            
-            Vector3 dir = new Vector3(h, 0, v);
-            gravity += Physics.gravity.y * Time.deltaTime;
-            dir.y = gravity;
+            animator.SetBool("isWalk", false);
+            return;
+        }
 
-            if (h != 0 || v != 0)
-            {
-                float angle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
-                transform.rotation = Quaternion.Euler(0F, angle, 0F);
-                cc.Move(dir * moveSpeed * Time.deltaTime);
-                animator.SetBool("isWalk", true);
-            }
-            else
-                animator.SetBool("isWalk", false);
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+        
+        Vector3 dir = new Vector3(h, 0, v);
+        gravity += Physics.gravity.y * Time.deltaTime;
+        dir.y = gravity;
+
+        if (h != 0 || v != 0)
+        {
+            float angle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0F, angle, 0F);
+            cc.Move(dir * moveSpeed * Time.deltaTime);
+
+            animator.SetBool("isWalk", true);
         }
         else
             animator.SetBool("isWalk", false);
     }
 
-    private void CheckGrounded()
+    private void CheckGround()
     {
-        if (cc.isGrounded)
-        {
-            PlayerInfo.Instance.isGround = true;
-            animator.ResetTrigger("Jump");
-        }
-        else
-        {
-            PlayerInfo.Instance.isGround = false;
-        }
+        PlayerInfo.Instance.isGround = cc.isGrounded;
+        if (cc.isGrounded) animator.ResetTrigger("Jump");
     }
 
     private void TryJump()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (PlayerInfo.Instance.isGround && !PlayerInfo.Instance.shouldAttack && !tryJump)
+            if (PlayerInfo.Instance.UnableMove()) return;
+
+            if (PlayerInfo.Instance.isGround && !tryJump)
             {
                 tryJump = true;
                 gravity = jumpForce;
@@ -99,67 +89,48 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void CheckForObjectsInRange()
+    private void GetItem()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, pickupRange);
-
-        gatherableObject = null;
-        pickupObject = null;
-        currentGatherScript = null;
-
-        foreach(Collider collider in colliders)
+        if (UIInteraction.Instance.interactableObj != null)
         {
-            if(collider.CompareTag("Gatherable"))
-            {
-                gatherableObject = collider.gameObject;
-                currentGatherScript = gatherableObject.GetComponent<GatherableObject>();
-            }
-            else if( collider.CompareTag("Item"))
-            {
-                pickupObject = collider.gameObject;
-            }
+            if (UIInteraction.Instance.interactableObj.CompareTag("Collectible"))
+                Collection(UIInteraction.Instance.interactableObj);
+            else if (UIInteraction.Instance.interactableObj.CompareTag("Gatherable"))
+                Gathering(UIInteraction.Instance.interactableObj);
         }
     }
 
-    private void PickUpItem()
+    private void Collection(GameObject item)
     {
-        if (Input.GetKeyDown(KeyCode.E) && pickupObject != null)
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            InventoryItem itemSlot = pickupObject.GetComponent<InventoryItem>();
-            if (itemSlot != null)
+            inventoryItem = item.GetComponent<InventoryItem>();
+            
+            if (inventoryItem != null && inventoryManager != null)
             {
-                if (inventoryManager != null)
+                bool added = inventoryManager.AddItem(inventoryItem.GetItemData());
+                if (added)
                 {
-                    inventoryManager.AddItem(itemSlot.GetItemData());
-                    Destroy(pickupObject);
-                    UIInteraction.Instance.ImageOff(UIInteraction.Instance.itemImage);
+                    Destroy(item);
+                    UIInteraction.Instance.ImageOff(UIInteraction.Instance.collection);
                 }
-                pickupObject = null;
             }
         }
     }
-    public void GatherableItem()
-    {
-        if (Input.GetKeyDown(KeyCode.E) && currentGatherScript != null)
-        {
-            currentGatherScript.StartGathering(this);
-        }
-        else if (Input.GetKeyUp(KeyCode.E) && currentGatherScript != null)
-        {
-            currentGatherScript.StopGathering();
-        }
-    }
 
-public void CollectItem(ItemData item, int amount)
+    public void Gathering(GameObject item)
     {
-        if (item != null && inventoryManager != null)
+        gatherableObject = item.GetComponent<GatherableObject>();
+
+        if (gatherableObject != null)
         {
-            for (int i = 0; i < amount; i++)
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                if (!inventoryManager.AddItem(item))
-                {
-                    break;
-                }
+                gatherableObject.StartGathering(inventoryManager);
+            }
+            else if (Input.GetKeyUp(KeyCode.E))
+            {
+                gatherableObject.StopGathering();
             }
         }
     }

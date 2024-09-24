@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class Fishing : MonoBehaviour
@@ -19,7 +18,7 @@ public class Fishing : MonoBehaviour
 
     private void Update()
 	{
-        if (Input.GetMouseButtonDown(0) && !PlayerInfo.Instance.fishingMode)
+        if (Input.GetMouseButtonDown(0) && !PlayerInfo.Instance.fishing)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -46,7 +45,7 @@ public class Fishing : MonoBehaviour
             }
         }
 
-		if (Input.GetKeyDown(fishingKey) && PlayerInfo.Instance.fishingMode && !nibble) // 물기 전 회수
+		if (Input.GetKeyDown(fishingKey) && PlayerInfo.Instance.fishing && !nibble) // 물기 전 회수
 		{
             if (bobber != null)
             {
@@ -54,19 +53,18 @@ public class Fishing : MonoBehaviour
             }
 
             StopAllCoroutines();
-            PlayerInfo.Instance.fishingMode = false;
+            PlayerInfo.Instance.fishing = false;
                 
             // 생각 풍선 초기화
             thoughtBubbles.GetComponent<Animator>().SetTrigger("Reset");
             thoughtBubbles.SetActive(false);
                 
         }
-		else if (Input.GetKeyDown(fishingKey) && PlayerInfo.Instance.fishingMode && nibble) // 물고 잡음
+		else if (Input.GetKeyDown(fishingKey) && PlayerInfo.Instance.fishing && nibble) // 물고 잡음
 		{
             if (bobber != null)
             {
                 bobber.position = originPos.position;
-                Debug.Log("PlayerInfo.Instance.fishingMode bobber returned to original position: " + originPos);
             }
 
             StopAllCoroutines();
@@ -79,7 +77,7 @@ public class Fishing : MonoBehaviour
     // 줄 던지기 호출
     private void CastLine()
 	{
-        PlayerInfo.Instance.fishingMode = true;
+        PlayerInfo.Instance.fishing = true;
         thoughtBubbles.SetActive(true); // 생각 풍선 활성화
         StartCoroutine(WaitForNibble(10)); // 물기를 기다리는 코루틴 시작
     }
@@ -103,13 +101,13 @@ public class Fishing : MonoBehaviour
         thoughtBubbles.GetComponent<Animator>().SetTrigger("Reset");
         thoughtBubbles.SetActive(false);
 
-        PlayerInfo.Instance.fishingMode = false;
+        PlayerInfo.Instance.fishing = false;
         nibble = false;
     }
 
     public void FishCaught()
 	{
-        PlayerInfo.Instance.fishingMode = false;
+        PlayerInfo.Instance.fishing = false;
         nibble = false;
 
         fishtype = FishManager.GetRandomFish();

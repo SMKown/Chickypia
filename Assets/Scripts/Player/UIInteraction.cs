@@ -6,6 +6,7 @@ using UnityEngine;
 public class UIInteraction : MonoBehaviour
 {
     public static UIInteraction Instance;
+    
     private void Awake()
     {
         if (Instance != null)
@@ -16,55 +17,42 @@ public class UIInteraction : MonoBehaviour
         Instance = this;
     }
 
-    public Image itemImage;
-    public Image cookingImage;
+    public Image collection;
+    public Image gathering;
+    public Image cooking;
+    public Image dialog;
     public Image gatherProgressCircle;
-    private GameObject interactableObj;
+    public GameObject interactableObj;
 
-    private Vector3 startScale;
-    private Vector3 targetScale;
-    private Vector3 targetPos;
+    private Dictionary<string, Image> tagToImageMap = new Dictionary<string, Image>();
+    private float elapsedTime;
 
     [SerializeField] private float animationDuration = 0.25F;
 
+    private void Start()
+    {
+        // 태그와 이미지 매핑
+        tagToImageMap.Add("Collectible", collection);
+        tagToImageMap.Add("Gatherable", gathering);
+        tagToImageMap.Add("CookingSpot", cooking);
+        tagToImageMap.Add("Dialog", dialog);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Item"))
+        if (tagToImageMap.TryGetValue(other.tag, out Image image))
         {
             interactableObj = other.gameObject;
-            targetPos = interactableObj.transform.position;
-            StartCoroutine(AnimateImageON(itemImage));
-        }
-        else if (other.CompareTag("Gatherable"))
-        {
-            interactableObj = other.gameObject;
-            targetPos = interactableObj.transform.position;
-            StartCoroutine(AnimateImageON(itemImage));
-        }
-        else if (other.CompareTag("CookingSpot"))
-        {
-            interactableObj = other.gameObject;
-            targetPos = interactableObj.transform.position;
-            StartCoroutine(AnimateImageON(cookingImage));
+            StartCoroutine(AnimateImageON(image));
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Item"))
+        if (tagToImageMap.ContainsKey(other.tag))
         {
             interactableObj = null;
-            ImageOff(itemImage);
-        }
-        else if (other.CompareTag("Gatherable"))
-        {
-            interactableObj = null;
-            ImageOff(itemImage);
-        }
-        else if (other.CompareTag("CookingSpot"))
-        {
-            interactableObj = null;
-            ImageOff(cookingImage);
+            ImageOff(tagToImageMap[other.tag]);
         }
     }
 
@@ -72,21 +60,15 @@ public class UIInteraction : MonoBehaviour
     {
         image.enabled = true;
 
-        startScale = Vector3.zero;
-        targetScale = Vector3.one;
-
-        float elapsedTime = 0f;
-
+        elapsedTime = 0F;
         while (elapsedTime < animationDuration)
         {
             float t = elapsedTime / animationDuration;
-            image.transform.localScale = Vector3.Lerp(startScale, targetScale, t);
-
+            image.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, t);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
-        image.transform.localScale = targetScale;
+        image.transform.localScale = Vector3.one;
     }
 
     public void ImageOff(Image image)
@@ -96,33 +78,29 @@ public class UIInteraction : MonoBehaviour
 
     private IEnumerator AnimateImageOFF(Image image)
     {
-        startScale = Vector3.one;
-        targetScale = Vector3.zero;
-
-        float elapsedTime = 0f;
-
+        elapsedTime = 0F;
         while (elapsedTime < animationDuration)
         {
             float t = elapsedTime / animationDuration;
-            image.transform.localScale = Vector3.Lerp(startScale, targetScale, t);
-
+            image.transform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, t);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        image.transform.localScale = Vector3.zero;
 
-        image.transform.localScale = targetScale;
         image.enabled = false;
     }
 
     public void ShowGatherProgress(float duration)
     {
-        StartCoroutine(GatherProgress(duration));
+        if (gatherProgressCircle != null)
+            StartCoroutine(GatherProgress(duration));
     }
 
     private IEnumerator GatherProgress(float duration)
     {
-        float elapsedTime = 0f;
-        gatherProgressCircle.fillAmount = 0f;
+        elapsedTime = 0F;
+        gatherProgressCircle.fillAmount = 0F;
         gatherProgressCircle.gameObject.SetActive(true);
 
         while (elapsedTime < duration)
@@ -134,21 +112,17 @@ public class UIInteraction : MonoBehaviour
             }
             else
             {
-                gatherProgressCircle.fillAmount = 0f;
-                gatherProgressCircle.gameObject.SetActive(false);
+                HideGatherProgress();
                 yield break;
             }
-
             yield return null;
         }
-
-        gatherProgressCircle.fillAmount = 1f;
+        gatherProgressCircle.fillAmount = 1F;
     }
 
     public void HideGatherProgress()
     {
-        gatherProgressCircle.fillAmount = 0f;
+        gatherProgressCircle.fillAmount = 0F;
         gatherProgressCircle.gameObject.SetActive(false);
     }
-
 }

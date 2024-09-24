@@ -16,8 +16,16 @@ public class PlayerInfo : MonoBehaviour
     }
 
     public bool attackMode = false;
-    public bool fishingMode = false;
-    public bool shouldTurn = false;
-    public bool shouldAttack = false;
+
+    public bool interacting = false;
+    public bool attacking = false;
+    public bool fishing = false;
+
     public bool isGround = true;
+
+    public bool UnableMove()
+    {
+        if (interacting || attacking || fishing) return true;
+        else return false;
+    }
 }
