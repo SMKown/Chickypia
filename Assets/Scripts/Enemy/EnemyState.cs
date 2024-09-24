@@ -23,8 +23,15 @@ public abstract class EnemyState
 
     protected bool PlayerOutPatrolRange()
     {
-        float distanceFromInitialPosition = Vector3.Distance(enemyAI.GetEnemy().initialPosition, enemyAI.player.position);
-        return distanceFromInitialPosition > enemyAI.GetEnemy().patrolRange;
+        Vector3[] patrolPoints = enemyAI.GetEnemy().patrolPoints;
+        foreach (var point in patrolPoints)
+        {
+            if (Vector3.Distance(point, enemyAI.player.position) <= enemyAI.GetEnemy().sightRange)
+            {
+                return false; // 플레이어가 순찰 지점 중 하나에 가까운 경우
+            }
+        }
+        return true;
     }
 }
 
@@ -70,82 +77,28 @@ public class IdleState : EnemyState
     }
 }
 
-// 적의 순찰 상태
-//public class PatrollingState : EnemyState
-//{
-//    public PatrollingState(EnemyAI enemyAI) : base(enemyAI) { }
-
-//    public override void EnterState()
-//    {
-//        SetNextDestination();
-//    }
-
-//    public override void UpdateState()
-//    {
-//        PatrolBehavior();
-//    }
-
-//    public override EnemyState CheckStateTransitions()
-//    {
-//        if (PlayerInChaseRange())
-//        {
-//            switch (enemyAI.enemyLevel)
-//            {
-//                case EnemyLevel.Level1:
-//                    return new FleeingState(enemyAI);
-//                case EnemyLevel.Level2:
-//                case EnemyLevel.Level3:
-//                    return new ChasingState(enemyAI);
-//            }
-//        }
-//        return this;
-//    }
-
-//    private void SetNextDestination()
-//    {
-//        enemyAI.GetEnemy().SetAnimationState("Move", true);
-//        enemyAI.SetDestinationRandomPoint();
-//    }
-
-//    private void PatrolBehavior()
-//    {
-//        if (!enemyAI.agent.pathPending && (enemyAI.agent.remainingDistance <= enemyAI.agent.stoppingDistance || enemyAI.agent.velocity.sqrMagnitude == 0f))
-//        {
-//            enemyAI.SwitchState(new IdleState(enemyAI, 2f));
-//        }
-//    }
-
-//    public override void ExitState()
-//    {
-//        enemyAI.GetEnemy().SetAnimationState("Move", false);
-//    }
-//}
+// 순찰 상태
 public class PatrollingState : EnemyState
 {
     private Vector3 patrolStartPosition;
     private Vector3 patrolEndPosition;
     private bool movingToEnd = true;
+    private bool waitingBeforeMove = false;
 
     public PatrollingState(EnemyAI enemyAI) : base(enemyAI) { }
 
     public override void EnterState()
     {
         enemyAI.GetEnemy().SetAnimationState("Move", true);
-        patrolStartPosition = enemyAI.GetEnemy().initialPosition;
-        SetPatrolPoints();
-        SetDestination(patrolStartPosition);
+        SetNextPatrolDestination();
     }
 
     public override void UpdateState()
     {
-        if (!enemyAI.agent.pathPending && enemyAI.agent.remainingDistance < 0.5f)
+        if (!waitingBeforeMove && !enemyAI.agent.pathPending && enemyAI.agent.remainingDistance < 0.5f)
         {
-            if (movingToEnd)
-                SetDestination(patrolEndPosition);
-            else
-                SetDestination(patrolStartPosition);
-
-            movingToEnd = !movingToEnd;
+            waitingBeforeMove = true;
+            enemyAI.SwitchState(new IdleState(enemyAI, 2f)); // Idle 상태로 전환하여 2초 대기
         }
     }
 
@@ -165,28 +118,66 @@ public class PatrollingState : EnemyState
         return this;
     }
 
-    private void SetPatrolPoints()
+    private void SetNextPatrolDestination()
     {
-        switch (enemyAI.GetEnemy().patrolType)
+        var enemy = enemyAI.GetEnemy();
+        switch (enemy.patrolType)
         {
-            case PatrolType.XAxisPatrol:
-                patrolEndPosition = patrolStartPosition + new Vector3(enemyAI.minpatrolRange, 0, 0);
-                break;
-
-            case PatrolType.ZAxisPatrol:
-                patrolEndPosition = patrolStartPosition + new Vector3(0, 0, enemyAI.minpatrolRange);
-                break;
-
-            case PatrolType.XZRandomPatrol:
-                if (Random.Range(0, 2) == 0)
-                {
-                    patrolEndPosition = patrolStartPosition + new Vector3(enemyAI.minpatrolRange, 0, 0);
-                }
+            case PatrolType.Patrol1:
+                if (movingToEnd)
+                    SetDestination(enemy.patrolPoints[1]);
                 else
-                {
-                    patrolEndPosition = patrolStartPosition + new Vector3(0, 0, enemyAI.minpatrolRange);
-                }
+                    SetDestination(enemy.patrolPoints[0]);
+
+                movingToEnd = !movingToEnd;
                 break;
+
+            case PatrolType.Patrol2:
+                int currentIndex = GetClosestPatrolPointIndex();
+                var possiblePoints = GetPossiblePoints(currentIndex);
+                int nextPoint = possiblePoints[Random.Range(0, possiblePoints.Length)];
+                SetDestination(enemy.patrolPoints[nextPoint]);
+                break;
+
+            default:
+                SetDestination(enemy.initialPosition);
+                break;
+        }
+    }
+
+    private int GetClosestPatrolPointIndex()
+    {
+        var enemy = enemyAI.GetEnemy();
+        int closestIndex = 0;
+        float closestDistance = Vector3.Distance(enemy.transform.position, enemy.patrolPoints[0]);
+
+        for (int i = 1; i < enemy.patrolPoints.Length; i++)
+        {
+            float distance = Vector3.Distance(enemy.transform.position, enemy.patrolPoints[i]);
+            if (distance < closestDistance)
+            {
+                closestIndex = i;
+                closestDistance = distance;
+            }
+        }
+
+        return closestIndex;
+    }
+
+    private int[] GetPossiblePoints(int currentIndex)
+    {
+        switch (currentIndex)
+        {
+            case 0:
+                return new int[] { 1, 2 };
+            case 1:
+                return new int[] { 0, 3 };
+            case 2:
+                return new int[] { 0, 3 };
+            case 3:
+                return new int[] { 1, 2 };
+            default:
+                return new int[] { 0 };
         }
     }
 
@@ -197,10 +188,10 @@ public class PatrollingState : EnemyState
 
     public override void ExitState()
     {
+        waitingBeforeMove = false; // 상태 종료 시 대기 상태 초기화
         enemyAI.GetEnemy().SetAnimationState("Move", false);
     }
 }
-
 
 // 적의 추적 상태
 public class ChasingState : EnemyState

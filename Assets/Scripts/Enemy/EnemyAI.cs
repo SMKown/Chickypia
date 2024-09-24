@@ -6,17 +6,13 @@ public class EnemyAI : MonoBehaviour
     public NavMeshAgent agent;
     public Transform player;
     public LayerMask Player;
-    public float minpatrolRange = 5f;             // 순찰 최소 범위
     public EnemyLevel enemyLevel;                 // 적의 레벨
-
-    private Vector3 patrolPoint;                  // 순찰 지점
-    private bool patrolPointSet;
 
     public EnemyState currentState;
     private bool isTransitioningState;
 
     private Enemy enemy;
-
+    private bool hasFledOnce = false;
     public Enemy GetEnemy()
     {
         return enemy;
@@ -75,71 +71,75 @@ public class EnemyAI : MonoBehaviour
     // 플레이어로부터 도망
     public void FleeFromPlayer()
     {
-        Vector3 directionAwayFromPlayer = (transform.position - player.position).normalized;
-        Vector3 fleePosition = transform.position + directionAwayFromPlayer * enemy.patrolRange;
-
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(fleePosition, out hit, enemy.patrolRange, NavMesh.AllAreas))
+        if (!hasFledOnce && PlayerInSightRange()) // 아직 도망간 적이 없고 플레이어가 시야 범위 안에 있을 때
         {
-            enemy.FleeFromPlayer(hit.position);
+            Vector3 directionAwayFromPlayer = (transform.position - player.position).normalized;
+
+            float fleeDistance = enemy.sightRange + 10f; // 도망 거리 계산
+            Vector3 fleePosition = transform.position + directionAwayFromPlayer * fleeDistance;
+
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(fleePosition, out hit, fleeDistance, NavMesh.AllAreas))
+            {
+                enemy.FleeFromPlayer(hit.position);
+                hasFledOnce = true; // 도망 기록 설정
+            }
+            else
+            {
+                SwitchToChaseOrAttackState();
+            }
         }
         else
         {
-            SwitchState(new PatrollingState(this));
+            SwitchToChaseOrAttackState(); // 이미 도망간 적이 있을 때 추격 또는 공격 상태로 전환
         }
     }
 
-    // 플레이어와 일정 거리 이상 떨어졌는지 확인
+    private void SwitchToChaseOrAttackState()
+    {
+        if (PlayerInSightRange() && !PlayerInAttackRange())
+        {
+            SwitchState(new ChasingState(this)); 
+        }
+        else if (PlayerInAttackRange())
+        {
+            SwitchToAttackState(); 
+        }
+        else
+        {
+            SwitchState(new PatrollingState(this)); 
+        }
+    }
+
     public bool PlayerMovedFar()
     {
-        return Vector3.Distance(transform.position, player.position) > enemy.fleeDistance;
+        // 플레이어가 적의 시야 범위 바깥에 있는 경우 true 반환
+        return Vector3.Distance(transform.position, player.position) > enemy.sightRange;
     }
 
-    // 플레이어가 시야 범위에 있는지 확인
     public bool PlayerInSightRange()
     {
-        return Physics.CheckSphere(transform.position, enemy.sightRange, Player);
+        // 플레이어가 시야 범위 내에 있는지 확인
+        if (Vector3.Distance(transform.position, player.position) <= enemy.sightRange)
+        {
+            RaycastHit hit;
+            Vector3 directionToPlayer = (player.position - transform.position).normalized;
+
+            if (Physics.Raycast(transform.position, directionToPlayer, out hit, enemy.sightRange))
+            {
+                if (hit.transform == player)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
-    // 플레이어가 공격 범위에 있는지 확인
     public bool PlayerInAttackRange()
     {
         return Physics.CheckSphere(transform.position, enemy.attackRange, Player);
     }
-
-    //public void SetDestinationRandomPoint()
-    //{
-    //    int maxAttempts = 30;
-    //    patrolPointSet = false;
-
-    //    for (int i = 0; i < maxAttempts; i++)
-    //    {
-    //        SearchPatrolPoint();
-
-    //        if (Vector3.Distance(enemy.initialPosition, patrolPoint) <= enemy.patrolRange && Vector3.Distance(transform.position, patrolPoint) >= minpatrolRange)
-    //        {
-    //            patrolPointSet = true;
-    //            agent.SetDestination(patrolPoint);
-    //            enemy.SetAnimationState("Move", true);
-    //            break;
-    //        }
-    //    }
-    //}
-
-    //// 순찰할 랜덤한 지점을 찾기
-    //private void SearchPatrolPoint()
-    //{
-    //    float randomZ = Random.Range(-patrolRange, patrolRange);
-    //    float randomX = Random.Range(-patrolRange, patrolRange);
-
-    //    Vector3 randomPoint = new Vector3(enemy.initialPosition.x + randomX, enemy.initialPosition.y, enemy.initialPosition.z + randomZ);
-
-    //    NavMeshHit hit;
-    //    if (NavMesh.SamplePosition(randomPoint, out hit, 2f, NavMesh.AllAreas))
-    //    {
-    //        patrolPoint = hit.position;
-    //    }
-    //}
 
     // 공격 상태로 전환
     public void SwitchToAttackState()

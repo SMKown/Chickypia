@@ -3,17 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Slot
-  - Item
-  - CookingSpot
-<<<<<<< Updated upstream
-  - Gatherable
-=======
-  - Fish
-  - CatchingBar
-  - Ground
->>>>>>> Stashed changes
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -21,9 +11,9 @@ TagManager:
   - 
   - Water
   - UI
-  - MapCam
-  - Renderer
-  - Player
+  - 
+  - 
+  - 
   - 
   - 
   - 

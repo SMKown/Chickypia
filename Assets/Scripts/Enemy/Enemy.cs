@@ -10,25 +10,24 @@ public enum EnemyLevel
 
 public enum PatrolType
 {
-    XAxisPatrol,
-    ZAxisPatrol,
-    XZRandomPatrol
+    Patrol1,
+    Patrol2
 }
 
 public abstract class Enemy : MonoBehaviour
 {
-    public int health;                // 적의 체력
-    public float sightRange;          // 적의 시야 범위
-    public float attackRange;         // 적의 공격 범위
-    public float fleeDistance = 20f;  // 도망 범위
-    public float patrolRange = 15f;   // 순찰 범위
+    public int health;
+    public float sightRange;
+    public float attackRange;
     public Vector3 initialPosition;
 
     protected Animator anim;
     protected Transform player;
-    protected NavMeshAgent agent;
+    public NavMeshAgent agent;
 
     public PatrolType patrolType;
+
+    public Vector3[] patrolPoints; // 순찰 지점들
 
     protected virtual void Awake()
     {
@@ -134,13 +133,23 @@ public abstract class Enemy : MonoBehaviour
         // 공격 범위 (빨간색)
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+        if (patrolPoints != null && patrolPoints.Length > 0)
+        {
+            Gizmos.color = Color.green;
 
-        // 도망 범위 (초록색)
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, fleeDistance);
+            for (int i = 0; i < patrolPoints.Length; i++)
+            {
+                Gizmos.DrawSphere(patrolPoints[i], 0.5f);
 
-        // 순찰 범위 (노란색)
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(initialPosition, patrolRange);
+                if (i + 1 < patrolPoints.Length)
+                {
+                    Gizmos.DrawLine(patrolPoints[i], patrolPoints[i + 1]);
+                }
+                else if (i == patrolPoints.Length - 1)
+                {
+                    Gizmos.DrawLine(patrolPoints[i], patrolPoints[0]);
+                }
+            }
+        }
     }
 }
