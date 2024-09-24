@@ -71,18 +71,82 @@ public class IdleState : EnemyState
 }
 
 // 적의 순찰 상태
+//public class PatrollingState : EnemyState
+//{
+//    public PatrollingState(EnemyAI enemyAI) : base(enemyAI) { }
+
+//    public override void EnterState()
+//    {
+//        SetNextDestination();
+//    }
+
+//    public override void UpdateState()
+//    {
+//        PatrolBehavior();
+//    }
+
+//    public override EnemyState CheckStateTransitions()
+//    {
+//        if (PlayerInChaseRange())
+//        {
+//            switch (enemyAI.enemyLevel)
+//            {
+//                case EnemyLevel.Level1:
+//                    return new FleeingState(enemyAI);
+//                case EnemyLevel.Level2:
+//                case EnemyLevel.Level3:
+//                    return new ChasingState(enemyAI);
+//            }
+//        }
+//        return this;
+//    }
+
+//    private void SetNextDestination()
+//    {
+//        enemyAI.GetEnemy().SetAnimationState("Move", true);
+//        enemyAI.SetDestinationRandomPoint();
+//    }
+
+//    private void PatrolBehavior()
+//    {
+//        if (!enemyAI.agent.pathPending && (enemyAI.agent.remainingDistance <= enemyAI.agent.stoppingDistance || enemyAI.agent.velocity.sqrMagnitude == 0f))
+//        {
+//            enemyAI.SwitchState(new IdleState(enemyAI, 2f));
+//        }
+//    }
+
+//    public override void ExitState()
+//    {
+//        enemyAI.GetEnemy().SetAnimationState("Move", false);
+//    }
+//}
 public class PatrollingState : EnemyState
 {
+    private Vector3 patrolStartPosition;
+    private Vector3 patrolEndPosition;
+    private bool movingToEnd = true;
+
     public PatrollingState(EnemyAI enemyAI) : base(enemyAI) { }
 
     public override void EnterState()
     {
-        SetNextDestination();
+        enemyAI.GetEnemy().SetAnimationState("Move", true);
+        patrolStartPosition = enemyAI.GetEnemy().initialPosition;
+        SetPatrolPoints();
+        SetDestination(patrolStartPosition);
     }
 
     public override void UpdateState()
     {
-        PatrolBehavior();
+        if (!enemyAI.agent.pathPending && enemyAI.agent.remainingDistance < 0.5f)
+        {
+            if (movingToEnd)
+                SetDestination(patrolEndPosition);
+            else
+                SetDestination(patrolStartPosition);
+
+            movingToEnd = !movingToEnd;
+        }
     }
 
     public override EnemyState CheckStateTransitions()
@@ -101,26 +165,42 @@ public class PatrollingState : EnemyState
         return this;
     }
 
-    private void SetNextDestination()
+    private void SetPatrolPoints()
     {
-        enemyAI.GetEnemy().SetAnimationState("Move", true);
-        enemyAI.SetDestinationRandomPoint();
-    }
-
-    private void PatrolBehavior()
-    {
-        if (!enemyAI.agent.pathPending && (enemyAI.agent.remainingDistance <= enemyAI.agent.stoppingDistance || enemyAI.agent.velocity.sqrMagnitude == 0f))
+        switch (enemyAI.GetEnemy().patrolType)
         {
-            enemyAI.SwitchState(new IdleState(enemyAI, 2f));
+            case PatrolType.XAxisPatrol:
+                patrolEndPosition = patrolStartPosition + new Vector3(enemyAI.minpatrolRange, 0, 0);
+                break;
+
+            case PatrolType.ZAxisPatrol:
+                patrolEndPosition = patrolStartPosition + new Vector3(0, 0, enemyAI.minpatrolRange);
+                break;
+
+            case PatrolType.XZRandomPatrol:
+                if (Random.Range(0, 2) == 0)
+                {
+                    patrolEndPosition = patrolStartPosition + new Vector3(enemyAI.minpatrolRange, 0, 0);
+                }
+                else
+                {
+                    patrolEndPosition = patrolStartPosition + new Vector3(0, 0, enemyAI.minpatrolRange);
+                }
+                break;
         }
     }
 
+    private void SetDestination(Vector3 destination)
+    {
+        enemyAI.agent.SetDestination(destination);
+    }
 
     public override void ExitState()
     {
         enemyAI.GetEnemy().SetAnimationState("Move", false);
     }
 }
+
 
 // 적의 추적 상태
 public class ChasingState : EnemyState

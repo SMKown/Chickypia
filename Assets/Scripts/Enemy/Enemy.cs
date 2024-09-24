@@ -8,6 +8,13 @@ public enum EnemyLevel
     Level3
 }
 
+public enum PatrolType
+{
+    XAxisPatrol,
+    ZAxisPatrol,
+    XZRandomPatrol
+}
+
 public abstract class Enemy : MonoBehaviour
 {
     public int health;                // 적의 체력
@@ -20,6 +27,8 @@ public abstract class Enemy : MonoBehaviour
     protected Animator anim;
     protected Transform player;
     protected NavMeshAgent agent;
+
+    public PatrolType patrolType;
 
     protected virtual void Awake()
     {
@@ -64,7 +73,6 @@ public abstract class Enemy : MonoBehaviour
             }
         }
     }
-
 
     protected void Die()
     {

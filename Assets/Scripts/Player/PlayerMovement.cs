@@ -22,9 +22,6 @@ public class PlayerMovement : MonoBehaviour
     private GameObject pickupObject;
     private GatherableObject currentGatherScript;
 
-    private float gatherHoldTime = 0f;
-    private float gatherThreshold = 1f;
-
     private void Start()
     {
         cc = GetComponent<CharacterController>();

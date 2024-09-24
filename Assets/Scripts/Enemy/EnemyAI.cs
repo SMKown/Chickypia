@@ -6,9 +6,7 @@ public class EnemyAI : MonoBehaviour
     public NavMeshAgent agent;
     public Transform player;
     public LayerMask Player;
-    public float patrolRange = 15f;               // 순찰 범위
     public float minpatrolRange = 5f;             // 순찰 최소 범위
-    public float fleeDistance = 20f;              // 도망 범위
     public EnemyLevel enemyLevel;                 // 적의 레벨
 
     private Vector3 patrolPoint;                  // 순찰 지점
@@ -78,10 +76,10 @@ public class EnemyAI : MonoBehaviour
     public void FleeFromPlayer()
     {
         Vector3 directionAwayFromPlayer = (transform.position - player.position).normalized;
-        Vector3 fleePosition = transform.position + directionAwayFromPlayer * patrolRange;
+        Vector3 fleePosition = transform.position + directionAwayFromPlayer * enemy.patrolRange;
 
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(fleePosition, out hit, patrolRange, NavMesh.AllAreas))
+        if (NavMesh.SamplePosition(fleePosition, out hit, enemy.patrolRange, NavMesh.AllAreas))
         {
             enemy.FleeFromPlayer(hit.position);
         }
@@ -94,7 +92,7 @@ public class EnemyAI : MonoBehaviour
     // 플레이어와 일정 거리 이상 떨어졌는지 확인
     public bool PlayerMovedFar()
     {
-        return Vector3.Distance(transform.position, player.position) > fleeDistance;
+        return Vector3.Distance(transform.position, player.position) > enemy.fleeDistance;
     }
 
     // 플레이어가 시야 범위에 있는지 확인
@@ -109,40 +107,39 @@ public class EnemyAI : MonoBehaviour
         return Physics.CheckSphere(transform.position, enemy.attackRange, Player);
     }
 
-    public void SetDestinationRandomPoint()
-    {
-        int maxAttempts = 30;
-        patrolPointSet = false;
+    //public void SetDestinationRandomPoint()
+    //{
+    //    int maxAttempts = 30;
+    //    patrolPointSet = false;
 
-        for (int i = 0; i < maxAttempts; i++)
-        {
-            SearchPatrolPoint();
+    //    for (int i = 0; i < maxAttempts; i++)
+    //    {
+    //        SearchPatrolPoint();
 
-            if (Vector3.Distance(enemy.initialPosition, patrolPoint) <= enemy.patrolRange && Vector3.Distance(transform.position, patrolPoint) >= minpatrolRange)
-            {
-                patrolPointSet = true;
-                agent.SetDestination(patrolPoint);
-                enemy.SetAnimationState("Move", true);
-                break;
-            }
-        }
-    }
+    //        if (Vector3.Distance(enemy.initialPosition, patrolPoint) <= enemy.patrolRange && Vector3.Distance(transform.position, patrolPoint) >= minpatrolRange)
+    //        {
+    //            patrolPointSet = true;
+    //            agent.SetDestination(patrolPoint);
+    //            enemy.SetAnimationState("Move", true);
+    //            break;
+    //        }
+    //    }
+    //}
 
-    // 순찰할 랜덤한 지점을 찾기
-    private void SearchPatrolPoint()
-    {
-        float randomZ = Random.Range(-patrolRange, patrolRange);
-        float randomX = Random.Range(-patrolRange, patrolRange);
+    //// 순찰할 랜덤한 지점을 찾기
+    //private void SearchPatrolPoint()
+    //{
+    //    float randomZ = Random.Range(-patrolRange, patrolRange);
+    //    float randomX = Random.Range(-patrolRange, patrolRange);
 
-        Vector3 randomPoint = new Vector3(enemy.initialPosition.x + randomX, enemy.initialPosition.y, enemy.initialPosition.z + randomZ);
+    //    Vector3 randomPoint = new Vector3(enemy.initialPosition.x + randomX, enemy.initialPosition.y, enemy.initialPosition.z + randomZ);
 
-        // 랜덤한 지점이 유효한 위치인지 확인
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(randomPoint, out hit, 2f, NavMesh.AllAreas))
-        {
-            patrolPoint = hit.position;
-        }
-    }
+    //    NavMeshHit hit;
+    //    if (NavMesh.SamplePosition(randomPoint, out hit, 2f, NavMesh.AllAreas))
+    //    {
+    //        patrolPoint = hit.position;
+    //    }
+    //}
 
     // 공격 상태로 전환
     public void SwitchToAttackState()
