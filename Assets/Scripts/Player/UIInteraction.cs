@@ -101,7 +101,7 @@ public class UIInteraction : MonoBehaviour
     {
         elapsedTime = 0F;
         gatherProgressCircle.fillAmount = 0F;
-        gatherProgressCircle.gameObject.SetActive(true);
+        gatherProgressCircle.enabled = true;
 
         while (elapsedTime < duration)
         {
@@ -123,6 +123,6 @@ public class UIInteraction : MonoBehaviour
     public void HideGatherProgress()
     {
         gatherProgressCircle.fillAmount = 0F;
-        gatherProgressCircle.gameObject.SetActive(false);
+        gatherProgressCircle.enabled = false;
     }
 }

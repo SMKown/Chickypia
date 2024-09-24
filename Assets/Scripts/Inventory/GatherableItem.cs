@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GatherableObject : MonoBehaviour
+public class GatherableItem : MonoBehaviour
 {
     public int gatherAmount = 1;
     public float gatherTime = 2F;

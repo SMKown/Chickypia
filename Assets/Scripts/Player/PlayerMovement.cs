@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
 
     public InventoryManager inventoryManager;
     private InventoryItem inventoryItem;
-    private GatherableObject gatherableObject;
+    private GatherableItem gatherableItem;
 
     private void Start()
     {
@@ -120,17 +120,17 @@ public class PlayerMovement : MonoBehaviour
 
     public void Gathering(GameObject item)
     {
-        gatherableObject = item.GetComponent<GatherableObject>();
+        gatherableItem = item.GetComponent<GatherableItem>();
 
-        if (gatherableObject != null)
+        if (gatherableItem != null)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                gatherableObject.StartGathering(inventoryManager);
+                gatherableItem.StartGathering(inventoryManager);
             }
             else if (Input.GetKeyUp(KeyCode.E))
             {
-                gatherableObject.StopGathering();
+                gatherableItem.StopGathering();
             }
         }
     }
