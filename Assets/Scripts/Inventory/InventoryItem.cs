@@ -1,15 +1,15 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("UI")]
     public Image image;
     public Text countText;
     public ItemData item;
+    public ItemToolTipUI tooltipUI;
 
     [HideInInspector] public int count = 1;
     [HideInInspector] public Transform parentAfterDrag;
@@ -21,12 +21,17 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         rectTransform = GetComponent<RectTransform>();
         //InitialiseItem(item);
+        if (tooltipUI == null)
+        {
+            tooltipUI = ItemToolTipUI.Instance;
+        }
     }
 
-    public void InitialiseItem(ItemData newItem)
+    public void InitialiseItem(ItemData newItem, ItemToolTipUI toolTipUIInstance)
     {
         item = newItem;
         image.sprite = newItem.itemIcon;
+        tooltipUI = toolTipUIInstance;
         ItemCount();
     }
 
@@ -44,7 +49,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         parentAfterDrag = transform.parent;
         transform.SetParent(transform.root);
-
+        tooltipUI.HideToolTip();
         isDragging = true;
     }
 
@@ -70,6 +75,45 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         isDragging = false;
     }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (tooltipUI == null || isDragging)
+            return;
+
+        SetTooltipPosition();
+
+        tooltipUI.ShowToolTip(item.itemDesc, item.itemName);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (tooltipUI == null || isDragging)
+            return;
+
+        tooltipUI.HideToolTip();
+    }
+
+
+    private void SetTooltipPosition()
+    {
+        RectTransform slotRectTransform = GetComponent<RectTransform>();
+        RectTransform tooltipRectTransform = tooltipUI.GetComponent<RectTransform>();
+        RectTransform canvasRectTransform = tooltipUI.transform.parent.GetComponent<RectTransform>();
+
+        Vector3 slotPosition = slotRectTransform.position;
+        Vector3 offset = new Vector3(slotRectTransform.rect.width / 2, -slotRectTransform.rect.height / 2, 0);
+
+        Vector2 anchoredPosition;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvasRectTransform,
+            slotPosition + offset,
+            null,
+            out anchoredPosition
+        );
+        tooltipRectTransform.anchoredPosition = anchoredPosition;
+    }
+
 
     private void Update()
     {

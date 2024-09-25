@@ -74,7 +74,7 @@ public class InventoryManager : MonoBehaviour
     {
         GameObject newItemGo = Instantiate(inventoryItemPrefab, slot.transform);
         InventoryItem invItem = newItemGo.GetComponent<InventoryItem>();
-        invItem.InitialiseItem(item);
+        invItem.InitialiseItem(item, ItemToolTipUI.Instance);
         invItem.count = count;
         invItem.ItemCount();
         return invItem;

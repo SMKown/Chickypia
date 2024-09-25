@@ -1,3 +1,4 @@
+using System.Net.NetworkInformation;
 using UnityEngine;
 
 public abstract class EnemyState
@@ -28,7 +29,7 @@ public abstract class EnemyState
         {
             if (Vector3.Distance(point, enemyAI.player.position) <= enemyAI.GetEnemy().sightRange)
             {
-                return false; // 플레이어가 순찰 지점 중 하나에 가까운 경우
+                return false;
             }
         }
         return true;
@@ -62,7 +63,10 @@ public class IdleState : EnemyState
         }
         else if (idleTimer <= 0f)
         {
-            enemyAI.SwitchState(new PatrollingState(enemyAI));
+            if (!(enemyAI.CurrentState is PatrollingState))
+            {
+                enemyAI.SwitchState(new PatrollingState(enemyAI));
+            }
         }
     }
 
@@ -80,10 +84,7 @@ public class IdleState : EnemyState
 // 순찰 상태
 public class PatrollingState : EnemyState
 {
-    private Vector3 patrolStartPosition;
-    private Vector3 patrolEndPosition;
-    private bool movingToEnd = true;
-    private bool waitingBeforeMove = false;
+    private int currentPatrolIndex = 0;
 
     public PatrollingState(EnemyAI enemyAI) : base(enemyAI) { }
 
@@ -95,10 +96,9 @@ public class PatrollingState : EnemyState
 
     public override void UpdateState()
     {
-        if (!waitingBeforeMove && !enemyAI.agent.pathPending && enemyAI.agent.remainingDistance < 0.5f)
+        if (!enemyAI.agent.pathPending && enemyAI.agent.remainingDistance <= enemyAI.agent.stoppingDistance + 0.1f)
         {
-            waitingBeforeMove = true;
-            enemyAI.SwitchState(new IdleState(enemyAI, 2f)); // Idle 상태로 전환하여 2초 대기
+            enemyAI.SwitchState(new IdleState(enemyAI, 2f));
         }
     }
 
@@ -121,31 +121,13 @@ public class PatrollingState : EnemyState
     private void SetNextPatrolDestination()
     {
         var enemy = enemyAI.GetEnemy();
-        switch (enemy.patrolType)
-        {
-            case PatrolType.Patrol1:
-                if (movingToEnd)
-                    SetDestination(enemy.patrolPoints[1]);
-                else
-                    SetDestination(enemy.patrolPoints[0]);
-
-                movingToEnd = !movingToEnd;
-                break;
-
-            case PatrolType.Patrol2:
-                int currentIndex = GetClosestPatrolPointIndex();
-                var possiblePoints = GetPossiblePoints(currentIndex);
-                int nextPoint = possiblePoints[Random.Range(0, possiblePoints.Length)];
-                SetDestination(enemy.patrolPoints[nextPoint]);
-                break;
-
-            default:
-                SetDestination(enemy.initialPosition);
-                break;
-        }
+        int currentIndex = GetPatrolPointIndex();
+        var possiblePoints = GetPossiblePoints(currentIndex);
+        int nextPoint = possiblePoints[Random.Range(0, possiblePoints.Length)];
+        SetDestination(enemy.patrolPoints[nextPoint]);
     }
 
-    private int GetClosestPatrolPointIndex()
+    private int GetPatrolPointIndex()
     {
         var enemy = enemyAI.GetEnemy();
         int closestIndex = 0;
@@ -188,7 +170,6 @@ public class PatrollingState : EnemyState
 
     public override void ExitState()
     {
-        waitingBeforeMove = false; // 상태 종료 시 대기 상태 초기화
         enemyAI.GetEnemy().SetAnimationState("Move", false);
     }
 }

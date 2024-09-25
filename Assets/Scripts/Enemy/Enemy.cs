@@ -8,12 +8,6 @@ public enum EnemyLevel
     Level3
 }
 
-public enum PatrolType
-{
-    Patrol1,
-    Patrol2
-}
-
 public abstract class Enemy : MonoBehaviour
 {
     public int health;
@@ -25,9 +19,7 @@ public abstract class Enemy : MonoBehaviour
     protected Transform player;
     public NavMeshAgent agent;
 
-    public PatrolType patrolType;
-
-    public Vector3[] patrolPoints; // 순찰 지점들
+    public Vector3[] patrolPoints;
 
     protected virtual void Awake()
     {
@@ -110,14 +102,12 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    // 추적
     public void ChasePlayer(Vector3 targetPosition)
     {
         SetAnimationState("Move", true);
         agent.SetDestination(targetPosition);
     }
 
-    // 도망
     public void FleeFromPlayer(Vector3 fleePosition)
     {
         SetAnimationState("Move", true);
@@ -133,6 +123,8 @@ public abstract class Enemy : MonoBehaviour
         // 공격 범위 (빨간색)
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+
+        // 순찰 포인트 (초록색)
         if (patrolPoints != null && patrolPoints.Length > 0)
         {
             Gizmos.color = Color.green;

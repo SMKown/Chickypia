@@ -15,7 +15,11 @@ MonoBehaviour:
   itemType: 2
   itemId: 11
   itemName: item 2
-  itemDesc: 
+  itemDesc: "\uB9C8\uBC14\uC0AC\uC544"
   stackable: 1
   itemIcon: {fileID: 21300000, guid: 3f144ecf58b79514cb6d2ec56c43b1ed, type: 3}
   itemModel: {fileID: 2258042982238242075, guid: d3bcf76fdaf47944792817d19968c646, type: 3}
+  moveSpeed: 0
+  jumpForce: 0
+  hp: 0
+  hpMax: 0

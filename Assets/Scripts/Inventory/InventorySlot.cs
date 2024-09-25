@@ -29,6 +29,8 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         InventoryItem draggedItem = eventData.pointerDrag?.GetComponent<InventoryItem>();
         if (draggedItem == null) return;
 
+        draggedItem.tooltipUI = ItemToolTipUI.Instance;
+
         InventoryManager inventoryManager = FindObjectOfType<InventoryManager>();
         if (inventoryManager != null)
         {

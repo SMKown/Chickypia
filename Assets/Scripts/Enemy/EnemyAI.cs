@@ -6,7 +6,7 @@ public class EnemyAI : MonoBehaviour
     public NavMeshAgent agent;
     public Transform player;
     public LayerMask Player;
-    public EnemyLevel enemyLevel;                 // 적의 레벨
+    public EnemyLevel enemyLevel;
 
     public EnemyState currentState;
     private bool isTransitioningState;
@@ -16,6 +16,10 @@ public class EnemyAI : MonoBehaviour
     public Enemy GetEnemy()
     {
         return enemy;
+    }
+    public EnemyState CurrentState
+    {
+        get { return currentState; }
     }
 
     private void Awake()
@@ -71,18 +75,18 @@ public class EnemyAI : MonoBehaviour
     // 플레이어로부터 도망
     public void FleeFromPlayer()
     {
-        if (!hasFledOnce && PlayerInSightRange()) // 아직 도망간 적이 없고 플레이어가 시야 범위 안에 있을 때
+        if (!hasFledOnce && PlayerInSightRange())
         {
             Vector3 directionAwayFromPlayer = (transform.position - player.position).normalized;
 
-            float fleeDistance = enemy.sightRange + 10f; // 도망 거리 계산
+            float fleeDistance = enemy.sightRange + 10f;
             Vector3 fleePosition = transform.position + directionAwayFromPlayer * fleeDistance;
 
             NavMeshHit hit;
             if (NavMesh.SamplePosition(fleePosition, out hit, fleeDistance, NavMesh.AllAreas))
             {
                 enemy.FleeFromPlayer(hit.position);
-                hasFledOnce = true; // 도망 기록 설정
+                hasFledOnce = true;
             }
             else
             {
@@ -91,7 +95,7 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            SwitchToChaseOrAttackState(); // 이미 도망간 적이 있을 때 추격 또는 공격 상태로 전환
+            SwitchToChaseOrAttackState();
         }
     }
 
@@ -113,13 +117,11 @@ public class EnemyAI : MonoBehaviour
 
     public bool PlayerMovedFar()
     {
-        // 플레이어가 적의 시야 범위 바깥에 있는 경우 true 반환
         return Vector3.Distance(transform.position, player.position) > enemy.sightRange;
     }
 
     public bool PlayerInSightRange()
     {
-        // 플레이어가 시야 범위 내에 있는지 확인
         if (Vector3.Distance(transform.position, player.position) <= enemy.sightRange)
         {
             RaycastHit hit;
@@ -141,7 +143,6 @@ public class EnemyAI : MonoBehaviour
         return Physics.CheckSphere(transform.position, enemy.attackRange, Player);
     }
 
-    // 공격 상태로 전환
     public void SwitchToAttackState()
     {
         switch (enemyLevel)
