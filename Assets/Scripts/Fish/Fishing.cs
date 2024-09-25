@@ -5,14 +5,15 @@ using Random = UnityEngine.Random;
 
 public class Fishing : MonoBehaviour
 {
-    public Transform bobber;
+    public GameObject Rod;
+    public GameObject bobber;
     public Transform originPos;
 
     private Animator animator;
+    private Animator rodAnimator;
 
     private Fish fishtype;
     private bool nibble = false;
-    [SerializeField] private GameObject thoughtBubbles;
 
     private KeyCode fishingKey = KeyCode.E;
     private float maxCastDistance = 5F;
@@ -21,17 +22,16 @@ public class Fishing : MonoBehaviour
     private Vector3 targetPos;
     private float startTime;
     private float lerpTime = 0.8F;
-    private bool isCasting = false;
 
     private void Start()
     {
-        animator = GetComponentInChildren<Animator>();
+        animator = GetComponent<Animator>();
+        rodAnimator = Rod.GetComponent<Animator>();
     }
 
     private void Update()
     {
         HandleInput();
-        UpdateBobberPosition();
         HandleFishingInput();
     }
 
@@ -39,8 +39,11 @@ public class Fishing : MonoBehaviour
     {
         if (PlayerInfo.Instance.moving || !PlayerInfo.Instance.isGround) return;
 
-        if (Input.GetMouseButtonDown(0) && !PlayerInfo.Instance.fishing)
+        if (Input.GetMouseButtonDown(0) && !PlayerInfo.Instance.casting && !PlayerInfo.Instance.fishing)
         {
+            animator.SetBool("Nice", false);
+            rodAnimator.SetBool("Nice", false);
+
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
@@ -57,7 +60,7 @@ public class Fishing : MonoBehaviour
 
     private void TryCastLine(Vector3 hitPoint)
     {
-        Debug.Log("물 인식!");
+        Debug.Log("물 인식");
 
         float distanceToHit = Vector3.Distance(originPos.position, hitPoint);
         if (distanceToHit <= maxCastDistance)
@@ -65,24 +68,21 @@ public class Fishing : MonoBehaviour
             StartCasting(hitPoint);
         }
         else
-        {
             Debug.Log("범위 초과");
-        }
     }
 
     private void StartCasting(Vector3 hitPoint)
     {
         if (bobber != null)
         {
-            bobber.SetParent(null);
-            initialPos = bobber.position;
+            PlayerInfo.Instance.casting = true;
+
             targetPos = hitPoint;
             startTime = Time.time;
-            isCasting = true;
 
-            // 플레이어 회전
             RotatePlayerToTarget(hitPoint);
             animator.SetBool("isFishing", true);
+            rodAnimator.SetBool("Cast", true);
         }
     }
 
@@ -93,72 +93,64 @@ public class Fishing : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, targetRot.eulerAngles.y, 0);
     }
 
-    private void UpdateBobberPosition()
+    private void StartUpdateBobberPosition()
     {
-        if (isCasting)
-        {
-            float t = (Time.time - startTime) / lerpTime;
-            if (t > 1F)
-            {
-                t = 1F;
-                isCasting = false;
-                CastLine();
-            }
+        StartCoroutine(UpdateBobberCoroutine());
+    }
 
-            bobber.position = Vector3.Slerp(initialPos, targetPos, t);
-            bobber.position += new Vector3(0, Mathf.Sin(t * Mathf.PI) * 1F, 0);
+    private IEnumerator UpdateBobberCoroutine()
+    {
+        float t = 0;
+        
+        initialPos = bobber.transform.position;
+        bobber.SetActive(true);
+        bobber.transform.SetParent(null);
+
+        while (t < 1f)
+        {
+            t += Time.deltaTime / lerpTime;
+            bobber.transform.position = Vector3.Slerp(initialPos, targetPos, t);
+            bobber.transform.position += new Vector3(0, Mathf.Sin(t * Mathf.PI) * 1F, 0);
+            yield return null;
         }
+
+        bobber.transform.position = targetPos;
+        CastLine();
+    }
+
+    private void CastLine()
+    {
+        PlayerInfo.Instance.casting = false;
+        PlayerInfo.Instance.fishing = true;
+        StartCoroutine(WaitForNibble(10));
     }
 
     private void HandleFishingInput()
     {
         if (Input.GetKeyDown(fishingKey) && PlayerInfo.Instance.fishing)
         {
-            if (!nibble) // 물기 전 회수
-            {
-                RetractLine();
-            }
-            else // 물고 잡음
-            {
-                CatchFish();
-            }
+            if (PlayerInfo.Instance.casting) return;
+            ResetBobber();
+
+            if (!nibble) PlayerInfo.Instance.fishing = false;
+            else CatchFish();
         }
     }
 
-    private void RetractLine()
+    private void ResetBobber()
     {
         StopAllCoroutines();
-        PlayerInfo.Instance.fishing = false;
-
-        thoughtBubbles.GetComponent<Animator>().SetTrigger("Reset");
-        thoughtBubbles.SetActive(false);
-
-        bobber.position = originPos.position;
-        bobber.SetParent(originPos);
+        bobber.SetActive(false);
+        bobber.transform.position = originPos.position;
+        bobber.transform.SetParent(originPos);
         animator.SetBool("isFishing", false);
-    }
-
-    private void CatchFish()
-    {
-        StopAllCoroutines();
-        FishCaught();
-
-        bobber.position = originPos.position;
-        bobber.SetParent(originPos);
-        animator.SetBool("isFishing", false);
-    }
-
-    private void CastLine()
-    {
-        PlayerInfo.Instance.fishing = true;
-        thoughtBubbles.SetActive(true);
-        StartCoroutine(WaitForNibble(10));
+        rodAnimator.SetBool("Cast", false);
     }
 
     private IEnumerator WaitForNibble(float maxWaitTime)
     {
         yield return new WaitForSeconds(Random.Range(maxWaitTime * 0.25F, maxWaitTime));
-        thoughtBubbles.GetComponent<Animator>().SetTrigger("Alert");
+        UIInteraction.Instance.ImageOn(UIInteraction.Instance.exclamation, bobber.transform);
         nibble = true;
         StartCoroutine(LineBreak(2));
     }
@@ -167,27 +159,29 @@ public class Fishing : MonoBehaviour
     {
         yield return new WaitForSeconds(lineBreakTime);
         Debug.Log("물고기 놓침");
+        UIInteraction.Instance.ImageOff(UIInteraction.Instance.exclamation);
 
-
-        thoughtBubbles.GetComponent<Animator>().SetTrigger("Reset");
-        thoughtBubbles.SetActive(false);
-
-        PlayerInfo.Instance.fishing = false;
         nibble = false;
-
-        bobber.position = originPos.position;
-        bobber.SetParent(originPos);
-        animator.SetBool("isFishing", false);
+        ResetBobber();
+        PlayerInfo.Instance.fishing = false;
     }
 
-    public void FishCaught()
+    private void CatchFish()
     {
-        PlayerInfo.Instance.fishing = false;
         nibble = false;
 
         fishtype = FishManager.GetRandomFish();
         Debug.Log($"잡은 물고기 : {fishtype.name}");
-        thoughtBubbles.SetActive(false);
-        thoughtBubbles.GetComponent<Animator>().SetTrigger("Reset");
+
+        RotatePlayerToTarget(Camera.main.transform.position);
+
+        UIInteraction.Instance.ImageOff(UIInteraction.Instance.exclamation);
+        animator.SetBool("Nice", true);
+        rodAnimator.SetBool("Nice", true);
+    }
+
+    private void NiceAnimEnd()
+    {
+        PlayerInfo.Instance.fishing = false;
     }
 }

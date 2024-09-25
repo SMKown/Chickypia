@@ -20,13 +20,14 @@ public class PlayerInfo : MonoBehaviour
     public bool moving = false;
     public bool interacting = false;
     public bool attacking = false;
+    public bool casting = false;
     public bool fishing = false;
 
     public bool isGround = true;
 
     public bool UnableMove()
     {
-        if (interacting || attacking || fishing) return true;
+        if (interacting || attacking || casting || fishing) return true;
         else return false;
     }
 }

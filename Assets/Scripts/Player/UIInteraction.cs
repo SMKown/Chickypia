@@ -17,17 +17,21 @@ public class UIInteraction : MonoBehaviour
         Instance = this;
     }
 
-    public Image collection;
-    public Image gathering;
-    public Image cooking;
-    public Image dialog;
+    public Image collection; // 수집
+    public Image gathering; // 채집
+    public Image cooking; // 요리
+    public Image dialog; // 대화
+
+    public Image exclamation; // !
+
     public Image gatherProgressCircle;
     public GameObject interactableObj;
 
     private Dictionary<string, Image> tagToImageMap = new Dictionary<string, Image>();
     private float elapsedTime;
 
-    [SerializeField] private float animationDuration = 0.25F;
+    private float animationDuration = 0.25F;
+    private Vector3 offsetPos;
 
     private void Start()
     {
@@ -40,10 +44,10 @@ public class UIInteraction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (tagToImageMap.TryGetValue(other.tag, out Image image))
+        if (tagToImageMap.ContainsKey(other.tag))
         {
             interactableObj = other.gameObject;
-            StartCoroutine(AnimateImageON(image));
+            ImageOn(tagToImageMap[other.tag], interactableObj.transform);
         }
     }
 
@@ -56,9 +60,20 @@ public class UIInteraction : MonoBehaviour
         }
     }
 
-    private IEnumerator AnimateImageON(Image image)
+    public void ImageOn(Image image, Transform targetTransform)
+    {
+        StartCoroutine(AnimateImageON(image, targetTransform));
+    }
+
+    private IEnumerator AnimateImageON(Image image, Transform targetTransform)
     {
         image.enabled = true;
+
+        offsetPos = targetTransform.position;
+        offsetPos.y += 0.5F;
+
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(offsetPos);
+        image.transform.position = screenPos;
 
         elapsedTime = 0F;
         while (elapsedTime < animationDuration)
