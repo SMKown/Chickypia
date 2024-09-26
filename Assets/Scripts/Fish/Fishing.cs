@@ -10,7 +10,6 @@ public class Fishing : MonoBehaviour
     public Transform originPos;
 
     private Animator animator;
-    private Animator rodAnimator;
 
     private Fish fishtype;
     private bool nibble = false;
@@ -26,7 +25,6 @@ public class Fishing : MonoBehaviour
     private void Start()
     {
         animator = GetComponent<Animator>();
-        rodAnimator = Rod.GetComponent<Animator>();
     }
 
     private void Update()
@@ -42,7 +40,6 @@ public class Fishing : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !PlayerInfo.Instance.casting && !PlayerInfo.Instance.fishing)
         {
             animator.SetBool("Nice", false);
-            rodAnimator.SetBool("Nice", false);
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -82,7 +79,6 @@ public class Fishing : MonoBehaviour
 
             RotatePlayerToTarget(hitPoint);
             animator.SetBool("isFishing", true);
-            rodAnimator.SetBool("Cast", true);
         }
     }
 
@@ -144,7 +140,6 @@ public class Fishing : MonoBehaviour
         bobber.transform.position = originPos.position;
         bobber.transform.SetParent(originPos);
         animator.SetBool("isFishing", false);
-        rodAnimator.SetBool("Cast", false);
     }
 
     private IEnumerator WaitForNibble(float maxWaitTime)
@@ -177,7 +172,6 @@ public class Fishing : MonoBehaviour
 
         UIInteraction.Instance.ImageOff(UIInteraction.Instance.exclamation);
         animator.SetBool("Nice", true);
-        rodAnimator.SetBool("Nice", true);
     }
 
     private void NiceAnimEnd()

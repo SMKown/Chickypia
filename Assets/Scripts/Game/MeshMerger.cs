@@ -16,6 +16,7 @@ public class MeshMerger : MonoBehaviour
             combineInstances[i].mesh = meshFilters[i].sharedMesh;
             combineInstances[i].transform = meshFilters[i].transform.localToWorldMatrix;
         }
+        combinedMesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
         combinedMesh.CombineMeshes(combineInstances, true, true);
 
         // 货肺款 GameObject 积己
