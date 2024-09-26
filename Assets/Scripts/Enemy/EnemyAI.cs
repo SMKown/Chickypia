@@ -140,7 +140,7 @@ public class EnemyAI : MonoBehaviour
 
     public bool PlayerInAttackRange()
     {
-        return Physics.CheckSphere(transform.position, enemy.attackRange, Player);
+        return enemy.PlayerInAttackRange();
     }
 
     public void SwitchToAttackState()

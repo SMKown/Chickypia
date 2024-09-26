@@ -7,12 +7,6 @@ public class Projectile : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            //PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
-            //if (playerHealth != null)
-            //{
-            //    playerHealth.TakeDamage(damage);
-            //}
-
             ProjectilePool pool = FindObjectOfType<ProjectilePool>();
             if (pool != null)
             {

@@ -23,11 +23,7 @@ public class EnemyMelee : Enemy
 
         if (Vector3.Distance(transform.position, player.position) <= attackRange)
         {
-            //PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
-            //if (playerHealth != null)
-            //{
-            //    playerHealth.TakeDamage(attackDamage);
-            //}
+
         }
 
         alreadyAttacked = true;

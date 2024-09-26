@@ -14,6 +14,7 @@ public abstract class Enemy : MonoBehaviour
     public float sightRange;
     public float attackRange;
     public Vector3 initialPosition;
+    public IEnemyAttack attackPattern;
 
     protected Animator anim;
     protected Transform player;
@@ -46,7 +47,7 @@ public abstract class Enemy : MonoBehaviour
         {
             float distanceToPlayer = Vector3.Distance(player.position, transform.position);
 
-            if (distanceToPlayer <= attackRange)
+            if (PlayerInAttackRange())
             {
                 SetAnimationState("Move", false);
                 SetAnimationTrigger("Attack");
@@ -72,7 +73,10 @@ public abstract class Enemy : MonoBehaviour
         Destroy(gameObject, 2f);
     }
 
-    public abstract void Attack();
+    public virtual void Attack()
+    {
+        attackPattern?.ExecuteAttack();
+    }
 
     public void SetAnimationTrigger(string triggerName)
     {
@@ -112,6 +116,20 @@ public abstract class Enemy : MonoBehaviour
     {
         SetAnimationState("Move", true);
         agent.SetDestination(fleePosition);
+    }
+
+    public bool PlayerInAttackRange()
+    {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange);
+        foreach (var collider in colliders)
+        {
+            CharacterController characterController = collider.GetComponent<CharacterController>();
+            if (characterController != null && collider.transform == player)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void OnDrawGizmosSelected()
