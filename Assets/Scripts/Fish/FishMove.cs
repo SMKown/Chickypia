@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FishMove : MonoBehaviour
 {
-    [SerializeField] private float rad = 0.8F;
+    [SerializeField] private float rad = 0.5F;
     [SerializeField] private float speed = 1.4F;
 
     private float angle;

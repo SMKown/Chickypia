@@ -6,10 +6,11 @@ using Random = UnityEngine.Random;
 public class Fishing : MonoBehaviour
 {
     public GameObject Rod;
-    public GameObject bobber;
+    public GameObject Bobber;
     public Transform originPos;
 
     private Animator animator;
+    private Animator BobberAnim;
 
     private Fish fishtype;
     private bool nibble = false;
@@ -25,6 +26,7 @@ public class Fishing : MonoBehaviour
     private void Start()
     {
         animator = GetComponent<Animator>();
+        BobberAnim = Bobber.GetComponent<Animator>();
     }
 
     private void Update()
@@ -35,7 +37,7 @@ public class Fishing : MonoBehaviour
 
     private void HandleInput()
     {
-        if (PlayerInfo.Instance.moving || !PlayerInfo.Instance.isGround) return;
+        if (PlayerInfo.Instance.moving) return;
 
         if (Input.GetMouseButtonDown(0) && !PlayerInfo.Instance.casting && !PlayerInfo.Instance.fishing)
         {
@@ -47,7 +49,8 @@ public class Fishing : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 MeshRenderer meshRenderer = hit.collider.GetComponent<MeshRenderer>();
-                if (meshRenderer != null && meshRenderer.material.name.Contains("Water"))
+
+                if (meshRenderer != null && meshRenderer.material.name.Contains("Water") && !hit.collider.CompareTag("Plane"))
                 {
                     TryCastLine(hit.point);
                 }
@@ -57,20 +60,16 @@ public class Fishing : MonoBehaviour
 
     private void TryCastLine(Vector3 hitPoint)
     {
-        Debug.Log("물 인식");
-
         float distanceToHit = Vector3.Distance(originPos.position, hitPoint);
         if (distanceToHit <= maxCastDistance)
         {
             StartCasting(hitPoint);
         }
-        else
-            Debug.Log("범위 초과");
     }
 
     private void StartCasting(Vector3 hitPoint)
     {
-        if (bobber != null)
+        if (Bobber != null)
         {
             PlayerInfo.Instance.casting = true;
 
@@ -98,19 +97,19 @@ public class Fishing : MonoBehaviour
     {
         float t = 0;
         
-        initialPos = bobber.transform.position;
-        bobber.SetActive(true);
-        bobber.transform.SetParent(null);
+        initialPos = Bobber.transform.position;
+        Bobber.SetActive(true);
+        Bobber.transform.SetParent(null);
 
         while (t < 1f)
         {
             t += Time.deltaTime / lerpTime;
-            bobber.transform.position = Vector3.Slerp(initialPos, targetPos, t);
-            bobber.transform.position += new Vector3(0, Mathf.Sin(t * Mathf.PI) * 1F, 0);
+            Bobber.transform.position = Vector3.Slerp(initialPos, targetPos, t);
+            Bobber.transform.position += new Vector3(0, Mathf.Sin(t * Mathf.PI) * 1F, 0);
             yield return null;
         }
 
-        bobber.transform.position = targetPos;
+        Bobber.transform.position = targetPos;
         CastLine();
     }
 
@@ -136,24 +135,25 @@ public class Fishing : MonoBehaviour
     private void ResetBobber()
     {
         StopAllCoroutines();
-        bobber.SetActive(false);
-        bobber.transform.position = originPos.position;
-        bobber.transform.SetParent(originPos);
+        Bobber.SetActive(false);
+        Bobber.transform.position = originPos.position;
+        Bobber.transform.SetParent(originPos);
         animator.SetBool("isFishing", false);
+        BobberAnim.SetBool("Bite", false);
     }
 
     private IEnumerator WaitForNibble(float maxWaitTime)
     {
         yield return new WaitForSeconds(Random.Range(maxWaitTime * 0.25F, maxWaitTime));
-        UIInteraction.Instance.ImageOn(UIInteraction.Instance.exclamation, bobber.transform);
+        UIInteraction.Instance.ImageOn(UIInteraction.Instance.exclamation, Bobber.transform);
         nibble = true;
+        BobberAnim.SetBool("Bite", true);
         StartCoroutine(LineBreak(2));
     }
 
     private IEnumerator LineBreak(float lineBreakTime)
     {
         yield return new WaitForSeconds(lineBreakTime);
-        Debug.Log("물고기 놓침");
         UIInteraction.Instance.ImageOff(UIInteraction.Instance.exclamation);
 
         nibble = false;
