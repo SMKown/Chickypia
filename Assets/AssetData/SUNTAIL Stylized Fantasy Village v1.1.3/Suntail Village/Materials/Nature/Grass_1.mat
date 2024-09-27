@@ -16,10 +16,7 @@ Material:
   - _COLOR2ENABLE_ON
   - _ENABLEWIND_ON
   - _SECONDCOLOROVERLAYTYPE_WORLD_POSITION
-  m_InvalidKeywords:
-  - _ENABLEHIGHLIGHTING1_ON
-  - _UVWIND_ON
-  - _VISUALWINDENABLE_ON
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -79,6 +76,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture:
+        m_Texture: {fileID: 2800000, guid: 18eead51218e72e409bd97864ebd164d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2D:
         m_Texture: {fileID: 2800000, guid: 18eead51218e72e409bd97864ebd164d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -175,11 +176,25 @@ Material:
     - _WorldScale: 0.18
     - _ZWrite: 1
     - __dirty: 1
+    - _curvestrength: 0.005
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.5019608, g: 0.63529414, b: 0.16862746, a: 1}
     - _Color0: {r: 1, g: 0.9315591, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _MainColor: {r: 0.19464225, g: 0.509434, b: 0.2103493, a: 0}
-    - _SecondColor: {r: 0.24140498, g: 0.3490566, b: 0.15641688, a: 0}
+    - _MainColor: {r: 0.19464222, g: 0.509434, b: 0.21034926, a: 1}
+    - _SecondColor: {r: 0.24140495, g: 0.34905657, b: 0.15641683, a: 1}
     - _SpecularColor: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 1}
   m_BuildTextureStacks: []
+--- !u!114 &825629464152828700
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
