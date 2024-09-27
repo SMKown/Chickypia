@@ -2,21 +2,28 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Bark
   m_Shader: {fileID: 4800000, guid: b50955928b87e714ab31f7fe9003b849, type: 3}
-  m_ShaderKeywords: _BLENDNORMALS_ON _COVERAGEOVERLAYMETHOD_VERTEX_POSITION _COVERAGEOVERLAYTYPE_VERTEX_POSITION
-    _SMOOTHNESSSOURCE_METALLIC_ALPHA
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _SMOOTHNESSSOURCE_METALLIC_ALPHA
+  m_InvalidKeywords:
+  - _BLENDNORMALS_ON
+  - _COVERAGEOVERLAYMETHOD_VERTEX_POSITION
+  - _COVERAGEOVERLAYTYPE_VERTEX_POSITION
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -168,7 +175,7 @@ Material:
     - _ZWrite: 1
     - __dirty: 1
     m_Colors:
-    - _Color: {r: 0.71800005, g: 0.5075517, b: 0.46628737, a: 1}
+    - _Color: {r: 0.764151, g: 0.5526928, b: 0.35684407, a: 1}
     - _CoverageColor: {r: 0.182825, g: 0.515, b: 0.27075368, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SurfaceColor: {r: 0.7647059, g: 0.5882353, b: 0.52156866, a: 0}
