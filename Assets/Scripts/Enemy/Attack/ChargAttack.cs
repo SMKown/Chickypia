@@ -4,22 +4,32 @@ using UnityEngine.AI;
 
 public class ChargeAttack : Enemy // 돌격 공격
 {
-    public int damage;
-    public float chargeSpeed;
-    public float chargeDuration;
-    public float prepareTime;
+    [Header("공격 속성")]
+    public int damage = 1;
+    [Tooltip("돌격 속도")]
+    public float chargeSpeed = 3f;
+    [Tooltip("돌격 지속 시간")]
+    public float chargeDuration = 3f;
+    [Tooltip("공격 딜레이")]
+    public float prepareTime = 2f;
+    public float attackCooldown = 5f;
+
+    private float lastAttackTime;
+    private LineRenderer lineRenderer;
 
     protected override void Awake()
     {
         base.Awake();
+        lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer.enabled = false;
     }
 
     public override void Attack()
     {
-        if (anim != null)
-        {
-            SetAnimationTrigger("Attack");
-        }
+        if (Time.time - lastAttackTime < attackCooldown) return;
+        lastAttackTime = Time.time;
+
+        SetAnimationState(AnimationState.Attack);
         ExecuteAttack();
     }
 
@@ -30,6 +40,16 @@ public class ChargeAttack : Enemy // 돌격 공격
 
     private IEnumerator ChargeCoroutine()
     {
+        // 준비 시간 동안 라인 렌더러 활성화
+        lineRenderer.enabled = true;
+        Vector3 startPoint = transform.position;
+
+        float chargeDistance = chargeSpeed * chargeDuration;
+        Vector3 endPoint = startPoint + transform.forward * chargeDistance;
+
+        lineRenderer.SetPosition(0, startPoint);
+        lineRenderer.SetPosition(1, endPoint);
+
         yield return new WaitForSeconds(prepareTime);
 
         float timer = chargeDuration;
@@ -43,6 +63,7 @@ public class ChargeAttack : Enemy // 돌격 공격
         }
 
         agent.velocity = Vector3.zero;
+        lineRenderer.enabled = false;
     }
 
     private void OnCollisionEnter(Collision collision)

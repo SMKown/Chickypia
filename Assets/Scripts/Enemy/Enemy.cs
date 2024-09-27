@@ -1,16 +1,12 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum EnemyType
-{
-    Runtype, // 1번 도망 후 공격
-    FightType, // 바로 추적 후 공격
-}
-
+public enum EnemyType { Runtype, FightType }
+public enum AnimationState { Idle, Move, Attack, Damage, Die }
 public abstract class Enemy : MonoBehaviour
 {
     public int health;
-    public int attackDamage;
+    [Header("시야 및 공격 범위")]
     public float sightRange;
     public float attackRange;
 
@@ -18,7 +14,7 @@ public abstract class Enemy : MonoBehaviour
     protected Transform player;
 
     [HideInInspector]public NavMeshAgent agent;
-
+    [Header("순찰 포인트 4개 지정")]
     public Vector3[] patrolPoints;
 
     protected virtual void Awake()
@@ -33,7 +29,7 @@ public abstract class Enemy : MonoBehaviour
         if (health <= 0) return;
 
         health -= damage;
-        SetAnimationTrigger("Damage");
+        SetAnimationState(AnimationState.Damage);
 
         if (health <= 0) Die();
     }
@@ -46,47 +42,54 @@ public abstract class Enemy : MonoBehaviour
 
             if (PlayerInAttackRange())
             {
-                SetAnimationState("Move", false);
-                SetAnimationTrigger("Attack");
+                SetAnimationState(AnimationState.Move);
+                SetAnimationState(AnimationState.Attack);
                 Attack();
             }
             else if (distanceToPlayer <= sightRange)
             {
-                SetAnimationState("Move", true);
+                SetAnimationState(AnimationState.Move);
                 ChasePlayer(player.position);
             }
             else
             {
-                SetAnimationState("Move", false);
-                SetAnimationState("Idle", true);
+                SetAnimationState(AnimationState.Move);
+                SetAnimationState(AnimationState.Idle);
             }
         }
     }
 
     protected void Die()
     {
-        SetAnimationTrigger("Die");
+        SetAnimationState(AnimationState.Die);
         agent.enabled = false;
         Destroy(gameObject, 2f);
     }
 
     public virtual void Attack(){}
 
-    public void SetAnimationTrigger(string triggerName)
+    public void SetAnimationState(AnimationState state)
     {
         if (anim != null)
         {
-            anim.SetTrigger(triggerName);
+            anim.SetBool("Idle", state == AnimationState.Idle);
+            anim.SetBool("Move", state == AnimationState.Move);
+
+            if (state == AnimationState.Attack)
+            {
+                anim.SetTrigger("Attack");
+            }
+            if (state == AnimationState.Damage)
+            {
+                anim.SetTrigger("Damage");
+            }
+            if (state == AnimationState.Die)
+            {
+                anim.SetTrigger("Die");
+            }
         }
     }
 
-    public void SetAnimationState(string stateName, bool state)
-    {
-        if (anim != null)
-        {
-            anim.SetBool(stateName, state);
-        }
-    }
 
     public void ResetAnimationState()
     {
@@ -105,13 +108,13 @@ public abstract class Enemy : MonoBehaviour
         if (agent != null)
         {
             agent.SetDestination(targetPosition);
-            SetAnimationState("Move", true);
+            SetAnimationState(AnimationState.Move);
         }
     }
 
     public void FleeFromPlayer(Vector3 fleePosition)
     {
-        SetAnimationState("Move", true);
+        SetAnimationState(AnimationState.Move);
         agent.SetDestination(fleePosition);
     }
 

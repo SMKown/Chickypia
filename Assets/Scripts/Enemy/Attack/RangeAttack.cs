@@ -3,10 +3,15 @@ using UnityEngine;
 
 public class RangeAttack : Enemy // 원거리 공격
 {
+    [Header("공격 속성")]
+    public float projectileSpeed = 3f;
+    public int damage = 1;
+    public float attackCooldown = 3f;
+    [Header("투사체")]
     public GameObject projectilePrefab;
     public Transform firePoint;
-    public float projectileSpeed;
-    public int damage;
+    private float lastAttackTime;
+
 
     protected override void Awake()
     {
@@ -15,11 +20,18 @@ public class RangeAttack : Enemy // 원거리 공격
 
     public override void Attack()
     {
+        if (Time.time - lastAttackTime < attackCooldown)
+        {
+            SetAnimationState(AnimationState.Idle);
+            return;
+        }
+
         if (projectilePrefab == null || firePoint == null)
         {
             return;
         }
-        SetAnimationTrigger("Attack");
+        lastAttackTime = Time.time;
+        SetAnimationState(AnimationState.Attack);
     }
 
     public void ExecuteAttack() // 애니메이션 이벤트 함수 사용해서 공격 넣기

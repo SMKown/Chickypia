@@ -5,15 +5,18 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
+    [Header("적 속성")]
     public NavMeshAgent agent;
     public Transform player;
+    [Header("적의 종류")]
     public EnemyType enemyType;
-
+    
     public EnemyState currentState;
     private bool isTransitioningState;
-
-    private Enemy enemy;
+    [Header("도망 여부")]
     public bool hasFledOnce = false;
+    private Enemy enemy;
+
     public Enemy GetEnemy()
     {
         return enemy;
@@ -70,7 +73,7 @@ public class EnemyAI : MonoBehaviour
         if (player != null)
         {
             Vector3 directionToPlayer = (player.position - transform.position).normalized;
-            Vector3 targetPosition = player.position - directionToPlayer * (enemy.attackRange - 1f);
+            Vector3 targetPosition = player.position - directionToPlayer * (enemy.attackRange);
 
             enemy.ChasePlayer(targetPosition);
         }

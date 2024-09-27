@@ -6817,6 +6817,7 @@ MonoBehaviour:
   agent: {fileID: 917663682}
   player: {fileID: 408506048}
   enemyType: 1
+  hasFledOnce: 0
 --- !u!195 &917663682
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -9911,10 +9912,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56e51a9de3a0944348272561e0634f87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offsetX: 0
-  offsetY: 5.5
-  offsetZ: -4
-  DelayTime: 5
 --- !u!114 &1456227240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13693,7 +13690,6 @@ GameObject:
   - component: {fileID: 1973294125}
   - component: {fileID: 1973294124}
   - component: {fileID: 1973294123}
-  - component: {fileID: 1973294127}
   m_Layer: 0
   m_Name: Fire_Pig_A (1)
   m_TagString: Untagged
@@ -13716,6 +13712,7 @@ MonoBehaviour:
   agent: {fileID: 1973294124}
   player: {fileID: 408506048}
   enemyType: 1
+  hasFledOnce: 0
 --- !u!195 &1973294124
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -13776,24 +13773,6 @@ Transform:
   - {fileID: 2134831485}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1973294127
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1973294121}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05d56df8c683f8e4bb98131832c4beb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 0
-  attackDamage: 0
-  sightRange: 0
-  attackRange: 0
-  agent: {fileID: 0}
-  patrolPoints: []
 --- !u!1 &1980433020
 GameObject:
   m_ObjectHideFlags: 0
@@ -14507,7 +14486,6 @@ GameObject:
   - component: {fileID: 3102100785288900951}
   - component: {fileID: 3102100785288900954}
   - component: {fileID: 3102100785288900953}
-  - component: {fileID: 3102100785288900955}
   m_Layer: 0
   m_Name: Fire_Gazer_A
   m_TagString: Untagged
@@ -14694,6 +14672,7 @@ MonoBehaviour:
   agent: {fileID: 3102100785288900954}
   player: {fileID: 408506048}
   enemyType: 1
+  hasFledOnce: 0
 --- !u!195 &3102100785288900954
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -14716,24 +14695,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &3102100785288900955
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3102100785279500949}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67026a40e69dc534aa4933ce00e534d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 0
-  attackDamage: 0
-  sightRange: 0
-  attackRange: 0
-  agent: {fileID: 0}
-  patrolPoints: []
 --- !u!137 &3102100785293102999
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -15162,7 +15123,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &7953982988500346990
 GameObject:
   m_ObjectHideFlags: 0
@@ -15852,8 +15813,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 3
-  attackDamage: 1
-  sightRange: 5
+  sightRange: 6
   attackRange: 1
   agent: {fileID: 0}
   patrolPoints:
@@ -15861,6 +15821,8 @@ MonoBehaviour:
   - {x: 5, y: 0, z: 15}
   - {x: -5, y: 0, z: 5}
   - {x: -5, y: 0, z: 15}
+  damage: 1
+  attackCooldown: 8
 --- !u!137 &7953982988511913326
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -16275,7 +16237,6 @@ GameObject:
   - component: {fileID: 8724185189198470728}
   - component: {fileID: 8724185189198470731}
   - component: {fileID: 8724185189198470730}
-  - component: {fileID: 8724185189198470732}
   - component: {fileID: 8724185189198470733}
   m_Layer: 0
   m_Name: Cute Butterfly_A
@@ -16283,7 +16244,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &8724185189191216524
 GameObject:
   m_ObjectHideFlags: 0
@@ -16530,6 +16491,7 @@ MonoBehaviour:
   agent: {fileID: 8724185189198470731}
   player: {fileID: 408506048}
   enemyType: 1
+  hasFledOnce: 0
 --- !u!195 &8724185189198470731
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -16552,30 +16514,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &8724185189198470732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8724185189191216522}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdacb860f896bca4c837b3da3d9ab62a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 1
-  attackDamage: 1
-  sightRange: 5
-  attackRange: 4
-  agent: {fileID: 0}
-  patrolPoints:
-  - {x: 5, y: 0, z: 5}
-  - {x: 5, y: 0, z: 15}
-  - {x: -5, y: 0, z: 5}
-  - {x: -5, y: 0, z: 15}
-  enemy: {fileID: 8724185189198470732}
-  firePoint: {fileID: 1842977427}
 --- !u!114 &8724185189198470733
 MonoBehaviour:
   m_ObjectHideFlags: 0

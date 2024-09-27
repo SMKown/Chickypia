@@ -46,7 +46,7 @@ public class IdleState : EnemyState
 
     public override void EnterState()
     {
-        enemyAI.GetEnemy().SetAnimationState("Idle", true);
+        enemyAI.GetEnemy().SetAnimationState(AnimationState.Idle);
         idleTimer = idleDuration;
     }
 
@@ -74,7 +74,7 @@ public class IdleState : EnemyState
 
     public override void ExitState()
     {
-        enemyAI.GetEnemy().SetAnimationState("Idle", false);
+        enemyAI.GetEnemy().SetAnimationState(AnimationState.Idle);
     }
 }
 
@@ -85,7 +85,7 @@ public class PatrollingState : EnemyState
 
     public override void EnterState()
     {
-        enemyAI.GetEnemy().SetAnimationState("Move", true);
+        enemyAI.GetEnemy().SetAnimationState(AnimationState.Move);
         SetNextPatrolDestination();
     }
 
@@ -169,7 +169,7 @@ public class PatrollingState : EnemyState
 
     public override void ExitState()
     {
-        enemyAI.GetEnemy().SetAnimationState("Move", false);
+        enemyAI.GetEnemy().SetAnimationState(AnimationState.Move);
     }
 }
 
@@ -180,13 +180,17 @@ public class ChasingState : EnemyState
 
     public override void EnterState()
     {
-        enemyAI.GetEnemy().SetAnimationState("Move", true);
+        enemyAI.GetEnemy().SetAnimationState(AnimationState.Move);
         enemyAI.ChasePlayer();
     }
 
     public override void UpdateState()
     {
-        if (PlayerOutPatrolRange())
+        if (enemyAI.PlayerInAttackRange())
+        {
+            enemyAI.SwitchState(new AttackState(enemyAI));
+        }
+        else if (enemyAI.PlayerMovedFar())
         {
             enemyAI.SwitchState(new PatrollingState(enemyAI));
         }
@@ -215,7 +219,7 @@ public class ChasingState : EnemyState
 
     public override void ExitState()
     {
-        enemyAI.GetEnemy().SetAnimationState("Move", false);
+        enemyAI.GetEnemy().SetAnimationState(AnimationState.Move);
     }
 }
 
@@ -227,7 +231,7 @@ public class AttackState : EnemyState
     public override void EnterState()
     {
         Enemy enemy = enemyAI.GetEnemy();
-        enemy.SetAnimationTrigger("Attack");
+        enemy.SetAnimationState(AnimationState.Attack);
     }
 
     public override void UpdateState() { }

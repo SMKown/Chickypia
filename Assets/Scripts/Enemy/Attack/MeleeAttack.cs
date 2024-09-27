@@ -3,7 +3,11 @@ using UnityEngine;
 
 public class MeleeAttack : Enemy // 근접 공격
 {
-    public int damage;
+    [Header("공격 속성")]
+    public int damage = 1;
+    public float attackCooldown = 3f;
+
+    private float lastAttackTime;
 
     protected override void Awake()
     {
@@ -12,10 +16,15 @@ public class MeleeAttack : Enemy // 근접 공격
 
     public override void Attack()
     {
-        if (anim != null)
+        if (Time.time - lastAttackTime < attackCooldown)
         {
-            SetAnimationTrigger("Attack");
+            SetAnimationState(AnimationState.Idle);
+            return;
         }
+
+        lastAttackTime = Time.time;
+
+        SetAnimationState(AnimationState.Attack);
         ExecuteAttack();
     }
 
