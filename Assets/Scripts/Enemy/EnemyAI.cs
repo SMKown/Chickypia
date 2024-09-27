@@ -5,8 +5,7 @@ public class EnemyAI : MonoBehaviour
 {
     public NavMeshAgent agent;
     public Transform player;
-    public LayerMask Player;
-    public EnemyLevel enemyLevel;
+    public EnemyType enemyType;
 
     public EnemyState currentState;
     private bool isTransitioningState;
@@ -67,9 +66,18 @@ public class EnemyAI : MonoBehaviour
     // 플레이어 추적
     public void ChasePlayer()
     {
-        Vector3 playerVelocity = player.GetComponent<Rigidbody>().velocity;
-        Vector3 predictedPosition = player.position + playerVelocity * 0.5f;
-        enemy.ChasePlayer(predictedPosition);
+        if (player != null)
+        {
+            Debug.Log("player found");
+            Vector3 playerVelocity = player.GetComponent<CharacterController>().velocity;
+            Vector3 predictedPosition = player.position + playerVelocity;
+            enemy.ChasePlayer(predictedPosition);
+        }
+        else
+        {
+            // 플레이어를 찾지 못했을 때의 처리
+            Debug.Log("Player not found!");
+        }
     }
 
     // 플레이어로부터 도망
@@ -107,7 +115,7 @@ public class EnemyAI : MonoBehaviour
         }
         else if (PlayerInAttackRange())
         {
-            SwitchToAttackState(); 
+            SwitchState(new AttackState(this));
         }
         else
         {
@@ -122,37 +130,18 @@ public class EnemyAI : MonoBehaviour
 
     public bool PlayerInSightRange()
     {
-        if (Vector3.Distance(transform.position, player.position) <= enemy.sightRange)
-        {
-            RaycastHit hit;
-            Vector3 directionToPlayer = (player.position - transform.position).normalized;
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-            if (Physics.Raycast(transform.position, directionToPlayer, out hit, enemy.sightRange))
-            {
-                if (hit.transform == player)
-                {
-                    return true;
-                }
-            }
+        if (distanceToPlayer <= enemy.sightRange)
+        {
+            return true;
         }
+
         return false;
     }
 
     public bool PlayerInAttackRange()
     {
         return enemy.PlayerInAttackRange();
-    }
-
-    public void SwitchToAttackState()
-    {
-        switch (enemyLevel)
-        {
-            case EnemyLevel.Level2:
-                SwitchState(new AttackState(this));
-                break;
-            case EnemyLevel.Level3:
-                SwitchState(new RangedAttackState(this));
-                break;
-        }
     }
 }

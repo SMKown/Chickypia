@@ -14,9 +14,7 @@ public abstract class EnemyState
     public abstract void UpdateState();
     public abstract EnemyState CheckStateTransitions();
 
-    public virtual void ExitState()
-    {
-    }
+    public virtual void ExitState(){}
     protected bool PlayerInChaseRange()
     {
         return enemyAI.PlayerInSightRange() && !PlayerOutPatrolRange();
@@ -84,8 +82,6 @@ public class IdleState : EnemyState
 // 순찰 상태
 public class PatrollingState : EnemyState
 {
-    private int currentPatrolIndex = 0;
-
     public PatrollingState(EnemyAI enemyAI) : base(enemyAI) { }
 
     public override void EnterState()
@@ -106,12 +102,11 @@ public class PatrollingState : EnemyState
     {
         if (PlayerInChaseRange())
         {
-            switch (enemyAI.enemyLevel)
+            switch (enemyAI.enemyType)
             {
-                case EnemyLevel.Level1:
+                case EnemyType.Runtype:
                     return new FleeingState(enemyAI);
-                case EnemyLevel.Level2:
-                case EnemyLevel.Level3:
+                case EnemyType.FightType:
                     return new ChasingState(enemyAI);
             }
         }
@@ -220,7 +215,7 @@ public class ChasingState : EnemyState
     }
 }
 
-// 적의 근접 공격 상태
+// 적의 공격 상태
 public class AttackState : EnemyState
 {
     public AttackState(EnemyAI enemyAI) : base(enemyAI) { }
@@ -229,7 +224,6 @@ public class AttackState : EnemyState
     {
         Enemy enemy = enemyAI.GetEnemy();
         enemy.SetAnimationTrigger("Attack");
-        enemyAI.GetComponent<EnemyMelee>().Attack();
     }
 
     public override void UpdateState() { }
@@ -248,36 +242,6 @@ public class AttackState : EnemyState
         enemyAI.GetEnemy().ResetAnimationState();
     }
 }
-
-// 적의 원거리 공격 상태
-public class RangedAttackState : EnemyState
-{
-    public RangedAttackState(EnemyAI enemyAI) : base(enemyAI) { }
-
-    public override void EnterState()
-    {
-        Enemy enemy = enemyAI.GetEnemy();
-        enemy.SetAnimationTrigger("Attack");
-        enemyAI.GetComponent<EnemyRange>().Attack();
-    }
-
-    public override void UpdateState() { }
-
-    public override EnemyState CheckStateTransitions()
-    {
-        if (!enemyAI.PlayerInAttackRange())
-        {
-            return new ChasingState(enemyAI);
-        }
-        return this;
-    }
-
-    public override void ExitState()
-    {
-        enemyAI.GetEnemy().ResetAnimationState();
-    }
-}
-
 // 적의 도망 상태
 public class FleeingState : EnemyState
 {

@@ -1,24 +1,23 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum EnemyLevel
+public enum EnemyType
 {
-    Level1,
-    Level2,
-    Level3
+    Runtype, // 1번 도망 후 공격
+    FightType, // 바로 추적 후 공격
 }
 
 public abstract class Enemy : MonoBehaviour
 {
     public int health;
+    public int attackDamage;
     public float sightRange;
     public float attackRange;
-    public Vector3 initialPosition;
-    public IEnemyAttack attackPattern;
 
     protected Animator anim;
     protected Transform player;
-    public NavMeshAgent agent;
+
+    [HideInInspector]public NavMeshAgent agent;
 
     public Vector3[] patrolPoints;
 
@@ -27,8 +26,6 @@ public abstract class Enemy : MonoBehaviour
         player = GameObject.Find("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-
-        initialPosition = transform.position;
     }
 
     public virtual void TakeDamage(int damage)
@@ -73,10 +70,7 @@ public abstract class Enemy : MonoBehaviour
         Destroy(gameObject, 2f);
     }
 
-    public virtual void Attack()
-    {
-        attackPattern?.ExecuteAttack();
-    }
+    public virtual void Attack(){}
 
     public void SetAnimationTrigger(string triggerName)
     {
