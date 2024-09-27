@@ -1,24 +1,37 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RangeAttack : Enemy // 원거리 공격
 {
-    public Enemy enemy;
-    private GameObject projectilePrefab;
+    public GameObject projectilePrefab;
     public Transform firePoint;
+    public float projectileSpeed;
+    public int damage;
 
-    public RangeAttack(Enemy enemy, GameObject projectilePrefab, Transform firePoint)
+    protected override void Awake()
     {
-        this.enemy = enemy;
-        this.projectilePrefab = projectilePrefab;
-        this.firePoint = firePoint;
+        base.Awake();
     }
-    public void ExecuteAttack()
-    {
-        enemy.SetAnimationTrigger("Attack");
 
-        GameObject projectile = Object.Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+    public override void Attack()
+    {
+        if (projectilePrefab == null || firePoint == null)
+        {
+            return;
+        }
+        SetAnimationTrigger("Attack");
+    }
+
+    public void ExecuteAttack() // 애니메이션 이벤트 함수 사용해서 공격 넣기
+    {
+        GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
         Projectile projectileScript = projectile.GetComponent<Projectile>();
+
+        if (projectileScript != null)
+        {
+            projectileScript.SetTarget(player.position);
+            projectileScript.SetDamage(damage);
+            projectileScript.SetSpeed(projectileSpeed);
+        }
     }
 }

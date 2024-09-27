@@ -1,4 +1,3 @@
-using System.Net.NetworkInformation;
 using UnityEngine;
 
 public abstract class EnemyState
@@ -102,12 +101,17 @@ public class PatrollingState : EnemyState
     {
         if (PlayerInChaseRange())
         {
-            switch (enemyAI.enemyType)
+            if (enemyAI.enemyType == EnemyType.Runtype && !enemyAI.hasFledOnce)
             {
-                case EnemyType.Runtype:
-                    return new FleeingState(enemyAI);
-                case EnemyType.FightType:
-                    return new ChasingState(enemyAI);
+                return new FleeingState(enemyAI);
+            }
+            else if (enemyAI.enemyType == EnemyType.Runtype && enemyAI.hasFledOnce)
+            {
+                return new ChasingState(enemyAI);
+            }
+            else if (enemyAI.enemyType == EnemyType.FightType)
+            {
+                return new ChasingState(enemyAI);
             }
         }
         return this;
@@ -242,6 +246,7 @@ public class AttackState : EnemyState
         enemyAI.GetEnemy().ResetAnimationState();
     }
 }
+
 // 적의 도망 상태
 public class FleeingState : EnemyState
 {

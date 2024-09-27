@@ -1,36 +1,59 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class ChargeAttack : Enemy // 돌격 공격
 {
-    private Enemy enemy;
-    private float chargeSpeed;
-    private float chargeDuration;
+    public int damage;
+    public float chargeSpeed;
+    public float chargeDuration;
+    public float prepareTime;
 
-    public ChargeAttack(Enemy enemy, NavMeshAgent agent, float speed, float duration)
+    protected override void Awake()
     {
-        this.enemy = enemy;
-        this.agent = agent;
-        this.chargeSpeed = speed;
-        this.chargeDuration = duration;
+        base.Awake();
+    }
+
+    public override void Attack()
+    {
+        if (anim != null)
+        {
+            SetAnimationTrigger("Attack");
+        }
+        ExecuteAttack();
     }
 
     public void ExecuteAttack()
     {
-        enemy.StartCoroutine(ChargeCoroutine());
+        StartCoroutine(ChargeCoroutine());
     }
 
     private IEnumerator ChargeCoroutine()
     {
+        yield return new WaitForSeconds(prepareTime);
+
         float timer = chargeDuration;
+        NavMeshAgent agent = GetComponent<NavMeshAgent>();
+
         while (timer > 0)
         {
-            agent.velocity = enemy.transform.forward * chargeSpeed;
+            agent.velocity = transform.forward * chargeSpeed;
             timer -= Time.deltaTime;
             yield return null;
         }
+
         agent.velocity = Vector3.zero;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            //PlayerInfo playerInfo = collision.gameObject.GetComponent<PlayerInfo>();
+            //if (playerInfo != null)
+            //{
+            //    playerInfo.TakeDamage(damage); // 플레이어에게 데미지 입힘
+            //}
+        }
     }
 }

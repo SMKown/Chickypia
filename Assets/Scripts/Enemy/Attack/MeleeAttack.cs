@@ -1,30 +1,37 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class MeleeAttack : Enemy // 근접 공격
 {
-    private Enemy enemy;
-    private int damage;
+    public int damage;
 
-    public MeleeAttack(Enemy enemy, int damage)
+    protected override void Awake()
     {
-        this.enemy = enemy;
-        this.damage = damage;
+        base.Awake(); 
+    }
+
+    public override void Attack()
+    {
+        if (anim != null)
+        {
+            SetAnimationTrigger("Attack");
+        }
+        ExecuteAttack();
     }
 
     public void ExecuteAttack()
     {
-        enemy.SetAnimationTrigger("Attack");
-
-        Collider[] hitColliders = Physics.OverlapSphere(enemy.transform.position, enemy.attackRange);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
         foreach (var collider in hitColliders)
         {
-            if (collider.CompareTag("Player"))
-            {
-                //collider.GetComponent<Player>().TakeDamage(damage);
-            }
+            //if (collision.gameObject.CompareTag("Player"))
+            //{
+            //    PlayerInfo playerInfo = collision.gameObject.GetComponent<PlayerInfo>();
+            //    if (playerInfo != null)
+            //    {
+            //        playerInfo.TakeDamage(damage);
+            //    }
+            //}
         }
     }
 }

@@ -102,8 +102,11 @@ public abstract class Enemy : MonoBehaviour
 
     public void ChasePlayer(Vector3 targetPosition)
     {
-        SetAnimationState("Move", true);
-        agent.SetDestination(targetPosition);
+        if (agent != null)
+        {
+            agent.SetDestination(targetPosition);
+            SetAnimationState("Move", true);
+        }
     }
 
     public void FleeFromPlayer(Vector3 fleePosition)

@@ -8,11 +8,18 @@ public class AOEAttack : Enemy // 범위 공격
     private float radius;
     private int damage;
 
-    public AOEAttack(Enemy enemy, float radius, int damage)
+    protected override void Awake()
     {
-        this.enemy = enemy;
-        this.radius = radius;
-        this.damage = damage;
+        base.Awake();
+    }
+
+    public override void Attack()
+    {
+        if (anim != null)
+        {
+            SetAnimationTrigger("Attack");
+        }
+        ExecuteAttack();
     }
 
     public void ExecuteAttack()
@@ -24,8 +31,11 @@ public class AOEAttack : Enemy // 범위 공격
         {
             if (collider.CompareTag("Player"))
             {
-                //// 플레이어에게 데미지 입힘
-                //collider.GetComponent<Player>().TakeDamage(damage);
+                //PlayerInfo playerInfo = collision.gameObject.GetComponent<PlayerInfo>();
+                //    if (playerInfo != null)
+                //    {
+                //        playerInfo.TakeDamage(damage);
+                //    }
             }
         }
     }

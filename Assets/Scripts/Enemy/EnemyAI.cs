@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,7 +13,7 @@ public class EnemyAI : MonoBehaviour
     private bool isTransitioningState;
 
     private Enemy enemy;
-    private bool hasFledOnce = false;
+    public bool hasFledOnce = false;
     public Enemy GetEnemy()
     {
         return enemy;
@@ -51,31 +53,29 @@ public class EnemyAI : MonoBehaviour
     // 상태 전환
     public void SwitchState(EnemyState newState)
     {
-        if (!isTransitioningState)
-        {
-            isTransitioningState = true;
+        if (isTransitioningState) return;
+        isTransitioningState = true;
 
-            currentState.ExitState();
-            currentState = newState;
-            currentState.EnterState();
+        currentState.ExitState();
+        currentState = newState;
+        currentState.EnterState();
 
-            isTransitioningState = false;
-        }
+        isTransitioningState = false;
     }
+
 
     // 플레이어 추적
     public void ChasePlayer()
     {
         if (player != null)
         {
-            Debug.Log("player found");
-            Vector3 playerVelocity = player.GetComponent<CharacterController>().velocity;
-            Vector3 predictedPosition = player.position + playerVelocity;
-            enemy.ChasePlayer(predictedPosition);
+            Vector3 directionToPlayer = (player.position - transform.position).normalized;
+            Vector3 targetPosition = player.position - directionToPlayer * (enemy.attackRange - 1f);
+
+            enemy.ChasePlayer(targetPosition);
         }
         else
         {
-            // 플레이어를 찾지 못했을 때의 처리
             Debug.Log("Player not found!");
         }
     }
@@ -95,6 +95,7 @@ public class EnemyAI : MonoBehaviour
             {
                 enemy.FleeFromPlayer(hit.position);
                 hasFledOnce = true;
+                SwitchState(new IdleState(this, 5f));
             }
             else
             {

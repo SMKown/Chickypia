@@ -24,8 +24,11 @@ public class ProjectilePool : MonoBehaviour
     {
         projectile.transform.position = Vector3.zero;
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
-        rb.velocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
+        if (rb != null)
+        {
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
 
         projectile.SetActive(false);
         projectilePool.Enqueue(projectile);
