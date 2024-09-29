@@ -93,27 +93,19 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void JumpAnimEnd()
-    {
-        animator.ResetTrigger("Attack");
-        animator.ResetTrigger("Jump");
-        Jumping = false;
-    }
-
     private void Particle()
     {
         particleSystem.Play();
     }
 
-    private void AttackAnimEnd()
+    private void AnimEnd()
     {
-        PlayerInfo.Instance.attacking = false;
-        
+        particleSystem.Clear();
+
+        Jumping = false;
         animator.ResetTrigger("Attack");
         animator.ResetTrigger("Jump");
-        Jumping = false;
-
-        particleSystem.Clear();
+        PlayerInfo.Instance.attacking = false;
     }
 
     private void GetItem()
