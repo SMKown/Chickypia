@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public enum EnemyType { Runtype, FightType }
-public enum AnimationState { Idle, Move, Attack, Damage, Die }
+public enum AnimationState { Idle, Move, Attack, Charge, Damage, Die }
 public abstract class Enemy : MonoBehaviour
 {
     public int health;
@@ -76,6 +76,10 @@ public abstract class Enemy : MonoBehaviour
             anim.SetBool("Move", state == AnimationState.Move);
 
             if (state == AnimationState.Attack)
+            {
+                anim.SetTrigger("Attack");
+            }
+            if (state == AnimationState.Charge)
             {
                 anim.SetTrigger("Attack");
             }
