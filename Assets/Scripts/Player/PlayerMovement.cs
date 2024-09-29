@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public GameObject particle;
+    private ParticleSystem particleSystem;
+
     private CharacterController cc;
     private Animator animator;
     
     [SerializeField] private float moveSpeed;
-    [SerializeField] private float jumpForce;
 
     private float gravity;
-    private bool tryJump = false;
+    private bool Jumping = false;
 
     public InventoryManager inventoryManager;
     private InventoryItem inventoryItem;
@@ -20,14 +22,17 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         cc = GetComponent<CharacterController>();
-        animator = GetComponentInChildren<Animator>();
+        animator = GetComponent<Animator>();
+
+        if (particle != null)
+            particleSystem = particle.GetComponent<ParticleSystem>();
     }
 
     private void Update()
     {
         Move();
-        CheckGround();
-        TryJump();
+        Jump();
+        Attack();
 
         GetItem();
     }
@@ -63,34 +68,52 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void CheckGround()
-    {
-        PlayerInfo.Instance.isGround = cc.isGrounded;
-        if (cc.isGrounded) animator.ResetTrigger("Jump");
-    }
-
-    private void TryJump()
+    private void Jump()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (PlayerInfo.Instance.UnableMove()) return;
 
-            if (PlayerInfo.Instance.isGround && !tryJump)
+            if (!Jumping)
             {
-                tryJump = true;
-                gravity = jumpForce;
+                Jumping = true;
                 animator.SetTrigger("Jump");
             }
         }
+    }
 
-        if (tryJump)
+    private void Attack()
+    {
+        if (!PlayerInfo.Instance.attackMode || PlayerInfo.Instance.moving || PlayerInfo.Instance.attacking) return;
+
+        if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (PlayerInfo.Instance.isGround)
-            {
-                tryJump = false;
-                gravity = 0;
-            }
+            PlayerInfo.Instance.attacking = true;
+            animator.SetTrigger("Attack");
         }
+    }
+
+    private void JumpAnimEnd()
+    {
+        animator.ResetTrigger("Attack");
+        animator.ResetTrigger("Jump");
+        Jumping = false;
+    }
+
+    private void Particle()
+    {
+        particleSystem.Play();
+    }
+
+    private void AttackAnimEnd()
+    {
+        PlayerInfo.Instance.attacking = false;
+        
+        animator.ResetTrigger("Attack");
+        animator.ResetTrigger("Jump");
+        Jumping = false;
+
+        particleSystem.Clear();
     }
 
     private void GetItem()
