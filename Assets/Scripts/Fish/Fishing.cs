@@ -77,6 +77,8 @@ public class Fishing : MonoBehaviour
             startTime = Time.time;
 
             RotatePlayerToTarget(hitPoint);
+
+            animator.SetBool("Break", false);
             animator.SetBool("isFishing", true);
         }
     }
@@ -125,8 +127,10 @@ public class Fishing : MonoBehaviour
         if (Input.GetKeyDown(fishingKey) && PlayerInfo.Instance.fishing)
         {
             if (PlayerInfo.Instance.casting) return;
+            
             ResetBobber();
 
+            animator.SetBool("isFishing", false);
             if (!nibble) PlayerInfo.Instance.fishing = false;
             else CatchFish();
         }
@@ -138,7 +142,6 @@ public class Fishing : MonoBehaviour
         Bobber.SetActive(false);
         Bobber.transform.position = originPos.position;
         Bobber.transform.SetParent(originPos);
-        animator.SetBool("isFishing", false);
         BobberAnim.SetBool("Bite", false);
     }
 
@@ -158,7 +161,8 @@ public class Fishing : MonoBehaviour
 
         nibble = false;
         ResetBobber();
-        PlayerInfo.Instance.fishing = false;
+        animator.SetBool("isFishing", false);
+        animator.SetBool("Break", true);
     }
 
     private void CatchFish()
@@ -174,7 +178,7 @@ public class Fishing : MonoBehaviour
         animator.SetBool("Nice", true);
     }
 
-    private void NiceAnimEnd()
+    private void EmoAnimEnd()
     {
         PlayerInfo.Instance.fishing = false;
     }

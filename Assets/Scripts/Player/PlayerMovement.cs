@@ -100,7 +100,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void AnimEnd()
     {
-        particleSystem.Clear();
+        if (particleSystem != null)
+            particleSystem.Clear();
 
         Jumping = false;
         animator.ResetTrigger("Attack");
