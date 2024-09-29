@@ -63,30 +63,74 @@ public class InventoryManager : MonoBehaviour
         isInventoryOpen = false;
     }
 
-    public bool AddItem(ItemData item)
+    //public bool AddItem(ItemData item)
+    //{
+    //    foreach (InventorySlot slot in inventorySlots)
+    //    {
+    //        InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+    //        if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < maxStack)
+    //        {
+    //            itemInSlot.count++;
+    //            itemInSlot.ItemCount();
+    //            return true;
+    //        }
+    //    }
+
+    //    foreach (InventorySlot slot in inventorySlots)
+    //    {
+    //        InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+    //        if (itemInSlot == null)
+    //        {
+    //            SpawnNewItem(item, slot);
+    //            return true;
+    //        }
+    //    }
+    //    return false;
+    //}
+
+    public bool AddItem(ItemData item, int amount = 1)
     {
         foreach (InventorySlot slot in inventorySlots)
         {
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
             if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < maxStack)
             {
-                itemInSlot.count++;
+                int addableAmount = Mathf.Min(amount, maxStack - itemInSlot.count);
+                itemInSlot.count += addableAmount;
                 itemInSlot.ItemCount();
-                return true;
+                amount -= addableAmount;
+
+                if (amount <= 0)
+                    return true;
             }
         }
 
-        foreach (InventorySlot slot in inventorySlots)
+        while (amount > 0)
         {
-            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-            if (itemInSlot == null)
+            foreach (InventorySlot slot in inventorySlots)
             {
-                SpawnNewItem(item, slot);
-                return true;
+                InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+                if (itemInSlot == null)
+                {
+                    int addableAmount = Mathf.Min(amount, maxStack);
+                    InventoryItem newItem = SpawnNewItem(item, slot, addableAmount);
+                    amount -= addableAmount;
+
+                    if (amount <= 0)
+                        return true;
+                }
+            }
+
+            if (amount > 0)
+            {
+                Debug.LogWarning("Inventory is full, unable to add remaining items.");
+                return false;
             }
         }
+
         return false;
     }
+
 
     public InventoryItem SpawnNewItem(ItemData item, InventorySlot slot, int count = 1)
     {

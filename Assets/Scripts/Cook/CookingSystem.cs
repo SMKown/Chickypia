@@ -121,6 +121,16 @@ public class CookingSystem : MonoBehaviour
 
     void StopCook()
     {
+        foreach (Transform child in ingredientParent)
+        {
+            IngredientSlot ingredientSlot = child.GetComponent<IngredientSlot>();
+            if (ingredientSlot.currentItemData != null) 
+            {
+                inventoryManager.AddItem(ingredientSlot.currentItemData, ingredientSlot.currentCount);
+                ingredientSlot.ResetSlot();
+            }
+        }
+
         choicePopup.gameObject.SetActive(false);
         makePopup.gameObject.SetActive(false);
         isCooking = false;
@@ -129,6 +139,16 @@ public class CookingSystem : MonoBehaviour
 
     public void ChoiceRecipe(FoodRecipeData recipe)
     {
+        foreach (Transform child in ingredientParent)
+        {
+            IngredientSlot ingredientSlot = child.GetComponent<IngredientSlot>();
+            if (ingredientSlot.currentItemData != null)
+            {
+                inventoryManager.AddItem(ingredientSlot.currentItemData, ingredientSlot.currentCount);
+                ingredientSlot.ResetSlot();
+            }
+        }
+
         currentRecipe = recipe;
 
         if (!makePopup.gameObject.activeSelf)
@@ -160,7 +180,7 @@ public class CookingSystem : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-
+        bool allIngredients = true;
         float initialX = 0f;
         float xOffset = 200f;
 
@@ -182,32 +202,16 @@ public class CookingSystem : MonoBehaviour
             if (ingredientName != null) { ingredientName.text = ingredient.item.itemName; }
             if (ingredientIcon != null) { ingredientIcon.sprite = ingredient.item.itemIcon; }
             if (ingrediencount != null) { ingrediencount.text = ingredient.count.ToString(); }
-        }
 
-        // 현재 필요 재료 소지 시
-        //if()
-        //{
-        //    cookButton.interactable = true;
-        //}
-    }
-
-    public void CheckAllIngredients()
-    {
-        bool allIngredientsFilled = true;
-
-        foreach (Transform child in ingredientParent)
-        {
-            IngredientSlot ingredientSlot = child.GetComponent<IngredientSlot>();
-            if (!ingredientSlot.IsFilled())
+            IngredientSlot ingredientSlot = FindIngredientSlot(ingredient.item);
+            if (ingredientSlot == null || ingredientSlot.currentCount < ingredient.count)
             {
-                allIngredientsFilled = false;
-                break;
+                allIngredients = false;
             }
         }
 
-        cookButton.interactable = allIngredientsFilled;
+        cookButton.interactable = allIngredients;
     }
-
 
     public void Cook(FoodRecipeData recipe)
     {
@@ -216,6 +220,23 @@ public class CookingSystem : MonoBehaviour
             Debug.Log("Cooking...");
             choicePopup.gameObject.SetActive(false);
             makePopup.gameObject.SetActive(false);
+            foreach (var ingredient in recipe.ingredients)
+            {
+                IngredientSlot ingredientSlot = FindIngredientSlot(ingredient.item);
+                if (ingredientSlot != null && ingredientSlot.currentItemData != null)
+                {
+                    int usedAmount = ingredient.count;
+                    int remainingAmount = ingredientSlot.currentCount - usedAmount;
+
+                    if (remainingAmount > 0)
+                    {
+                        inventoryManager.AddItem(ingredientSlot.currentItemData, remainingAmount);
+                    }
+
+                    ingredientSlot.ResetSlot();
+                }
+            }
+
             StartCoroutine(Cooking(recipe));
         }
         else
@@ -224,13 +245,24 @@ public class CookingSystem : MonoBehaviour
         }
     }
 
+    private IngredientSlot FindIngredientSlot(ItemData ingredient)
+    {
+        foreach (Transform child in ingredientParent)
+        {
+            IngredientSlot slot = child.GetComponent<IngredientSlot>();
+            if (slot != null && slot.currentItemData == ingredient)
+            {
+                return slot;
+            }
+        }
+        return null;
+    }
+
     IEnumerator Cooking(FoodRecipeData recipe)
     {
         yield return new WaitForSeconds(3f);
 
         choicePopup.gameObject.SetActive(true);
         makePopup.gameObject.SetActive(true);
-
-
     }
 }
