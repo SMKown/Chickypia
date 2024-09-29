@@ -17,6 +17,8 @@ public class InventoryManager : MonoBehaviour
     int selectedSlot = -1;
     public ItemData selectedItem;
 
+    public CookingSystem cookingSystem;
+
     private void Start()
     {
         MainInventory.SetActive(false);
@@ -24,6 +26,11 @@ public class InventoryManager : MonoBehaviour
 
     private void Update()
     {
+        if (cookingSystem != null && cookingSystem.IsCookingActive())
+        {
+            return;
+        }
+
         OnInventory();
 
         if (Input.GetKeyDown(KeyCode.T))
@@ -43,6 +50,17 @@ public class InventoryManager : MonoBehaviour
             isInventoryOpen = !isInventoryOpen;
             MainInventory.SetActive(isInventoryOpen);
         }
+    }
+    public void ShowInventory()
+    {
+        MainInventory.SetActive(true);
+        isInventoryOpen = true;
+    }
+
+    public void HideInventory()
+    {
+        MainInventory.SetActive(false);
+        isInventoryOpen = false;
     }
 
     public bool AddItem(ItemData item)

@@ -32,7 +32,7 @@ public class CookingSystem : MonoBehaviour
     public Button cookButton;
     private Transform recipeTransform;
 
-    private bool isCooking = true;
+    private bool isCooking = false;
 
     public FoodRecipeData currentRecipe;
 
@@ -44,7 +44,7 @@ public class CookingSystem : MonoBehaviour
         foodRecipeParent = transform.GetChild(0);
         ingredientParent = transform.GetChild(1).GetChild(1).GetChild(0);
         cookButton = transform.GetChild(1).GetChild(1).GetChild(1).GetComponent<Button>();
-
+        inventoryManager = FindObjectOfType<InventoryManager>();
 
         if (choicePopup == null) { Debug.LogError("choicePopup is not assigned."); }
         if (makePopup == null) { Debug.LogError("makePopup is not assigned."); }
@@ -63,7 +63,6 @@ public class CookingSystem : MonoBehaviour
             }
             else
             {
-                isCooking = true;
                 StartCook();
             }
         }
@@ -71,8 +70,15 @@ public class CookingSystem : MonoBehaviour
         cookButton.onClick.AddListener(() => Cook(currentRecipe));
     }
 
+    public bool IsCookingActive()
+    {
+        return isCooking;
+    }
+
+
     void StartCook()
     {
+        isCooking = true;
         choicePopup.gameObject.SetActive(true);
 
         //List<(ItemData item, int count)> inventoryItems = inventoryManager.GetInventoryItems();
@@ -81,7 +87,7 @@ public class CookingSystem : MonoBehaviour
         //{
         //    Debug.Log($"Inventory Item: {item.item.name}, Count: {item.count}");
         //}
-
+        inventoryManager.ShowInventory();
         foreach (Transform child in foodRecipeParent)
         {
             Destroy(child.gameObject);
@@ -118,6 +124,7 @@ public class CookingSystem : MonoBehaviour
         choicePopup.gameObject.SetActive(false);
         makePopup.gameObject.SetActive(false);
         isCooking = false;
+        inventoryManager.HideInventory();
     }
 
     public void ChoiceRecipe(FoodRecipeData recipe)
@@ -183,6 +190,24 @@ public class CookingSystem : MonoBehaviour
         //    cookButton.interactable = true;
         //}
     }
+
+    public void CheckAllIngredients()
+    {
+        bool allIngredientsFilled = true;
+
+        foreach (Transform child in ingredientParent)
+        {
+            IngredientSlot ingredientSlot = child.GetComponent<IngredientSlot>();
+            if (!ingredientSlot.IsFilled())
+            {
+                allIngredientsFilled = false;
+                break;
+            }
+        }
+
+        cookButton.interactable = allIngredientsFilled;
+    }
+
 
     public void Cook(FoodRecipeData recipe)
     {
