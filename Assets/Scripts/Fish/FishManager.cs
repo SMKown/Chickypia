@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -6,12 +5,12 @@ using Random = UnityEngine.Random;
 public class Fish
 {
     public string name;
-    public string sprite;
+    public Sprite sprite;
 
-    public Fish(string a, string b)
+    public Fish(string fishName)
     {
-        name = a;
-        sprite = b;
+        name = fishName;  
+        sprite = Resources.Load<Sprite>($"Sprites/{fishName}");
     }
 }
 
@@ -23,14 +22,14 @@ public static class FishManager
     public static void InitFishManager()
     {
         var textAsset = Resources.Load<TextAsset>("CSV/Fish");
-        
-        var splitData = textAsset.text.Split('\n');
-        foreach (var line in splitData)
+
+        var lines = textAsset.text.Split('\n');
+        foreach (var line in lines)
         {
-            var lineData = line.Split(',');
-            if (lineData[0] != "Fish Name")
+            var fishName = line.Trim();
+            if (!string.IsNullOrEmpty(fishName) && fishName != "Fish Name")
             {
-                var newFish = new Fish(lineData[0], lineData[1]);
+                var newFish = new Fish(fishName);
                 allFish.Add(newFish);
             }
         }

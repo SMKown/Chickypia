@@ -22,8 +22,6 @@ public class UIInteraction : MonoBehaviour
     public Image cooking; // 요리
     public Image dialog; // 대화
 
-    public Image exclamation; // !
-
     public Image gatherProgressCircle;
     public GameObject interactableObj;
 
@@ -70,7 +68,6 @@ public class UIInteraction : MonoBehaviour
         image.enabled = true;
 
         offsetPos = targetTransform.position;
-        offsetPos.y += 0.5F;
 
         Vector3 screenPos = Camera.main.WorldToScreenPoint(offsetPos);
         image.transform.position = screenPos;

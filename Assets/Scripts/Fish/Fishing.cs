@@ -1,19 +1,26 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class Fishing : MonoBehaviour
 {
     public GameObject Rod;
     public GameObject Bobber;
+    public GameObject FxShine;
+    public GameObject ExImage;
     public Transform originPos;
+    public Transform[] fishPos;
+    public Image fishImage;
+    private Image biteImage;
 
     private Animator animator;
     private Animator BobberAnim;
 
     private Fish fishtype;
     private bool nibble = false;
+    private bool emoAnim = false;
 
     private KeyCode fishingKey = KeyCode.E;
     private float maxCastDistance = 5F;
@@ -23,10 +30,13 @@ public class Fishing : MonoBehaviour
     private float startTime;
     private float lerpTime = 0.8F;
 
+    private Coroutine fishingCoroutine;
+
     private void Start()
     {
         animator = GetComponent<Animator>();
         BobberAnim = Bobber.GetComponent<Animator>();
+        biteImage = ExImage.GetComponent<Image>();
     }
 
     private void Update()
@@ -41,8 +51,6 @@ public class Fishing : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && !PlayerInfo.Instance.casting && !PlayerInfo.Instance.fishing)
         {
-            animator.SetBool("Nice", false);
-
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
@@ -71,15 +79,17 @@ public class Fishing : MonoBehaviour
     {
         if (Bobber != null)
         {
+            animator.SetBool("Break", false);
+            animator.SetBool("Nice", false);
+            animator.SetBool("isFishing", true);
+            FxShine.SetActive(false);
+
             PlayerInfo.Instance.casting = true;
 
             targetPos = hitPoint;
             startTime = Time.time;
 
             RotatePlayerToTarget(hitPoint);
-
-            animator.SetBool("Break", false);
-            animator.SetBool("isFishing", true);
         }
     }
 
@@ -119,15 +129,15 @@ public class Fishing : MonoBehaviour
     {
         PlayerInfo.Instance.casting = false;
         PlayerInfo.Instance.fishing = true;
-        StartCoroutine(WaitForNibble(10));
+        fishingCoroutine = StartCoroutine(WaitForNibble(10)); // 코루틴 저장
     }
 
     private void HandleFishingInput()
     {
         if (Input.GetKeyDown(fishingKey) && PlayerInfo.Instance.fishing)
         {
-            if (PlayerInfo.Instance.casting) return;
-            
+            if (PlayerInfo.Instance.casting || emoAnim) return;
+
             ResetBobber();
 
             animator.SetBool("isFishing", false);
@@ -138,7 +148,12 @@ public class Fishing : MonoBehaviour
 
     private void ResetBobber()
     {
-        StopAllCoroutines();
+        if (fishingCoroutine != null)
+        {
+            StopCoroutine(fishingCoroutine);
+            fishingCoroutine = null;
+        }
+
         Bobber.SetActive(false);
         Bobber.transform.position = originPos.position;
         Bobber.transform.SetParent(originPos);
@@ -148,38 +163,59 @@ public class Fishing : MonoBehaviour
     private IEnumerator WaitForNibble(float maxWaitTime)
     {
         yield return new WaitForSeconds(Random.Range(maxWaitTime * 0.25F, maxWaitTime));
-        UIInteraction.Instance.ImageOn(UIInteraction.Instance.exclamation, Bobber.transform);
+        ExImage.SetActive(true);
+        UIInteraction.Instance.ImageOn(biteImage, Bobber.transform);
         nibble = true;
         BobberAnim.SetBool("Bite", true);
-        StartCoroutine(LineBreak(2));
+        fishingCoroutine = StartCoroutine(LineBreak(1.5F));
     }
 
     private IEnumerator LineBreak(float lineBreakTime)
     {
         yield return new WaitForSeconds(lineBreakTime);
-        UIInteraction.Instance.ImageOff(UIInteraction.Instance.exclamation);
+        UIInteraction.Instance.ImageOff(biteImage);
+        ExImage.SetActive(false);
 
         nibble = false;
         ResetBobber();
         animator.SetBool("isFishing", false);
         animator.SetBool("Break", true);
+        emoAnim = true;
     }
 
     private void CatchFish()
     {
         nibble = false;
 
-        fishtype = FishManager.GetRandomFish();
-        Debug.Log($"잡은 물고기 : {fishtype.name}");
-
         RotatePlayerToTarget(Camera.main.transform.position);
 
-        UIInteraction.Instance.ImageOff(UIInteraction.Instance.exclamation);
+        UIInteraction.Instance.ImageOff(biteImage);
+        ExImage.SetActive(false);
         animator.SetBool("Nice", true);
+        emoAnim = true;
+
+        fishtype = FishManager.GetRandomFish();
+
+        if (transform.position.x <= -5F) FxShine.transform.position = fishPos[0].position;
+        else FxShine.transform.position = fishPos[1].position;
+
+        FxShine.SetActive(true);
+
+        fishImage.sprite = fishtype.sprite;
+        UIInteraction.Instance.ImageOn(fishImage, FxShine.transform);
+        
+        StartCoroutine(FishImageOff(1.2F));
+    }
+
+    private IEnumerator FishImageOff(float t)
+    {
+        yield return new WaitForSeconds(t);
+        UIInteraction.Instance.ImageOff(fishImage);
     }
 
     private void EmoAnimEnd()
     {
         PlayerInfo.Instance.fishing = false;
+        emoAnim = false;
     }
 }
