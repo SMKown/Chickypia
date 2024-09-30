@@ -39,6 +39,18 @@ namespace Cookingsystem
                 foodRecipeId = resultItem.itemId;
             }
         }
+
+        public int GetIngredientCount(ItemData ingredient)
+        {
+            foreach (var ingredientInfo in ingredients)
+            {
+                if (ingredientInfo.item == ingredient)
+                {
+                    return ingredientInfo.count;
+                }
+            }
+            return 0;
+        }
     }
 
     [System.Serializable]

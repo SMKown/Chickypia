@@ -1,51 +1,129 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class IngredientSlot : MonoBehaviour, IDropHandler
 {
     public Image ingredientImage;
-    public Text ingredientName;
-    public Text ingredientCount;
+    public TextMeshProUGUI ingredientName;
+    public TextMeshProUGUI ingredientCount;
 
     public ItemData currentItemData;
     public int currentCount;
+    private CookingSystem cookingSystem;
 
-    // 드롭된 아이템을 받는 부분
+    private Color originalColor;
+
+    private void Awake()
+    {
+        cookingSystem = FindObjectOfType<CookingSystem>();
+        originalColor = ingredientImage.color;
+    }
+
     public void OnDrop(PointerEventData eventData)
     {
         InventoryItem draggedItem = eventData.pointerDrag?.GetComponent<InventoryItem>();
+        if (draggedItem == null)
+        {
+            Debug.LogError("draggedItem is null in OnDrop");
+            return;
+        }
 
-        if (draggedItem == null || draggedItem.item == null) return;
+        if (currentItemData != null && currentItemData == draggedItem.item)
+        {
+            int remainingAmountNeeded = cookingSystem.currentRecipe.GetIngredientCount(currentItemData) - currentCount;
+            int amountToAdd = Mathf.Min(draggedItem.count, remainingAmountNeeded);
 
-        // 재료 슬롯에 아이템 배치
+            currentCount += amountToAdd;
+            ingredientCount.text = currentCount.ToString();
+            draggedItem.count -= amountToAdd;
+            if (draggedItem.count <= 0)
+            {
+                Destroy(draggedItem.gameObject);
+            }
+            else
+            {
+                draggedItem.ItemCount();
+            }
+
+            cookingSystem.CheckAllIngredients();
+            return;
+        }
+
+        if (currentItemData != null)
+        {
+            Debug.Log("이미 재료가 추가되어 있습니다.");
+            return;
+        }
+
+        if (!IsCorrectIngredient(draggedItem.item))
+        {
+            StartCoroutine(FlashSlot(Color.red, 0.5f));
+            draggedItem.transform.SetParent(draggedItem.parentAfterDrag);
+            draggedItem.transform.localPosition = Vector3.zero;
+            return;
+        }
+        AddIngredient(draggedItem);
+    }
+
+    private bool IsCorrectIngredient(ItemData draggedItem)
+    {
+        var currentRecipe = cookingSystem.currentRecipe;
+        foreach (var ingredient in currentRecipe.ingredients)
+        {
+            if (ingredient.item == draggedItem)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void AddIngredient(InventoryItem draggedItem)
+    {
         currentItemData = draggedItem.item;
-        currentCount = draggedItem.count;
 
+        int requiredAmount = cookingSystem.currentRecipe.GetIngredientCount(currentItemData);
+        currentCount = Mathf.Min(draggedItem.count, requiredAmount);
         ingredientImage.sprite = draggedItem.item.itemIcon;
         ingredientImage.color = Color.white;
         ingredientName.text = draggedItem.item.itemName;
         ingredientCount.text = currentCount.ToString();
 
-        // 우클릭으로 하나씩 놓기
-        draggedItem.count -= 1;
-        draggedItem.ItemCount();
-
+        draggedItem.count -= currentCount;
         if (draggedItem.count <= 0)
         {
-            Destroy(draggedItem.gameObject); // 아이템 전부 소진 시 제거
+            Destroy(draggedItem.gameObject);
         }
+        else
+        {
+            draggedItem.ItemCount();
+        }
+
+        draggedItem.transform.SetParent(this.transform);
+        draggedItem.transform.localPosition = Vector3.zero;
+
+        cookingSystem.CheckAllIngredients();
     }
 
-    // 재료 슬롯 초기화 (레시피 변경 시 실행)
     public void ResetSlot()
     {
         currentItemData = null;
         currentCount = 0;
 
         ingredientImage.sprite = null;
-        ingredientImage.color = new Color(0, 0, 0, 0); // 투명하게 변경
+        ingredientImage.color = new Color(1, 1, 1, 0.5f);
         ingredientName.text = "";
         ingredientCount.text = "";
+    }
+
+    private IEnumerator FlashSlot(Color color, float duration)
+    {
+        Color originalColor = ingredientImage.color;
+        ingredientImage.color = color;
+        yield return new WaitForSeconds(duration);
+        ingredientImage.color = originalColor;
     }
 }

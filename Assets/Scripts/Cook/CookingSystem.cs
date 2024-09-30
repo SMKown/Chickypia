@@ -66,8 +66,6 @@ public class CookingSystem : MonoBehaviour
                 StartCook();
             }
         }
-
-        cookButton.onClick.AddListener(() => Cook(currentRecipe));
     }
 
     public bool IsCookingActive()
@@ -80,18 +78,18 @@ public class CookingSystem : MonoBehaviour
     {
         isCooking = true;
         choicePopup.gameObject.SetActive(true);
+        inventoryManager.ShowInventory();
 
+        cookButton.onClick.RemoveAllListeners();
+        cookButton.onClick.AddListener(() => Cook(currentRecipe));
         //List<(ItemData item, int count)> inventoryItems = inventoryManager.GetInventoryItems();
 
         //foreach (var item in inventoryItems)
         //{
         //    Debug.Log($"Inventory Item: {item.item.name}, Count: {item.count}");
         //}
-        inventoryManager.ShowInventory();
-        foreach (Transform child in foodRecipeParent)
-        {
-            Destroy(child.gameObject);
-        }
+
+        ClearIngredientSlots();
 
         foreach (var foodRecipe in foodRecipeData)
         {
@@ -100,13 +98,11 @@ public class CookingSystem : MonoBehaviour
                 GameObject newIngredient = Instantiate(foodRecipePrefab, foodRecipeParent);
 
                 Image foodRecipeIcon = newIngredient.transform.GetChild(0).GetComponent<Image>();
-                TextMeshProUGUI foodRecipeName = newIngredient.transform.GetChild(1).GetComponent< TextMeshProUGUI>();                
+                TextMeshProUGUI foodRecipeName = newIngredient.transform.GetChild(1).GetComponent< TextMeshProUGUI>();
 
-                if (foodRecipeIcon != null) 
-                {                    
-                    foodRecipeIcon.sprite = foodRecipe.foodIcon;
-                    foodRecipeIcon.color = Color.gray;
-                }
+                foodRecipeIcon.sprite = foodRecipe.foodIcon;
+                foodRecipeIcon.color = Color.gray;
+                
                 if (foodRecipeName != null) { foodRecipeName.text = foodRecipe.foodName; }
                                
 
@@ -121,15 +117,7 @@ public class CookingSystem : MonoBehaviour
 
     void StopCook()
     {
-        foreach (Transform child in ingredientParent)
-        {
-            IngredientSlot ingredientSlot = child.GetComponent<IngredientSlot>();
-            if (ingredientSlot.currentItemData != null) 
-            {
-                inventoryManager.AddItem(ingredientSlot.currentItemData, ingredientSlot.currentCount);
-                ingredientSlot.ResetSlot();
-            }
-        }
+        ResetIngredientSlots();
 
         choicePopup.gameObject.SetActive(false);
         makePopup.gameObject.SetActive(false);
@@ -139,15 +127,7 @@ public class CookingSystem : MonoBehaviour
 
     public void ChoiceRecipe(FoodRecipeData recipe)
     {
-        foreach (Transform child in ingredientParent)
-        {
-            IngredientSlot ingredientSlot = child.GetComponent<IngredientSlot>();
-            if (ingredientSlot.currentItemData != null)
-            {
-                inventoryManager.AddItem(ingredientSlot.currentItemData, ingredientSlot.currentCount);
-                ingredientSlot.ResetSlot();
-            }
-        }
+        ResetIngredientSlots();
 
         currentRecipe = recipe;
 
@@ -176,10 +156,7 @@ public class CookingSystem : MonoBehaviour
             foodImage.sprite = recipe.foodIcon;
         }
 
-        foreach (Transform child in ingredientParent)
-        {
-            Destroy(child.gameObject);
-        }
+        ClearIngredientSlots();
         bool allIngredients = true;
         float initialX = 0f;
         float xOffset = 200f;
@@ -199,18 +176,41 @@ public class CookingSystem : MonoBehaviour
             TextMeshProUGUI ingrediencount = newIngredient.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
             Image ingredientIcon = newIngredient.transform.GetChild(0).GetComponent<Image>();
 
-            if (ingredientName != null) { ingredientName.text = ingredient.item.itemName; }
-            if (ingredientIcon != null) { ingredientIcon.sprite = ingredient.item.itemIcon; }
-            if (ingrediencount != null) { ingrediencount.text = ingredient.count.ToString(); }
+            ingredientName.text = ingredient.item.itemName;
+            ingredientIcon.sprite = ingredient.item.itemIcon;
+            ingredientIcon.color = new Color(1, 1, 1, 0.5f);
+            ingrediencount.text = ingredient.count.ToString();
 
             IngredientSlot ingredientSlot = FindIngredientSlot(ingredient.item);
             if (ingredientSlot == null || ingredientSlot.currentCount < ingredient.count)
             {
                 allIngredients = false;
             }
+
         }
 
         cookButton.interactable = allIngredients;
+    }
+
+    private void ResetIngredientSlots()
+    {
+        foreach (Transform child in ingredientParent)
+        {
+            IngredientSlot ingredientSlot = child.GetComponent<IngredientSlot>();
+            if (ingredientSlot != null && ingredientSlot.currentItemData != null)
+            {
+                inventoryManager.AddItem(ingredientSlot.currentItemData, ingredientSlot.currentCount);
+                ingredientSlot.ResetSlot();
+            }
+        }
+    }
+
+    private void ClearIngredientSlots()
+    {
+        foreach (Transform child in ingredientParent)
+        {
+            Destroy(child.gameObject);
+        }
     }
 
     public void Cook(FoodRecipeData recipe)
@@ -220,24 +220,22 @@ public class CookingSystem : MonoBehaviour
             Debug.Log("Cooking...");
             choicePopup.gameObject.SetActive(false);
             makePopup.gameObject.SetActive(false);
+            inventoryManager.HideInventory();
+            cookButton.interactable = false;
             foreach (var ingredient in recipe.ingredients)
             {
                 IngredientSlot ingredientSlot = FindIngredientSlot(ingredient.item);
                 if (ingredientSlot != null && ingredientSlot.currentItemData != null)
                 {
-                    int usedAmount = ingredient.count;
-                    int remainingAmount = ingredientSlot.currentCount - usedAmount;
-
-                    if (remainingAmount > 0)
-                    {
-                        inventoryManager.AddItem(ingredientSlot.currentItemData, remainingAmount);
-                    }
-
                     ingredientSlot.ResetSlot();
                 }
             }
 
             StartCoroutine(Cooking(recipe));
+            currentRecipe = null;
+            foodName.text = "";
+            foodImage.sprite = null;
+            ClearIngredientSlots();
         }
         else
         {
@@ -258,11 +256,36 @@ public class CookingSystem : MonoBehaviour
         return null;
     }
 
+    public void CheckAllIngredients()
+    {
+        bool allIngredientsMet = true;
+
+        foreach (var ingredient in currentRecipe.ingredients)
+        {
+            IngredientSlot ingredientSlot = FindIngredientSlot(ingredient.item);
+            if (ingredientSlot == null || ingredientSlot.currentCount < ingredient.count)
+            {
+                allIngredientsMet = false;
+                break;
+            }
+        }
+
+        cookButton.interactable = allIngredientsMet;
+    }
+
     IEnumerator Cooking(FoodRecipeData recipe)
     {
         yield return new WaitForSeconds(3f);
+        inventoryManager.AddItem(recipe.resultItem, 1);
+        currentRecipe = null;
+        foodName.text = "";
+        foodImage.sprite = null;
+        ClearIngredientSlots();
 
         choicePopup.gameObject.SetActive(true);
         makePopup.gameObject.SetActive(true);
+        inventoryManager.ShowInventory();
+
+        cookButton.interactable = true;
     }
 }
