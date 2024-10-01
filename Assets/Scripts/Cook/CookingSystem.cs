@@ -79,6 +79,10 @@ public class CookingSystem : MonoBehaviour
         isCooking = true;
         choicePopup.gameObject.SetActive(true);
         inventoryManager.ShowInventory();
+        foreach (Transform child in foodRecipeParent)
+        {
+            Destroy(child.gameObject);
+        }
 
         cookButton.onClick.RemoveAllListeners();
         cookButton.onClick.AddListener(() => Cook(currentRecipe));
@@ -232,10 +236,6 @@ public class CookingSystem : MonoBehaviour
             }
 
             StartCoroutine(Cooking(recipe));
-            currentRecipe = null;
-            foodName.text = "";
-            foodImage.sprite = null;
-            ClearIngredientSlots();
         }
         else
         {
