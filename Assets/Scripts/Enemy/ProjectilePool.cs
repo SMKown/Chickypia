@@ -3,8 +3,15 @@ using System.Collections.Generic;
 
 public class ProjectilePool : MonoBehaviour
 {
+    public static ProjectilePool Instance { get; private set; }
+
     public GameObject projectilePrefab;
     private Queue<GameObject> projectilePool = new Queue<GameObject>();
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     public GameObject GetProjectile()
     {

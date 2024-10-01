@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum PatrolType { FourPt, TwoPt }
 public class EnemyAI : MonoBehaviour
 {
     [Header("적 속성")]
@@ -10,7 +11,8 @@ public class EnemyAI : MonoBehaviour
     public Transform player;
     [Header("적의 종류")]
     public EnemyType enemyType;
-    
+    public PatrolType patrolType;
+
     public EnemyState currentState;
     private bool isTransitioningState;
     [Header("도망 여부")]
@@ -35,7 +37,7 @@ public class EnemyAI : MonoBehaviour
 
     private void Start()
     {
-        currentState = new PatrollingState(this);
+        currentState = new PatrollingState(this, patrolType);
         currentState.EnterState();
     }
 
@@ -113,17 +115,17 @@ public class EnemyAI : MonoBehaviour
 
     private void SwitchToChaseOrAttackState()
     {
-        if (PlayerInSightRange() && !PlayerInAttackRange())
-        {
-            SwitchState(new ChasingState(this)); 
-        }
-        else if (PlayerInAttackRange())
+        if (PlayerInAttackRange())
         {
             SwitchState(new AttackState(this));
         }
+        else if (PlayerInSightRange())
+        {
+            SwitchState(new ChasingState(this));
+        }
         else
         {
-            SwitchState(new PatrollingState(this)); 
+            SwitchState(new PatrollingState(this, patrolType));
         }
     }
 

@@ -12,6 +12,8 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     
     [SerializeField] private float moveSpeed;
+    [SerializeField] private int maxHealth = 5;
+    private int currentHealth;
 
     private float gravity;
     private bool Jumping = false;
@@ -95,11 +97,29 @@ public class PlayerMovement : MonoBehaviour
                 if (enemy.CompareTag("Enemy"))
                 {
                     Vector3 knockbackDirection = (enemy.transform.position - transform.position).normalized;
-                    float knockbackForce = 5f;
+                    float knockbackForce = 3f;
                     enemy.GetComponent<Enemy>().TakeDamage(attackDamage, knockbackDirection, knockbackForce);
                 }
             }
         }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+        else
+        {
+            //animator
+        }
+    }
+
+    private void Die()
+    {
+
     }
 
 

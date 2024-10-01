@@ -6,7 +6,6 @@ public class RangeAttack : Enemy // 원거리 공격
     [Header("공격 속성")]
     public float projectileSpeed = 3f;
     public int damage = 1;
-    public float attackCooldown = 3f;
     [Header("투사체")]
     public GameObject projectilePrefab;
     public Transform firePoint;

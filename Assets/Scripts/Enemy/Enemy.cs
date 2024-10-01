@@ -10,12 +10,14 @@ public abstract class Enemy : MonoBehaviour
     [Header("시야 및 공격 범위")]
     public float sightRange;
     public float attackRange;
+    [Header("공격 쿨타임")]
+    public float attackCooldown;
 
     protected Animator anim;
     protected Transform player;
 
     [HideInInspector]public NavMeshAgent agent;
-    [Header("순찰 포인트 4개 지정")]
+    [Header("순찰 포인트")]
     public Vector3[] patrolPoints;
 
     protected virtual void Awake()
@@ -37,14 +39,27 @@ public abstract class Enemy : MonoBehaviour
         if (health <= 0) Die();
     }
 
-    private void Knockback(Vector3 direction, float force)
+    private void Knockback(Vector3 knockbackSourcePosition, float force)
     {
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
         {
-            rb.AddForce(direction * force, ForceMode.Impulse);
+            Vector3 knockbackDirection = (transform.position - knockbackSourcePosition).normalized;
+            agent.isStopped = true;
+            agent.enabled = false;
+            rb.AddForce(knockbackDirection * force, ForceMode.Impulse);
+            StartCoroutine(ReEnableNavMeshAgent());
         }
     }
+
+    private IEnumerator ReEnableNavMeshAgent()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        agent.enabled = true;
+        agent.isStopped = false;
+    }
+
 
     private IEnumerator FlashRed()
     {

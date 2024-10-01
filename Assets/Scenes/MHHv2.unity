@@ -1291,6 +1291,7 @@ MonoBehaviour:
   attackRange: 2
   attackDamage: 1
   moveSpeed: 3
+  maxHealth: 5
   inventoryManager: {fileID: 1952127463}
 --- !u!114 &24637617
 MonoBehaviour:
@@ -56633,6 +56634,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.26852962
       objectReference: {fileID: 0}
+    - target: {fileID: 1271100826935906998, guid: 56f8768f0679ed544be12b4d6e57784e, type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1292899940985245573, guid: 56f8768f0679ed544be12b4d6e57784e, type: 3}
       propertyPath: m_LocalRotation.w
       value: 4.2007332e-17
@@ -56747,7 +56752,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5088168342664027259, guid: 56f8768f0679ed544be12b4d6e57784e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.15
+      value: 22.23
       objectReference: {fileID: 0}
     - target: {fileID: 5088168342664027259, guid: 56f8768f0679ed544be12b4d6e57784e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -56864,7 +56869,7 @@ PrefabInstance:
     - target: {fileID: 8217282539758200431, guid: 56f8768f0679ed544be12b4d6e57784e, type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 24637618}
     - target: {fileID: 8217282539758200431, guid: 56f8768f0679ed544be12b4d6e57784e, type: 3}
       propertyPath: m_Enabled
       value: 1

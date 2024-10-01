@@ -25,38 +25,28 @@ public class Projectile : MonoBehaviour
 
         if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
         {
-            HandleImpact();
+            HandleImpact(null);
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.collider.CompareTag("Player"))
         {
-            HandleImpact();
+            HandleImpact(collision.collider);
         }
     }
 
-    private void HandleImpact()
-    { 
-        // 둘중하나 사용
-
-        //PlayerInfo playerInfo = target.GetComponent<PlayerInfo>();
-        //if (playerInfo != null)
-        //{
-        //    playerInfo.TakeDamage(damage);
-        //}
-
-        //PlayerInfo playerInfo = collision.gameObject.GetComponent<PlayerInfo>();
-        //    if (playerInfo != null)
-        //    {
-        //        playerInfo.TakeDamage(damage);
-        //    }
-
-        ProjectilePool pool = FindObjectOfType<ProjectilePool>();
-        if (pool != null)
+    private void HandleImpact(Collider collider)
+    {
+        if (collider != null && collider.CompareTag("Player"))
         {
-            pool.ReturnProjectile(gameObject);
+            PlayerMovement playerMovement = collider.GetComponent<PlayerMovement>();
+            if (playerMovement != null)
+            {
+                playerMovement.TakeDamage(damage);
+            }
         }
+        ProjectilePool.Instance.ReturnProjectile(gameObject);
     }
 }

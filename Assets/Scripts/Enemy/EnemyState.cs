@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
@@ -23,14 +24,21 @@ public abstract class EnemyState
     protected bool PlayerOutPatrolRange()
     {
         Vector3[] patrolPoints = enemyAI.GetEnemy().patrolPoints;
+        float patrolRadius = 20f;
+        float sightRange = enemyAI.GetEnemy().sightRange;  // 적의 시야 범위
+
         foreach (var point in patrolPoints)
         {
-            if (Vector3.Distance(point, enemyAI.player.position) <= enemyAI.GetEnemy().sightRange)
+            if (Vector3.Distance(point, enemyAI.player.position) <= patrolRadius)
             {
                 return false;
             }
         }
-        return true;
+        if (Vector3.Distance(enemyAI.player.position, enemyAI.transform.position) > sightRange)
+        {
+            return true;
+        }
+        return false;
     }
 }
 
@@ -63,7 +71,7 @@ public class IdleState : EnemyState
         {
             if (!(enemyAI.CurrentState is PatrollingState))
             {
-                enemyAI.SwitchState(new PatrollingState(enemyAI));
+                enemyAI.SwitchState(new PatrollingState(enemyAI, enemyAI.patrolType));
             }
         }
     }
@@ -82,19 +90,38 @@ public class IdleState : EnemyState
 // 순찰 상태
 public class PatrollingState : EnemyState
 {
-    public PatrollingState(EnemyAI enemyAI) : base(enemyAI) { }
+    private PatrolType patrolType;
+    private bool movingToPointA;
+
+    public PatrollingState(EnemyAI enemyAI, PatrolType patrolType) : base(enemyAI) 
+    {
+        this.patrolType = patrolType;
+        this.movingToPointA = false;
+    }
 
     public override void EnterState()
     {
         enemyAI.GetEnemy().SetAnimationState(AnimationState.Move);
-        SetNextPatrolDestination();
+        if (patrolType == PatrolType.FourPt)
+        {
+            SetNextFourPatrolDestination();
+        }
+        else if (patrolType == PatrolType.TwoPt)
+        {
+            SetNextTwoPatrolDestination();
+        }
     }
 
     public override void UpdateState()
     {
         if (!enemyAI.agent.pathPending && enemyAI.agent.remainingDistance <= enemyAI.agent.stoppingDistance + 0.1f)
         {
-            enemyAI.SwitchState(new IdleState(enemyAI, 2f));
+            if (patrolType == PatrolType.FourPt || patrolType == PatrolType.TwoPt)
+            {
+                // Idle 상태로 전환하여 2초 동안 쉬고 다시 순찰
+                enemyAI.SwitchState(new IdleState(enemyAI, 2f));
+            }
+
         }
     }
 
@@ -118,7 +145,7 @@ public class PatrollingState : EnemyState
         return this;
     }
 
-    private void SetNextPatrolDestination()
+    private void SetNextFourPatrolDestination()
     {
         var enemy = enemyAI.GetEnemy();
         int currentIndex = GetPatrolPointIndex();
@@ -126,7 +153,26 @@ public class PatrollingState : EnemyState
         int nextPoint = possiblePoints[Random.Range(0, possiblePoints.Length)];
         SetDestination(enemy.patrolPoints[nextPoint]);
     }
-
+    private void SetNextTwoPatrolDestination()
+    {
+        var enemy = enemyAI.GetEnemy();
+        if (enemy.patrolPoints.Length >= 2)
+        {
+            if (movingToPointA)
+            {
+                SetDestination(enemy.patrolPoints[0]);
+            }
+            else
+            {
+                SetDestination(enemy.patrolPoints[1]);
+            }
+        }
+    }
+    private void SetDestination(Vector3 destination)
+    {
+        enemyAI.agent.SetDestination(destination);
+    }
+    
     private int GetPatrolPointIndex()
     {
         var enemy = enemyAI.GetEnemy();
@@ -163,11 +209,6 @@ public class PatrollingState : EnemyState
         }
     }
 
-    private void SetDestination(Vector3 destination)
-    {
-        enemyAI.agent.SetDestination(destination);
-    }
-
     public override void ExitState()
     {
         enemyAI.GetEnemy().SetAnimationState(AnimationState.Move);
@@ -193,7 +234,7 @@ public class ChasingState : EnemyState
         }
         else if (enemyAI.PlayerMovedFar())
         {
-            enemyAI.SwitchState(new PatrollingState(enemyAI));
+            enemyAI.SwitchState(new PatrollingState(enemyAI, enemyAI.patrolType));
         }
         else
         {
@@ -205,11 +246,11 @@ public class ChasingState : EnemyState
     {
         if (PlayerOutPatrolRange())
         {
-            return new PatrollingState(enemyAI);
+            return new PatrollingState(enemyAI, enemyAI.patrolType);
         }
         else if (!PlayerInChaseRange())
         {
-            return new PatrollingState(enemyAI);
+            return new PatrollingState(enemyAI, enemyAI.patrolType);
         }
         else if (enemyAI.PlayerInAttackRange())
         {
@@ -227,19 +268,32 @@ public class ChasingState : EnemyState
 // 적의 공격 상태
 public class AttackState : EnemyState
 {
-    public AttackState(EnemyAI enemyAI) : base(enemyAI) { }
+    private bool isCoolingDown;
+    public AttackState(EnemyAI enemyAI) : base(enemyAI) 
+    {
+        isCoolingDown = false;
+    }
 
     public override void EnterState()
     {
         Enemy enemy = enemyAI.GetEnemy();
         enemy.SetAnimationState(AnimationState.Attack);
+        enemyAI.StartCoroutine(StartCooldown());
     }
 
-    public override void UpdateState() { }
+    public override void UpdateState() 
+    {
+        if (isCoolingDown) return;
+
+        if (!enemyAI.PlayerInAttackRange())
+        {
+            enemyAI.SwitchState(new IdleState(enemyAI, 2f));
+        }
+    }
 
     public override EnemyState CheckStateTransitions()
     {
-        if (!enemyAI.PlayerInAttackRange())
+        if (!enemyAI.PlayerInAttackRange()&& !isCoolingDown)
         {
             return new ChasingState(enemyAI);
         }
@@ -249,6 +303,12 @@ public class AttackState : EnemyState
     public override void ExitState()
     {
         enemyAI.GetEnemy().ResetAnimationState();
+    }
+    private IEnumerator StartCooldown()
+    {
+        isCoolingDown = true;
+        yield return new WaitForSeconds(enemyAI.GetEnemy().attackCooldown);
+        isCoolingDown = false;
     }
 }
 
@@ -268,7 +328,7 @@ public class FleeingState : EnemyState
     {
         if (enemyAI.PlayerMovedFar())
         {
-            return new PatrollingState(enemyAI);
+            return new PatrollingState(enemyAI, enemyAI.patrolType);
         }
         return this;
     }

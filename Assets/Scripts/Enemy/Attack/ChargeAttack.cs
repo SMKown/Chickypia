@@ -12,21 +12,25 @@ public class ChargeAttack : Enemy // 돌격 공격
     public float chargeDuration = 3f;
     [Tooltip("공격 딜레이")]
     public float prepareTime = 2f;
-    public float attackCooldown = 5f;
 
     private float lastAttackTime;
     private LineRenderer lineRenderer;
+    private Rigidbody rb;
+    private bool isCharging;
 
     protected override void Awake()
     {
         base.Awake();
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.enabled = false;
+        rb = GetComponent<Rigidbody>();
+        rb.isKinematic = true;
+        isCharging = false;
     }
 
     public override void Attack()
     {
-        if (Time.time - lastAttackTime < attackCooldown) return;
+        if (Time.time - lastAttackTime < attackCooldown || isCharging) return;
         lastAttackTime = Time.time;
 
         SetAnimationState(AnimationState.Charge);
@@ -52,28 +56,36 @@ public class ChargeAttack : Enemy // 돌격 공격
         yield return new WaitForSeconds(prepareTime);
 
         float timer = chargeDuration;
-        NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        isCharging = true;
+        rb.isKinematic = false;
+        rb.velocity = transform.forward * chargeSpeed;
 
         while (timer > 0)
         {
-            agent.velocity = transform.forward * chargeSpeed;
             timer -= Time.deltaTime;
             yield return null;
         }
 
-        agent.velocity = Vector3.zero;
+        rb.velocity = Vector3.zero;
+        rb.isKinematic = true;
+        isCharging = false;
         lineRenderer.enabled = false;
+
+        yield return new WaitForSeconds(attackCooldown);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (isCharging && collision.collider.CompareTag("Player"))
         {
-            //PlayerInfo playerInfo = collision.gameObject.GetComponent<PlayerInfo>();
-            //if (playerInfo != null)
-            //{
-            //    playerInfo.TakeDamage(damage); // 플레이어에게 데미지 입힘
-            //}
+            PlayerMovement playerMovement = collision.collider.GetComponent<PlayerMovement>();
+            if (playerMovement != null)
+            {
+                playerMovement.TakeDamage(damage);
+            }
+
+            rb.velocity = Vector3.zero;
+            isCharging = false;
         }
     }
 }
