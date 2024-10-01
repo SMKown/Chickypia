@@ -25,33 +25,38 @@ public abstract class Enemy : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    public virtual void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage, Vector3 knockbackDirection, float knockbackForce)
     {
         if (health <= 0) return;
 
         health -= damage;
-
-        //StartCoroutine(FlashRed());
+        Knockback(knockbackDirection, knockbackForce);
+        StartCoroutine(FlashRed());
         SetAnimationState(AnimationState.Damage);
 
         if (health <= 0) Die();
     }
 
-    //private void Knocback()
-    //{
+    private void Knockback(Vector3 direction, float force)
+    {
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.AddForce(direction * force, ForceMode.Impulse);
+        }
+    }
 
-    //}
+    private IEnumerator FlashRed()
+    {
+        Renderer renderer = GetComponentInChildren<Renderer>();
 
-    //private IEnumerator FlashRed()
-    //{
-    //    Renderer renderer = GetComponent<Renderer>();
-    //    Color originalColor = renderer.material.color;
+        Color originalColor = renderer.material.color;
 
-    //    renderer.material.color = Color.red;
+        renderer.material.color = Color.red;
 
-    //    yield return new WaitForSeconds(0.1f);
-    //    renderer.material.color = originalColor;
-    //}
+        yield return new WaitForSeconds(0.1f);
+        renderer.material.color = originalColor;
+    }
 
     public void OnDamageAnimationEnd()
     {

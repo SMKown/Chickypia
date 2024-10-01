@@ -94,11 +94,14 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (enemy.CompareTag("Enemy"))
                 {
-                    enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+                    Vector3 knockbackDirection = (enemy.transform.position - transform.position).normalized;
+                    float knockbackForce = 5f;
+                    enemy.GetComponent<Enemy>().TakeDamage(attackDamage, knockbackDirection, knockbackForce);
                 }
             }
         }
     }
+
 
     private void Particle()
     {
