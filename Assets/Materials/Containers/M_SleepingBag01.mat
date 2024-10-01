@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_SleepingBag01
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 7d479da66ca1a40efb5d9b3635aea6f8, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -30,8 +30,7 @@ Material:
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap:
-    RenderType: Opaque
+  stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -133,6 +132,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Texture2D:
+        m_Texture: {fileID: 2800000, guid: 4f7ae3273b5421942b4fe519a106c3d5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _texcoord:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -183,9 +186,11 @@ Material:
     - _NormalIntensity: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _RoughnessIntensity: 1
+    - _Smooth: 0
     - _Smoothness: 0.444
     - _SmoothnessMultiplier: 1
     - _SmoothnessTextureChannel: 0
@@ -197,6 +202,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     - __dirty: 0
+    - _curvestrength: 0.008
     m_Colors:
     - _AlbedoTint: {r: 1, g: 1, b: 1, a: 0}
     - _BaseColor: {r: 0.8867924, g: 0.8240477, b: 0.8240477, a: 0.36862746}

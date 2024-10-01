@@ -5398,6 +5398,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6212790919424508218, guid: d495f3bc1efe0459e9926098b97a91d6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01c7f2b4a98a0db478148239dd9ebefb, type: 2}
     - target: {fileID: 919132149155446097, guid: d495f3bc1efe0459e9926098b97a91d6, type: 3}
       propertyPath: m_Name
       value: bushes_small_purple_berries_LOD_group
@@ -5406,6 +5410,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2601309697005497429, guid: d495f3bc1efe0459e9926098b97a91d6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01c7f2b4a98a0db478148239dd9ebefb, type: 2}
+    - target: {fileID: 7745583050858040431, guid: d495f3bc1efe0459e9926098b97a91d6, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01c7f2b4a98a0db478148239dd9ebefb, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5590,10 +5602,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3182035102243693453, guid: a3a40c7668caf4b91877c2e3214443e1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01c7f2b4a98a0db478148239dd9ebefb, type: 2}
     - target: {fileID: 919132149155446097, guid: a3a40c7668caf4b91877c2e3214443e1, type: 3}
       propertyPath: m_Name
       value: bush_square_big_leaves_LOD_group
       objectReference: {fileID: 0}
+    - target: {fileID: 4431126941480217430, guid: a3a40c7668caf4b91877c2e3214443e1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01c7f2b4a98a0db478148239dd9ebefb, type: 2}
+    - target: {fileID: 5696293936745980214, guid: a3a40c7668caf4b91877c2e3214443e1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01c7f2b4a98a0db478148239dd9ebefb, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5612,6 +5636,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 104637549}
     m_Modifications:
+    - target: {fileID: -9190363094374384574, guid: aa66aeb54ecc24ec6b1e1469141707da, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01c7f2b4a98a0db478148239dd9ebefb, type: 2}
     - target: {fileID: -8679921383154817045, guid: aa66aeb54ecc24ec6b1e1469141707da, type: 3}
       propertyPath: m_RootOrder
       value: 108
@@ -5656,10 +5684,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7808646395969083155, guid: aa66aeb54ecc24ec6b1e1469141707da, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01c7f2b4a98a0db478148239dd9ebefb, type: 2}
     - target: {fileID: 919132149155446097, guid: aa66aeb54ecc24ec6b1e1469141707da, type: 3}
       propertyPath: m_Name
       value: bush_square_big_plain_LOD_group
       objectReference: {fileID: 0}
+    - target: {fileID: 3330269608758059413, guid: aa66aeb54ecc24ec6b1e1469141707da, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01c7f2b4a98a0db478148239dd9ebefb, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5722,10 +5758,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3182035102243693453, guid: a3a40c7668caf4b91877c2e3214443e1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01c7f2b4a98a0db478148239dd9ebefb, type: 2}
     - target: {fileID: 919132149155446097, guid: a3a40c7668caf4b91877c2e3214443e1, type: 3}
       propertyPath: m_Name
       value: bush_square_big_leaves_LOD_group (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4431126941480217430, guid: a3a40c7668caf4b91877c2e3214443e1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01c7f2b4a98a0db478148239dd9ebefb, type: 2}
+    - target: {fileID: 5696293936745980214, guid: a3a40c7668caf4b91877c2e3214443e1, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01c7f2b4a98a0db478148239dd9ebefb, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5744,6 +5792,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 104637549}
     m_Modifications:
+    - target: {fileID: -9190363094374384574, guid: aa66aeb54ecc24ec6b1e1469141707da, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01c7f2b4a98a0db478148239dd9ebefb, type: 2}
     - target: {fileID: -8679921383154817045, guid: aa66aeb54ecc24ec6b1e1469141707da, type: 3}
       propertyPath: m_RootOrder
       value: 108
@@ -5788,10 +5840,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7808646395969083155, guid: aa66aeb54ecc24ec6b1e1469141707da, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01c7f2b4a98a0db478148239dd9ebefb, type: 2}
     - target: {fileID: 919132149155446097, guid: aa66aeb54ecc24ec6b1e1469141707da, type: 3}
       propertyPath: m_Name
       value: bush_square_big_plain_LOD_group (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3330269608758059413, guid: aa66aeb54ecc24ec6b1e1469141707da, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01c7f2b4a98a0db478148239dd9ebefb, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6022,10 +6082,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4874223102800071372, guid: 0c3ac5ba8e7134c36b292d0e31abc14b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01c7f2b4a98a0db478148239dd9ebefb, type: 2}
+    - target: {fileID: -3058093667572020433, guid: 0c3ac5ba8e7134c36b292d0e31abc14b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01c7f2b4a98a0db478148239dd9ebefb, type: 2}
     - target: {fileID: 919132149155446097, guid: 0c3ac5ba8e7134c36b292d0e31abc14b, type: 3}
       propertyPath: m_Name
       value: bushes_small_plain_LOD_group
       objectReference: {fileID: 0}
+    - target: {fileID: 1050326564944492311, guid: 0c3ac5ba8e7134c36b292d0e31abc14b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01c7f2b4a98a0db478148239dd9ebefb, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6088,10 +6160,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6837550738782016886, guid: 7de1d39f7ed374824ae6f7dae0bf21bb, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01c7f2b4a98a0db478148239dd9ebefb, type: 2}
+    - target: {fileID: -1110991837109983749, guid: 7de1d39f7ed374824ae6f7dae0bf21bb, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01c7f2b4a98a0db478148239dd9ebefb, type: 2}
     - target: {fileID: 919132149155446097, guid: 7de1d39f7ed374824ae6f7dae0bf21bb, type: 3}
       propertyPath: m_Name
       value: bush_square_small_flower_LOD_group
       objectReference: {fileID: 0}
+    - target: {fileID: 3591438330252070138, guid: 7de1d39f7ed374824ae6f7dae0bf21bb, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01c7f2b4a98a0db478148239dd9ebefb, type: 2}
+    - target: {fileID: 7895290730775508655, guid: 7de1d39f7ed374824ae6f7dae0bf21bb, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01c7f2b4a98a0db478148239dd9ebefb, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -39525,7 +39613,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.98039216, b: 0.8235294, a: 1}
+  m_Color: {r: 1, g: 1, b: 0.9019608, a: 1}
   m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
@@ -45308,6 +45396,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2611254578870884996, guid: 79bf453c538fb3542b8b760ea2b4ee34, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 01c7f2b4a98a0db478148239dd9ebefb, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
