@@ -6782,6 +6782,7 @@ MonoBehaviour:
   inventoryItemPrefab: {fileID: 7358745283426256889, guid: b1350af415b12854b84308a2ea089f96, type: 3}
   player: {fileID: 9077490626961489988}
   selectedItem: {fileID: 0}
+  cookingSystem: {fileID: 0}
 --- !u!4 &1665265835
 Transform:
   m_ObjectHideFlags: 0
