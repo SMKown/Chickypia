@@ -129,7 +129,7 @@ public class Fishing : MonoBehaviour
     {
         PlayerInfo.Instance.casting = false;
         PlayerInfo.Instance.fishing = true;
-        fishingCoroutine = StartCoroutine(WaitForNibble(10)); // 코루틴 저장
+        fishingCoroutine = StartCoroutine(WaitForNibble(10));
     }
 
     private void HandleFishingInput()
@@ -204,7 +204,7 @@ public class Fishing : MonoBehaviour
         fishImage.sprite = fishtype.sprite;
         UIInteraction.Instance.ImageOn(fishImage, FxShine.transform);
         
-        StartCoroutine(FishImageOff(1.2F));
+        StartCoroutine(FishImageOff(1.3F));
     }
 
     private IEnumerator FishImageOff(float t)

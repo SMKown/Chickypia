@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
     public GameObject particle;
-    private ParticleSystem particleSystem;
 
     private CharacterController cc;
     private Animator animator;
@@ -23,9 +23,6 @@ public class PlayerMovement : MonoBehaviour
     {
         cc = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-
-        if (particle != null)
-            particleSystem = particle.GetComponent<ParticleSystem>();
     }
 
     private void Update()
@@ -95,13 +92,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Particle()
     {
-        particleSystem.Play();
+        particle.SetActive(true);
     }
 
     private void AnimEnd()
     {
-        if (particleSystem != null)
-            particleSystem.Clear();
+        particle.SetActive(false);
 
         Jumping = false;
         animator.ResetTrigger("Attack");
