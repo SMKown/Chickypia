@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -29,10 +30,28 @@ public abstract class Enemy : MonoBehaviour
         if (health <= 0) return;
 
         health -= damage;
+
+        //StartCoroutine(FlashRed());
         SetAnimationState(AnimationState.Damage);
 
         if (health <= 0) Die();
     }
+
+    //private void Knocback()
+    //{
+
+    //}
+
+    //private IEnumerator FlashRed()
+    //{
+    //    Renderer renderer = GetComponent<Renderer>();
+    //    Color originalColor = renderer.material.color;
+
+    //    renderer.material.color = Color.red;
+
+    //    yield return new WaitForSeconds(0.1f);
+    //    renderer.material.color = originalColor;
+    //}
 
     public void OnDamageAnimationEnd()
     {

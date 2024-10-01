@@ -6,7 +6,8 @@ using static UnityEngine.ParticleSystem;
 public class PlayerMovement : MonoBehaviour
 {
     public GameObject particle;
-
+    public float attackRange;
+    public int attackDamage;
     private CharacterController cc;
     private Animator animator;
     
@@ -87,6 +88,15 @@ public class PlayerMovement : MonoBehaviour
         {
             PlayerInfo.Instance.attacking = true;
             animator.SetTrigger("Attack");
+
+            Collider[] hitEnemies = Physics.OverlapSphere(transform.position, attackRange);
+            foreach (Collider enemy in hitEnemies)
+            {
+                if (enemy.CompareTag("Enemy"))
+                {
+                    enemy.GetComponent<Enemy>().TakeDamage(attackDamage);
+                }
+            }
         }
     }
 
