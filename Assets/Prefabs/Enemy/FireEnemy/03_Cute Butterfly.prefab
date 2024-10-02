@@ -364,15 +364,17 @@ GameObject:
   - component: {fileID: 3966970256189539894}
   - component: {fileID: 7806081840620023440}
   - component: {fileID: 436085781236263220}
+  - component: {fileID: 7453492648234501771}
+  - component: {fileID: 4130364176237202132}
   - component: {fileID: 7494437540764911746}
-  - component: {fileID: 2020330362792631166}
+  - component: {fileID: 5406817392275258545}
   m_Layer: 0
   m_Name: 03_Cute Butterfly
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3966970256189539894
 Transform:
   m_ObjectHideFlags: 0
@@ -381,7 +383,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5180897028333359185}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 10, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
@@ -421,8 +423,8 @@ NavMeshAgent:
   m_GameObject: {fileID: 5180897028333359185}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.37
-  m_Speed: 3.5
+  m_Radius: 0.21
+  m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -430,27 +432,59 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 0.68
+  m_Height: 0.6
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &7494437540764911746
-MonoBehaviour:
+--- !u!135 &7453492648234501771
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5180897028333359185}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc3ec79fcaf86d247bd8228b0405d1e3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 436085781236263220}
-  player: {fileID: 0}
-  enemyType: 1
-  hasFledOnce: 0
---- !u!114 &2020330362792631166
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.25
+  m_Center: {x: 0, y: 0.41, z: 0}
+--- !u!54 &4130364176237202132
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5180897028333359185}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!114 &7494437540764911746
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -459,10 +493,38 @@ MonoBehaviour:
   m_GameObject: {fileID: 5180897028333359185}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29e4b1b2944df6942998b31fe04cbaf9, type: 3}
+  m_Script: {fileID: 11500000, guid: cc3ec79fcaf86d247bd8228b0405d1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 4509750774241890572, guid: 71465652a7eb3c849bde10239e2d78c0, type: 3}
+  agent: {fileID: 436085781236263220}
+  player: {fileID: 0}
+  enemyType: 1
+  patrolType: 1
+  hasFledOnce: 0
+--- !u!114 &5406817392275258545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5180897028333359185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdacb860f896bca4c837b3da3d9ab62a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 5
+  sightRange: 7
+  attackRange: 6
+  attackCooldown: 2
+  agent: {fileID: 0}
+  patrolPoints:
+  - {x: 27, y: 0, z: 0}
+  - {x: 24, y: 0, z: 0}
+  projectileSpeed: 3
+  damage: 1
+  projectilePrefab: {fileID: 1174116267127552703, guid: a9b649e35f3a6544faafb612f818def4, type: 3}
+  firePoint: {fileID: 2001339886626806853}
 --- !u!1 &5308577884832132499
 GameObject:
   m_ObjectHideFlags: 0
