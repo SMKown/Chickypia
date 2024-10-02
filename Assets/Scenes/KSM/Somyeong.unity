@@ -3400,7 +3400,10 @@ MonoBehaviour:
   inventorySlots: []
   inventoryItemPrefab: {fileID: 0}
   player: {fileID: 0}
+  fishdata: []
+  isInventoryOpen: 0
   selectedItem: {fileID: 0}
+  cookingSystem: {fileID: 0}
 --- !u!4 &937926390
 Transform:
   m_ObjectHideFlags: 0
