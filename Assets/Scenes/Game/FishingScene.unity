@@ -20,9 +20,9 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.8773585, g: 0.8373507, b: 0.7325116, a: 1}
-  m_AmbientEquatorColor: {r: 0.9245283, g: 0.9245283, b: 0.9245283, a: 1}
-  m_AmbientGroundColor: {r: 0.78617626, g: 0.9026957, b: 1.1990602, a: 1}
+  m_AmbientSkyColor: {r: 0.872252, g: 0.83777994, b: 0.7447057, a: 1}
+  m_AmbientEquatorColor: {r: 0.8962264, g: 0.7905393, b: 0.7905393, a: 1}
+  m_AmbientGroundColor: {r: 0.38366255, g: 0.50493217, b: 0.8215804, a: 1}
   m_AmbientIntensity: 1.4
   m_AmbientMode: 1
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
@@ -11657,6 +11657,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 306f3d2674ad5e041897b2b483558ab2, type: 2}
   - {fileID: 11400000, guid: 166a7ab2c5f67714ebc5ad1b80a67bca, type: 2}
   - {fileID: 11400000, guid: 3ee03cb100693574f9ee25a04097b064, type: 2}
+  isInventoryOpen: 0
   selectedItem: {fileID: 0}
   cookingSystem: {fileID: 0}
 --- !u!4 &1956408123
