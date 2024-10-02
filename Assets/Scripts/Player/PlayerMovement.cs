@@ -130,7 +130,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void AnimEnd()
     {
-        particle.SetActive(false);
+        if (particle != null)
+            particle.SetActive(false);
 
         Jumping = false;
         animator.ResetTrigger("Attack");
