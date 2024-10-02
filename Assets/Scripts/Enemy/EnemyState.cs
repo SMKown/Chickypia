@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public abstract class EnemyState
 {
@@ -92,6 +91,8 @@ public class PatrollingState : EnemyState
 {
     private PatrolType patrolType;
     private bool movingToPointA;
+    private float twoPtWaitTime = 1f;
+    private float waitTimer;
 
     public PatrollingState(EnemyAI enemyAI, PatrolType patrolType) : base(enemyAI) 
     {
@@ -114,14 +115,32 @@ public class PatrollingState : EnemyState
 
     public override void UpdateState()
     {
-        if (!enemyAI.agent.pathPending && enemyAI.agent.remainingDistance <= enemyAI.agent.stoppingDistance + 0.1f)
+        if (patrolType == PatrolType.FourPt)
         {
-            if (patrolType == PatrolType.FourPt || patrolType == PatrolType.TwoPt)
+            if(!enemyAI.agent.pathPending && enemyAI.agent.remainingDistance <= enemyAI.agent.stoppingDistance + 0.2f)
             {
-                // Idle 상태로 전환하여 2초 동안 쉬고 다시 순찰
                 enemyAI.SwitchState(new IdleState(enemyAI, 2f));
             }
-
+        }
+        else if (patrolType == PatrolType.TwoPt)
+        {
+            if (!enemyAI.agent.pathPending && enemyAI.agent.remainingDistance <= enemyAI.agent.stoppingDistance + 0.2f)
+            {
+                if (waitTimer <= 0f)
+                {
+                    SetNextTwoPatrolDestination();
+                    waitTimer = twoPtWaitTime;
+                }
+                else
+                {
+                    waitTimer -= Time.deltaTime;
+                    enemyAI.GetEnemy().SetAnimationState(AnimationState.Idle);
+                }
+            }
+            else
+            {
+                enemyAI.GetEnemy().SetAnimationState(AnimationState.Move);
+            }
         }
     }
 
@@ -166,6 +185,7 @@ public class PatrollingState : EnemyState
             {
                 SetDestination(enemy.patrolPoints[1]);
             }
+            movingToPointA = !movingToPointA;
         }
     }
     private void SetDestination(Vector3 destination)

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -21,6 +22,8 @@ public class Fishing : MonoBehaviour
     private Fish fishtype;
     private bool nibble = false;
     private bool emoAnim = false;
+
+    public InventoryManager inventoryManager;
 
     private KeyCode fishingKey = KeyCode.E;
     private float maxCastDistance = 5F;
@@ -49,21 +52,24 @@ public class Fishing : MonoBehaviour
     {
         if (PlayerInfo.Instance.moving) return;
 
-        if (Input.GetMouseButtonDown(0) && !PlayerInfo.Instance.casting && !PlayerInfo.Instance.fishing)
+        if (inventoryManager.isInventoryOpen == false)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
+            if (Input.GetMouseButtonDown(0) && !PlayerInfo.Instance.casting && !PlayerInfo.Instance.fishing)
             {
-                MeshRenderer meshRenderer = hit.collider.GetComponent<MeshRenderer>();
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
 
-                if (meshRenderer != null && meshRenderer.material.name.Contains("Water") && !hit.collider.CompareTag("Plane"))
+                if (Physics.Raycast(ray, out hit))
                 {
-                    TryCastLine(hit.point);
+                    MeshRenderer meshRenderer = hit.collider.GetComponent<MeshRenderer>();
+
+                    if (meshRenderer != null && meshRenderer.material.name.Contains("Water") && !hit.collider.CompareTag("Plane"))
+                    {
+                        TryCastLine(hit.point);
+                    }
                 }
             }
-        }
+        }        
     }
 
     private void TryCastLine(Vector3 hitPoint)
@@ -203,8 +209,23 @@ public class Fishing : MonoBehaviour
 
         fishImage.sprite = fishtype.sprite;
         UIInteraction.Instance.ImageOn(fishImage, FxShine.transform);
-        
+        AddFish(fishtype);
         StartCoroutine(FishImageOff(1.3F));
+    }
+
+    public void AddFish(Fish fish)
+    {
+        ItemData fishItemData = inventoryManager.GetItemDataByName(fish.name);
+
+        if (fishItemData != null)
+        {
+            inventoryManager.AddItem(fishItemData, 1);
+            Debug.Log($"Added {fish.name} to inventory.");
+        }
+        else
+        {
+            Debug.LogWarning($"ItemData for {fish.name} not found in inventory.");
+        }
     }
 
     private IEnumerator FishImageOff(float t)

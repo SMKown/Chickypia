@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build.Content;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
@@ -13,7 +14,9 @@ public class InventoryManager : MonoBehaviour
     public GameObject inventoryItemPrefab;
     public Transform player;
 
-    private bool isInventoryOpen = false;
+    public ItemData[] fishdata;
+
+    public bool isInventoryOpen = false;
     int selectedSlot = -1;
     public ItemData selectedItem;
 
@@ -63,31 +66,6 @@ public class InventoryManager : MonoBehaviour
         isInventoryOpen = false;
     }
 
-    //public bool AddItem(ItemData item)
-    //{
-    //    foreach (InventorySlot slot in inventorySlots)
-    //    {
-    //        InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-    //        if (itemInSlot != null && itemInSlot.item == item && itemInSlot.count < maxStack)
-    //        {
-    //            itemInSlot.count++;
-    //            itemInSlot.ItemCount();
-    //            return true;
-    //        }
-    //    }
-
-    //    foreach (InventorySlot slot in inventorySlots)
-    //    {
-    //        InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
-    //        if (itemInSlot == null)
-    //        {
-    //            SpawnNewItem(item, slot);
-    //            return true;
-    //        }
-    //    }
-    //    return false;
-    //}
-
     public bool AddItem(ItemData item, int amount = 1)
     {
         foreach (InventorySlot slot in inventorySlots)
@@ -130,7 +108,6 @@ public class InventoryManager : MonoBehaviour
 
         return false;
     }
-
 
     public InventoryItem SpawnNewItem(ItemData item, InventorySlot slot, int count = 1)
     {
@@ -211,5 +188,19 @@ public class InventoryManager : MonoBehaviour
             }
         }
         return items;
+    }
+
+    public ItemData GetItemDataByName(string itemName)
+    {
+        foreach (var itemData in fishdata)
+        {
+            if (itemData.itemName == itemName)
+            {
+                return itemData;
+            }
+        }
+
+        Debug.LogWarning($"ItemData for {itemName} not found!");
+        return null;
     }
 }

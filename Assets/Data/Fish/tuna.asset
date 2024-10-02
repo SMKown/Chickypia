@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c2febac446cda843a398f3da80a3970, type: 3}
-  m_Name: Item 5
+  m_Name: tuna
   m_EditorClassIdentifier: 
-  itemType: 2
-  itemId: 15
-  itemName: item 5
-  itemDesc: 
+  itemType: 1
+  itemId: 32
+  itemName: tuna
+  itemDesc: "\uCC38\uCE58"
   stackable: 1
-  itemIcon: {fileID: 21300000, guid: a12b513706dca2e4ea46a3f87458fe37, type: 3}
+  itemIcon: {fileID: 21300000, guid: 11a862ebe3589404e8f6d0462e89c454, type: 3}
   itemModel: {fileID: 0}
   moveSpeed: 0
   jumpForce: 0
