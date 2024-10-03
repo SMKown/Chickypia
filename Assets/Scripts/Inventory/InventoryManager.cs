@@ -1,27 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor.Build.Content;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
     public FoodEffect foodEffect;
-
     public int maxStack = 10;
     public GameObject MainInventory;
     public InventorySlot[] inventorySlots;
-
     public GameObject inventoryItemPrefab;
     public Transform player;
-
-    public ItemData[] fishdata;
-
-    public bool isInventoryOpen = false;
-    int selectedSlot = -1;
-    public ItemData selectedItem;
-
+    public ItemDatabase itemDatabase;
+    [HideInInspector]public bool isInventoryOpen = false;
     public CookingSystem cookingSystem;
+    private string saveFilePath;
 
+    private void Awake()
+    {
+        saveFilePath = Application.persistentDataPath + "/inventoryData.json";
+        LoadInventory();
+    }
     private void Start()
     {
         MainInventory.SetActive(false);
@@ -119,16 +119,6 @@ public class InventoryManager : MonoBehaviour
         return invItem;
     }
 
-    public ItemData GetSelectedItem()
-    {
-        if (selectedSlot >= 0 && selectedSlot < inventorySlots.Length)
-        {
-            InventoryItem itemInSlot = inventorySlots[selectedSlot].GetComponentInChildren<InventoryItem>();
-            return itemInSlot != null ? itemInSlot.item : null;
-        }
-        return null;
-    }
-
     public void OnItemSwapped(InventoryItem draggedItem, InventorySlot newSlot)
     {
         if (draggedItem == null || newSlot == null) return;
@@ -192,15 +182,83 @@ public class InventoryManager : MonoBehaviour
 
     public ItemData GetItemDataByName(string itemName)
     {
-        foreach (var itemData in fishdata)
+        return itemDatabase.GetItemDataByName(itemName);
+    }
+
+    public void SaveInventory()
+    {
+        List<InventoryItemData> inventoryDataList = new List<InventoryItemData>();
+
+        for (int i = 0; i < inventorySlots.Length; i++)
         {
-            if (itemData.itemName == itemName)
+            InventorySlot slot = inventorySlots[i];
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            if (itemInSlot != null)
             {
-                return itemData;
+                InventoryItemData data = new InventoryItemData
+                {
+                    itemName = itemInSlot.item.itemName,
+                    quantity = itemInSlot.count,
+                    slotIndex = i
+                };
+                inventoryDataList.Add(data);
             }
         }
+        if (inventoryDataList.Count > 0)
+        {
+            string json = JsonUtility.ToJson(new InventoryDataWrapper(inventoryDataList), true);
+            System.IO.File.WriteAllText(saveFilePath, json);
+        }
+    }
 
-        Debug.LogWarning($"ItemData for {itemName} not found!");
-        return null;
+    public void LoadInventory()
+    {
+        if (File.Exists(saveFilePath))
+        {
+            string json = File.ReadAllText(saveFilePath);
+            InventoryDataWrapper dataWrapper = JsonUtility.FromJson<InventoryDataWrapper>(json);
+            List<InventoryItemData> inventoryDataList = dataWrapper.items;
+            string inventoryLog = "Loaded Inventory Slots:\n";
+
+            foreach (InventorySlot slot in inventorySlots)
+            {
+                foreach (Transform child in slot.transform)
+                {
+                    Destroy(child.gameObject);
+                }
+            }
+
+            foreach (InventoryItemData data in inventoryDataList)
+            {
+                ItemData itemData = GetItemDataByName(data.itemName);
+                if (itemData != null)
+                {
+                    InventorySlot slot = inventorySlots[data.slotIndex];
+                    InventoryItem newItem = SpawnNewItem(itemData, slot, data.quantity);
+
+                    inventoryLog += $"Slot {data.slotIndex} : {data.itemName} {data.quantity}°³\n";
+                }
+            }
+            Debug.Log(inventoryLog);
+        }
+    }
+}
+
+[System.Serializable]
+public class InventoryItemData
+{
+    public string itemName;
+    public int quantity;
+    public int slotIndex;
+}
+
+[System.Serializable]
+public class InventoryDataWrapper
+{
+    public List<InventoryItemData> items;
+
+    public InventoryDataWrapper(List<InventoryItemData> items)
+    {
+        this.items = items;
     }
 }

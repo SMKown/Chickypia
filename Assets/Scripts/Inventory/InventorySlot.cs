@@ -6,24 +6,6 @@ using UnityEngine.EventSystems;
 
 public class InventorySlot : MonoBehaviour, IDropHandler
 {
-    public Image image;
-    public Color selectedColor, notSelectedColor;
-
-    private void Awake()
-    {
-        DeSelect();
-    }
-
-    public void Select()
-    {
-        image.color = selectedColor;
-    }
-
-    public void DeSelect()
-    {
-        image.color = notSelectedColor;
-    }
-
     public void OnDrop(PointerEventData eventData)
     {
         InventoryItem draggedItem = eventData.pointerDrag?.GetComponent<InventoryItem>();

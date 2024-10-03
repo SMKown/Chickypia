@@ -11652,13 +11652,8 @@ MonoBehaviour:
   - {fileID: 1077318185}
   inventoryItemPrefab: {fileID: 7358745283426256889, guid: b1350af415b12854b84308a2ea089f96, type: 3}
   player: {fileID: 4380931271816048783}
-  fishdata:
-  - {fileID: 11400000, guid: aeaec5c07e339bb41b6cf5806ea46ed4, type: 2}
-  - {fileID: 11400000, guid: 306f3d2674ad5e041897b2b483558ab2, type: 2}
-  - {fileID: 11400000, guid: 166a7ab2c5f67714ebc5ad1b80a67bca, type: 2}
-  - {fileID: 11400000, guid: 3ee03cb100693574f9ee25a04097b064, type: 2}
+  itemDatabase: {fileID: 11400000, guid: 70bdd31ff36f2fb4f93845471905f5c7, type: 2}
   isInventoryOpen: 0
-  selectedItem: {fileID: 0}
   cookingSystem: {fileID: 0}
 --- !u!4 &1956408123
 Transform:
