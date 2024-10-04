@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6337905073935162326}
   - component: {fileID: 7374083087824476569}
   - component: {fileID: 2768479695167548744}
-  - component: {fileID: 4639772872771938473}
+  - component: {fileID: 4401349341150225881}
   m_Layer: 0
   m_Name: 03_Fire_Gazer
   m_TagString: Enemy
@@ -147,7 +147,7 @@ MonoBehaviour:
   enemyType: 1
   patrolType: 1
   hasFledOnce: 0
---- !u!114 &4639772872771938473
+--- !u!114 &4401349341150225881
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -156,19 +156,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1192279232629197637}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67026a40e69dc534aa4933ce00e534d5, type: 3}
+  m_Script: {fileID: 11500000, guid: bdacb860f896bca4c837b3da3d9ab62a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5
-  sightRange: 7
-  attackRange: 6
-  attackCooldown: 4
+  health: 4
+  sightRange: 6
+  attackRange: 4
+  attackCooldown: 3
   agent: {fileID: 0}
   patrolPoints:
-  - {x: 31, y: 0, z: 0}
-  - {x: 28, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  projectileSpeed: 3
   damage: 1
-  radius: 3
+  projectilePrefab: {fileID: 0}
+  firePoint: {fileID: 0}
 --- !u!1 &2415856302005367205
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,7 +289,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5095218026480961579}
-  m_LocalEulerAnglesHint: {x: 8.786604, y: 24.780796, z: 96.45764}
+  m_LocalEulerAnglesHint: {x: 7.864726, y: 0.5835819, z: 77.44994}
 --- !u!1 &5425137930442616070
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,7 +321,7 @@ Transform:
   m_Children:
   - {fileID: 4137836119684319953}
   m_Father: {fileID: 4735765576316060578}
-  m_LocalEulerAnglesHint: {x: 0.43252507, y: -3.9888349, z: 6.177176}
+  m_LocalEulerAnglesHint: {x: 0.49601382, y: -4.5728846, z: 6.1778708}
 --- !u!1 &6639919280182061552
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,4 +385,4 @@ Transform:
   m_Children:
   - {fileID: 5095218026480961579}
   m_Father: {fileID: 7424036868511055761}
-  m_LocalEulerAnglesHint: {x: 2.5785723, y: 0.0635171, z: -88.588615}
+  m_LocalEulerAnglesHint: {x: 0.8160279, y: 0.02001191, z: -88.590996}

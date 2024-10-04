@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     {
         cc = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
+        currentHealth = maxHealth;
     }
 
     private void Update()

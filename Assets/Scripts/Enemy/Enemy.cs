@@ -8,7 +8,7 @@ public abstract class Enemy : MonoBehaviour
 {
     public int health;
     [Header("시야 및 공격 범위")]
-    public float sightRange;
+    [Space(3)]public float sightRange;
     public float attackRange;
     [Header("공격 쿨타임")]
     public float attackCooldown;
