@@ -29,7 +29,6 @@ public class SceneLoader : MonoBehaviour
 #endif
     }
 
-
     private void SaveInventoryBeforeSceneLoad()
     {
         if (inventoryManager != null)

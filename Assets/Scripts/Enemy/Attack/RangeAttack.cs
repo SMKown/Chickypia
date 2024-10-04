@@ -33,7 +33,7 @@ public class RangeAttack : Enemy // 원거리 공격
         SetAnimationState(AnimationState.Attack);
     }
 
-    public void ExecuteAttack() // 애니메이션 이벤트 함수 사용해서 공격 넣기
+    public void ExecuteAttack()
     {
         GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
         Projectile projectileScript = projectile.GetComponent<Projectile>();
