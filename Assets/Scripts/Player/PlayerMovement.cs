@@ -1,21 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.ParticleSystem;
+using UnityEngine.AI;
 
 public class PlayerMovement : MonoBehaviour
 {
     public GameObject particle;
     public float attackRange;
     public int attackDamage;
-    private CharacterController cc;
-    private Animator animator;
     
-    [SerializeField] private float moveSpeed;
+    private Animator animator;
+    private NavMeshAgent agent;
+    private Vector3 moveDirection;
     [SerializeField] private int maxHealth = 5;
     private int currentHealth;
 
-    private float gravity;
     private bool Jumping = false;
 
     public InventoryManager inventoryManager;
@@ -24,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-        cc = GetComponent<CharacterController>();
+        agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         currentHealth = maxHealth;
     }
@@ -34,7 +33,6 @@ public class PlayerMovement : MonoBehaviour
         Move();
         Jump();
         Attack();
-
         GetItem();
     }
 
@@ -48,16 +46,16 @@ public class PlayerMovement : MonoBehaviour
 
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
-        
+
         Vector3 dir = new Vector3(h, 0, v);
-        gravity += Physics.gravity.y * Time.deltaTime;
-        dir.y = gravity;
 
         if (h != 0 || v != 0)
         {
+            moveDirection = transform.position + dir;  // 플레이어의 현재 위치에서 입력 방향으로 목적지 설정
+            agent.SetDestination(moveDirection);  // NavMeshAgent로 목적지 설정
+
             float angle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0F, angle, 0F);
-            cc.Move(dir * moveSpeed * Time.deltaTime);
 
             PlayerInfo.Instance.moving = true;
             animator.SetBool("isWalk", true);
@@ -120,9 +118,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Die()
     {
-
+        // 사망 처리
     }
-
 
     private void Particle()
     {

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class FoodEffect : MonoBehaviour
 {
-    public PlayerAbility playerAbility;
     public PlayerMovement playerMovement; 
     private ItemData itemData;
 

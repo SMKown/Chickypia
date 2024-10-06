@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -18,6 +18,7 @@ public class Fishing : MonoBehaviour
 
     private Animator animator;
     private Animator BobberAnim;
+    private NavMeshAgent navMeshAgent;
 
     private Fish fishtype;
     private bool nibble = false;
@@ -40,6 +41,7 @@ public class Fishing : MonoBehaviour
         animator = GetComponent<Animator>();
         BobberAnim = Bobber.GetComponent<Animator>();
         biteImage = ExImage.GetComponent<Image>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
     private void Update()
@@ -63,7 +65,7 @@ public class Fishing : MonoBehaviour
                 {
                     MeshRenderer meshRenderer = hit.collider.GetComponent<MeshRenderer>();
 
-                    if (meshRenderer != null && meshRenderer.material.name.Contains("Water") && !hit.collider.CompareTag("Plane"))
+                    if (meshRenderer != null && meshRenderer.material.name.Contains("Water"))
                     {
                         TryCastLine(hit.point);
                     }
@@ -96,6 +98,8 @@ public class Fishing : MonoBehaviour
             startTime = Time.time;
 
             RotatePlayerToTarget(hitPoint);
+
+            navMeshAgent.enabled = false;
         }
     }
 
@@ -164,6 +168,8 @@ public class Fishing : MonoBehaviour
         Bobber.transform.position = originPos.position;
         Bobber.transform.SetParent(originPos);
         BobberAnim.SetBool("Bite", false);
+        
+        navMeshAgent.enabled = true;
     }
 
     private IEnumerator WaitForNibble(float maxWaitTime)
@@ -238,5 +244,7 @@ public class Fishing : MonoBehaviour
     {
         PlayerInfo.Instance.fishing = false;
         emoAnim = false;
+        
+        navMeshAgent.enabled = true;
     }
 }
