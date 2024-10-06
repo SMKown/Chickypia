@@ -1,15 +1,11 @@
+using System.Collections;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    private Vector3 targetPosition;
     private float speed;
     private int damage;
-
-    public void SetTarget(Vector3 target)
-    {
-        targetPosition = target + new Vector3(0, 1.5f, 0);
-    }
+    public float lifetime = 5f;
 
     public void SetDamage(int damageAmount)
     {
@@ -20,35 +16,45 @@ public class Projectile : MonoBehaviour
     {
         speed = projectileSpeed;
     }
+    private void Start()
+    {
+        StartCoroutine(DestroyLifetime());
+    }
 
     private void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-        if (Vector3.Distance(transform.position, targetPosition) < 0.5f)
+        transform.position += transform.forward * speed * Time.deltaTime;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
         {
-            HandleImpact(null);
+            HandleImpact(other.gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void HandleImpact(GameObject player)
     {
-        if (collision.collider.CompareTag("Player"))
+        if (player != null && player.CompareTag("Player"))
         {
-            HandleImpact(collision.collider);
-        }
-    }
-
-    private void HandleImpact(Collider collider)
-    {
-        if (collider != null && collider.CompareTag("Player"))
-        {
-            PlayerMovement playerMovement = collider.GetComponent<PlayerMovement>();
+            PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
             if (playerMovement != null)
             {
                 playerMovement.TakeDamage(damage);
+                Debug.Log("Player hit, dealing damage: " + damage);
             }
         }
-
+        Debug.Log("Projectile destroyed");
+        Destroy(gameObject);
+    }
+    private IEnumerator DestroyLifetime()
+    {
+        yield return new WaitForSeconds(lifetime);
         Destroy(gameObject);
     }
 }

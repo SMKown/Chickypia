@@ -10,7 +10,7 @@ public class RangeAttack : Enemy // 원거리 공격
     public GameObject projectilePrefab;
     public Transform firePoint;
     private float lastAttackTime;
-
+    private bool isAttacking = false;
 
     protected override void Awake()
     {
@@ -19,30 +19,61 @@ public class RangeAttack : Enemy // 원거리 공격
 
     public override void Attack()
     {
-        if (Time.time - lastAttackTime < attackCooldown)
+        if (Time.time - lastAttackTime >= attackCooldown && !isAttacking)
+        {
+            isAttacking = true;
+            lastAttackTime = Time.time;
+
+            if (player != null && projectilePrefab != null && firePoint != null)
+            {
+                SetAnimationState(AnimationState.Attack);
+            }
+        }
+        else
         {
             SetAnimationState(AnimationState.Idle);
-            return;
         }
-
-        if (projectilePrefab == null || firePoint == null)
-        {
-            return;
-        }
-        lastAttackTime = Time.time;
-        SetAnimationState(AnimationState.Attack);
     }
 
     public void ExecuteAttack()
     {
-        GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
-        Projectile projectileScript = projectile.GetComponent<Projectile>();
-
-        if (projectileScript != null)
+        if (projectilePrefab != null && firePoint != null)
         {
-            projectileScript.SetTarget(player.position);
-            projectileScript.SetDamage(damage);
-            projectileScript.SetSpeed(projectileSpeed);
+            GameObject projectile = Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
+
+            Projectile projectileScript = projectile.GetComponent<Projectile>();
+
+            if (projectileScript != null)
+            {
+                projectileScript.SetDamage(damage);
+                projectileScript.SetSpeed(projectileSpeed);
+            }
+
+            StartCoroutine(WaitForCooldown());
+        }
+    }
+
+    public void AttackAnimationEnd()
+    {
+        StartCoroutine(WaitForCooldown());
+    }
+
+    private IEnumerator WaitForCooldown()
+    {
+        SetAnimationState(AnimationState.Idle);
+        agent.isStopped = true;
+        yield return new WaitForSeconds(attackCooldown);
+
+        isAttacking = false;
+        agent.isStopped = false;
+
+        if (PlayerInAttackRange())
+        {
+            Attack();
+        }
+        else
+        {
+            ChasePlayer(player.position);
         }
     }
 }

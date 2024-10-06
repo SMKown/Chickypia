@@ -31,7 +31,7 @@ public class EnemyAI : MonoBehaviour
     private void Awake()
     {
         enemy = GetComponent<Enemy>();
-        player = GameObject.Find("Player").transform;
+        player = GameObject.Find("Player_AttackMode").transform;
         agent = GetComponent<NavMeshAgent>();
     }
 
@@ -88,24 +88,17 @@ public class EnemyAI : MonoBehaviour
     // 플레이어로부터 도망
     public void FleeFromPlayer()
     {
-        if (!hasFledOnce && PlayerInSightRange())
+        Vector3 directionAwayFromPlayer = (transform.position - player.position).normalized;
+
+        float fleeDistance = enemy.sightRange + 10f;
+        Vector3 fleePosition = transform.position + directionAwayFromPlayer * fleeDistance;
+
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(fleePosition, out hit, fleeDistance, NavMesh.AllAreas))
         {
-            Vector3 directionAwayFromPlayer = (transform.position - player.position).normalized;
-
-            float fleeDistance = enemy.sightRange + 10f;
-            Vector3 fleePosition = transform.position + directionAwayFromPlayer * fleeDistance;
-
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(fleePosition, out hit, fleeDistance, NavMesh.AllAreas))
-            {
-                enemy.FleeFromPlayer(hit.position);
-                hasFledOnce = true;
-                SwitchState(new IdleState(this, 5f));
-            }
-            else
-            {
-                SwitchToChaseOrAttackState();
-            }
+            enemy.FleeFromPlayer(hit.position);
+            hasFledOnce = true;
+            SwitchState(new IdleState(this, 5f));
         }
         else
         {

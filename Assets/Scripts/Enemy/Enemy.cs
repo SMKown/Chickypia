@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public enum EnemyType { Runtype, FightType }
-public enum AnimationState { Idle, Move, Attack, Charge, Damage, Die }
+public enum AnimationState { Idle, Move, Attack, Damage, Die }
 public abstract class Enemy : MonoBehaviour
 {
     public int health;
@@ -22,7 +22,7 @@ public abstract class Enemy : MonoBehaviour
 
     protected virtual void Awake()
     {
-        player = GameObject.Find("Player").transform;
+        player = GameObject.Find("Player_AttackMode").transform;
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
     }
@@ -35,6 +35,15 @@ public abstract class Enemy : MonoBehaviour
         Knockback(knockbackDirection, knockbackForce);
         StartCoroutine(FlashRed());
         SetAnimationState(AnimationState.Damage);
+
+        if (health > 0)
+        {
+            EnemyAI enemyAI = GetComponent<EnemyAI>();
+            if (enemyAI.enemyType == EnemyType.Runtype && !enemyAI.hasFledOnce)
+            {
+                enemyAI.SwitchState(new FleeingState(enemyAI));
+            }
+        }
 
         if (health <= 0) Die();
     }
@@ -122,10 +131,6 @@ public abstract class Enemy : MonoBehaviour
             {
                 anim.SetTrigger("Attack");
             }
-            if (state == AnimationState.Charge)
-            {
-                anim.SetTrigger("Attack");
-            }
             if (state == AnimationState.Damage)
             {
                 anim.SetTrigger("Damage");
@@ -170,12 +175,13 @@ public abstract class Enemy : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, attackRange);
         foreach (var collider in colliders)
         {
-            CharacterController characterController = collider.GetComponent<CharacterController>();
-            if (characterController != null && collider.transform == player)
+            if (collider.transform.IsChildOf(player))
             {
+                Debug.Log("Player in attack range");
                 return true;
             }
         }
+        Debug.Log("Player not in attack range");
         return false;
     }
 

@@ -14,15 +14,13 @@ public class ChargeAttack : Enemy // 돌격 공격
     public float prepareTime = 2f;
 
     private float lastAttackTime;
-    private LineRenderer lineRenderer;
     private Rigidbody rb;
     private bool isCharging;
+    private Vector3 chargeDirection;
 
     protected override void Awake()
     {
         base.Awake();
-        lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.enabled = false;
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = true;
         isCharging = false;
@@ -30,10 +28,11 @@ public class ChargeAttack : Enemy // 돌격 공격
 
     public override void Attack()
     {
+        Debug.Log("Attack method called");
         if (Time.time - lastAttackTime < attackCooldown || isCharging) return;
         lastAttackTime = Time.time;
 
-        SetAnimationState(AnimationState.Charge);
+        SetAnimationState(AnimationState.Attack);
         ExecuteAttack();
     }
 
@@ -44,21 +43,23 @@ public class ChargeAttack : Enemy // 돌격 공격
 
     private IEnumerator ChargeCoroutine()
     {
-        lineRenderer.enabled = true;
-        Vector3 startPoint = transform.position;
+        chargeDirection = (player.position - transform.position).normalized;
+        Debug.Log("Charge direction: " + chargeDirection);
+        float prepareTimer = prepareTime;
+        while (prepareTimer > 0)
+        {
+            Vector3 directionToPlayer = (player.position - transform.position).normalized;
+            Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
 
-        float chargeDistance = chargeSpeed * chargeDuration;
-        Vector3 endPoint = startPoint + transform.forward * chargeDistance;
-
-        lineRenderer.SetPosition(0, startPoint);
-        lineRenderer.SetPosition(1, endPoint);
-
-        yield return new WaitForSeconds(prepareTime);
+            prepareTimer -= Time.deltaTime;
+            yield return null;
+        }
 
         float timer = chargeDuration;
         isCharging = true;
         rb.isKinematic = false;
-        rb.velocity = transform.forward * chargeSpeed;
+        rb.velocity = chargeDirection * chargeSpeed;
 
         while (timer > 0)
         {
@@ -69,7 +70,6 @@ public class ChargeAttack : Enemy // 돌격 공격
         rb.velocity = Vector3.zero;
         rb.isKinematic = true;
         isCharging = false;
-        lineRenderer.enabled = false;
 
         yield return new WaitForSeconds(attackCooldown);
     }

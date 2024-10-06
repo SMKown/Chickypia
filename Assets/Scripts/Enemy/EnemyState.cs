@@ -340,6 +340,7 @@ public class FleeingState : EnemyState
     public override void EnterState()
     {
         enemyAI.FleeFromPlayer();
+        enemyAI.hasFledOnce = true;
     }
 
     public override void UpdateState() { }
