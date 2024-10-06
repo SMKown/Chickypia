@@ -8,12 +8,14 @@ public class Projectile : MonoBehaviour
 
     public void SetTarget(Vector3 target)
     {
-        targetPosition = target;
+        targetPosition = target + new Vector3(0, 1.5f, 0);
     }
+
     public void SetDamage(int damageAmount)
     {
         damage = damageAmount;
     }
+
     public void SetSpeed(float projectileSpeed)
     {
         speed = projectileSpeed;
@@ -22,8 +24,7 @@ public class Projectile : MonoBehaviour
     private void Update()
     {
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
-
-        if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
+        if (Vector3.Distance(transform.position, targetPosition) < 0.5f)
         {
             HandleImpact(null);
         }
@@ -47,6 +48,7 @@ public class Projectile : MonoBehaviour
                 playerMovement.TakeDamage(damage);
             }
         }
-        ProjectilePool.Instance.ReturnProjectile(gameObject);
+
+        Destroy(gameObject);
     }
 }

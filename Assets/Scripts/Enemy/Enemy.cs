@@ -101,7 +101,11 @@ public abstract class Enemy : MonoBehaviour
     protected void Die()
     {
         SetAnimationState(AnimationState.Die);
-        agent.enabled = false;
+        if (agent != null)
+        {
+            agent.isStopped = true;
+            agent.enabled = false;
+        }
         Destroy(gameObject, 2f);
     }
 
