@@ -177,11 +177,9 @@ public abstract class Enemy : MonoBehaviour
         {
             if (collider.transform.IsChildOf(player))
             {
-                Debug.Log("Player in attack range");
                 return true;
             }
         }
-        Debug.Log("Player not in attack range");
         return false;
     }
 

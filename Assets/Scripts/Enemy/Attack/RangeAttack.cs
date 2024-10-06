@@ -26,6 +26,9 @@ public class RangeAttack : Enemy // 원거리 공격
 
             if (player != null && projectilePrefab != null && firePoint != null)
             {
+                Vector3 directionToPlayer = (player.position - transform.position).normalized;
+                Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionToPlayer.x, 0, directionToPlayer.z));
+                transform.rotation = lookRotation;
                 SetAnimationState(AnimationState.Attack);
             }
         }
