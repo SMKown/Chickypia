@@ -148,15 +148,11 @@ public class PatrollingState : EnemyState
     {
         if (PlayerInChaseRange())
         {
-            if (enemyAI.enemyType == EnemyType.Runtype && !enemyAI.hasFledOnce)
-            {
-                return new FleeingState(enemyAI);
-            }
-            else if (enemyAI.enemyType == EnemyType.Runtype && enemyAI.hasFledOnce)
+            if (enemyAI.enemyType == EnemyType.FightType)
             {
                 return new ChasingState(enemyAI);
             }
-            else if (enemyAI.enemyType == EnemyType.FightType)
+            else if (enemyAI.enemyType == EnemyType.Runtype)
             {
                 return new ChasingState(enemyAI);
             }
@@ -335,22 +331,36 @@ public class AttackState : EnemyState
 // 적의 도망 상태
 public class FleeingState : EnemyState
 {
+    private float OutTime = 0f;
+    private float maxOutTime = 3f;
+
     public FleeingState(EnemyAI enemyAI) : base(enemyAI) { }
 
     public override void EnterState()
     {
         enemyAI.FleeFromPlayer();
         enemyAI.hasFledOnce = true;
+        OutTime = 0f;
     }
 
-    public override void UpdateState() { }
-
-    public override EnemyState CheckStateTransitions()
+    public override void UpdateState() 
     {
         if (enemyAI.PlayerMovedFar())
         {
-            return new PatrollingState(enemyAI, enemyAI.patrolType);
+            OutTime += Time.deltaTime;
+            if (OutTime >= maxOutTime)
+            {
+                enemyAI.SwitchState(new PatrollingState(enemyAI, enemyAI.patrolType));
+            }
         }
+        else
+        {
+            OutTime = 0f;
+        }
+    }
+
+    public override EnemyState CheckStateTransitions()
+    {
         return this;
     }
 

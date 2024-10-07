@@ -2,90 +2,106 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ChargeAttack : Enemy // 돌격 공격
+public class ChargeAttack : Enemy
 {
     [Header("공격 속성")]
     public int damage = 1;
     [Tooltip("돌격 속도")]
-    public float chargeSpeed = 3f;
-    [Tooltip("돌격 지속 시간")]
-    public float chargeDuration = 3f;
-    [Tooltip("공격 딜레이")]
-    public float prepareTime = 2f;
+    public float chargeSpeed = 6f;
 
-    private float lastAttackTime;
-    private Rigidbody rb;
-    private bool isCharging;
-    private Vector3 chargeDirection;
+    private bool isCharging = false;
+    private bool isAttackOnCooldown = false;
+    private Vector3 chargeDestination;
 
     protected override void Awake()
     {
         base.Awake();
-        rb = GetComponent<Rigidbody>();
-        rb.isKinematic = true;
-        isCharging = false;
     }
 
     public override void Attack()
     {
-        Debug.Log("Attack method called");
-        if (Time.time - lastAttackTime < attackCooldown || isCharging) return;
-        lastAttackTime = Time.time;
+        if (!isCharging && !isAttackOnCooldown && player != null)
+        {
+            isCharging = true;
+            chargeDestination = player.position;
 
-        SetAnimationState(AnimationState.Attack);
-        ExecuteAttack();
+            Vector3 chargeDirection = (chargeDestination - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(chargeDirection);
+            transform.rotation = lookRotation;
+
+            SetAnimationState(AnimationState.Attack);
+        }
     }
 
-    public void ExecuteAttack()
+    private void Update()
     {
-        StartCoroutine(ChargeCoroutine());
+        if (isCharging)
+        {
+            ExecuteCharge();
+        }
     }
 
-    private IEnumerator ChargeCoroutine()
+    private void ExecuteCharge()
     {
-        chargeDirection = (player.position - transform.position).normalized;
-        Debug.Log("Charge direction: " + chargeDirection);
-        float prepareTimer = prepareTime;
-        while (prepareTimer > 0)
+        Vector3 direction = (chargeDestination - transform.position).normalized;
+        transform.position += direction * chargeSpeed * Time.deltaTime;
+
+        if (Vector3.Distance(transform.position, chargeDestination) < 0.1f)
         {
-            Vector3 directionToPlayer = (player.position - transform.position).normalized;
-            Quaternion targetRotation = Quaternion.LookRotation(directionToPlayer);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
-
-            prepareTimer -= Time.deltaTime;
-            yield return null;
+            EndCharge();
         }
+    }
 
-        float timer = chargeDuration;
-        isCharging = true;
-        rb.isKinematic = false;
-        rb.velocity = chargeDirection * chargeSpeed;
-
-        while (timer > 0)
+    private void EndCharge()
+    {
+        if (isCharging)
         {
-            timer -= Time.deltaTime;
-            yield return null;
+            isCharging = false;
+            StartCoroutine(WaitForCooldown());
         }
+    }
 
-        rb.velocity = Vector3.zero;
-        rb.isKinematic = true;
-        isCharging = false;
-
+    private IEnumerator WaitForCooldown()
+    {
+        isAttackOnCooldown = true;
+        SetAnimationState(AnimationState.Idle);
+        agent.isStopped = true;
         yield return new WaitForSeconds(attackCooldown);
+
+        isAttackOnCooldown = false;
+        agent.isStopped = false;
+
+        if (PlayerInAttackRange())
+        {
+            Attack();
+        }
+        else
+        {
+            ChasePlayer(player.position);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (isCharging && collision.collider.CompareTag("Player"))
+        if (isCharging && collision.gameObject.CompareTag("Player"))
         {
-            PlayerMovement playerMovement = collision.collider.GetComponent<PlayerMovement>();
-            if (playerMovement != null)
-            {
-                playerMovement.TakeDamage(damage);
-            }
-
-            rb.velocity = Vector3.zero;
-            isCharging = false;
+            ExecuteAttack();
         }
+    }
+
+    public void ExecuteAttack()
+    {
+        
+        PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
+        if (playerMovement != null)
+        {
+            playerMovement.TakeDamage(damage);
+        }
+        EndCharge();
+    }
+
+    public new bool PlayerInAttackRange()
+    {
+        return Vector3.Distance(transform.position, player.position) <= attackRange;
     }
 }

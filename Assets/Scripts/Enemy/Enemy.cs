@@ -27,12 +27,12 @@ public abstract class Enemy : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    public virtual void TakeDamage(int damage, Vector3 knockbackDirection, float knockbackForce)
+    public virtual void TakeDamage(int damage, Vector3 playerForwardDirection, float knockbackForce)
     {
         if (health <= 0) return;
 
         health -= damage;
-        Knockback(knockbackDirection, knockbackForce);
+        Knockback(playerForwardDirection, knockbackForce);
         StartCoroutine(FlashRed());
         SetAnimationState(AnimationState.Damage);
 
@@ -48,14 +48,13 @@ public abstract class Enemy : MonoBehaviour
         if (health <= 0) Die();
     }
 
-    private void Knockback(Vector3 knockbackSourcePosition, float force)
+    private void Knockback(Vector3 playerForwardDirection, float force)
     {
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
         {
-            Vector3 knockbackDirection = (transform.position - knockbackSourcePosition).normalized;
+            Vector3 knockbackDirection = playerForwardDirection.normalized;
             agent.isStopped = true;
-            agent.enabled = false;
             rb.AddForce(knockbackDirection * force, ForceMode.Impulse);
             StartCoroutine(ReEnableNavMeshAgent());
         }
@@ -110,7 +109,7 @@ public abstract class Enemy : MonoBehaviour
     protected void Die()
     {
         SetAnimationState(AnimationState.Die);
-        if (agent != null)
+        if (agent != null && agent.isOnNavMesh)
         {
             agent.isStopped = true;
             agent.enabled = false;

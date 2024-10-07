@@ -73,7 +73,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 856ca43eff82c27438d7b59fcf100a70, type: 3}
+  m_Motion: {fileID: 7400000, guid: cf56cb4ef8870944bb50befe620b6997, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -99,7 +99,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: b3ea92912bde6384991a2dcc77bc6e70, type: 3}
+  m_Motion: {fileID: 7400000, guid: f0c2093eb36ed214995d4af85ca52794, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -153,7 +153,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 5b18a36951ef6a349964c89917050dd3, type: 3}
+  m_Motion: {fileID: 7400000, guid: cc91bbf68a12d614aaf0955630c7cbee, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -358,7 +358,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: b9b5c0806e932b94fa025a05902e3c73, type: 3}
+  m_Motion: {fileID: 7400000, guid: 633bb898f790fb84d95d9e5e44aef238, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -370,7 +370,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: EnemyFledgling
+  m_Name: EnemySeed
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Move
@@ -550,7 +550,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 1827ae5c0e41e464fa29543c167ce5ec, type: 3}
+  m_Motion: {fileID: 7400000, guid: b7addf4f2e200a749b619e31d3f0bec2, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

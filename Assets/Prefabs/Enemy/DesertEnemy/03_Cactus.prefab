@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdacb860f896bca4c837b3da3d9ab62a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 4
+  health: 5
   sightRange: 6
   attackRange: 4
   attackCooldown: 3
@@ -175,7 +175,7 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   projectileSpeed: 3
   damage: 1
-  projectilePrefab: {fileID: 0}
+  projectilePrefab: {fileID: 7484433336485101761, guid: 07c0c13d6d68b9f4da01284c5ce1c39a, type: 3}
   firePoint: {fileID: 2022397042091275274}
 --- !u!1 &731823803747497306
 GameObject:
