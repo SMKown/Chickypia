@@ -8,14 +8,13 @@ public class InventoryManager : MonoBehaviour
 {
     public FoodEffect foodEffect;
     public int maxStack = 10;
-    public GameObject MainInventory;
     public InventorySlot[] inventorySlots;
     public GameObject inventoryItemPrefab;
     public Transform player;
     public ItemDatabase itemDatabase;
-    [HideInInspector]public bool isInventoryOpen = false;
     public CookingSystem cookingSystem;
     private string saveFilePath;
+    public CompendiumManager compendiumManager;
 
     private void Awake()
     {
@@ -24,7 +23,6 @@ public class InventoryManager : MonoBehaviour
     }
     private void Start()
     {
-        MainInventory.SetActive(false);
     }
 
     private void Update()
@@ -34,8 +32,6 @@ public class InventoryManager : MonoBehaviour
             return;
         }
 
-        OnInventory();
-
         if (Input.GetKeyDown(KeyCode.T))
         {
             List<(ItemData item, int count)> items = GetInventoryItems();
@@ -44,26 +40,6 @@ public class InventoryManager : MonoBehaviour
                 Debug.Log($"Item: {itemData.item.name}, Count: {itemData.count}");
             }
         }
-    }
-
-    public void OnInventory()
-    {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            isInventoryOpen = !isInventoryOpen;
-            MainInventory.SetActive(isInventoryOpen);
-        }
-    }
-    public void ShowInventory()
-    {
-        MainInventory.SetActive(true);
-        isInventoryOpen = true;
-    }
-
-    public void HideInventory()
-    {
-        MainInventory.SetActive(false);
-        isInventoryOpen = false;
     }
 
     public bool AddItem(ItemData item, int amount = 1)
@@ -77,6 +53,12 @@ public class InventoryManager : MonoBehaviour
                 itemInSlot.count += addableAmount;
                 itemInSlot.ItemCount();
                 amount -= addableAmount;
+
+                if (!item.isCollected)
+                {
+                    item.isCollected = true;
+                    compendiumManager.CollectItem(item);
+                }
 
                 if (amount <= 0)
                     return true;
@@ -93,6 +75,12 @@ public class InventoryManager : MonoBehaviour
                     int addableAmount = Mathf.Min(amount, maxStack);
                     InventoryItem newItem = SpawnNewItem(item, slot, addableAmount);
                     amount -= addableAmount;
+
+                    if (!item.isCollected)
+                    {
+                        item.isCollected = true;
+                        compendiumManager.CollectItem(item);
+                    }
 
                     if (amount <= 0)
                         return true;

@@ -21,6 +21,9 @@ public class ItemData : ScriptableObject
     public float jumpForce;
     public int hp;
     public int hpMax;
+
+    [Header("# Compendium")]
+    public bool isCollected = false;
 }
 
 public enum ItemType

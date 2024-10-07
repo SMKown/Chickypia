@@ -114,7 +114,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         tooltipRectTransform.anchoredPosition = anchoredPosition;
     }
 
-
     private void Update()
     {
         if (isDragging && Input.GetMouseButtonDown(1))

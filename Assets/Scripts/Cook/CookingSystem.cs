@@ -13,6 +13,7 @@ public class CookingSystem : MonoBehaviour
     public FoodRecipeData[] foodRecipeData;   
 
     private InventoryManager inventoryManager;
+    private InvenCompenUI invenCompenUI;
     private InventorySlot resultItemSlot;
 
     private Transform choicePopup;
@@ -45,6 +46,7 @@ public class CookingSystem : MonoBehaviour
         ingredientParent = transform.GetChild(1).GetChild(1).GetChild(0);
         cookButton = transform.GetChild(1).GetChild(1).GetChild(1).GetComponent<Button>();
         inventoryManager = FindObjectOfType<InventoryManager>();
+        invenCompenUI = FindObjectOfType<InvenCompenUI>();
 
         if (choicePopup == null) { Debug.LogError("choicePopup is not assigned."); }
         if (makePopup == null) { Debug.LogError("makePopup is not assigned."); }
@@ -78,7 +80,7 @@ public class CookingSystem : MonoBehaviour
     {
         isCooking = true;
         choicePopup.gameObject.SetActive(true);
-        inventoryManager.ShowInventory();
+        invenCompenUI.SetInventoryActive(true);
         foreach (Transform child in foodRecipeParent)
         {
             Destroy(child.gameObject);
@@ -126,7 +128,7 @@ public class CookingSystem : MonoBehaviour
         choicePopup.gameObject.SetActive(false);
         makePopup.gameObject.SetActive(false);
         isCooking = false;
-        inventoryManager.HideInventory();
+        invenCompenUI.SetInventoryActive(false);
     }
 
     public void ChoiceRecipe(FoodRecipeData recipe)
@@ -224,7 +226,7 @@ public class CookingSystem : MonoBehaviour
             Debug.Log("Cooking...");
             choicePopup.gameObject.SetActive(false);
             makePopup.gameObject.SetActive(false);
-            inventoryManager.HideInventory();
+            invenCompenUI.SetInventoryActive(false);
             cookButton.interactable = false;
             foreach (var ingredient in recipe.ingredients)
             {
@@ -284,7 +286,7 @@ public class CookingSystem : MonoBehaviour
 
         choicePopup.gameObject.SetActive(true);
         makePopup.gameObject.SetActive(true);
-        inventoryManager.ShowInventory();
+        invenCompenUI.SetInventoryActive(true);
 
         cookButton.interactable = true;
     }

@@ -25,6 +25,7 @@ public class Fishing : MonoBehaviour
     private bool emoAnim = false;
 
     public InventoryManager inventoryManager;
+    public InvenCompenUI invenCompenUI;
 
     private KeyCode fishingKey = KeyCode.E;
     private float maxCastDistance = 5F;
@@ -54,7 +55,7 @@ public class Fishing : MonoBehaviour
     {
         if (PlayerInfo.Instance.moving) return;
 
-        if (inventoryManager.isInventoryOpen == false)
+        if (invenCompenUI.isInventoryOpen == false)
         {
             if (Input.GetMouseButtonDown(0) && !PlayerInfo.Instance.casting && !PlayerInfo.Instance.fishing)
             {
