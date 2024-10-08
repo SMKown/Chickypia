@@ -4,10 +4,10 @@ public class SceneLoader : MonoBehaviour
 {
     public InventoryManager inventoryManager;
     public CompendiumManager compendiumManager;
-    public void MainScene()
+    public void VillageScene()
     {
         SaveAllBeforeSceneLoad();
-        LoadingSceneManager.LoadScene("MainScene");
+        LoadingSceneManager.LoadScene("Village");
     }
 
     public void CustomScene()

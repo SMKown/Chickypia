@@ -610,6 +610,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ae9fa1b6d7b64b2ca4dddafe0b2bce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryManager: {fileID: 0}
+  compendiumManager: {fileID: 0}
 --- !u!4 &693354872
 Transform:
   m_ObjectHideFlags: 0
@@ -1768,7 +1770,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 693354871}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: MainScene
+        m_MethodName: VillageScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
