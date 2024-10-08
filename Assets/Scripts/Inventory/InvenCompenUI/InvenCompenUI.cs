@@ -12,6 +12,7 @@ public class InvenCompenUI : MonoBehaviour
     [HideInInspector] public bool isInventoryOpen = false;
 
     private ItemToolTipUI tooltipUI;
+    public CompendiumManager compendiumManager;
 
     private void Start()
     {
@@ -48,6 +49,11 @@ public class InvenCompenUI : MonoBehaviour
     {
         MainInventory.SetActive(false);
         CompendiumUI.SetActive(true);
+
+        if (compendiumManager != null)
+        {
+            compendiumManager.GatheringItems();
+        }
 
         if (tooltipUI != null)
         {

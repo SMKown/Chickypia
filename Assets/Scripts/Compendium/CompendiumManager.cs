@@ -21,18 +21,41 @@ public class CompendiumManager : MonoBehaviour
     {
         if (!isCompendiumLoaded)
         {
-            PopulateCompendium();
+            GatheringItems();
         }
     }
-
-    public void PopulateCompendium()
+    public void GatheringItems()
     {
+        PopulateCompendium(ItemCategory.Gathering);
+    }
+    public void CookingItems()
+    {
+        PopulateCompendium(ItemCategory.Cooking);
+    }
+    public void FishingItems()
+    {
+        PopulateCompendium(ItemCategory.Fishing);
+    }
+    public void MonsterDropItems()
+    {
+        PopulateCompendium(ItemCategory.MonsterDrop);
+    }
+
+    public void PopulateCompendium(ItemCategory? categoryFilter = null)
+    {
+        foreach (Transform child in compendiumContent)
+        {
+            Destroy(child.gameObject);
+        }
+
         foreach (ItemData item in itemDatabase.allItems)
         {
-            GameObject newItemEntry = Instantiate(compendiumItemPrefab, compendiumContent);
-            CompendiumItemUI itemUI = newItemEntry.GetComponent<CompendiumItemUI>();
-
-            itemUI.Setup(item, item.isCollected);
+            if (categoryFilter != null && item.category == categoryFilter)
+            {
+                GameObject newItemEntry = Instantiate(compendiumItemPrefab, compendiumContent);
+                CompendiumItemUI itemUI = newItemEntry.GetComponent<CompendiumItemUI>();
+                itemUI.Setup(item, item.isCollected);
+            }
         }
     }
 

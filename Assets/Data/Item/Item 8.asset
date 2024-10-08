@@ -19,3 +19,9 @@ MonoBehaviour:
   stackable: 1
   itemIcon: {fileID: 21300000, guid: c37a33318d9b0f147bd5075b4c0b1890, type: 3}
   itemModel: {fileID: 0}
+  moveSpeed: 0
+  jumpForce: 0
+  hp: 0
+  hpMax: 0
+  category: 3
+  isCollected: 0

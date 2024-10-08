@@ -10,6 +10,7 @@ public class CompendiumItemUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
     private bool isCollected;
     public ItemData itemData;
     public ItemToolTipUI tooltipUI;
+
     private void Start()
     {
         if (tooltipUI == null)
@@ -43,6 +44,7 @@ public class CompendiumItemUI : MonoBehaviour, IPointerEnterHandler, IPointerExi
         isCollected = false;
         itemIconImage.color = new Color(0.5f, 0.5f, 0.5f);
     }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (isCollected)

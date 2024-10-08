@@ -22,6 +22,9 @@ public class ItemData : ScriptableObject
     public int hp;
     public int hpMax;
 
+    [Header("# Category")]
+    public ItemCategory category;
+
     [Header("# Compendium")]
     public bool isCollected = false;
 }
@@ -30,4 +33,12 @@ public enum ItemType
 {
     Food,
     Ingredient
+}
+
+public enum ItemCategory
+{
+    Gathering,
+    Cooking,
+    Fishing,
+    MonsterDrop
 }
