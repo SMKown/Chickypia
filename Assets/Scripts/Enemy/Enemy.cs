@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public enum EnemyType { Runtype, FightType }
+public enum EnemyAttack { Attack, Charge }
 public enum AnimationState { Idle, Move, Attack, Damage, Die }
 public abstract class Enemy : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public abstract class Enemy : MonoBehaviour
     [Header("°ø°Ý ÄðÅ¸ÀÓ")]
     public float attackCooldown;
 
+    //public GameObject CollectItem;
     protected Animator anim;
     protected Transform player;
 
@@ -114,6 +116,13 @@ public abstract class Enemy : MonoBehaviour
             agent.isStopped = true;
             agent.enabled = false;
         }
+
+        //if (CollectItem != null)
+        //{
+        //    GameObject droppedItem = Instantiate(CollectItem, transform.position, Quaternion.identity);
+
+        //    DroppedItem item = droppedItem.GetComponent<DroppedItem>();
+        //}
         Destroy(gameObject, 2f);
     }
 

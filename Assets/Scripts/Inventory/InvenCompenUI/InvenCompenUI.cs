@@ -21,7 +21,7 @@ public class InvenCompenUI : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             ToggleInventory();
         }
