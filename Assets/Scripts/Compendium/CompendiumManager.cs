@@ -8,7 +8,17 @@ public class CompendiumManager : MonoBehaviour
 {
     public ItemDatabase itemDatabase;
     public GameObject compendiumItemPrefab;
-    public Transform compendiumContent;
+
+    public GameObject gatheringUI;
+    public GameObject cookingUI;
+    public GameObject fishingUI;
+    public GameObject monsterDropUI;
+
+    public Transform gatheringContent;
+    public Transform cookingContent;
+    public Transform fishingContent;
+    public Transform monsterDropContent;
+
     private string compendiumFilePath;
     private bool isCompendiumLoaded = false;
 
@@ -21,29 +31,41 @@ public class CompendiumManager : MonoBehaviour
     {
         if (!isCompendiumLoaded)
         {
-            GatheringItems();
+            OpenCompendium(ItemCategory.Gathering);
         }
     }
-    public void GatheringItems()
+
+    public void OpenCompendium(ItemCategory category)
     {
-        PopulateCompendium(ItemCategory.Gathering);
-    }
-    public void CookingItems()
-    {
-        PopulateCompendium(ItemCategory.Cooking);
-    }
-    public void FishingItems()
-    {
-        PopulateCompendium(ItemCategory.Fishing);
-    }
-    public void MonsterDropItems()
-    {
-        PopulateCompendium(ItemCategory.MonsterDrop);
+        Transform contentParent = null;
+        GameObject activeUI = null;
+
+        switch(category)
+        {
+            case ItemCategory.Gathering:
+                contentParent = gatheringContent;
+                activeUI = gatheringUI;
+                break;
+            case ItemCategory.Cooking:
+                contentParent = cookingContent;
+                activeUI = cookingUI;
+                break;
+            case ItemCategory.Fishing:
+                contentParent = fishingContent;
+                activeUI = fishingUI;
+                break;
+            case ItemCategory.MonsterDrop:
+                contentParent = monsterDropContent;
+                activeUI = monsterDropUI;
+                break;
+        }
+        ActivateCategory(activeUI);
+        PopulateCompendium(contentParent, category);
     }
 
-    public void PopulateCompendium(ItemCategory? categoryFilter = null)
+    public void PopulateCompendium(Transform contentParent, ItemCategory? categoryFilter = null)
     {
-        foreach (Transform child in compendiumContent)
+        foreach (Transform child in contentParent)
         {
             Destroy(child.gameObject);
         }
@@ -52,16 +74,38 @@ public class CompendiumManager : MonoBehaviour
         {
             if (categoryFilter != null && item.category == categoryFilter)
             {
-                GameObject newItemEntry = Instantiate(compendiumItemPrefab, compendiumContent);
+                GameObject newItemEntry = Instantiate(compendiumItemPrefab, contentParent);
                 CompendiumItemUI itemUI = newItemEntry.GetComponent<CompendiumItemUI>();
                 itemUI.Setup(item, item.isCollected);
             }
         }
     }
 
+    private Transform GetCurrentContent()
+    {
+        if (gatheringUI.activeSelf) return gatheringContent;
+        if (cookingUI.activeSelf) return cookingContent;
+        if (fishingUI.activeSelf) return fishingContent;
+        if (monsterDropUI.activeSelf) return monsterDropContent;
+        return null;
+    }
+
+    private void ActivateCategory(GameObject activeUI)
+    {
+        gatheringUI.SetActive(false);
+        cookingUI.SetActive(false);
+        fishingUI.SetActive(false);
+        monsterDropUI.SetActive(false);
+
+        activeUI.SetActive(true);
+    }
+
     public void CollectItem(ItemData collectedItem)
     {
-        foreach (Transform item in compendiumContent)
+        Transform currentContent = GetCurrentContent();
+        if (currentContent == null) return;
+
+        foreach (Transform item in currentContent)
         {
             CompendiumItemUI itemUI = item.GetComponent<CompendiumItemUI>();
             if (itemUI.itemData == collectedItem)
@@ -79,11 +123,10 @@ public class CompendiumManager : MonoBehaviour
             item.isCollected = false;
         }
 
-        foreach (Transform child in compendiumContent)
-        {
-            Destroy(child.gameObject);
-        }
-        PopulateCompendium();
+        ResetCategoryContent(gatheringContent, ItemCategory.Gathering);
+        ResetCategoryContent(cookingContent, ItemCategory.Cooking);
+        ResetCategoryContent(fishingContent, ItemCategory.Fishing);
+        ResetCategoryContent(monsterDropContent, ItemCategory.MonsterDrop);
 
         if (File.Exists(compendiumFilePath))
         {
@@ -93,7 +136,14 @@ public class CompendiumManager : MonoBehaviour
         LoadCompendium();
         Debug.Log("Compendium has been reset.");
     }
-
+    private void ResetCategoryContent(Transform contentParent, ItemCategory category)
+    {
+        foreach (Transform child in contentParent)
+        {
+            Destroy(child.gameObject);
+        }
+        PopulateCompendium(contentParent, category);
+    }
 
     public void SaveCompendium()
     {
@@ -118,13 +168,13 @@ public class CompendiumManager : MonoBehaviour
 
         if (File.Exists(filePath))
         {
-            string json = File.ReadAllText(filePath);
+            string json = File.ReadAllText(compendiumFilePath);
             CompendiumDataWrapper dataWrapper = JsonUtility.FromJson<CompendiumDataWrapper>(json);
 
-            foreach (Transform child in compendiumContent)
-            {
-                Destroy(child.gameObject);
-            }
+            ResetCategoryContent(gatheringContent, ItemCategory.Gathering);
+            ResetCategoryContent(cookingContent, ItemCategory.Cooking);
+            ResetCategoryContent(fishingContent, ItemCategory.Fishing);
+            ResetCategoryContent(monsterDropContent, ItemCategory.MonsterDrop);
 
             foreach (CompendiumItemData data in dataWrapper.items)
             {
@@ -134,12 +184,18 @@ public class CompendiumManager : MonoBehaviour
                     item.isCollected = data.isCollected;
                 }
             }
-            PopulateCompendium();
+            PopulateCompendium(gatheringContent, ItemCategory.Gathering);
+            PopulateCompendium(cookingContent, ItemCategory.Cooking);
+            PopulateCompendium(fishingContent, ItemCategory.Fishing);
+            PopulateCompendium(monsterDropContent, ItemCategory.MonsterDrop);
             isCompendiumLoaded = true;
         }
         else
         {
-            PopulateCompendium();
+            PopulateCompendium(gatheringContent, ItemCategory.Gathering);
+            PopulateCompendium(cookingContent, ItemCategory.Cooking);
+            PopulateCompendium(fishingContent, ItemCategory.Fishing);
+            PopulateCompendium(monsterDropContent, ItemCategory.MonsterDrop);
         }
     }
 }

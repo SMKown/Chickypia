@@ -6,6 +6,12 @@ public class InvenCompenUI : MonoBehaviour
 {
     public GameObject MainInventory;
     public GameObject CompendiumUI;
+
+    public GameObject gatheringUI;
+    public GameObject cookingUI;
+    public GameObject fishingUI;
+    public GameObject monsterDropUI;
+
     public GameObject InventoryOpenButton;
     public GameObject CompendiumOpenButton;
 
@@ -52,7 +58,7 @@ public class InvenCompenUI : MonoBehaviour
 
         if (compendiumManager != null)
         {
-            compendiumManager.GatheringItems();
+            compendiumManager.OpenCompendium(ItemCategory.Gathering);
         }
 
         if (tooltipUI != null)
@@ -60,6 +66,7 @@ public class InvenCompenUI : MonoBehaviour
             tooltipUI.HideToolTip();
         }
     }
+
     public void CloseCompendium()
     {
         CompendiumUI.SetActive(false);
@@ -70,6 +77,27 @@ public class InvenCompenUI : MonoBehaviour
             tooltipUI.HideToolTip();
         }
     }
+
+    public void GatheringButton()
+    {
+        compendiumManager.OpenCompendium(ItemCategory.Gathering);
+    }
+
+    public void CookingButton()
+    {
+        compendiumManager.OpenCompendium(ItemCategory.Cooking);
+    }
+
+    public void FishingButton()
+    {
+        compendiumManager.OpenCompendium(ItemCategory.Fishing);
+    }
+
+    public void MonsterDropButton()
+    {
+        compendiumManager.OpenCompendium(ItemCategory.MonsterDrop);
+    }
+
 
     public void SetInventoryActive(bool isActive)
     {

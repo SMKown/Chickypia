@@ -89,17 +89,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 70
-    m_Right: 70
+    m_Left: 65
+    m_Right: 65
     m_Top: 180
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 80, y: 80}
+  m_CellSize: {x: 100, y: 100}
   m_Spacing: {x: 15, y: 15}
   m_Constraint: 1
-  m_ConstraintCount: 5
+  m_ConstraintCount: 9
 --- !u!1 &319736586272815114
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,7 +110,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3043876977044303412}
   m_Layer: 5
-  m_Name: 3
+  m_Name: FishingUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -226,17 +226,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 70
-    m_Right: 70
+    m_Left: 65
+    m_Right: 65
     m_Top: 180
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 80, y: 80}
+  m_CellSize: {x: 100, y: 100}
   m_Spacing: {x: 15, y: 15}
   m_Constraint: 1
-  m_ConstraintCount: 5
+  m_ConstraintCount: 9
 --- !u!1 &902124596158772024
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,7 +247,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9094516807992108658}
   m_Layer: 5
-  m_Name: 2
+  m_Name: MonsterDropUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -491,12 +491,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1368590494367863316}
   m_Layer: 5
-  m_Name: 1
+  m_Name: GatheringUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1368590494367863316
 RectTransform:
   m_ObjectHideFlags: 0
@@ -727,7 +727,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4359346186864863587}
   m_Layer: 5
-  m_Name: 4
+  m_Name: CookingUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1127,17 +1127,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 70
-    m_Right: 70
+    m_Left: 65
+    m_Right: 65
     m_Top: 180
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 80, y: 80}
+  m_CellSize: {x: 100, y: 100}
   m_Spacing: {x: 15, y: 15}
   m_Constraint: 1
-  m_ConstraintCount: 5
+  m_ConstraintCount: 9
 --- !u!1 &5712217352323275517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1258,9 +1258,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6800556573938239800}
-        m_TargetAssemblyTypeName: CompendiumManager, Assembly-CSharp
-        m_MethodName: MonsterDropItems
+      - m_Target: {fileID: 3675239153853683653}
+        m_TargetAssemblyTypeName: InvenCompenUI, Assembly-CSharp
+        m_MethodName: MonsterDropButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1325,6 +1325,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MainInventory: {fileID: 5183443176631905874}
   CompendiumUI: {fileID: 8075508385937310595}
+  gatheringUI: {fileID: 1455336349495385870}
+  cookingUI: {fileID: 3868940921194920871}
+  fishingUI: {fileID: 319736586272815114}
+  monsterDropUI: {fileID: 902124596158772024}
   InventoryOpenButton: {fileID: 983572716730551358}
   CompendiumOpenButton: {fileID: 8499261296784446581}
   isInventoryOpen: 0
@@ -1524,9 +1528,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6800556573938239800}
-        m_TargetAssemblyTypeName: CompendiumManager, Assembly-CSharp
-        m_MethodName: GatheringItems
+      - m_Target: {fileID: 3675239153853683653}
+        m_TargetAssemblyTypeName: InvenCompenUI, Assembly-CSharp
+        m_MethodName: GatheringButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1770,9 +1774,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6800556573938239800}
-        m_TargetAssemblyTypeName: CompendiumManager, Assembly-CSharp
-        m_MethodName: FishingItems
+      - m_Target: {fileID: 3675239153853683653}
+        m_TargetAssemblyTypeName: InvenCompenUI, Assembly-CSharp
+        m_MethodName: FishingButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1871,17 +1875,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 70
-    m_Right: 70
+    m_Left: 65
+    m_Right: 65
     m_Top: 180
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 80, y: 80}
+  m_CellSize: {x: 100, y: 100}
   m_Spacing: {x: 15, y: 15}
   m_Constraint: 1
-  m_ConstraintCount: 5
+  m_ConstraintCount: 9
 --- !u!1 &8075508385937310595
 GameObject:
   m_ObjectHideFlags: 0
@@ -1937,7 +1941,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemDatabase: {fileID: 11400000, guid: 70bdd31ff36f2fb4f93845471905f5c7, type: 2}
   compendiumItemPrefab: {fileID: 7358745283426256889, guid: 6f0ce152524f59b4fb71afb0b7f81558, type: 3}
-  compendiumContent: {fileID: 5140737871020150912}
+  gatheringUI: {fileID: 1455336349495385870}
+  cookingUI: {fileID: 3868940921194920871}
+  fishingUI: {fileID: 319736586272815114}
+  monsterDropUI: {fileID: 902124596158772024}
+  gatheringContent: {fileID: 5140737871020150912}
+  cookingContent: {fileID: 6677285202005995791}
+  fishingContent: {fileID: 6393937363881484788}
+  monsterDropContent: {fileID: 456913164209047770}
 --- !u!1 &8117889060307319796
 GameObject:
   m_ObjectHideFlags: 0
@@ -2269,9 +2280,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6800556573938239800}
-        m_TargetAssemblyTypeName: CompendiumManager, Assembly-CSharp
-        m_MethodName: CookingItems
+      - m_Target: {fileID: 3675239153853683653}
+        m_TargetAssemblyTypeName: InvenCompenUI, Assembly-CSharp
+        m_MethodName: CookingButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
