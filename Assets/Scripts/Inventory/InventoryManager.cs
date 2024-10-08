@@ -59,6 +59,7 @@ public class InventoryManager : MonoBehaviour
                     item.isCollected = true;
                     compendiumManager.CollectItem(item);
                 }
+                slot.UpdateSlotBackground();
 
                 if (amount <= 0)
                     return true;
@@ -81,6 +82,7 @@ public class InventoryManager : MonoBehaviour
                         item.isCollected = true;
                         compendiumManager.CollectItem(item);
                     }
+                    slot.UpdateSlotBackground();
 
                     if (amount <= 0)
                         return true;
@@ -110,7 +112,7 @@ public class InventoryManager : MonoBehaviour
     public void OnItemSwapped(InventoryItem draggedItem, InventorySlot newSlot)
     {
         if (draggedItem == null || newSlot == null) return;
-
+        InventorySlot oldSlot = draggedItem.parentAfterDrag.GetComponent<InventorySlot>();
         InventoryItem existingItem = newSlot.GetComponentInChildren<InventoryItem>();
         if (existingItem != null)
         {
@@ -151,6 +153,11 @@ public class InventoryManager : MonoBehaviour
             draggedItem.transform.localPosition = Vector3.zero;
             draggedItem.parentAfterDrag = newSlot.transform;
         }
+        newSlot.UpdateSlotBackground(); 
+        if (oldSlot != null)
+        {
+            oldSlot.UpdateSlotBackground();
+        }
     }
 
     public List<(ItemData item, int count)> GetInventoryItems()
@@ -172,6 +179,26 @@ public class InventoryManager : MonoBehaviour
     {
         return itemDatabase.GetItemDataByName(itemName);
     }
+
+    public void ResetInventory()
+    {
+        foreach (InventorySlot slot in inventorySlots)
+        {
+            foreach (Transform child in slot.transform)
+            {
+                DestroyImmediate(child.gameObject);
+            }
+            slot.UpdateSlotBackground();
+        }
+
+        if (File.Exists(saveFilePath))
+        {
+            File.Delete(saveFilePath);
+        }
+
+        Debug.Log("Inventory has been reset.");
+    }
+
 
     public void SaveInventory()
     {

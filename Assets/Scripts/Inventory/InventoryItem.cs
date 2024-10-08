@@ -48,7 +48,14 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         countText.raycastTarget = false;
 
         parentAfterDrag = transform.parent;
-        transform.SetParent(transform.root);
+        InventorySlot currentSlot = parentAfterDrag.GetComponent<InventorySlot>();
+        if (currentSlot != null)
+        {
+            transform.SetParent(transform.root);
+            currentSlot.UpdateSlotBackground();
+        }
+
+        //transform.SetParent(transform.root);
         tooltipUI.HideToolTip();
         isDragging = true;
     }
@@ -72,6 +79,14 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         transform.SetParent(parentAfterDrag);
         transform.localPosition = Vector3.zero;
+
+        InventorySlot targetSlot = parentAfterDrag.GetComponent<InventorySlot>();
+        if (targetSlot != null)
+        {
+            transform.SetParent(parentAfterDrag);
+            transform.localPosition = Vector3.zero;
+            targetSlot.UpdateSlotBackground();
+        }
 
         isDragging = false;
     }

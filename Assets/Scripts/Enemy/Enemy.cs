@@ -14,13 +14,16 @@ public abstract class Enemy : MonoBehaviour
     [Header("공격 쿨타임")]
     public float attackCooldown;
 
-    //public GameObject CollectItem;
     protected Animator anim;
     protected Transform player;
 
     [HideInInspector]public NavMeshAgent agent;
     [Header("순찰 포인트")]
     public Vector3[] patrolPoints;
+
+    [Header("드롭할 아이템 설정")]
+    public ItemData DropData;
+    public GameObject CollectItem;
 
     protected virtual void Awake()
     {
@@ -116,16 +119,20 @@ public abstract class Enemy : MonoBehaviour
             agent.isStopped = true;
             agent.enabled = false;
         }
+        if (CollectItem != null)
+        {
+            GameObject droppedItem = Instantiate(CollectItem, transform.position + Vector3.up * 1f, Quaternion.identity);
 
-        //if (CollectItem != null)
-        //{
-        //    GameObject droppedItem = Instantiate(CollectItem, transform.position, Quaternion.identity);
+            DroppedItem item = droppedItem.GetComponent<DroppedItem>();
+            if (item != null)
+            {
+                item.itemData = DropData;
+            }
+        }
 
-        //    DroppedItem item = droppedItem.GetComponent<DroppedItem>();
-        //}
         Destroy(gameObject, 2f);
     }
-
+  
     public virtual void Attack(){}
 
     public void SetAnimationState(AnimationState state)

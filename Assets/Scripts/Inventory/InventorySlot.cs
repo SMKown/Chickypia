@@ -6,6 +6,12 @@ using UnityEngine.EventSystems;
 
 public class InventorySlot : MonoBehaviour, IDropHandler
 {
+    public Image slotBackgroundImage;
+
+    private void Start()
+    {
+        UpdateSlotBackground();
+    }
     public void OnDrop(PointerEventData eventData)
     {
         InventoryItem draggedItem = eventData.pointerDrag?.GetComponent<InventoryItem>();
@@ -17,6 +23,19 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         if (inventoryManager != null)
         {
             inventoryManager.OnItemSwapped(draggedItem, this);
+            UpdateSlotBackground();
+        }
+    }
+    public void UpdateSlotBackground()
+    {
+        InventoryItem itemInSlot = GetComponentInChildren<InventoryItem>();
+        if (itemInSlot != null)
+        {
+            slotBackgroundImage.color = Color.clear;
+        }
+        else
+        {
+            slotBackgroundImage.color = Color.white;
         }
     }
 }

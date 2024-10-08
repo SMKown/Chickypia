@@ -14,9 +14,22 @@ public class ResetData : MonoBehaviour
             ResetInvenCompend();
         }
     }
+    public void OnStartButtonPressed()
+    {
+        ResetInvenCompend();
+    }
 
     public void ResetInvenCompend()
     {
-        
+        if (inventoryManager != null)
+        {
+            inventoryManager.ResetInventory();
+        }
+
+        if (compendiumManager != null)
+        {
+            compendiumManager.ResetCompendium();
+        }
+        Debug.Log("Inventory and Compendium have been reset.");
     }
 }

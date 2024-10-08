@@ -10,6 +10,7 @@ public class CompendiumManager : MonoBehaviour
     public GameObject compendiumItemPrefab;
     public Transform compendiumContent;
     private string compendiumFilePath;
+    private bool isCompendiumLoaded = false;
 
     private void Awake()
     {
@@ -18,7 +19,10 @@ public class CompendiumManager : MonoBehaviour
     }
     private void Start()
     {
-        PopulateCompendium();
+        if (!isCompendiumLoaded)
+        {
+            PopulateCompendium();
+        }
     }
 
     public void PopulateCompendium()
@@ -44,6 +48,29 @@ public class CompendiumManager : MonoBehaviour
             }
         }
     }
+
+    public void ResetCompendium()
+    {
+        foreach (ItemData item in itemDatabase.allItems)
+        {
+            item.isCollected = false;
+        }
+
+        foreach (Transform child in compendiumContent)
+        {
+            Destroy(child.gameObject);
+        }
+        PopulateCompendium();
+
+        if (File.Exists(compendiumFilePath))
+        {
+            File.Delete(compendiumFilePath);
+        }
+        SaveCompendium();
+        LoadCompendium();
+        Debug.Log("Compendium has been reset.");
+    }
+
 
     public void SaveCompendium()
     {
@@ -84,6 +111,8 @@ public class CompendiumManager : MonoBehaviour
                     item.isCollected = data.isCollected;
                 }
             }
+            PopulateCompendium();
+            isCompendiumLoaded = true;
         }
         else
         {
