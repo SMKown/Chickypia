@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using UnityEngine;
 
@@ -83,7 +84,9 @@ public class CompendiumManager : MonoBehaviour
                     item.isCollected = data.isCollected;
                 }
             }
-
+        }
+        else
+        {
             PopulateCompendium();
         }
     }

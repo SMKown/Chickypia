@@ -4103,6 +4103,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5546554088597515117, guid: 38f3b6d1323a77244883ae5d03a428da, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5775049256487964927, guid: 38f3b6d1323a77244883ae5d03a428da, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5921924243447484821, guid: 38f3b6d1323a77244883ae5d03a428da, type: 3}
       propertyPath: m_Name
       value: InvenCompen
@@ -4353,6 +4361,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8034585846281929841, guid: 38f3b6d1323a77244883ae5d03a428da, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075508385937310595, guid: 38f3b6d1323a77244883ae5d03a428da, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8221203011793613747, guid: 38f3b6d1323a77244883ae5d03a428da, type: 3}
