@@ -51,8 +51,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (h != 0 || v != 0)
         {
-            moveDirection = transform.position + dir;  // 플레이어의 현재 위치에서 입력 방향으로 목적지 설정
-            agent.SetDestination(moveDirection);  // NavMeshAgent로 목적지 설정
+            agent.Move(dir * Time.deltaTime * agent.speed);
+            agent.SetDestination(transform.position + dir);
 
             float angle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0F, angle, 0F);

@@ -1433,6 +1433,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2668025938757629148, guid: dec0ae9635ffa42fc97e716bfbac69c4, type: 3}
+      propertyPath: m_Speed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7463417182811677547, guid: dec0ae9635ffa42fc97e716bfbac69c4, type: 3}
       propertyPath: m_Name
       value: Player_AttackMode
@@ -1529,6 +1533,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryManager: {fileID: 0}
+  compendiumManager: {fileID: 0}
 --- !u!4 &7565892767894614199
 Transform:
   m_ObjectHideFlags: 0
