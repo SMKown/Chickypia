@@ -22,6 +22,10 @@ public class ItemToolTipUI : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        if (tooltipUI != null)
+        {
+            tooltipUI.SetActive(false);
+        }
         tooltipUI.SetActive(false);
     }
 

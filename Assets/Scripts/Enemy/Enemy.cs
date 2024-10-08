@@ -21,9 +21,8 @@ public abstract class Enemy : MonoBehaviour
     [Header("순찰 포인트")]
     public Vector3[] patrolPoints;
 
-    [Header("드롭할 아이템 설정")]
-    public ItemData DropData;
-    public GameObject CollectItem;
+    public ItemData dropItemData;
+    public GameObject dropItemPrefab;
 
     protected virtual void Awake()
     {
@@ -119,20 +118,23 @@ public abstract class Enemy : MonoBehaviour
             agent.isStopped = true;
             agent.enabled = false;
         }
-        if (CollectItem != null)
-        {
-            GameObject droppedItem = Instantiate(CollectItem, transform.position + Vector3.up * 1f, Quaternion.identity);
-
-            DroppedItem item = droppedItem.GetComponent<DroppedItem>();
-            if (item != null)
-            {
-                item.itemData = DropData;
-            }
-        }
-
+        DropItem();
         Destroy(gameObject, 2f);
     }
-  
+    private void DropItem()
+    {
+        Vector3 dropPosition = transform.position + new Vector3(0, 0.5f, 0);
+        GameObject droppedItem = Instantiate(dropItemPrefab, dropPosition, Quaternion.identity);
+
+        DroppedItem droppedItemScript = droppedItem.GetComponent<DroppedItem>();
+        if (droppedItemScript != null)
+        {
+            droppedItemScript.itemData = dropItemData;
+            droppedItemScript.itemSprite = dropItemData.itemIcon;
+        }
+    }
+
+
     public virtual void Attack(){}
 
     public void SetAnimationState(AnimationState state)

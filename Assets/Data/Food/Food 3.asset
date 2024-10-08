@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Food 3
   m_EditorClassIdentifier: 
   itemType: 0
-  itemId: 3
-  itemName: Food3
-  itemDesc: 
+  itemId: 300
+  itemName: "\uCFE0\uD0A4"
+  itemDesc: "\uCFE0\uD0A4"
   stackable: 1
-  itemIcon: {fileID: 21300000, guid: dc41dcdcc8bb13c4794cfedb42d507bc, type: 3}
+  itemIcon: {fileID: 21300000, guid: 4ea5dfc9164029142890bdb5375de792, type: 3}
   itemModel: {fileID: 0}
   moveSpeed: 0
   jumpForce: 0

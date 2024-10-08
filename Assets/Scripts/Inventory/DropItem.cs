@@ -2,29 +2,30 @@ using UnityEngine;
 
 public class DroppedItem : MonoBehaviour
 {
+    public Sprite itemSprite;
     public ItemData itemData;
-    private Rigidbody rb;
     private SpriteRenderer spriteRenderer;
 
-    void Start()
+    private InventoryItem inventoryItem;
+    private void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
-        if (rb != null)
-        {
-            rb.isKinematic = false;
-            rb.useGravity = true;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = itemSprite;
+        transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 
-            rb.AddForce(new Vector3(Random.Range(-10f, 10f), 15f, Random.Range(-10f, 10f)), ForceMode.Impulse);
+        inventoryItem = GetComponent<InventoryItem>();
+        if (inventoryItem != null)
+        {
+            inventoryItem.InitialiseItem(itemData, ItemToolTipUI.Instance);
         }
-
-        if (itemData != null && spriteRenderer != null)
+        else
         {
-            spriteRenderer.sprite = itemData.itemIcon;
+            Debug.LogWarning("InventoryItem 컴포넌트를 찾을 수 없습니다!");
         }
     }
-    void Update()
-    { 
-        transform.Rotate(Vector3.up, 50f * Time.deltaTime, Space.World);
+
+    private void Update()
+    {
+        transform.Rotate(Vector3.up * 50f * Time.deltaTime);
     }
 }

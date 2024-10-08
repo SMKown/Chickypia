@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c2febac446cda843a398f3da80a3970, type: 3}
-  m_Name: Food 6
+  m_Name: Item 15
   m_EditorClassIdentifier: 
-  itemType: 0
-  itemId: 600
-  itemName: "\uD0D5\uD6C4\uB8E8"
-  itemDesc: "\uD0D5\uD6C4\uB8E8\uCC98\uB7FC\uC0DD\uAE40"
+  itemType: 1
+  itemId: 15
+  itemName: "\uBD88\uC824\uB9AC.."
+  itemDesc: "\uC824\uB9AC\uCC98\uB7FC \uC0DD\uAE40"
   stackable: 1
-  itemIcon: {fileID: 21300000, guid: adde84842361934409ca2739a1f841bb, type: 3}
+  itemIcon: {fileID: 21300000, guid: a0bb94929dc9f554cb19ad0d524e4d0d, type: 3}
   itemModel: {fileID: 0}
   moveSpeed: 0
   jumpForce: 0
   hp: 0
   hpMax: 0
-  category: 1
+  category: 3
   isCollected: 0
