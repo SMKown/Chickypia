@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GatherableItem : MonoBehaviour
 {
@@ -8,13 +9,19 @@ public class GatherableItem : MonoBehaviour
     public float gatherTime = 2F;
     private float elapsedTime;
     public bool isGathering = false;
-    
+
     private InventoryItem inventoryItem;
     private Coroutine gatherCoroutine;
+
+    public Slider gatherSlider;
 
     private void Start()
     {
         inventoryItem = GetComponent<InventoryItem>();
+        if (gatherSlider != null)
+        {
+            gatherSlider.gameObject.SetActive(false);
+        }
     }
 
     public void StartGathering(InventoryManager inventoryManager)
@@ -24,6 +31,11 @@ public class GatherableItem : MonoBehaviour
         if (!isGathering)
         {
             isGathering = true;
+            if (gatherSlider != null)
+            {
+                gatherSlider.gameObject.SetActive(true);
+                gatherSlider.value = 0F;
+            }
             gatherCoroutine = StartCoroutine(Gather(inventoryManager));
         }
     }
@@ -39,8 +51,11 @@ public class GatherableItem : MonoBehaviour
                 gatherCoroutine = null;
             }
 
-            UIInteraction.Instance.gatherProgressCircle.fillAmount = 0F;
-            UIInteraction.Instance.HideGatherProgress();
+            if (gatherSlider != null)
+            {
+                gatherSlider.value = 0F;
+                gatherSlider.gameObject.SetActive(false);
+            }
             PlayerInfo.Instance.interacting = false;
         }
     }
@@ -54,19 +69,25 @@ public class GatherableItem : MonoBehaviour
         {
             if (!isGathering)
             {
-                UIInteraction.Instance.gatherProgressCircle.fillAmount = 0F;
+                if (gatherSlider != null)
+                {
+                    gatherSlider.value = 0F;
+                    gatherSlider.gameObject.SetActive(false);
+                }
                 yield break;
             }
 
             elapsedTime += Time.deltaTime;
-            UIInteraction.Instance.gatherProgressCircle.fillAmount = elapsedTime / gatherTime;
+            if (gatherSlider != null)
+            {
+                gatherSlider.value = elapsedTime / gatherTime;
+            }
             yield return null;
         }
 
-
         isGathering = false;
         gatherCoroutine = null;
-        
+
         if (inventoryItem != null && inventoryManager != null)
         {
             bool added = inventoryManager.AddItem(inventoryItem.GetItemData());
@@ -75,8 +96,11 @@ public class GatherableItem : MonoBehaviour
                 UIInteraction.Instance.ImageOff(UIInteraction.Instance.collection);
             }
         }
-        
-        UIInteraction.Instance.HideGatherProgress();
+
+        if (gatherSlider != null)
+        {
+            gatherSlider.gameObject.SetActive(false);
+        }
         PlayerInfo.Instance.interacting = false;
     }
 }
