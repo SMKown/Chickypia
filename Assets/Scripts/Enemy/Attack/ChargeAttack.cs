@@ -9,6 +9,8 @@ public class ChargeAttack : Enemy
     [Tooltip("돌격 속도")]
     public float chargeSpeed = 6f;
 
+    public float CharginRange = 6f;
+
     private bool isCharging = false;
     private bool isAttackOnCooldown = false;
     private Vector3 chargeDestination;

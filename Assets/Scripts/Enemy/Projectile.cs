@@ -28,7 +28,7 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("A"))
         {
             HandleImpact(other.gameObject);
         }
@@ -40,7 +40,7 @@ public class Projectile : MonoBehaviour
 
     private void HandleImpact(GameObject player)
     {
-        if (player != null && player.CompareTag("Player"))
+        if (player != null && player.CompareTag("A"))
         {
             PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
             if (playerMovement != null)
@@ -49,7 +49,6 @@ public class Projectile : MonoBehaviour
                 Debug.Log("Player hit, dealing damage: " + damage);
             }
         }
-        Debug.Log("Projectile destroyed");
         Destroy(gameObject);
     }
     private IEnumerator DestroyLifetime()
