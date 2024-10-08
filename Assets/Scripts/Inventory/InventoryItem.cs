@@ -117,7 +117,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         RectTransform canvasRectTransform = tooltipUI.transform.parent.GetComponent<RectTransform>();
 
         Vector3 slotPosition = slotRectTransform.position;
-        Vector3 offset = new Vector3(slotRectTransform.rect.width / 2, -slotRectTransform.rect.height / 2, 0);
+        Vector3 offset = new Vector3(slotRectTransform.rect.width / 4, -slotRectTransform.rect.height / 4, 0);
 
         Vector2 anchoredPosition;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
@@ -125,7 +125,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             slotPosition + offset,
             null,
             out anchoredPosition
-        );
+            );
         tooltipRectTransform.anchoredPosition = anchoredPosition;
     }
 
@@ -155,10 +155,13 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                     {
                         InventoryManager inventoryManager = FindObjectOfType<InventoryManager>();
                         InventoryItem newItem = inventoryManager.SpawnNewItem(item, slot, 1);
+
                         newItem.image.raycastTarget = true;
                         newItem.countText.raycastTarget = true;
                         count -= 1;
                         ItemCount();
+                        slot.UpdateSlotBackground();
+
                         return;
                     }
                     else if (itemInSlot.item == item)
@@ -167,6 +170,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                         itemInSlot.ItemCount();
                         count -= 1;
                         ItemCount();
+                        slot.UpdateSlotBackground();
                         return;
                     }
                     return;

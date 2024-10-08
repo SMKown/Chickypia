@@ -11,12 +11,16 @@ public class InvenCompenUI : MonoBehaviour
 
     [HideInInspector] public bool isInventoryOpen = false;
 
+    private ItemToolTipUI tooltipUI;
+
     private void Start()
     {
         MainInventory.SetActive(false);
         CompendiumUI.SetActive(false);
         InventoryOpenButton.SetActive(false);
         CompendiumOpenButton.SetActive(false);
+
+        tooltipUI = ItemToolTipUI.Instance;
     }
 
     private void Update()
@@ -34,21 +38,41 @@ public class InvenCompenUI : MonoBehaviour
         InventoryOpenButton.SetActive(isInventoryOpen);
         CompendiumOpenButton.SetActive(isInventoryOpen);
         CompendiumUI.SetActive(false);
+
+        if (!isInventoryOpen && tooltipUI != null)
+        {
+            tooltipUI.HideToolTip();
+        }
     }
     public void OpenCompendium()
     {
         MainInventory.SetActive(false);
         CompendiumUI.SetActive(true);
+
+        if (tooltipUI != null)
+        {
+            tooltipUI.HideToolTip();
+        }
     }
     public void CloseCompendium()
     {
         CompendiumUI.SetActive(false);
         MainInventory.SetActive(true);
+
+        if (tooltipUI != null)
+        {
+            tooltipUI.HideToolTip();
+        }
     }
 
     public void SetInventoryActive(bool isActive)
     {
         MainInventory.SetActive(isActive);
         isInventoryOpen = isActive;
+
+        if (tooltipUI != null)
+        {
+            tooltipUI.HideToolTip();
+        }
     }
 }
