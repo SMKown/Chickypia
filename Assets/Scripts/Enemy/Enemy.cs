@@ -14,6 +14,7 @@ public abstract class Enemy : MonoBehaviour
     [Header("°ø°Ý ÄðÅ¸ÀÓ")]
     public float attackCooldown;
 
+    //public GameObject CollectItem;
     protected Animator anim;
     protected Transform player;
 
@@ -115,6 +116,13 @@ public abstract class Enemy : MonoBehaviour
             agent.isStopped = true;
             agent.enabled = false;
         }
+
+        //if (CollectItem != null)
+        //{
+        //    GameObject droppedItem = Instantiate(CollectItem, transform.position, Quaternion.identity);
+
+        //    DroppedItem item = droppedItem.GetComponent<DroppedItem>();
+        //}
         Destroy(gameObject, 2f);
     }
 

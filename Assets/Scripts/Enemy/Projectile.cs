@@ -28,10 +28,12 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("A"))
+        if (other.gameObject.name == "TakeDamageRange")
         {
             HandleImpact(other.gameObject);
         }
+        else if (other.gameObject.name == "InteractionRange") 
+        { }
         else
         {
             Destroy(gameObject);
@@ -40,15 +42,13 @@ public class Projectile : MonoBehaviour
 
     private void HandleImpact(GameObject player)
     {
-        if (player != null && player.CompareTag("A"))
+        PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
+        if (playerMovement != null)
         {
-            PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
-            if (playerMovement != null)
-            {
-                playerMovement.TakeDamage(damage);
-                Debug.Log("Player hit, dealing damage: " + damage);
-            }
+            playerMovement.TakeDamage(damage);
+            Debug.Log("Player hit, dealing damage: " + damage);
         }
+
         Destroy(gameObject);
     }
     private IEnumerator DestroyLifetime()
