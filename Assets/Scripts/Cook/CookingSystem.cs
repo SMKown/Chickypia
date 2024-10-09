@@ -10,6 +10,8 @@ public class CookingSystem : MonoBehaviour
 {
     // public GameObject cookingSpot;    
 
+    public bool isLetsCook = false;
+
     public FoodRecipeData[] foodRecipeData;   
 
     private InventoryManager inventoryManager;
@@ -20,7 +22,7 @@ public class CookingSystem : MonoBehaviour
     private Transform makePopup;
 
     private TextMeshProUGUI foodName;
-    private TextMeshProUGUI ingredientsName;
+    //private TextMeshProUGUI ingredientsName;
     private Image foodImage;
     private GameObject disableImage;
 
@@ -43,20 +45,25 @@ public class CookingSystem : MonoBehaviour
         choicePopup = transform.GetChild(0);
         makePopup = transform.GetChild(1);
         foodRecipeParent = transform.GetChild(0);
-        ingredientParent = transform.GetChild(1).GetChild(1).GetChild(0);
-        cookButton = transform.GetChild(1).GetChild(1).GetChild(1).GetComponent<Button>();
+        ingredientParent = transform.GetChild(1).GetChild(1).GetChild(1);
+        cookButton = transform.GetChild(1).GetChild(1).GetChild(2).GetChild(0).GetComponent<Button>();
         inventoryManager = FindObjectOfType<InventoryManager>();
         invenCompenUI = FindObjectOfType<InvenCompenUI>();
+
+        foodImage = makePopup.GetChild(0).GetChild(0).GetComponent<Image>();
 
         if (choicePopup == null) { Debug.LogError("choicePopup is not assigned."); }
         if (makePopup == null) { Debug.LogError("makePopup is not assigned."); }
         if (foodRecipeParent == null) { Debug.LogError("foodRecipeParent is not assigned."); }
-        if (ingredientParent == null) { Debug.LogError("ingredientParent is not assigned."); }
-        
+        if (ingredientParent == null) { Debug.LogError("ingredientParent is not assigned."); }        
     }
 
     private void Update()
     {
+        if(isLetsCook)
+        {
+            StartCook();
+        }
         if (Input.GetKeyDown(KeyCode.Q))
         {
             if (isCooking)
@@ -80,7 +87,9 @@ public class CookingSystem : MonoBehaviour
     {
         isCooking = true;
         choicePopup.gameObject.SetActive(true);
+        makePopup.gameObject.SetActive(true);
         invenCompenUI.SetInventoryActive(true);
+        foodImage.gameObject.SetActive(false);
         foreach (Transform child in foodRecipeParent)
         {
             Destroy(child.gameObject);
@@ -88,12 +97,6 @@ public class CookingSystem : MonoBehaviour
 
         cookButton.onClick.RemoveAllListeners();
         cookButton.onClick.AddListener(() => Cook(currentRecipe));
-        //List<(ItemData item, int count)> inventoryItems = inventoryManager.GetInventoryItems();
-
-        //foreach (var item in inventoryItems)
-        //{
-        //    Debug.Log($"Inventory Item: {item.item.name}, Count: {item.count}");
-        //}
 
         ClearIngredientSlots();
 
@@ -104,12 +107,11 @@ public class CookingSystem : MonoBehaviour
                 GameObject newIngredient = Instantiate(foodRecipePrefab, foodRecipeParent);
 
                 Image foodRecipeIcon = newIngredient.transform.GetChild(0).GetComponent<Image>();
-                TextMeshProUGUI foodRecipeName = newIngredient.transform.GetChild(1).GetComponent< TextMeshProUGUI>();
+                //TextMeshProUGUI foodRecipeName = newIngredient.transform.GetChild(1).GetComponent< TextMeshProUGUI>();
 
-                foodRecipeIcon.sprite = foodRecipe.foodIcon;
-                foodRecipeIcon.color = Color.gray;
+                foodRecipeIcon.sprite = foodRecipe.foodIcon;                
                 
-                if (foodRecipeName != null) { foodRecipeName.text = foodRecipe.foodName; }
+                //if (foodRecipeName != null) { foodRecipeName.text = foodRecipe.foodName; }
                                
 
                 recipeButton = newIngredient.transform.GetChild(0).GetComponent<Button>();
@@ -137,18 +139,15 @@ public class CookingSystem : MonoBehaviour
 
         currentRecipe = recipe;
 
-        if (!makePopup.gameObject.activeSelf)
-        {
-            makePopup.gameObject.SetActive(true);
-        }
 
         UpdateUIRecipe(currentRecipe);
     }
 
     private void UpdateUIRecipe(FoodRecipeData recipe)
     {
-        foodName = makePopup.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>();
-        foodImage = makePopup.GetChild(0).GetChild(0).GetComponent<Image>();
+        foodName = makePopup.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>();
+
+        foodImage.gameObject.SetActive(true);
 
         cookButton.interactable = false;
 
@@ -178,11 +177,11 @@ public class CookingSystem : MonoBehaviour
                 initialX += xOffset;
             }
 
-            TextMeshProUGUI ingredientName = newIngredient.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            // TextMeshProUGUI ingredientName = newIngredient.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI ingrediencount = newIngredient.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
             Image ingredientIcon = newIngredient.transform.GetChild(0).GetComponent<Image>();
 
-            ingredientName.text = ingredient.item.itemName;
+            // ingredientName.text = ingredient.item.itemName;
             ingredientIcon.sprite = ingredient.item.itemIcon;
             ingredientIcon.color = new Color(1, 1, 1, 0.5f);
             ingrediencount.text = ingredient.count.ToString();
@@ -224,10 +223,10 @@ public class CookingSystem : MonoBehaviour
         if(isCooking)
         {
             Debug.Log("Cooking...");
-            choicePopup.gameObject.SetActive(false);
-            makePopup.gameObject.SetActive(false);
-            invenCompenUI.SetInventoryActive(false);
-            cookButton.interactable = false;
+            //choicePopup.gameObject.SetActive(false);
+            //makePopup.gameObject.SetActive(false);
+            //invenCompenUI.SetInventoryActive(false);
+            //cookButton.interactable = false;
             foreach (var ingredient in recipe.ingredients)
             {
                 IngredientSlot ingredientSlot = FindIngredientSlot(ingredient.item);
@@ -284,9 +283,9 @@ public class CookingSystem : MonoBehaviour
         foodImage.sprite = null;
         ClearIngredientSlots();
 
-        choicePopup.gameObject.SetActive(true);
-        makePopup.gameObject.SetActive(true);
-        invenCompenUI.SetInventoryActive(true);
+        //choicePopup.gameObject.SetActive(true);
+        //makePopup.gameObject.SetActive(true);
+        //invenCompenUI.SetInventoryActive(true);
 
         cookButton.interactable = true;
     }

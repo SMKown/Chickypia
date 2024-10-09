@@ -89,7 +89,7 @@ public class IngredientSlot : MonoBehaviour, IDropHandler
         currentCount = Mathf.Min(draggedItem.count, requiredAmount);
         ingredientImage.sprite = draggedItem.item.itemIcon;
         ingredientImage.color = Color.white;
-        ingredientName.text = draggedItem.item.itemName;
+        //ingredientName.text = draggedItem.item.itemName;
         ingredientCount.text = currentCount.ToString();
 
         draggedItem.count -= currentCount;

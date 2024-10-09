@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: FoodRecipe 4
   m_EditorClassIdentifier: 
   foodType: 1
-  foodRecipeId: 4
-  foodName: Food4
+  foodRecipeId: 400
+  foodName: "\uAF2C\uCE582"
   foodDesc: 
-  foodIcon: {fileID: 21300000, guid: 4a839d3774cc5b04093aa4a3c4675e8a, type: 3}
+  foodIcon: {fileID: 21300000, guid: e5f921ef0aec2b6448589eb5b2e7527b, type: 3}
   ingredients:
-  - item: {fileID: 11400000, guid: 77c4e29213fda8d41b0f46466933ef29, type: 2}
+  - item: {fileID: 11400000, guid: 21e4b016fcd55b24a80be277c12f4f26, type: 2}
     count: 2
   resultItem: {fileID: 11400000, guid: a7ddfd5d287dd7e41a4f9c9b6c46f63f, type: 2}
