@@ -308,7 +308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 3348611266779478724}
-  player: {fileID: 766207004619489451, guid: dec0ae9635ffa42fc97e716bfbac69c4, type: 3}
+  player: {fileID: 0}
   enemyType: 1
   patrolType: 1
   hasFledOnce: 0
@@ -330,8 +330,10 @@ MonoBehaviour:
   attackCooldown: 3
   agent: {fileID: 0}
   patrolPoints:
-  - {x: 7, y: 0, z: 0}
-  - {x: 4, y: 0, z: 0}
+  - {x: 9, y: 0, z: 0}
+  - {x: 17, y: 0, z: 0}
+  dropItemData: {fileID: 0}
+  dropItemPrefab: {fileID: 5857909854282709900, guid: a687cccb46f2df342b01697475b13ec7, type: 3}
   damage: 1
 --- !u!54 &1271100826935906998
 Rigidbody:
