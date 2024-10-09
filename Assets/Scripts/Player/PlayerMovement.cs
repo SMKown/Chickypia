@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public CinemachineVirtualCamera[] virtualCameras;
+    private int currentCameraIndex;
+
     public GameObject particle;
     public float attackRange;
     public int attackDamage;
@@ -145,6 +149,31 @@ public class PlayerMovement : MonoBehaviour
                 Collection(UIInteraction.Instance.interactableObj);
             else if (UIInteraction.Instance.interactableObj.CompareTag("Gatherable"))
                 Gathering(UIInteraction.Instance.interactableObj);
+            else if (UIInteraction.Instance.interactableObj.CompareTag("Dialog"))
+                Dialog();
+        }
+        else
+        {
+            currentCameraIndex = 0;
+            UpdateCamera();
+        }
+    }
+
+    private void UpdateCamera()
+    {
+        for (int i = 0; i < virtualCameras.Length; i++)
+        {
+            virtualCameras[i].gameObject.SetActive(i == currentCameraIndex);
+        }
+    }
+
+    private void Dialog()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            UIInteraction.Instance.ImageOff(UIInteraction.Instance.dialog);
+            currentCameraIndex = 1;
+            UpdateCamera();
         }
     }
 

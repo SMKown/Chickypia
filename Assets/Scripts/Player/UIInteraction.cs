@@ -6,7 +6,7 @@ using UnityEngine;
 public class UIInteraction : MonoBehaviour
 {
     public static UIInteraction Instance;
-    
+
     private void Awake()
     {
         if (Instance != null)
@@ -30,6 +30,7 @@ public class UIInteraction : MonoBehaviour
 
     private float animationDuration = 0.25F;
     private Vector3 offsetPos;
+    private Coroutine currentCoroutine;
 
     private void Start()
     {
@@ -60,17 +61,24 @@ public class UIInteraction : MonoBehaviour
 
     public void ImageOn(Image image, Transform targetTransform)
     {
-        StartCoroutine(AnimateImageON(image, targetTransform));
+        if (currentCoroutine != null)
+        {
+            StopCoroutine(currentCoroutine);
+        }
+        currentCoroutine = StartCoroutine(AnimateImageON(image, targetTransform));
     }
 
     private IEnumerator AnimateImageON(Image image, Transform targetTransform)
     {
         image.enabled = true;
-
         offsetPos = targetTransform.position;
 
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(offsetPos);
-        image.transform.position = screenPos;
+        while (image.enabled)
+        {
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(targetTransform.position);
+            image.transform.position = screenPos;
+            yield return null;
+        }
 
         elapsedTime = 0F;
         while (elapsedTime < animationDuration)
