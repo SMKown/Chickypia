@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2735241110200209938}
   - component: {fileID: 1003605038559831883}
   - component: {fileID: 713921735122642021}
-  - component: {fileID: -1604849227383460196}
+  - component: {fileID: -2877433570463319114}
   m_Layer: 0
   m_Name: DropItem
   m_TagString: Collectible
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemSprite: {fileID: 0}
   itemData: {fileID: 0}
---- !u!114 &-1604849227383460196
+--- !u!114 &-2877433570463319114
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 6337905073935162326}
   - component: {fileID: 7374083087824476569}
   - component: {fileID: 2768479695167548744}
-  - component: {fileID: 4401349341150225881}
   m_Layer: 0
   m_Name: 03_Fire_Gazer
   m_TagString: Enemy
@@ -148,30 +147,6 @@ MonoBehaviour:
   enemyType: 1
   patrolType: 1
   hasFledOnce: 0
---- !u!114 &4401349341150225881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1192279232629197637}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdacb860f896bca4c837b3da3d9ab62a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 5
-  sightRange: 6
-  attackRange: 4
-  attackCooldown: 3
-  agent: {fileID: 0}
-  patrolPoints:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  projectileSpeed: 3
-  damage: 1
-  projectilePrefab: {fileID: 0}
-  firePoint: {fileID: 7501635256837395795}
 --- !u!1 &2415856302005367205
 GameObject:
   m_ObjectHideFlags: 0

@@ -622,6 +622,8 @@ MonoBehaviour:
   patrolPoints:
   - {x: 2, y: 0, z: 0}
   - {x: 1, y: 0, z: 0}
+  dropItemData: {fileID: 0}
+  dropItemPrefab: {fileID: 5857909854282709900, guid: a687cccb46f2df342b01697475b13ec7, type: 3}
   projectileSpeed: 3
   damage: 1
   projectilePrefab: {fileID: 6655336852279481375, guid: e1233e2a83a257b4c826e5f68a478d50, type: 3}

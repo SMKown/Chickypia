@@ -1205,10 +1205,11 @@ MonoBehaviour:
   patrolPoints:
   - {x: 11, y: 0, z: 0}
   - {x: 8, y: 0, z: 0}
+  dropItemData: {fileID: 0}
+  dropItemPrefab: {fileID: 5857909854282709900, guid: a687cccb46f2df342b01697475b13ec7, type: 3}
   damage: 1
   chargeSpeed: 3
-  chargeDuration: 3
-  prepareTime: 2
+  CharginRange: 6
 --- !u!1 &8115697536409313132
 GameObject:
   m_ObjectHideFlags: 0

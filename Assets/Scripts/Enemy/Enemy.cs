@@ -67,8 +67,6 @@ public abstract class Enemy : MonoBehaviour
     private IEnumerator ReEnableNavMeshAgent()
     {
         yield return new WaitForSeconds(0.5f);
-
-        agent.enabled = true;
         agent.isStopped = false;
     }
 
@@ -118,6 +116,13 @@ public abstract class Enemy : MonoBehaviour
             agent.isStopped = true;
             agent.enabled = false;
         }
+
+        EnemyAI enemyAI = GetComponent<EnemyAI>();
+        if (enemyAI != null)
+        {
+            enemyAI.enabled = false;
+        }
+
         DropItem();
         Destroy(gameObject, 2f);
     }
