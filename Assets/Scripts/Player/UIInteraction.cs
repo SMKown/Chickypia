@@ -22,14 +22,13 @@ public class UIInteraction : MonoBehaviour
     public Image cooking; // 요리
     public Image dialog; // 대화
 
-    public Image gatherProgressCircle;
+    public Image gatherProgress;
     public GameObject interactableObj;
 
     private Dictionary<string, Image> tagToImageMap = new Dictionary<string, Image>();
     private float elapsedTime;
 
     private float animationDuration = 0.25F;
-    private Vector3 offsetPos;
     private Coroutine currentCoroutine;
 
     private void Start()
@@ -71,7 +70,6 @@ public class UIInteraction : MonoBehaviour
     private IEnumerator AnimateImageON(Image image, Transform targetTransform)
     {
         image.enabled = true;
-        offsetPos = targetTransform.position;
 
         while (image.enabled)
         {
@@ -113,22 +111,22 @@ public class UIInteraction : MonoBehaviour
 
     public void ShowGatherProgress(float duration)
     {
-        if (gatherProgressCircle != null)
+        if (gatherProgress != null)
             StartCoroutine(GatherProgress(duration));
     }
 
     private IEnumerator GatherProgress(float duration)
     {
         elapsedTime = 0F;
-        gatherProgressCircle.fillAmount = 0F;
-        gatherProgressCircle.enabled = true;
+        gatherProgress.fillAmount = 0F;
+        gatherProgress.enabled = true;
 
         while (elapsedTime < duration)
         {
             if (Input.GetKey(KeyCode.E))
             {
                 elapsedTime += Time.deltaTime;
-                gatherProgressCircle.fillAmount = elapsedTime / duration;
+                gatherProgress.fillAmount = elapsedTime / duration;
             }
             else
             {
@@ -137,12 +135,12 @@ public class UIInteraction : MonoBehaviour
             }
             yield return null;
         }
-        gatherProgressCircle.fillAmount = 1F;
+        gatherProgress.fillAmount = 1F;
     }
 
     public void HideGatherProgress()
     {
-        gatherProgressCircle.fillAmount = 0F;
-        gatherProgressCircle.enabled = false;
+        gatherProgress.fillAmount = 0F;
+        gatherProgress.enabled = false;
     }
 }

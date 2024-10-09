@@ -172,6 +172,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             UIInteraction.Instance.ImageOff(UIInteraction.Instance.dialog);
+            UIInteraction.Instance.interactableObj = null;
             currentCameraIndex = 1;
             UpdateCamera();
         }

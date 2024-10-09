@@ -93,6 +93,7 @@ public class GatherableItem : MonoBehaviour
             bool added = inventoryManager.AddItem(inventoryItem.GetItemData());
             if (added)
             {
+                UIInteraction.Instance.interactableObj = null;
                 UIInteraction.Instance.ImageOff(UIInteraction.Instance.collection);
             }
         }
