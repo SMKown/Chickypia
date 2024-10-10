@@ -120,6 +120,13 @@ public abstract class Enemy : MonoBehaviour
         if (agent != null && agent.isOnNavMesh)
         {
             agent.isStopped = true;
+            agent.updatePosition = false;
+            agent.updateRotation = false;
+        }
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = true;
         }
 
         EnemyAI enemyAI = GetComponent<EnemyAI>();

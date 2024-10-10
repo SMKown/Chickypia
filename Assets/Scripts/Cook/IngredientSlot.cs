@@ -7,7 +7,7 @@ using TMPro;
 public class IngredientSlot : MonoBehaviour, IDropHandler
 {
     public Image ingredientImage;
-    public TextMeshProUGUI ingredientName;
+    //public TextMeshProUGUI ingredientName;
     public TextMeshProUGUI ingredientCount;
 
     public ItemData currentItemData;
@@ -115,7 +115,7 @@ public class IngredientSlot : MonoBehaviour, IDropHandler
 
         ingredientImage.sprite = null;
         ingredientImage.color = new Color(1, 1, 1, 0.5f);
-        ingredientName.text = "";
+        //ingredientName.text = "";
         ingredientCount.text = "";
     }
 

@@ -50,7 +50,7 @@ Animator:
   m_GameObject: {fileID: 1192279232629197637}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 4be9030064a00cf479072da1ab0b94fd, type: 3}
-  m_Controller: {fileID: 9100000, guid: b42d39d71c554704baff0f043f53597a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 4df43e7144afe7a4a91dfbcd12dc7220, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -160,8 +160,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdacb860f896bca4c837b3da3d9ab62a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5
-  sightRange: 6
+  health: 3
+  sightRange: 5
   attackRange: 4
   attackCooldown: 3
   agent: {fileID: 0}
@@ -292,7 +292,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5095218026480961579}
-  m_LocalEulerAnglesHint: {x: 10.979009, y: 18.73347, z: 60.682396}
+  m_LocalEulerAnglesHint: {x: 0.21470438, y: -15.798671, z: 90.758766}
 --- !u!1 &5425137930442616070
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,7 +324,7 @@ Transform:
   m_Children:
   - {fileID: 4137836119684319953}
   m_Father: {fileID: 4735765576316060578}
-  m_LocalEulerAnglesHint: {x: -2.0509384, y: 20.950678, z: 5.3399954}
+  m_LocalEulerAnglesHint: {x: 0.5224239, y: -3.9354997, z: 7.435328}
 --- !u!1 &6639919280182061552
 GameObject:
   m_ObjectHideFlags: 0
@@ -419,4 +419,4 @@ Transform:
   m_Children:
   - {fileID: 5095218026480961579}
   m_Father: {fileID: 7424036868511055761}
-  m_LocalEulerAnglesHint: {x: 32.819584, y: 0.909376, z: -88.3225}
+  m_LocalEulerAnglesHint: {x: 8.834738, y: 0.22030987, z: -88.56985}

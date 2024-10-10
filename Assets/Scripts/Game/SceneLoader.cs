@@ -12,6 +12,7 @@ public class SceneLoader : MonoBehaviour
 
     public void CustomScene()
     {
+        SaveAllBeforeSceneLoad();
         LoadingSceneManager.LoadScene("CustomScene");
     }
 

@@ -47,10 +47,10 @@ public class CookingSystem : MonoBehaviour
         foodRecipeParent = transform.GetChild(0);
         ingredientParent = transform.GetChild(1).GetChild(1).GetChild(1);
         cookButton = transform.GetChild(1).GetChild(1).GetChild(2).GetChild(1).GetComponent<Button>();
+        foodImage = makePopup.GetChild(0).GetChild(0).GetComponent<Image>();
         inventoryManager = FindObjectOfType<InventoryManager>();
         invenCompenUI = FindObjectOfType<InvenCompenUI>();
 
-        foodImage = makePopup.GetChild(0).GetChild(0).GetComponent<Image>();
 
         if (choicePopup == null) { Debug.LogError("choicePopup is not assigned."); }
         if (makePopup == null) { Debug.LogError("makePopup is not assigned."); }
@@ -223,16 +223,20 @@ public class CookingSystem : MonoBehaviour
         if(isCooking)
         {
             Debug.Log("Cooking...");
-            //choicePopup.gameObject.SetActive(false);
-            //makePopup.gameObject.SetActive(false);
-            //invenCompenUI.SetInventoryActive(false);
-            //cookButton.interactable = false;
+            choicePopup.gameObject.SetActive(false);
+            makePopup.gameObject.SetActive(false);
+            invenCompenUI.SetInventoryActive(false);
+            cookButton.interactable = false;
             foreach (var ingredient in recipe.ingredients)
             {
                 IngredientSlot ingredientSlot = FindIngredientSlot(ingredient.item);
                 if (ingredientSlot != null && ingredientSlot.currentItemData != null)
                 {
                     ingredientSlot.ResetSlot();
+                }
+                else
+                {
+                    Debug.LogWarning("IngredientSlot or currentItemData is null for " + ingredient.item.itemName);
                 }
             }
 
@@ -283,9 +287,9 @@ public class CookingSystem : MonoBehaviour
         foodImage.sprite = null;
         ClearIngredientSlots();
 
-        //choicePopup.gameObject.SetActive(true);
-        //makePopup.gameObject.SetActive(true);
-        //invenCompenUI.SetInventoryActive(true);
+        choicePopup.gameObject.SetActive(true);
+        makePopup.gameObject.SetActive(true);
+        invenCompenUI.SetInventoryActive(true);
 
         cookButton.interactable = true;
     }
