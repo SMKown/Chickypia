@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 1
   itemId: 32
-  itemName: tuna
-  itemDesc: "\uCC38\uCE58"
+  itemName: "\uCC38\uCE58"
+  itemDesc: "\uB9DB\uC788\uB294 \uCC38\uCE58"
   stackable: 1
   itemIcon: {fileID: 21300000, guid: 11a862ebe3589404e8f6d0462e89c454, type: 3}
   itemModel: {fileID: 0}
@@ -24,4 +24,4 @@ MonoBehaviour:
   hp: 0
   hpMax: 0
   category: 2
-  isCollected: 0
+  isCollected: 1
