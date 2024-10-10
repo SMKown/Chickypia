@@ -11,7 +11,7 @@ public class DroppedItem : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = itemSprite;
-        transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
 
         inventoryItem = GetComponent<InventoryItem>();
         if (inventoryItem != null)

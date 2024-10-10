@@ -46,7 +46,7 @@ public class CookingSystem : MonoBehaviour
         makePopup = transform.GetChild(1);
         foodRecipeParent = transform.GetChild(0);
         ingredientParent = transform.GetChild(1).GetChild(1).GetChild(1);
-        cookButton = transform.GetChild(1).GetChild(1).GetChild(2).GetChild(0).GetComponent<Button>();
+        cookButton = transform.GetChild(1).GetChild(1).GetChild(2).GetChild(1).GetComponent<Button>();
         inventoryManager = FindObjectOfType<InventoryManager>();
         invenCompenUI = FindObjectOfType<InvenCompenUI>();
 

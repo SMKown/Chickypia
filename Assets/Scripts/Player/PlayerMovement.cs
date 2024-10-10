@@ -100,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
                 if (enemy.CompareTag("Enemy"))
                 {
                     Vector3 knockbackDirection = transform.forward;
-                    float knockbackForce = 4f;
+                    float knockbackForce = 3f;
                     enemy.GetComponent<Enemy>().TakeDamage(attackDamage, knockbackDirection, knockbackForce);
                 }
             }

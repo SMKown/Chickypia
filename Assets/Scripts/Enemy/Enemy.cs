@@ -54,13 +54,17 @@ public abstract class Enemy : MonoBehaviour
 
     private void Knockback(Vector3 playerForwardDirection, float force)
     {
-        Rigidbody rb = GetComponent<Rigidbody>();
-        if (rb != null)
+        if (health > 0)
         {
-            Vector3 knockbackDirection = playerForwardDirection.normalized;
-            agent.isStopped = true;
-            rb.AddForce(knockbackDirection * force, ForceMode.Impulse);
-            StartCoroutine(ReEnableNavMeshAgent());
+            Rigidbody rb = GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                Vector3 knockbackDirection = playerForwardDirection.normalized;
+                agent.isStopped = true;
+                rb.AddForce(knockbackDirection * force, ForceMode.Impulse);
+
+                StartCoroutine(ReEnableNavMeshAgent());
+            }
         }
     }
 
