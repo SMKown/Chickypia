@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3057282678496805826}
   - component: {fileID: 3057282678500197346}
   - component: {fileID: 3057282678499098914}
-  - component: {fileID: 763440500457404456}
   m_Layer: 0
   m_Name: Pillow02
   m_TagString: Untagged
@@ -27,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3057282678497107938}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.72905415, z: -0, w: 0.68445605}
+  m_LocalRotation: {x: 0, y: 0.72905225, z: 0, w: 0.6844581}
   m_LocalPosition: {x: -0.588, y: 0.149, z: -0.075}
   m_LocalScale: {x: 0.92, y: 0.92, z: 0.92}
   m_ConstrainProportionsScale: 0
@@ -84,24 +83,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &763440500457404456
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3057282678497107938}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.90761197, y: 0.20811625, z: 0.39197004}
-  m_Center: {x: 0.00006055832, y: -0.008745275, z: 0.0000011250377}

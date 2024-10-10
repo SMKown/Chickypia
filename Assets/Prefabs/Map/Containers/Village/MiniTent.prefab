@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2489760127555991325}
   - component: {fileID: 8933266226689147458}
   - component: {fileID: 3797926542787388549}
-  - component: {fileID: 3505139498989001353}
   m_Layer: 0
   m_Name: MiniTent
   m_TagString: Untagged
@@ -88,28 +87,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3505139498989001353
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6581262377679761801}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 671d2214b6a3486428045a590582de31, type: 3}
 --- !u!1001 &2559401576941752726
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -242,22 +219,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2489760127555991325}
     m_Modifications:
-    - target: {fileID: 1285954400799373164, guid: 06608e4efc75f9446abffe8189bfe7a9, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1285954400799373164, guid: 06608e4efc75f9446abffe8189bfe7a9, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.06
-      objectReference: {fileID: 0}
-    - target: {fileID: 1285954400799373164, guid: 06608e4efc75f9446abffe8189bfe7a9, type: 3}
-      propertyPath: m_LocalScale.y
-      value: -2.39
-      objectReference: {fileID: 0}
-    - target: {fileID: 1285954400799373164, guid: 06608e4efc75f9446abffe8189bfe7a9, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.3046
-      objectReference: {fileID: 0}
     - target: {fileID: 1285954400799373164, guid: 06608e4efc75f9446abffe8189bfe7a9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.006
