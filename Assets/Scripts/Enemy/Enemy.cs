@@ -60,9 +60,10 @@ public abstract class Enemy : MonoBehaviour
             if (rb != null)
             {
                 Vector3 knockbackDirection = playerForwardDirection.normalized;
+
                 agent.isStopped = true;
                 rb.AddForce(knockbackDirection * force, ForceMode.Impulse);
-
+                rb.isKinematic = true;
                 StartCoroutine(ReEnableNavMeshAgent());
             }
         }
@@ -70,7 +71,9 @@ public abstract class Enemy : MonoBehaviour
 
     private IEnumerator ReEnableNavMeshAgent()
     {
+        Rigidbody rb = GetComponent<Rigidbody>();
         yield return new WaitForSeconds(0.5f);
+        rb.isKinematic = false;
         agent.isStopped = false;
     }
 
@@ -118,7 +121,6 @@ public abstract class Enemy : MonoBehaviour
         if (agent != null && agent.isOnNavMesh)
         {
             agent.isStopped = true;
-            agent.enabled = false;
         }
 
         EnemyAI enemyAI = GetComponent<EnemyAI>();
