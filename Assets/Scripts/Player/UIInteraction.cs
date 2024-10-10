@@ -69,10 +69,20 @@ public class UIInteraction : MonoBehaviour
 
     private IEnumerator AnimateImageON(Image image, Transform targetTransform)
     {
+        if (image == null || targetTransform == null)
+        {
+            yield break;
+        }
+
         image.enabled = true;
 
         while (image.enabled)
         {
+            if (image == null || targetTransform == null)
+            {
+                yield break;
+            }
+
             Vector3 screenPos = Camera.main.WorldToScreenPoint(targetTransform.position);
             image.transform.position = screenPos;
             yield return null;
@@ -91,22 +101,36 @@ public class UIInteraction : MonoBehaviour
 
     public void ImageOff(Image image)
     {
+        if (image == null)
+        {
+            return;
+        }
         StartCoroutine(AnimateImageOFF(image));
     }
 
     private IEnumerator AnimateImageOFF(Image image)
     {
+        if (image == null)
+        {
+            yield break;
+        }
         elapsedTime = 0F;
         while (elapsedTime < animationDuration)
         {
+            if (image == null)
+            {
+                yield break;
+            }
             float t = elapsedTime / animationDuration;
             image.transform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, t);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        image.transform.localScale = Vector3.zero;
-
-        image.enabled = false;
+        if (image != null)
+        {
+            image.transform.localScale = Vector3.zero;
+            image.enabled = false;
+        }
     }
 
     public void ShowGatherProgress(float duration)
