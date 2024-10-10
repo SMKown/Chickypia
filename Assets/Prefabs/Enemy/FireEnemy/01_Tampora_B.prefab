@@ -166,7 +166,7 @@ Rigidbody:
   m_GameObject: {fileID: 3177638081695449523}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 2
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -204,9 +204,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.34
-  m_Height: 0.4
+  m_Height: 0.68
   m_Direction: 1
-  m_Center: {x: 0, y: 0.24, z: 0}
+  m_Center: {x: 0, y: 0.28, z: 0}
 --- !u!195 &3957689197311996510
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -259,13 +259,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 2
-  sightRange: 5
+  sightRange: 6
   attackRange: 1
   attackCooldown: 3
   agent: {fileID: 0}
   patrolPoints:
-  - {x: 9, y: 0, z: 0}
-  - {x: 17, y: 0, z: 0}
+  - {x: -7, y: 0, z: 5}
+  - {x: -20, y: 0, z: 5}
   dropItemData: {fileID: 11400000, guid: 4b269f3b7120022499b5bd9198577529, type: 2}
   dropItemPrefab: {fileID: 5857909854282709900, guid: a687cccb46f2df342b01697475b13ec7, type: 3}
   damage: 1
