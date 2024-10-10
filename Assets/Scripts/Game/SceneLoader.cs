@@ -21,6 +21,12 @@ public class SceneLoader : MonoBehaviour
         LoadingSceneManager.LoadScene("FishingScene");
     }
 
+    public void Flame01()
+    {
+        SaveAllBeforeSceneLoad();
+        LoadingSceneManager.LoadScene("Flame01");
+    }
+
     public void ExitGame()
     {
         SaveAllBeforeSceneLoad();
