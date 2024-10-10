@@ -176,20 +176,28 @@ public class Fishing : MonoBehaviour
     private IEnumerator WaitForNibble(float maxWaitTime)
     {
         yield return new WaitForSeconds(Random.Range(maxWaitTime * 0.25F, maxWaitTime));
+
+        // 찌를 물기 이미지의 위치와 스케일을 초기화
+        biteImage.transform.localScale = Vector3.one; // 기본 스케일
+        biteImage.transform.position = Bobber.transform.position + new Vector3(0, 1f, 0); // Bobber 위에 위치 조정
         ExImage.SetActive(true);
-        UIInteraction.Instance.ImageOn(biteImage, Bobber.transform);
+
+        UIInteraction.Instance.ImageOn(biteImage, Bobber.transform); // 이미지 활성화
         nibble = true;
         BobberAnim.SetBool("Bite", true);
         fishingCoroutine = StartCoroutine(LineBreak(1.5F));
     }
 
+
     private IEnumerator LineBreak(float lineBreakTime)
     {
         yield return new WaitForSeconds(lineBreakTime);
-        UIInteraction.Instance.ImageOff(biteImage);
-        ExImage.SetActive(false);
-
         nibble = false;
+
+        // 찌를 물기 이미지를 비활성화하고 초기화
+        UIInteraction.Instance.ImageOff(biteImage);
+        biteImage.transform.localScale = Vector3.zero; // 스케일 초기화
+
         ResetBobber();
         animator.SetBool("isFishing", false);
         animator.SetBool("Break", true);
@@ -203,7 +211,7 @@ public class Fishing : MonoBehaviour
         RotatePlayerToTarget(Camera.main.transform.position);
 
         UIInteraction.Instance.ImageOff(biteImage);
-        ExImage.SetActive(false);
+
         animator.SetBool("Nice", true);
         emoAnim = true;
 
@@ -245,7 +253,7 @@ public class Fishing : MonoBehaviour
     {
         PlayerInfo.Instance.fishing = false;
         emoAnim = false;
-        
+
         navMeshAgent.enabled = true;
     }
 }
