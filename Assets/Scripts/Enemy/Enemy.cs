@@ -63,7 +63,6 @@ public abstract class Enemy : MonoBehaviour
 
                 agent.isStopped = true;
                 rb.AddForce(knockbackDirection * force, ForceMode.Impulse);
-                rb.isKinematic = true;
                 StartCoroutine(ReEnableNavMeshAgent());
             }
         }
@@ -134,7 +133,7 @@ public abstract class Enemy : MonoBehaviour
     }
     private void DropItem()
     {
-        Vector3 dropPosition = transform.position + new Vector3(0, 0.5f, 0);
+        Vector3 dropPosition = transform.position + new Vector3(0, 1f, 0);
         GameObject droppedItem = Instantiate(dropItemPrefab, dropPosition, Quaternion.identity);
 
         DroppedItem droppedItemScript = droppedItem.GetComponent<DroppedItem>();
