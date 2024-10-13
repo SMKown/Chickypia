@@ -10,11 +10,11 @@ public class RangeAttack : Enemy // 원거리 공격
     public GameObject projectilePrefab;
     public Transform firePoint;
     private float lastAttackTime;
-    private bool isAttacking = false;
 
     protected override void Awake()
     {
         base.Awake();
+        lastAttackTime = Time.time;
     }
 
     public override void Attack()
@@ -34,12 +34,7 @@ public class RangeAttack : Enemy // 원거리 공격
         }
         else
         {
-            if (player != null)
-            {
-                Vector3 directionToPlayer = (player.position - transform.position).normalized;
-                Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionToPlayer.x, 0, directionToPlayer.z));
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
-            }
+            LookAtPlayer();
         }
     }
 
@@ -70,7 +65,14 @@ public class RangeAttack : Enemy // 원거리 공격
     {
         SetAnimationState(AnimationState.Idle);
         agent.isStopped = true;
-        yield return new WaitForSeconds(attackCooldown);
+
+        float elapsedTime = 0f;
+        while (elapsedTime < attackCooldown)
+        {
+            LookAtPlayer();
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
 
         isAttacking = false;
         agent.isStopped = false;
@@ -82,6 +84,16 @@ public class RangeAttack : Enemy // 원거리 공격
         else
         {
             ChasePlayer(player.position);
+        }
+    }
+
+    private void LookAtPlayer()
+    {
+        if (player != null)
+        {
+            Vector3 directionToPlayer = (player.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionToPlayer.x, 0, directionToPlayer.z));
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
         }
     }
 }

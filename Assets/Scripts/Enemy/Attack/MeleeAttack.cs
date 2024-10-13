@@ -5,9 +5,7 @@ public class MeleeAttack : Enemy // 근접 공격
 {
     [Header("공격 속성")]
     public int damage = 1;
-
     private float lastAttackTime;
-    private bool isAttacking = false;
 
     protected override void Awake()
     {

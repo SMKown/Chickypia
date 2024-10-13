@@ -1,19 +1,16 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class ChargeAttack : Enemy
 {
     [Header("공격 속성")]
     public int damage = 1;
-    [Tooltip("돌격 속도")]
-    public float chargeSpeed = 6f;
-
-    public float CharginRange = 6f;
+    public float chargeSpeed = 5f;
+    public float chargeDistance = 10f;
+    public float attackStartRange = 5f;
 
     private bool isCharging = false;
-    private bool isAttackOnCooldown = false;
-    private Vector3 chargeDestination;
+    private float lastAttackTime;
 
     protected override void Awake()
     {
@@ -22,56 +19,55 @@ public class ChargeAttack : Enemy
 
     public override void Attack()
     {
-        if (!isCharging && !isAttackOnCooldown && player != null)
+        if (!isCharging && Time.time - lastAttackTime >= attackCooldown)
         {
-            isCharging = true;
-            chargeDestination = player.position;
+            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+            if (distanceToPlayer <= attackStartRange)
+            {
+                isCharging = true;
+                lastAttackTime = Time.time;
+                StartCoroutine(ChargeTowardsPlayer());
+            }
+        }
+    }
 
-            Vector3 chargeDirection = (chargeDestination - transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(chargeDirection);
+    private IEnumerator ChargeTowardsPlayer()
+    {
+        SetAnimationState(AnimationState.Attack);
+
+        Vector3 targetPosition = player.position;
+        Vector3 initialPosition = transform.position;
+
+        while (Vector3.Distance(transform.position, targetPosition) > 0.5f &&
+               Vector3.Distance(initialPosition, transform.position) < chargeDistance)
+        {
+            Vector3 directionToPlayer = (targetPosition - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionToPlayer.x, 0, directionToPlayer.z));
             transform.rotation = lookRotation;
 
-            SetAnimationState(AnimationState.Attack);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, chargeSpeed * Time.deltaTime);
+            yield return null;
         }
-    }
 
-    private void Update()
-    {
-        if (isCharging)
+        if (Vector3.Distance(transform.position, targetPosition) <= 0.5f)
         {
-            ExecuteCharge();
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
+            foreach (var collider in hitColliders)
+            {
+                if (collider.CompareTag("Player"))
+                {
+                    PlayerMovement playerMovement = collider.GetComponent<PlayerMovement>();
+                    if (playerMovement != null)
+                    {
+                        playerMovement.TakeDamage(damage);
+                    }
+                }
+            }
         }
-    }
 
-    private void ExecuteCharge()
-    {
-        Vector3 direction = (chargeDestination - transform.position).normalized;
-        transform.position += direction * chargeSpeed * Time.deltaTime;
-
-        if (Vector3.Distance(transform.position, chargeDestination) < 0.1f)
-        {
-            EndCharge();
-        }
-    }
-
-    private void EndCharge()
-    {
-        if (isCharging)
-        {
-            isCharging = false;
-            StartCoroutine(WaitForCooldown());
-        }
-    }
-
-    private IEnumerator WaitForCooldown()
-    {
-        isAttackOnCooldown = true;
-        SetAnimationState(AnimationState.Idle);
-        agent.isStopped = true;
         yield return new WaitForSeconds(attackCooldown);
-
-        isAttackOnCooldown = false;
-        agent.isStopped = false;
+        SetAnimationState(AnimationState.Idle);
+        isCharging = false;
 
         if (PlayerInAttackRange())
         {
@@ -81,29 +77,5 @@ public class ChargeAttack : Enemy
         {
             ChasePlayer(player.position);
         }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (isCharging && collision.gameObject.CompareTag("Player"))
-        {
-            ExecuteAttack();
-        }
-    }
-
-    public void ExecuteAttack()
-    {
-        
-        PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
-        if (playerMovement != null)
-        {
-            playerMovement.TakeDamage(damage);
-        }
-        EndCharge();
-    }
-
-    public new bool PlayerInAttackRange()
-    {
-        return Vector3.Distance(transform.position, player.position) <= attackRange;
     }
 }

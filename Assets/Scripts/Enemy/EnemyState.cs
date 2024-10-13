@@ -293,8 +293,11 @@ public class AttackState : EnemyState
     public override void EnterState()
     {
         Enemy enemy = enemyAI.GetEnemy();
-        enemy.SetAnimationState(AnimationState.Attack);
-        enemyAI.StartCoroutine(StartCooldown());
+        if (!enemy.isAttacking)
+        {
+            enemy.SetAnimationState(AnimationState.Attack);
+            enemyAI.StartCoroutine(StartCooldown());
+        }
     }
 
     public override void UpdateState() 

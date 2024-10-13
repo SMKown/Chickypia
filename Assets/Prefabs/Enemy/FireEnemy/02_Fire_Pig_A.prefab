@@ -308,7 +308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 3348611266779478724}
-  player: {fileID: 0}
+  player: {fileID: 766207004619489451, guid: dec0ae9635ffa42fc97e716bfbac69c4, type: 3}
   enemyType: 1
   patrolType: 1
   hasFledOnce: 0

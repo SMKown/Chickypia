@@ -16,7 +16,7 @@ public abstract class Enemy : MonoBehaviour
 
     protected Animator anim;
     protected Transform player;
-
+    public bool isAttacking = false;
     [HideInInspector]public NavMeshAgent agent;
     [Header("순찰 포인트")]
     public Vector3[] patrolPoints;
