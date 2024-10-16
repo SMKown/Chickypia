@@ -6,10 +6,8 @@ public class ChargeAttack : Enemy
     [Header("공격 속성")]
     public int damage = 1;
     public float chargeSpeed = 5f;
-    public float chargeDistance = 10f;
     public float attackStartRange = 5f;
 
-    private bool isCharging = false;
     private float lastAttackTime;
 
     protected override void Awake()
@@ -19,35 +17,28 @@ public class ChargeAttack : Enemy
 
     public override void Attack()
     {
-        if (!isCharging && Time.time - lastAttackTime >= attackCooldown)
+        if (!isAttacking && Time.time - lastAttackTime >= attackCooldown)
         {
             float distanceToPlayer = Vector3.Distance(transform.position, player.position);
             if (distanceToPlayer <= attackStartRange)
             {
-                isCharging = true;
+                isAttacking = true;
                 lastAttackTime = Time.time;
-                StartCoroutine(ChargeTowardsPlayer());
+                ExecuteAttack();
             }
         }
     }
 
-    private IEnumerator ChargeTowardsPlayer()
+    public void ExecuteAttack()
     {
         SetAnimationState(AnimationState.Attack);
 
         Vector3 targetPosition = player.position;
         Vector3 initialPosition = transform.position;
 
-        while (Vector3.Distance(transform.position, targetPosition) > 0.5f &&
-               Vector3.Distance(initialPosition, transform.position) < chargeDistance)
-        {
-            Vector3 directionToPlayer = (targetPosition - transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionToPlayer.x, 0, directionToPlayer.z));
-            transform.rotation = lookRotation;
-
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, chargeSpeed * Time.deltaTime);
-            yield return null;
-        }
+        Vector3 directionToPlayer = (targetPosition - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionToPlayer.x, 0, directionToPlayer.z));
+        transform.rotation = lookRotation;
 
         if (Vector3.Distance(transform.position, targetPosition) <= 0.5f)
         {
@@ -64,10 +55,21 @@ public class ChargeAttack : Enemy
                 }
             }
         }
+    }
 
-        yield return new WaitForSeconds(attackCooldown);
+    public void AttackAnimationEnd()
+    {
+        StartCoroutine(WaitForCooldown());
+    }
+
+    private IEnumerator WaitForCooldown()
+    {
         SetAnimationState(AnimationState.Idle);
-        isCharging = false;
+        agent.isStopped = true;
+        yield return new WaitForSeconds(attackCooldown);
+
+        agent.isStopped = false;
+        isAttacking = false;
 
         if (PlayerInAttackRange())
         {

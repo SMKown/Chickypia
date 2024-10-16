@@ -242,7 +242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 3957689197311996510}
-  player: {fileID: 766207004619489451, guid: dec0ae9635ffa42fc97e716bfbac69c4, type: 3}
+  player: {fileID: 0}
   enemyType: 0
   patrolType: 1
   hasFledOnce: 0
@@ -262,6 +262,7 @@ MonoBehaviour:
   sightRange: 4
   attackRange: 1
   attackCooldown: 3
+  isAttacking: 0
   agent: {fileID: 0}
   patrolPoints:
   - {x: 0, y: 0, z: -2}

@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public enum EnemyType { Runtype, FightType }
-public enum EnemyAttack { Attack, Charge }
 public enum AnimationState { Idle, Move, Attack, Damage, Die }
 public abstract class Enemy : MonoBehaviour
 {

@@ -295,6 +295,10 @@ public class AttackState : EnemyState
         Enemy enemy = enemyAI.GetEnemy();
         if (!enemy.isAttacking)
         {
+            Vector3 directionToPlayer =(enemyAI.player.position - enemy.transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionToPlayer.x, 0, directionToPlayer.z));
+            enemy.transform.rotation = lookRotation;
+
             enemy.SetAnimationState(AnimationState.Attack);
             enemyAI.StartCoroutine(StartCooldown());
         }
@@ -331,11 +335,30 @@ public class AttackState : EnemyState
     }
 }
 
+public class ChargeState : EnemyState
+{
+    public ChargeState(EnemyAI enemyAI) : base(enemyAI) { }
+    public override void EnterState()
+    {
+    }
+    public override void UpdateState()
+    {
+    }
+    public override EnemyState CheckStateTransitions()
+    {
+        return this;
+    }
+    public override void ExitState()
+    {
+        enemyAI.GetEnemy().ResetAnimationState();
+    }
+}
+
 // 적의 도망 상태
 public class FleeingState : EnemyState
 {
     private float OutTime = 0f;
-    private float maxOutTime = 3f;
+    private float maxOutTime = 6f;
 
     public FleeingState(EnemyAI enemyAI) : base(enemyAI) { }
 

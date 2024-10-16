@@ -28,6 +28,12 @@ public class SceneLoader : MonoBehaviour
         LoadingSceneManager.LoadScene("Flame01");
     }
 
+    public void Flame02()
+    {
+        SaveAllBeforeSceneLoad();
+        LoadingSceneManager.LoadScene("Flame02");
+    }
+
     public void ExitGame()
     {
         SaveAllBeforeSceneLoad();
