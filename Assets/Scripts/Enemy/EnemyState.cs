@@ -284,29 +284,22 @@ public class ChasingState : EnemyState
 // 적의 공격 상태
 public class AttackState : EnemyState
 {
-    private bool isCoolingDown;
-    public AttackState(EnemyAI enemyAI) : base(enemyAI) 
-    {
-        isCoolingDown = false;
-    }
+    public AttackState(EnemyAI enemyAI) : base(enemyAI) {}
 
     public override void EnterState()
     {
         Enemy enemy = enemyAI.GetEnemy();
         if (!enemy.isAttacking)
         {
-            Vector3 directionToPlayer =(enemyAI.player.position - enemy.transform.position).normalized;
+            Vector3 directionToPlayer = (enemyAI.player.position - enemy.transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionToPlayer.x, 0, directionToPlayer.z));
             enemy.transform.rotation = lookRotation;
-            enemy.SetAnimationState(AnimationState.Attack);
-            enemyAI.StartCoroutine(StartCooldown());
+            enemy.Attack();
         }
     }
 
     public override void UpdateState() 
     {
-        if (isCoolingDown) return;
-
         if (!enemyAI.PlayerInAttackRange())
         {
             enemyAI.SwitchState(new IdleState(enemyAI, 2f));
@@ -315,7 +308,7 @@ public class AttackState : EnemyState
 
     public override EnemyState CheckStateTransitions()
     {
-        if (!enemyAI.PlayerInAttackRange()&& !isCoolingDown)
+        if (!enemyAI.PlayerInAttackRange())
         {
             return new ChasingState(enemyAI);
         }
@@ -325,12 +318,6 @@ public class AttackState : EnemyState
     public override void ExitState()
     {
         enemyAI.GetEnemy().ResetAnimationState();
-    }
-    private IEnumerator StartCooldown()
-    {
-        isCoolingDown = true;
-        yield return new WaitForSeconds(enemyAI.GetEnemy().attackCooldown);
-        isCoolingDown = false;
     }
 }
 

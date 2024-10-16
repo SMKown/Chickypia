@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5057470254300016247}
   - component: {fileID: 7383440740282927096}
   - component: {fileID: -4633802701960482622}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Seed (obj)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

@@ -28,29 +28,19 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Projectile hit: " + other.gameObject.name);
         if (other.gameObject.name == "TakeDamageRange")
         {
-            HandleImpact(other.gameObject);
-        }
-        else if (other.gameObject.name == "InteractionRange") 
-        { }
-        else
-        {
+            PlayerHP playerhp = other.GetComponent<PlayerHP>();
+            if (playerhp != null)
+            {
+                playerhp.TakeDamage(damage);
+                Debug.Log("Player hit, dealing damage: " + damage);
+            }
             Destroy(gameObject);
         }
     }
 
-    private void HandleImpact(GameObject player)
-    {
-        PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
-        if (playerMovement != null)
-        {
-            playerMovement.TakeDamage(damage);
-            Debug.Log("Player hit, dealing damage: " + damage);
-        }
-
-        Destroy(gameObject);
-    }
     private IEnumerator DestroyLifetime()
     {
         yield return new WaitForSeconds(lifetime);

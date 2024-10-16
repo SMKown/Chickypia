@@ -16,8 +16,6 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     private NavMeshAgent agent;
     private Vector3 moveDirection;
-    [SerializeField] private int maxHealth = 5;
-    private int currentHealth;
 
     private bool Jumping = false;
 
@@ -29,7 +27,6 @@ public class PlayerMovement : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        currentHealth = maxHealth;
     }
 
     private void Update()
@@ -105,24 +102,6 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-    }
-
-    public void TakeDamage(int damage)
-    {
-        currentHealth -= damage;
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
-        else
-        {
-            //animator
-        }
-    }
-
-    private void Die()
-    {
-        // 사망 처리
     }
 
     private void Particle()

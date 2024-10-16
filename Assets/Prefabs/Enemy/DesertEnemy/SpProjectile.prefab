@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7475843026663881325}
   - component: {fileID: -4769866759101997908}
   - component: {fileID: -138390876642376772}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SpProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2

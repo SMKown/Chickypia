@@ -18,12 +18,9 @@ public class MeleeAttack : Enemy // 근접 공격
         {
             isAttacking = true;
             lastAttackTime = Time.time;
+            
             if (player != null)
             {
-                Vector3 directionToPlayer = (player.position - transform.position).normalized;
-                Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionToPlayer.x, 0, directionToPlayer.z));
-                transform.rotation = lookRotation;
-
                 SetAnimationState(AnimationState.Attack);
             }
         }
@@ -50,10 +47,11 @@ public class MeleeAttack : Enemy // 근접 공격
             {
                 if (collider.CompareTag("Player"))
                 {
-                    PlayerMovement playerMovement = collider.GetComponent<PlayerMovement>();
-                    if (playerMovement != null)
+                    PlayerHP playerHP = collider.GetComponent<PlayerHP>();
+                    if (playerHP != null)
                     {
-                        playerMovement.TakeDamage(damage);
+                        playerHP.TakeDamage(damage);
+                        Debug.Log("Player hit, dealing damage: " + damage);
                     }
                 }
             }
