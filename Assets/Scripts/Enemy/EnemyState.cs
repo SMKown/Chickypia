@@ -298,7 +298,6 @@ public class AttackState : EnemyState
             Vector3 directionToPlayer =(enemyAI.player.position - enemy.transform.position).normalized;
             Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionToPlayer.x, 0, directionToPlayer.z));
             enemy.transform.rotation = lookRotation;
-
             enemy.SetAnimationState(AnimationState.Attack);
             enemyAI.StartCoroutine(StartCooldown());
         }
@@ -332,25 +331,6 @@ public class AttackState : EnemyState
         isCoolingDown = true;
         yield return new WaitForSeconds(enemyAI.GetEnemy().attackCooldown);
         isCoolingDown = false;
-    }
-}
-
-public class ChargeState : EnemyState
-{
-    public ChargeState(EnemyAI enemyAI) : base(enemyAI) { }
-    public override void EnterState()
-    {
-    }
-    public override void UpdateState()
-    {
-    }
-    public override EnemyState CheckStateTransitions()
-    {
-        return this;
-    }
-    public override void ExitState()
-    {
-        enemyAI.GetEnemy().ResetAnimationState();
     }
 }
 

@@ -42,6 +42,8 @@ public class ChargeAttack : Enemy
 
         if (Vector3.Distance(transform.position, targetPosition) <= 0.5f)
         {
+
+            Debug.Log("°ø°ÝÁß");
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
             foreach (var collider in hitColliders)
             {
