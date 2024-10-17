@@ -27,7 +27,6 @@ public class UIInteraction : MonoBehaviour
 
     private Dictionary<string, Image> tagToImageMap = new Dictionary<string, Image>();
     private float elapsedTime;
-
     private float animationDuration = 0.25F;
     private Coroutine currentCoroutine;
 
@@ -38,6 +37,15 @@ public class UIInteraction : MonoBehaviour
         tagToImageMap.Add("Gatherable", gathering);
         tagToImageMap.Add("CookingSpot", cooking);
         tagToImageMap.Add("Dialog", dialog);
+    }
+
+    private void Update()
+    {
+        if (interactableObj != null && !interactableObj.activeInHierarchy)
+        {
+            ImageOff(tagToImageMap[interactableObj.tag]);
+            interactableObj = null;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -64,6 +72,7 @@ public class UIInteraction : MonoBehaviour
         {
             StopCoroutine(currentCoroutine);
         }
+        image.transform.localScale = Vector3.one;
         currentCoroutine = StartCoroutine(AnimateImageON(image, targetTransform));
     }
 
