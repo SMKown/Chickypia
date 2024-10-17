@@ -160,10 +160,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdacb860f896bca4c837b3da3d9ab62a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 3
+  health: 5
   sightRange: 5
   attackRange: 4
   attackCooldown: 3
+  isAttacking: 0
   agent: {fileID: 0}
   patrolPoints:
   - {x: 15, y: 5, z: 3}

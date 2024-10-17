@@ -432,7 +432,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 1699369264596544181}
   player: {fileID: 766207004619489451, guid: dec0ae9635ffa42fc97e716bfbac69c4, type: 3}
-  enemyType: 1
+  enemyType: 0
   patrolType: 1
   hasFledOnce: 0
 --- !u!114 &2202671090171614830
@@ -448,14 +448,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 2
-  sightRange: 6
+  sightRange: 4
   attackRange: 1
   attackCooldown: 3
   isAttacking: 0
   agent: {fileID: 0}
   patrolPoints:
-  - {x: -7, y: 0, z: 5}
-  - {x: -20, y: 0, z: 5}
+  - {x: 6, y: 0.6, z: -1}
+  - {x: 6, y: 0.6, z: -12}
   dropItemData: {fileID: 11400000, guid: 33710cb12f684f049af19b443ffe78cb, type: 2}
   dropItemPrefab: {fileID: 5857909854282709900, guid: a687cccb46f2df342b01697475b13ec7, type: 3}
   damage: 1

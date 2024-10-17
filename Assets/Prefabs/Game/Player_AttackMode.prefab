@@ -22947,7 +22947,7 @@ GameObject:
   - component: {fileID: 7576053742553460838}
   m_Layer: 0
   m_Name: TakeDamageRange
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22986,7 +22986,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.4
+  m_Radius: 0.5
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.8, z: 0}
@@ -23002,6 +23002,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0327b1b1b20e1af4abfba6425a72e6f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 5
 --- !u!1 &6809234828124793033
 GameObject:
   m_ObjectHideFlags: 0
@@ -26785,7 +26786,6 @@ MonoBehaviour:
   particle: {fileID: 1608474658216668293}
   attackRange: 3
   attackDamage: 1
-  maxHealth: 5
   inventoryManager: {fileID: 0}
 --- !u!95 &3514978911849208042
 Animator:
@@ -26816,7 +26816,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7463417182811677547}
   m_Enabled: 1
-  m_AgentTypeID: 0
+  m_AgentTypeID: -902729914
   m_Radius: 0.5
   m_Speed: 1.4
   m_Acceleration: 5

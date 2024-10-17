@@ -30,7 +30,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3599350997206541723}
-  m_LocalEulerAnglesHint: {x: -10.389902, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 45.553574, y: 31.287838, z: 6.4196987}
 --- !u!1 &1278634838170100624
 GameObject:
   m_ObjectHideFlags: 0
@@ -64,7 +64,7 @@ Transform:
   - {fileID: 6975142957224869829}
   - {fileID: 3599350997206541723}
   m_Father: {fileID: 342855498371432275}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 32.561333, y: 31.785187, z: 23.214687}
 --- !u!1 &1760838848874912538
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,7 +215,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3177638081695449523}
   m_Enabled: 1
-  m_AgentTypeID: 0
+  m_AgentTypeID: -902729914
   m_Radius: 0.37
   m_Speed: 2
   m_Acceleration: 8
@@ -244,7 +244,7 @@ MonoBehaviour:
   agent: {fileID: 3957689197311996510}
   player: {fileID: 0}
   enemyType: 0
-  patrolType: 1
+  patrolType: 0
   hasFledOnce: 0
 --- !u!114 &8915940426793173321
 MonoBehaviour:
@@ -265,8 +265,10 @@ MonoBehaviour:
   isAttacking: 0
   agent: {fileID: 0}
   patrolPoints:
-  - {x: 0, y: 0, z: -2}
-  - {x: 0, y: 0, z: -12}
+  - {x: 0, y: 0.6, z: -1}
+  - {x: -8, y: 0.6, z: -1}
+  - {x: 0, y: 0.6, z: -12}
+  - {x: -8, y: 0.6, z: -12}
   dropItemData: {fileID: 11400000, guid: 4b269f3b7120022499b5bd9198577529, type: 2}
   dropItemPrefab: {fileID: 5857909854282709900, guid: a687cccb46f2df342b01697475b13ec7, type: 3}
   damage: 1
@@ -391,7 +393,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5390000620036031084}
-  m_LocalEulerAnglesHint: {x: -25.051916, y: -1.0277747, z: 1.6204965}
+  m_LocalEulerAnglesHint: {x: 12.189038, y: 0, z: 0}
 --- !u!1 &6085232635302487605
 GameObject:
   m_ObjectHideFlags: 0
@@ -454,7 +456,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6975142957224869829}
-  m_LocalEulerAnglesHint: {x: -10.389902, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 19.966904, y: -28.295511, z: -4.755479}
 --- !u!1 &7191866870132833544
 GameObject:
   m_ObjectHideFlags: 0
