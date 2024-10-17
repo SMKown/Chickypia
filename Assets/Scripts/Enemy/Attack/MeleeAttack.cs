@@ -26,23 +26,19 @@ public class MeleeAttack : Enemy // 근접 공격
         }
         else
         {
-            if (player != null)
-            {
-                Vector3 directionToPlayer = (player.position - transform.position).normalized;
-                Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionToPlayer.x, 0, directionToPlayer.z));
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
-            }
+            LookAtPlayer();
         }
     }
 
     public void ExecuteAttack()
     {
+        Debug.Log("hit");
         Vector3 directionToPlayer = (player.position - transform.position).normalized;
         float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
 
         if (angleToPlayer <= 60f)
         {
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange);
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, sightRange);
             foreach (var collider in hitColliders)
             {
                 if (collider.CompareTag("Player"))
@@ -67,7 +63,14 @@ public class MeleeAttack : Enemy // 근접 공격
     {
         SetAnimationState(AnimationState.Idle);
         agent.isStopped = true;
-        yield return new WaitForSeconds(attackCooldown);
+
+        float elapsedTime = 0f;
+        while (elapsedTime < attackCooldown)
+        {
+            LookAtPlayer();
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
 
         isAttacking = false;
         agent.isStopped = false;

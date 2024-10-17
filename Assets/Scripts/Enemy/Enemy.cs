@@ -75,7 +75,6 @@ public abstract class Enemy : MonoBehaviour
         agent.isStopped = false;
     }
 
-
     private IEnumerator FlashRed()
     {
         Renderer renderer = GetComponentInChildren<Renderer>();
@@ -137,6 +136,7 @@ public abstract class Enemy : MonoBehaviour
         DropItem();
         Destroy(gameObject, 2f);
     }
+
     private void DropItem()
     {
         Vector3 dropPosition = transform.position + new Vector3(0, 1f, 0);
@@ -149,7 +149,6 @@ public abstract class Enemy : MonoBehaviour
             droppedItemScript.itemSprite = dropItemData.itemIcon;
         }
     }
-
 
     public virtual void Attack(){}
 
@@ -174,7 +173,6 @@ public abstract class Enemy : MonoBehaviour
             }
         }
     }
-
 
     public void ResetAnimationState()
     {
@@ -214,6 +212,16 @@ public abstract class Enemy : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public void LookAtPlayer()
+    {
+        if (player != null)
+        {
+            Vector3 directionToPlayer = (player.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionToPlayer.x, 0, directionToPlayer.z));
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+        }
     }
 
     private void OnDrawGizmosSelected()

@@ -31,12 +31,7 @@ public class ChargeAttack : Enemy
         }
         else
         {
-            if (player != null)
-            {
-                Vector3 directionToPlayer = (player.position - transform.position).normalized;
-                Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionToPlayer.x, 0, directionToPlayer.z));
-                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
-            }
+            LookAtPlayer();
         }
     }
 
@@ -69,13 +64,13 @@ public class ChargeAttack : Enemy
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && isAttacking)
+        if (other.gameObject.name == "TakeDamageRange")
         {
-            PlayerHP playerHP = other.GetComponent<PlayerHP>();
-            if (playerHP != null)
+            PlayerHP playerhp = other.GetComponent<PlayerHP>();
+            if (playerhp != null)
             {
-                playerHP.TakeDamage(damage);
-                Debug.Log("Player hit by charge in trigger!");
+                playerhp.TakeDamage(damage);
+                Debug.Log("Player hit, dealing damage: " + damage);
             }
             AttackAnimationEnd();
         }
@@ -90,7 +85,14 @@ public class ChargeAttack : Enemy
     {
         SetAnimationState(AnimationState.Idle);
         agent.isStopped = true;
-        yield return new WaitForSeconds(attackCooldown);
+
+        float elapsedTime = 0f;
+        while (elapsedTime < attackCooldown)
+        {
+            LookAtPlayer();
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
 
         isAttacking = false;
         agent.isStopped = false;
