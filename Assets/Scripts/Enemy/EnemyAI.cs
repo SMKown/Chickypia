@@ -89,36 +89,21 @@ public class EnemyAI : MonoBehaviour
     public void FleeFromPlayer()
     {
         Vector3 directionAwayFromPlayer = (transform.position - player.position).normalized;
-
-        float fleeDistance = enemy.sightRange + 10f;
+        float fleeDistance = enemy.sightRange + 5f;
         Vector3 fleePosition = transform.position + directionAwayFromPlayer * fleeDistance;
 
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(fleePosition, out hit, fleeDistance, NavMesh.AllAreas))
+        bool foundPosition = NavMesh.SamplePosition(fleePosition, out hit, fleeDistance, NavMesh.AllAreas);
+
+        if (foundPosition)
         {
             enemy.FleeFromPlayer(hit.position);
+        }
+        else
+        {
+            Vector3 fallbackPosition = transform.position + directionAwayFromPlayer * fleeDistance;
+            enemy.FleeFromPlayer(fallbackPosition);
             hasFledOnce = true;
-            SwitchState(new IdleState(this, 5f));
-        }
-        else
-        {
-            SwitchToChaseOrAttackState();
-        }
-    }
-
-    private void SwitchToChaseOrAttackState()
-    {
-        if (PlayerInAttackRange())
-        {
-            SwitchState(new AttackState(this));
-        }
-        else if (PlayerInSightRange())
-        {
-            SwitchState(new ChasingState(this));
-        }
-        else
-        {
-            SwitchState(new PatrollingState(this, patrolType));
         }
     }
 
@@ -141,6 +126,7 @@ public class EnemyAI : MonoBehaviour
 
     public bool PlayerInAttackRange()
     {
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
         return enemy.PlayerInAttackRange();
     }
 }
