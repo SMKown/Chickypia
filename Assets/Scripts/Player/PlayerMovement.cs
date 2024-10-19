@@ -6,9 +6,6 @@ using UnityEngine.AI;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public CinemachineVirtualCamera[] virtualCameras;
-    private int currentCameraIndex;
-
     public GameObject particle;
     public float attackRange;
     public int attackDamage;
@@ -131,19 +128,6 @@ public class PlayerMovement : MonoBehaviour
             else if (UIInteraction.Instance.interactableObj.CompareTag("Dialog"))
                 Dialog();
         }
-        else
-        {
-            currentCameraIndex = 0;
-            UpdateCamera();
-        }
-    }
-
-    private void UpdateCamera()
-    {
-        for (int i = 0; i < virtualCameras.Length; i++)
-        {
-            virtualCameras[i].gameObject.SetActive(i == currentCameraIndex);
-        }
     }
 
     private void Dialog()
@@ -152,8 +136,6 @@ public class PlayerMovement : MonoBehaviour
         {
             UIInteraction.Instance.ImageOff(UIInteraction.Instance.dialog);
             UIInteraction.Instance.interactableObj = null;
-            currentCameraIndex = 1;
-            UpdateCamera();
         }
     }
 
