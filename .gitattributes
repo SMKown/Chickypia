@@ -1,3 +1,4 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 Assets/Prefads/Map/Nature/MainGround-mesh.asset filter=lfs diff=lfs merge=lfs -text
+Assets/Prefabs/Map/Nature/MainGround-mesh.asset filter=lfs diff=lfs merge=lfs -text
