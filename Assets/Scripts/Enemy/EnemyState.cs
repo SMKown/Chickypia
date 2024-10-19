@@ -260,17 +260,17 @@ public class ChasingState : EnemyState
 
     public override EnemyState CheckStateTransitions()
     {
-        if (PlayerOutPatrolRange())
+        if (enemyAI.PlayerInAttackRange()) 
+        {
+            return new AttackState(enemyAI);
+        }
+        else if (PlayerOutPatrolRange())
         {
             return new PatrollingState(enemyAI, enemyAI.patrolType);
         }
         else if (!PlayerInChaseRange())
         {
             return new PatrollingState(enemyAI, enemyAI.patrolType);
-        }
-        else if (enemyAI.PlayerInAttackRange())
-        {
-            return new AttackState(enemyAI);
         }
         return this;
     }

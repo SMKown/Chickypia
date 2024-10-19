@@ -35,8 +35,9 @@ public class MeleeAttack : Enemy // 근접 공격
         Debug.Log("hit");
         Vector3 directionToPlayer = (player.position - transform.position).normalized;
         float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-        if (angleToPlayer <= 60f)
+        if (angleToPlayer <= 60f && distanceToPlayer <= attackRange)
         {
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, sightRange);
             foreach (var collider in hitColliders)
