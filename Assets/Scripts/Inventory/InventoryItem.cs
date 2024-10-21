@@ -42,6 +42,47 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         countText.gameObject.SetActive(textActive);
     }
 
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            UseItem();
+        }
+    }
+
+    public void UseItem()
+    {
+        if (item.itemType == ItemType.Food)
+        {
+            ApplyFoodEffect();
+
+            count -= 1;
+            if (count <= 0)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                ItemCount();
+            }
+        }
+        else
+        {
+            Debug.Log("This item cannot be consumed.");
+        }
+    }
+
+    private void ApplyFoodEffect()
+    {
+        PlayerStats.Instance.ChangeMaxHealth(item.hpMax);
+        PlayerStats.Instance.ChangeHealHealth(item.hp);
+        PlayerStats.Instance.ChangeAttackDamage(item.attackDamage);
+        PlayerStats.Instance.ChangeMoveSpeed(item.moveSpeed);
+
+        Debug.Log($"Used {item.itemName}: MaxHP +{item.hpMax}, CurrentHP +{item.hp}, Attack +{item.attackDamage}, MoveSpeed +{item.moveSpeed}");
+    }
+
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         image.raycastTarget = false;

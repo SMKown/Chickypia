@@ -18,7 +18,7 @@ public class ItemData : ScriptableObject
 
     [Header("# Effect")]
     public float moveSpeed;
-    public float jumpForce;
+    public int attackDamage;
     public int hp;
     public int hpMax;
 

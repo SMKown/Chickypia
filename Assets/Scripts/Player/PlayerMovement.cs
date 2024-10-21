@@ -8,7 +8,6 @@ public class PlayerMovement : MonoBehaviour
 {
     public GameObject particle;
     public float attackRange;
-    public int attackDamage;
     
     private Animator animator;
     private NavMeshAgent agent;
@@ -46,6 +45,8 @@ public class PlayerMovement : MonoBehaviour
         float v = Input.GetAxis("Vertical");
 
         Vector3 dir = new Vector3(h, 0, v);
+
+        agent.speed = PlayerStats.Instance.moveSpeed;
 
         if (h != 0 || v != 0)
         {
@@ -87,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
         {
             PlayerInfo.Instance.attacking = true;
             animator.SetTrigger("Attack");
+            int attackDamage = PlayerStats.Instance.attackDamage;
 
             Collider[] hitEnemies = Physics.OverlapSphere(transform.position, attackRange);
             foreach (Collider enemy in hitEnemies)

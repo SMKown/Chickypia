@@ -4,21 +4,25 @@ using UnityEngine;
 
 public class PlayerHP : MonoBehaviour
 {
-    [SerializeField] private int maxHealth = 5;
-    private int currentHealth;
-
     private void Start()
     {
-        currentHealth = maxHealth;
+        HPUI();
     }
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        if (currentHealth <= 0)
+        PlayerStats.Instance.ChangeHealHealth(-damage);
+
+        if (PlayerStats.Instance.currentHp <= 0)
         {
             Die();
         }
+        HPUI();
+    }
+
+    private void HPUI()
+    {
+
     }
 
     private void Die()
