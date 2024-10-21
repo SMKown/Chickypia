@@ -23002,7 +23002,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0327b1b1b20e1af4abfba6425a72e6f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 5
 --- !u!1 &6809234828124793033
 GameObject:
   m_ObjectHideFlags: 0
@@ -26726,6 +26725,7 @@ GameObject:
   - component: {fileID: 3116179583651659398}
   - component: {fileID: 3514978911849208042}
   - component: {fileID: 2668025938757629148}
+  - component: {fileID: 6371406999224080189}
   m_Layer: 0
   m_Name: Player_AttackMode
   m_TagString: Player
@@ -26782,10 +26782,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2efb3ee5f3248dc836a9408f664a91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  virtualCameras: []
   particle: {fileID: 1608474658216668293}
   attackRange: 3
-  attackDamage: 1
   inventoryManager: {fileID: 0}
 --- !u!95 &3514978911849208042
 Animator:
@@ -26830,6 +26828,22 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
+--- !u!114 &6371406999224080189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7463417182811677547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da56b96cce86acd4787cc17f2f98ee33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 5
+  currentHp: 5
+  attackDamage: 1
+  moveSpeed: 1.5
 --- !u!1 &7476361384622233438
 GameObject:
   m_ObjectHideFlags: 0
