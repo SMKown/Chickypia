@@ -44,9 +44,12 @@ public abstract class Enemy : MonoBehaviour
         if (health > 0)
         {
             EnemyAI enemyAI = GetComponent<EnemyAI>();
-            if (enemyAI.enemyType == EnemyType.Runtype && !enemyAI.hasFledOnce)
+            if (enemyAI.enemyType == EnemyType.Runtype || isAttacking)
             {
-                enemyAI.SwitchState(new FleeingState(enemyAI));
+                if (!enemyAI.hasFledOnce)
+                {
+                    enemyAI.SwitchState(new FleeingState(enemyAI));
+                }
             }
         }
         if (health <= 0) Die();
@@ -197,10 +200,35 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    public void FleeFromPlayer(Vector3 fleePosition)
+    public void FleeFromPlayer()
     {
+        EnemyAI enemyAI = GetComponent<EnemyAI>();
+        if (enemyAI.enemyType != EnemyType.Runtype)
+        {
+            Debug.Log("싸움타입적");
+            return;
+        }
+
+        if (FleePoints == null || FleePoints.Length == 0)
+        {
+            Debug.LogError("도망 포인트 필요");
+            return;
+        }
+        Vector3 furthestFleePoint = FleePoints[0];
+        float maxDistance = Vector3.Distance(transform.position, player.position);
+
+        foreach (var fleePoint in FleePoints)
+        {
+            float distance = Vector3.Distance(fleePoint, player.position);
+            if (distance > maxDistance)
+            {
+                furthestFleePoint = fleePoint;
+                maxDistance = distance;
+            }
+        }
+
+        agent.SetDestination(furthestFleePoint);
         SetAnimationState(AnimationState.Move);
-        agent.SetDestination(fleePosition);
     }
 
     public bool PlayerInAttackRange()

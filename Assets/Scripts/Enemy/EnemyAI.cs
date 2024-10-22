@@ -92,25 +92,7 @@ public class EnemyAI : MonoBehaviour
     // «√∑π¿ÃæÓ∑Œ∫Œ≈Õ µµ∏¡
     public void FleeFromPlayer()
     {
-        Vector3 directionAwayFromPlayer = (transform.position - player.position).normalized;
-        float fleeDistance = enemy.sightRange + 6f;
-        Vector3 fleePosition = transform.position + directionAwayFromPlayer * fleeDistance;
-
-
-
-        //NavMeshHit hit;
-        //bool foundPosition = NavMesh.SamplePosition(fleePosition, out hit, fleeDistance, NavMesh.AllAreas);
-
-        //if (foundPosition)
-        //{
-        //    Debug.Log("∆¶");
-        //    enemy.FleeFromPlayer(hit.position);
-        //}
-        //else
-        //{
-        //    Vector3 defaultFleePosition = transform.position + directionAwayFromPlayer * (fleeDistance / 2);
-        //    enemy.FleeFromPlayer(defaultFleePosition);
-        //}
+        enemy.FleeFromPlayer();
     }
 
     public bool PlayerMovedFar()

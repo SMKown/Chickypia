@@ -326,12 +326,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 4
   sightRange: 6
-  attackRange: 1
+  attackRange: 2
   attackCooldown: 3
+  isAttacking: 0
   agent: {fileID: 0}
   patrolPoints:
   - {x: -7, y: 0, z: 5}
   - {x: -20, y: 0, z: 5}
+  FleePoints: []
   dropItemData: {fileID: 11400000, guid: 0fa711fdd5109d042b2ed8910215c5ea, type: 2}
   dropItemPrefab: {fileID: 5857909854282709900, guid: a687cccb46f2df342b01697475b13ec7, type: 3}
   damage: 1

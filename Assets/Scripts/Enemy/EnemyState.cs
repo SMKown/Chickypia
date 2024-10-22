@@ -304,7 +304,7 @@ public class AttackState : EnemyState
     {
         if (!enemyAI.PlayerInAttackRange())
         {
-            enemyAI.SwitchState(new IdleState(enemyAI, 2f));
+            enemyAI.SwitchState(new ChasingState(enemyAI));
         }
     }
 
@@ -326,9 +326,9 @@ public class AttackState : EnemyState
 // ÀûÀÇ µµ¸Á »óÅÂ
 public class FleeingState : EnemyState
 {
-    private float OutTime = 0f;
-    private float maxOutTime = 6f;
-    private float MinDistance = 5f;
+    private bool reachedFleePoint = false;
+    private float idleDuration = 5f;
+    private float idleTimer = 0f;
 
     public FleeingState(EnemyAI enemyAI) : base(enemyAI) { }
 
@@ -338,17 +338,43 @@ public class FleeingState : EnemyState
         enemyAI.GetEnemy().ResetAnimationState();
         enemyAI.FleeFromPlayer();
         enemyAI.hasFledOnce = true;
-        OutTime = 0f;
+        reachedFleePoint = false;
+        idleTimer = 0f;
     }
 
     public override void UpdateState() 
     {
-        if (enemyAI.PlayerMovedFar() || Vector3.Distance(enemyAI.transform.position, enemyAI.player.position) > MinDistance)
+        if (!reachedFleePoint && enemyAI.agent.remainingDistance <= enemyAI.agent.stoppingDistance + 0.2f)
         {
-            OutTime += Time.deltaTime;
-            if (OutTime >= maxOutTime)
+            reachedFleePoint = true;
+            Debug.Log("µµ¸Á Àå¼Ò¿¡ µµÂø");
+            enemyAI.GetEnemy().SetAnimationState(AnimationState.Idle);
+            idleTimer = 0f;
+        }
+
+        if (reachedFleePoint)
+        {
+            idleTimer += Time.deltaTime;
+            if (enemyAI.PlayerInSightRange())
             {
-                enemyAI.SwitchState(new PatrollingState(enemyAI, enemyAI.patrolType));
+                enemyAI.SwitchState(new ChasingState(enemyAI));
+                return;
+            }
+
+            if (idleTimer >= idleDuration)
+            {
+                if (enemyAI.PlayerInAttackRange())
+                {
+                    enemyAI.SwitchState(new AttackState(enemyAI));
+                }
+                else if (enemyAI.PlayerInSightRange())
+                {
+                    enemyAI.SwitchState(new ChasingState(enemyAI));
+                }
+                else
+                {
+                    enemyAI.SwitchState(new PatrollingState(enemyAI, enemyAI.patrolType));
+                }
             }
         }
     }
