@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c2febac446cda843a398f3da80a3970, type: 3}
-  m_Name: Item 12
+  m_Name: Item 18
   m_EditorClassIdentifier: 
   itemType: 1
-  itemId: 12
-  itemName: "\uD480"
-  itemDesc: "\uD478\uB987\uD55C \uD480"
+  itemId: 18
+  itemName: "\uD654\uC5FC \uC824\uB9AC"
+  itemDesc: "\uB9DB\uC788\uB294"
   stackable: 1
-  itemIcon: {fileID: 21300000, guid: e67e581297677254b867d6a7deb9d91a, type: 3}
+  itemIcon: {fileID: 21300000, guid: a0bb94929dc9f554cb19ad0d524e4d0d, type: 3}
   itemModel: {fileID: 0}
   moveSpeed: 0
-  jumpForce: 0
+  attackDamage: 0
   hp: 0
   hpMax: 0
   category: 3

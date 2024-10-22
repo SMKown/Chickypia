@@ -26,7 +26,10 @@ public class CompendiumManager : MonoBehaviour
     {
         compendiumFilePath = Application.persistentDataPath + "/compendiumData.json";
         LoadCompendium();
+        
+        //File.Delete(compendiumFilePath);
     }
+
     private void Start()
     {
         if (!isCompendiumLoaded)
