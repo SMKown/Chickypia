@@ -32,7 +32,7 @@ public class MeleeAttack : Enemy // 근접 공격
 
     public void ExecuteAttack()
     {
-        Debug.Log("hit");
+        Debug.Log("때림");
         Vector3 directionToPlayer = (player.position - transform.position).normalized;
         float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
@@ -62,6 +62,7 @@ public class MeleeAttack : Enemy // 근접 공격
 
     private IEnumerator WaitForCooldown()
     {
+        Debug.Log("쿨타임중~~~~~~~~~~~~~~~~~~");
         SetAnimationState(AnimationState.Idle);
         agent.isStopped = true;
 

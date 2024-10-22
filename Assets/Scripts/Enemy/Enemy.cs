@@ -19,6 +19,8 @@ public abstract class Enemy : MonoBehaviour
     [HideInInspector]public NavMeshAgent agent;
     [Header("¼øÂû Æ÷ÀÎÆ®")]
     public Vector3[] patrolPoints;
+    [Header("µµ¸Á Æ÷ÀÎÆ®")]
+    public Vector3[] FleePoints;
 
     public ItemData dropItemData;
     public GameObject dropItemPrefab;
@@ -47,12 +49,12 @@ public abstract class Enemy : MonoBehaviour
                 enemyAI.SwitchState(new FleeingState(enemyAI));
             }
         }
-
         if (health <= 0) Die();
     }
 
     private void Knockback(Vector3 playerForwardDirection, float force)
     {
+        Debug.Log("³Ë¹é");
         if (health > 0)
         {
             Rigidbody rb = GetComponent<Rigidbody>();

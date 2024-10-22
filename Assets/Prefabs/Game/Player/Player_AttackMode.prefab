@@ -26783,7 +26783,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particle: {fileID: 1608474658216668293}
-  attackRange: 3
+  attackRange: 2
   inventoryManager: {fileID: 0}
 --- !u!95 &3514978911849208042
 Animator:
@@ -26843,7 +26843,7 @@ MonoBehaviour:
   maxHp: 5
   currentHp: 5
   attackDamage: 1
-  moveSpeed: 1.5
+  moveSpeed: 1.4
 --- !u!1 &7476361384622233438
 GameObject:
   m_ObjectHideFlags: 0

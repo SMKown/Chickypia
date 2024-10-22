@@ -47,6 +47,11 @@ public class EnemyAI : MonoBehaviour
         {
             currentState.UpdateState();
 
+            if (currentState is IdleState && PlayerInAttackRange())
+            {
+                SwitchState(new AttackState(this));
+            }
+
             EnemyState nextState = currentState.CheckStateTransitions();
             if (nextState != currentState)
             {
@@ -68,7 +73,6 @@ public class EnemyAI : MonoBehaviour
         isTransitioningState = false;
     }
 
-
     // 플레이어 추적
     public void ChasePlayer()
     {
@@ -89,22 +93,24 @@ public class EnemyAI : MonoBehaviour
     public void FleeFromPlayer()
     {
         Vector3 directionAwayFromPlayer = (transform.position - player.position).normalized;
-        float fleeDistance = enemy.sightRange + 5f;
+        float fleeDistance = enemy.sightRange + 6f;
         Vector3 fleePosition = transform.position + directionAwayFromPlayer * fleeDistance;
 
-        NavMeshHit hit;
-        bool foundPosition = NavMesh.SamplePosition(fleePosition, out hit, fleeDistance, NavMesh.AllAreas);
 
-        if (foundPosition)
-        {
-            enemy.FleeFromPlayer(hit.position);
-        }
-        else
-        {
-            Vector3 fallbackPosition = transform.position + directionAwayFromPlayer * fleeDistance;
-            enemy.FleeFromPlayer(fallbackPosition);
-            hasFledOnce = true;
-        }
+
+        //NavMeshHit hit;
+        //bool foundPosition = NavMesh.SamplePosition(fleePosition, out hit, fleeDistance, NavMesh.AllAreas);
+
+        //if (foundPosition)
+        //{
+        //    Debug.Log("튐");
+        //    enemy.FleeFromPlayer(hit.position);
+        //}
+        //else
+        //{
+        //    Vector3 defaultFleePosition = transform.position + directionAwayFromPlayer * (fleeDistance / 2);
+        //    enemy.FleeFromPlayer(defaultFleePosition);
+        //}
     }
 
     public bool PlayerMovedFar()

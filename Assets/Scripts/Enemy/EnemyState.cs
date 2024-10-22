@@ -1,5 +1,7 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class EnemyState
 {
@@ -326,11 +328,14 @@ public class FleeingState : EnemyState
 {
     private float OutTime = 0f;
     private float maxOutTime = 6f;
+    private float MinDistance = 5f;
 
     public FleeingState(EnemyAI enemyAI) : base(enemyAI) { }
 
     public override void EnterState()
     {
+        Debug.Log("µµ¸Á»óÅÂ");
+        enemyAI.GetEnemy().ResetAnimationState();
         enemyAI.FleeFromPlayer();
         enemyAI.hasFledOnce = true;
         OutTime = 0f;
@@ -338,17 +343,13 @@ public class FleeingState : EnemyState
 
     public override void UpdateState() 
     {
-        if (enemyAI.PlayerMovedFar())
+        if (enemyAI.PlayerMovedFar() || Vector3.Distance(enemyAI.transform.position, enemyAI.player.position) > MinDistance)
         {
             OutTime += Time.deltaTime;
             if (OutTime >= maxOutTime)
             {
                 enemyAI.SwitchState(new PatrollingState(enemyAI, enemyAI.patrolType));
             }
-        }
-        else
-        {
-            OutTime = 0f;
         }
     }
 
