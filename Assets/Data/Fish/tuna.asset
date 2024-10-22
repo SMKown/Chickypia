@@ -15,13 +15,13 @@ MonoBehaviour:
   itemType: 1
   itemId: 32
   itemName: "\uCC38\uCE58"
-  itemDesc: "\uB9DB\uC788\uB294 \uCC38\uCE58"
+  itemDesc: "\uD1B5\uD1B5\uD55C \uCC38\uCE58"
   stackable: 1
   itemIcon: {fileID: 21300000, guid: 11a862ebe3589404e8f6d0462e89c454, type: 3}
   itemModel: {fileID: 0}
   moveSpeed: 0
-  jumpForce: 0
+  attackDamage: 0
   hp: 0
   hpMax: 0
   category: 2
-  isCollected: 1
+  isCollected: 0

@@ -15,12 +15,12 @@ MonoBehaviour:
   itemType: 1
   itemId: 30
   itemName: "\uBCF5\uC5B4"
-  itemDesc: "\uB9DB\uC788\uB294 \uBCF5\uC5B4"
+  itemDesc: "\uBFB0\uC871\uD55C \uBCF5\uC5B4"
   stackable: 1
   itemIcon: {fileID: 21300000, guid: 072637df505fe4c1e8222a32e4e948c8, type: 3}
   itemModel: {fileID: 0}
   moveSpeed: 0
-  jumpForce: 0
+  attackDamage: 0
   hp: 0
   hpMax: 0
   category: 2

@@ -4350,7 +4350,7 @@ PrefabInstance:
     - target: {fileID: 4262200051682710804, guid: ca3ab0f1d45ed460280bbf2bf6265897, type: 3}
       propertyPath: gatherProgress
       value: 
-      objectReference: {fileID: 1475614537}
+      objectReference: {fileID: 0}
     - target: {fileID: 4886128957644651115, guid: ca3ab0f1d45ed460280bbf2bf6265897, type: 3}
       propertyPath: m_Name
       value: Player
