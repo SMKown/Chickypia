@@ -27,6 +27,9 @@ public class PlayerMovement : MonoBehaviour
     private InventoryItem inventoryItem;
     private GatherableItem gatherableItem;
 
+    public QuestManager questManager;
+    private NPC currentNpc;
+
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -158,6 +161,13 @@ public class PlayerMovement : MonoBehaviour
             {
                 isDialogActive = true;
                 ChangeCameraForNPC(UIInteraction.Instance.interactableObj.transform);
+
+                currentNpc = UIInteraction.Instance.interactableObj.GetComponent<NPC>();
+                if (currentNpc != null)
+                {
+                    currentNpc.Interact();
+                }
+                else Debug.LogError("NPC가 null입니다.");
             }
             else
             {

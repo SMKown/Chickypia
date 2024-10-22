@@ -22,8 +22,8 @@ public static class FishManager
     public static void InitFishManager()
     {
         var textAsset = Resources.Load<TextAsset>("CSV/Fish");
-
         var lines = textAsset.text.Split('\n');
+        
         foreach (var line in lines)
         {
             var fishName = line.Trim();
