@@ -7,8 +7,8 @@ using UnityEngine.AI;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public CinemachineVirtualCamera[] virtualCameras; // 두 대의 카메라 배열
-    private int currentCameraIndex = 0; // 현재 활성화된 카메라 인덱스
+    public CinemachineVirtualCamera[] virtualCameras;
+    private int currentCameraIndex = 0;
     private bool isDialogActive = false;
 
     public GameObject DialogBox;
@@ -31,7 +31,9 @@ public class PlayerMovement : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        dialogImage = DialogBox.GetComponent<Image>();
+        
+        if (DialogBox != null)
+            dialogImage = DialogBox.GetComponent<Image>();
 
         for (int i = 0; i < virtualCameras.Length; i++)
         {
@@ -51,6 +53,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (PlayerInfo.Instance.UnableMove() || isDialogActive)
         {
+            if (agent.isActiveAndEnabled) agent.ResetPath();
+
             animator.SetBool("isWalk", false);
             return;
         }
