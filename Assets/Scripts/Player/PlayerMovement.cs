@@ -2,13 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.AI;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public CinemachineVirtualCamera[] virtualCameras; // 두 대의 카메라 배열
+    private int currentCameraIndex = 0; // 현재 활성화된 카메라 인덱스
+    private bool isDialogActive = false;
+
+    public GameObject DialogBox;
+    private Image dialogImage;
+
     public GameObject particle;
     public float attackRange;
-    
+
     private Animator animator;
     private NavMeshAgent agent;
     private Vector3 moveDirection;
@@ -23,6 +31,12 @@ public class PlayerMovement : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        dialogImage = DialogBox.GetComponent<Image>();
+
+        for (int i = 0; i < virtualCameras.Length; i++)
+        {
+            virtualCameras[i].gameObject.SetActive(i == 0);
+        }
     }
 
     private void Update()
@@ -35,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        if (PlayerInfo.Instance.UnableMove())
+        if (PlayerInfo.Instance.UnableMove() || isDialogActive)
         {
             animator.SetBool("isWalk", false);
             return;
@@ -136,8 +150,70 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            UIInteraction.Instance.ImageOff(UIInteraction.Instance.dialog);
-            UIInteraction.Instance.interactableObj = null;
+            if (!isDialogActive)
+            {
+                isDialogActive = true;
+                ChangeCameraForNPC(UIInteraction.Instance.interactableObj.transform);
+            }
+            else
+            {
+                isDialogActive = false;
+                ResetCameraForPlayer();
+                UIInteraction.Instance.ImageOff(UIInteraction.Instance.dialog);
+                UIInteraction.Instance.interactableObj = null;
+            }
+        }
+    }
+
+    private void ChangeCameraForNPC(Transform npcTransform)
+    {
+        currentCameraIndex = 1; 
+        SetActiveCamera(currentCameraIndex);
+
+        virtualCameras[currentCameraIndex].LookAt = npcTransform;
+        virtualCameras[currentCameraIndex].Follow = npcTransform;
+
+        DialogBox.SetActive(true);
+    }
+
+    private void ResetCameraForPlayer()
+    {
+        currentCameraIndex = 0;
+        SetActiveCamera(currentCameraIndex);
+
+        virtualCameras[currentCameraIndex].LookAt = transform;
+        virtualCameras[currentCameraIndex].Follow = transform;
+
+        StartCoroutine(FadeOutDialogBox());
+    }
+
+    private IEnumerator FadeOutDialogBox()
+    {
+        Color imageColor = dialogImage.color;
+        float fadeDuration = 0.5F;
+        float startAlpha = imageColor.a;
+
+        for (float t = 0; t < fadeDuration; t += Time.deltaTime)
+        {
+            float normalizedTime = t / fadeDuration;
+            imageColor.a = Mathf.Lerp(startAlpha, 0, normalizedTime);
+            dialogImage.color = imageColor;
+            yield return null;
+        }
+
+        imageColor.a = 0;
+        dialogImage.color = imageColor;
+        DialogBox.SetActive(false);
+
+        imageColor.a = 1F;
+        dialogImage.color = imageColor;
+    }
+
+    private void SetActiveCamera(int index)
+    {
+        for (int i = 0; i < virtualCameras.Length; i++)
+        {
+            virtualCameras[i].gameObject.SetActive(i == index);
         }
     }
 
@@ -146,7 +222,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             inventoryItem = item.GetComponent<InventoryItem>();
-            
+
             if (inventoryItem != null && inventoryManager != null)
             {
                 bool added = inventoryManager.AddItem(inventoryItem.GetItemData());

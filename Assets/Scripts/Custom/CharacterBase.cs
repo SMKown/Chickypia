@@ -220,8 +220,6 @@ public class CharacterBase : MonoBehaviour
             string json = File.ReadAllText(filePath);
             CharacterData characterData = JsonUtility.FromJson<CharacterData>(json);
 
-            Debug.Log($"Loaded: Hair={characterData.HairIndex}, Face={characterData.FaceIndex}, HeadGear={characterData.HeadGearIndex}, Top={characterData.TopIndex}, Bottom={characterData.BottomIndex}, Eyewear={characterData.EyewearIndex}, Bag={characterData.BagIndex}, Shoes={characterData.ShoesIndex}, Glove={characterData.GloveIndex}");
-
             SetItem(PartsType.Hair, characterData.HairIndex);
             SetItem(PartsType.Face, characterData.FaceIndex);
             SetItem(PartsType.Headgear, characterData.HeadGearIndex);

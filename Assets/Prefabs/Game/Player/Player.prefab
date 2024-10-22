@@ -17912,6 +17912,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f2efb3ee5f3248dc836a9408f664a91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  virtualCameras:
+  - {fileID: 0}
+  - {fileID: 0}
+  DialogBox: {fileID: 0}
   particle: {fileID: 0}
   attackRange: 0
   inventoryManager: {fileID: 0}
