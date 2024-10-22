@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 0
   itemId: 400
-  itemName: "\uAF2C\uCE58"
+  itemName: "\uC591\uB150 \uAF2C\uCE58"
   itemDesc: "\uC591\uB150\uB41C \uAF2C\uCE58"
   stackable: 1
   itemIcon: {fileID: 21300000, guid: e5f921ef0aec2b6448589eb5b2e7527b, type: 3}
   itemModel: {fileID: 0}
   moveSpeed: 0
-  jumpForce: 0
+  attackDamage: 0
   hp: 0
   hpMax: 0
   category: 1
