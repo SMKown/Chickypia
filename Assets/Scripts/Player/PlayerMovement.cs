@@ -272,7 +272,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                gatherableItem.StartGathering(inventoryManager);
+                gatherableItem.StartGathering(inventoryManager, questManager);
             }
             else if (Input.GetKeyUp(KeyCode.E))
             {

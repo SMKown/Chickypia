@@ -24,7 +24,7 @@ public class GatherableItem : MonoBehaviour
         }
     }
 
-    public void StartGathering(InventoryManager inventoryManager)
+    public void StartGathering(InventoryManager inventoryManager, QuestManager questManager)
     {
         PlayerInfo.Instance.interacting = true;
 
@@ -36,7 +36,7 @@ public class GatherableItem : MonoBehaviour
                 gatherSlider.gameObject.SetActive(true);
                 gatherSlider.value = 0F;
             }
-            gatherCoroutine = StartCoroutine(Gather(inventoryManager));
+            gatherCoroutine = StartCoroutine(Gather(inventoryManager, questManager));
         }
     }
 
@@ -60,7 +60,7 @@ public class GatherableItem : MonoBehaviour
         }
     }
 
-    private IEnumerator Gather(InventoryManager inventoryManager)
+    private IEnumerator Gather(InventoryManager inventoryManager, QuestManager questManager)
     {
         elapsedTime = 0F;
         UIInteraction.Instance.ShowGatherProgress(gatherTime);
@@ -95,6 +95,15 @@ public class GatherableItem : MonoBehaviour
             {
                 UIInteraction.Instance.interactableObj = null;
                 UIInteraction.Instance.ImageOff(UIInteraction.Instance.collection);
+
+                // 수집한 아이템의 ID를 퀘스트와 비교
+                foreach (var quest in questManager.questList)
+                {
+                    if (quest.itemId == inventoryItem.GetItemData().itemId)
+                    {
+                        quest.UpdateItemCount(1);
+                    }
+                }
             }
         }
 
