@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerHP : MonoBehaviour
 {
+    public Vector3[] Heart;
     public GameObject heartBroken;
     private void Start()
     {
