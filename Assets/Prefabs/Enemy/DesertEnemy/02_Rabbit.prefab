@@ -370,6 +370,120 @@ Transform:
   - {fileID: 9151622444902774982}
   m_Father: {fileID: 8746009844350260402}
   m_LocalEulerAnglesHint: {x: 3.6034424, y: -7.1237297, z: 34.206512}
+--- !u!1 &2787763203393578360
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 804514781567771101}
+  - component: {fileID: 5552187973830995831}
+  m_Layer: 0
+  m_Name: Rabbit (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &804514781567771101
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2787763203393578360}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0, y: 0, z: -0.000000010140025}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9003770653335144311}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!137 &5552187973830995831
+SkinnedMeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2787763203393578360}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 3
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 1a9d16657894c684f92ed3e45632a8f3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  serializedVersion: 2
+  m_Quality: 0
+  m_UpdateWhenOffscreen: 0
+  m_SkinnedMotionVectors: 1
+  m_Mesh: {fileID: -5981759663563155700, guid: 8afc6408b3846a84d8a8a0659da68643, type: 3}
+  m_Bones:
+  - {fileID: 8199986184343317729}
+  - {fileID: 8746009844350260402}
+  - {fileID: 2178578394199319873}
+  - {fileID: 8619742906398880803}
+  - {fileID: 2195866801762570087}
+  - {fileID: 2666825421869387495}
+  - {fileID: 3763164070767316215}
+  - {fileID: 8541724083791959243}
+  - {fileID: 652436123309431170}
+  - {fileID: 6154415482902187502}
+  - {fileID: 6025126970802237238}
+  - {fileID: 2753884384404089838}
+  - {fileID: 1291696153727166150}
+  - {fileID: 5642070115045600400}
+  - {fileID: 6017402718946181560}
+  - {fileID: 8934771922165275450}
+  - {fileID: 5393882374813931566}
+  - {fileID: 5169429867147390186}
+  - {fileID: 9151622444902774982}
+  - {fileID: 3859037588085135851}
+  - {fileID: 4828161540126908216}
+  - {fileID: 3282299899351616195}
+  - {fileID: 267532995373730253}
+  - {fileID: 3128480195135112023}
+  - {fileID: 1207232464746445522}
+  - {fileID: 3439483764165536479}
+  - {fileID: 3848228784384577834}
+  - {fileID: 4398114436524429069}
+  - {fileID: 4416427823599749943}
+  m_BlendShapeWeights: []
+  m_RootBone: {fileID: 8199986184343317729}
+  m_AABB:
+    m_Center: {x: -0.38502058, y: 0.02787003, z: -0.000000029802322}
+    m_Extent: {x: 0.76856196, y: 0.40517023, z: 0.3481312}
+  m_DirtyAABB: 0
 --- !u!1 &2799762269504382557
 GameObject:
   m_ObjectHideFlags: 0
@@ -723,6 +837,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8480101390929953039}
+  - {fileID: 804514781567771101}
   - {fileID: 3894140788715188558}
   - {fileID: 7469674936674201725}
   - {fileID: 8199986184343317729}
@@ -861,6 +976,7 @@ MonoBehaviour:
   - {x: -7, y: 0, z: 5}
   - {x: -20, y: 0, z: 5}
   FleePoints: []
+  FlashTrans: {fileID: 0}
   dropItemData: {fileID: 11400000, guid: 33710cb12f684f049af19b443ffe78cb, type: 2}
   dropItemPrefab: {fileID: 5857909854282709900, guid: a687cccb46f2df342b01697475b13ec7, type: 3}
   damage: 1

@@ -1,5 +1,96 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &114351786019358210
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3110389131152847153}
+  - component: {fileID: 6354160088434750078}
+  m_Layer: 0
+  m_Name: Tempora_B (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3110389131152847153
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114351786019358210}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2450982441763006640}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!137 &6354160088434750078
+SkinnedMeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114351786019358210}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 482936e2047faca4097983870af77513, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  serializedVersion: 2
+  m_Quality: 0
+  m_UpdateWhenOffscreen: 0
+  m_SkinnedMotionVectors: 1
+  m_Mesh: {fileID: 4300000, guid: dc3e9bd08920ac24098bbe7fec638c92, type: 3}
+  m_Bones:
+  - {fileID: 5390000620036031084}
+  - {fileID: 6975142957224869829}
+  - {fileID: 8671855190069545984}
+  - {fileID: 4322244476584240642}
+  - {fileID: 3599350997206541723}
+  - {fileID: 541769697477980349}
+  m_BlendShapeWeights: []
+  m_RootBone: {fileID: 5390000620036031084}
+  m_AABB:
+    m_Center: {x: -0.14681855, y: 0.12016536, z: -0.000000059604645}
+    m_Extent: {x: 0.47240624, y: 0.22649027, z: 0.3240471}
+  m_DirtyAABB: 0
 --- !u!1 &933611120796155281
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,6 +225,7 @@ Transform:
   m_Children:
   - {fileID: 342855498371432275}
   - {fileID: 287761177093793438}
+  - {fileID: 3110389131152847153}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7285630724614155266
@@ -265,11 +357,15 @@ MonoBehaviour:
   isAttacking: 0
   agent: {fileID: 0}
   patrolPoints:
-  - {x: 0, y: 0.6, z: -1}
-  - {x: -8, y: 0.6, z: -1}
-  - {x: 0, y: 0.6, z: -12}
   - {x: -8, y: 0.6, z: -12}
-  FleePoints: []
+  - {x: 0, y: 0.6, z: -12}
+  - {x: -8, y: 0.6, z: -1}
+  - {x: 0, y: 0.6, z: -1}
+  FleePoints:
+  - {x: -8, y: 0.6, z: -13.5}
+  - {x: 4, y: 0.6, z: 6}
+  - {x: 16, y: 4.6, z: -9}
+  FlashTrans: {fileID: 0}
   dropItemData: {fileID: 11400000, guid: 4b269f3b7120022499b5bd9198577529, type: 2}
   dropItemPrefab: {fileID: 5857909854282709900, guid: a687cccb46f2df342b01697475b13ec7, type: 3}
   damage: 1

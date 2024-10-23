@@ -158,7 +158,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         RectTransform canvasRectTransform = tooltipUI.transform.parent.GetComponent<RectTransform>();
 
         Vector3 slotPosition = slotRectTransform.position;
-        Vector3 offset = new Vector3(slotRectTransform.rect.width / 4, -slotRectTransform.rect.height / 4, 0);
+        Vector3 offset = new Vector3(slotRectTransform.rect.width / 4, -slotRectTransform.rect.height / 5, 0);
 
         Vector2 anchoredPosition;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(

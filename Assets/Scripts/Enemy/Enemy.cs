@@ -22,6 +22,8 @@ public abstract class Enemy : MonoBehaviour
     [Header("µµ¸Á Æ÷ÀÎÆ®")]
     public Vector3[] FleePoints;
 
+    public GameObject FlashTrans;
+
     public ItemData dropItemData;
     public GameObject dropItemPrefab;
 
@@ -38,7 +40,7 @@ public abstract class Enemy : MonoBehaviour
 
         health -= damage;
         Knockback(playerForwardDirection, knockbackForce);
-        StartCoroutine(FlashRed());
+        StartCoroutine(FlashTR());
         SetAnimationState(AnimationState.Damage);
 
         if (health > 0)
@@ -75,21 +77,21 @@ public abstract class Enemy : MonoBehaviour
     private IEnumerator ReEnableNavMeshAgent()
     {
         Rigidbody rb = GetComponent<Rigidbody>();
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2f);
         rb.isKinematic = false;
         agent.isStopped = false;
     }
 
-    private IEnumerator FlashRed()
+    private IEnumerator FlashTR()
     {
-        Renderer renderer = GetComponentInChildren<Renderer>();
-
-        Color originalColor = renderer.material.color;
-
-        renderer.material.color = Color.red;
-
-        yield return new WaitForSeconds(0.1f);
-        renderer.material.color = originalColor;
+        int flashCount = 8;
+        for (int i = 0; i < flashCount; i++)
+        {
+            FlashTrans.SetActive(false);
+            yield return new WaitForSeconds(0.15f);
+            FlashTrans.SetActive(true);
+            yield return new WaitForSeconds(0.15f);
+        }
     }
 
     public void OnDamageAnimationEnd()

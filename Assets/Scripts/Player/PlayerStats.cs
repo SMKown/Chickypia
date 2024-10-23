@@ -7,7 +7,7 @@ public class PlayerStats : MonoBehaviour
 {
     public static PlayerStats Instance;
 
-    public int maxHp = 5;
+    public int maxHp = 3;
     public int currentHp;
     public int attackDamage = 1;
     public float moveSpeed = 1.4f;
