@@ -724,6 +724,10 @@ PrefabInstance:
       value: -0.3193375
       objectReference: {fileID: 0}
     - target: {fileID: 5191600072976547646, guid: d5ad88076a4f1d048a288b25c5386634, type: 3}
+      propertyPath: quest_ids.Array.data[0]
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191600072976547646, guid: d5ad88076a4f1d048a288b25c5386634, type: 3}
       propertyPath: DialogueText.Array.data[0]
       value: 
       objectReference: {fileID: 845600526}
@@ -731,6 +735,18 @@ PrefabInstance:
       propertyPath: DialogueText.Array.data[1]
       value: 
       objectReference: {fileID: 607127638}
+    - target: {fileID: 5191600072976547646, guid: d5ad88076a4f1d048a288b25c5386634, type: 3}
+      propertyPath: generalDialogues.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191600072976547646, guid: d5ad88076a4f1d048a288b25c5386634, type: 3}
+      propertyPath: generalDialogues.Array.data[0]
+      value: "\uB09A\uC2DC\uD558\uB7EC \uC654\uC5B4?"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191600072976547646, guid: d5ad88076a4f1d048a288b25c5386634, type: 3}
+      propertyPath: generalDialogues.Array.data[1]
+      value: "\uBB3C\uACE0\uAE30 \uB9CE\uC774 \uC7A1\uC544\uAC00~"
+      objectReference: {fileID: 0}
     - target: {fileID: 5286380342092460094, guid: d5ad88076a4f1d048a288b25c5386634, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3
@@ -3197,6 +3213,26 @@ PrefabInstance:
       value: Cat
       objectReference: {fileID: 0}
     - target: {fileID: 7372100019764978888, guid: 8bb6a449533863245b84a52a6b71b6d9, type: 3}
+      propertyPath: quest_ids.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7372100019764978888, guid: 8bb6a449533863245b84a52a6b71b6d9, type: 3}
+      propertyPath: quest_ids.Array.data[1]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7372100019764978888, guid: 8bb6a449533863245b84a52a6b71b6d9, type: 3}
+      propertyPath: quest_ids.Array.data[2]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7372100019764978888, guid: 8bb6a449533863245b84a52a6b71b6d9, type: 3}
+      propertyPath: quest_ids.Array.data[3]
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7372100019764978888, guid: 8bb6a449533863245b84a52a6b71b6d9, type: 3}
+      propertyPath: quest_ids.Array.data[4]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7372100019764978888, guid: 8bb6a449533863245b84a52a6b71b6d9, type: 3}
       propertyPath: DialogueText.Array.data[0]
       value: 
       objectReference: {fileID: 845600526}
@@ -3204,6 +3240,22 @@ PrefabInstance:
       propertyPath: DialogueText.Array.data[1]
       value: 
       objectReference: {fileID: 607127638}
+    - target: {fileID: 7372100019764978888, guid: 8bb6a449533863245b84a52a6b71b6d9, type: 3}
+      propertyPath: generalDialogues.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7372100019764978888, guid: 8bb6a449533863245b84a52a6b71b6d9, type: 3}
+      propertyPath: generalDialogues.Array.data[0]
+      value: "\uC5B4\uB514 \uAC00\uB294 \uAE38\uC774\uC57C?"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7372100019764978888, guid: 8bb6a449533863245b84a52a6b71b6d9, type: 3}
+      propertyPath: generalDialogues.Array.data[1]
+      value: "\uC870\uC2EC\uD788 \uAC00~"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7372100019764978888, guid: 8bb6a449533863245b84a52a6b71b6d9, type: 3}
+      propertyPath: generalDialogues.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

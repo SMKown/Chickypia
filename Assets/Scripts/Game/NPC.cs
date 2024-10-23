@@ -4,12 +4,14 @@ using UnityEngine.UI;
 
 public class NPC : MonoBehaviour
 {
-    public int[] quest_ids; // 해당 NPC 할당 퀘스트
-    public List<string> generalDialogues; // 일반 대화 리스트
+    public int[] quest_ids; // NPC 할당 퀘스트
+    public List<string> generalDialogues; // 일반 대화 배열
     public GameObject questMark;
     public Text[] DialogueText;
-
+    public int dialogueIndex = 0;
+    
     private QuestManager questManager;
+    private bool isInteracting = false;
 
     private void Start()
     {
@@ -24,7 +26,10 @@ public class NPC : MonoBehaviour
 
     private void Update()
     {
-        UpdateQuestMark();
+        if (!isInteracting)
+        {
+            UpdateQuestMark();
+        }
     }
 
     private void UpdateQuestMark()
@@ -34,7 +39,6 @@ public class NPC : MonoBehaviour
         foreach (int questId in quest_ids)
         {
             QuestData quest = questManager.GetQuestData(questId);
-
             if (quest != null && quest.GetQuestStatus() == QuestStatus.Available)
             {
                 if (quest.requiresQuestId == 0 || questManager.GetQuestData(quest.requiresQuestId)?.GetQuestStatus() == QuestStatus.Completed)
@@ -44,30 +48,43 @@ public class NPC : MonoBehaviour
                 }
             }
         }
-
         questMark.SetActive(hasAvailableQuest);
     }
 
     public void Interact()
     {
-        if (transform.parent.name == "Cat")
-            DialogueText[0].text = "삼냥이";
-        else
-            DialogueText[0].text = "강태곰";
-
+        isInteracting = true; // 대화 시작
         QuestData activeQuest = GetActiveQuest();
+        questMark.SetActive(false); // 대화 중 퀘스트 마크 숨기기
 
         if (activeQuest != null)
+            DisplayDialogue(activeQuest.questDialogues, activeQuest);
+        else
+            DisplayDialogue(generalDialogues);
+    }
+
+    private void CloseDialogue()
+    {
+        isInteracting = false;
+        UIInteraction.Instance.ImageOff(UIInteraction.Instance.dialog);
+        dialogueIndex = 0;
+    }
+
+    private void DisplayDialogue(List<string> dialogues, QuestData quest = null)
+    {
+        if (dialogueIndex < dialogues.Count)
         {
-            // 대화 내용 설정 및 퀘스트 상태 변경
-            DialogueText[1].text = activeQuest.questDialogues[0];
-            activeQuest.SetQuestStatus(QuestStatus.InProgress);
-            questMark.SetActive(false); // 대화 후 인디케이터 비활성화
+            DialogueText[1].text = dialogues[dialogueIndex];
+            dialogueIndex++;
         }
         else
         {
-            // 일반 대화 처리
-            DialogueText[1].text = generalDialogues[Random.Range(0, generalDialogues.Count)];
+            if (quest != null)
+            {
+                quest.SetQuestStatus(QuestStatus.InProgress);
+                quest.UpdateItemCount(0);
+            }
+            CloseDialogue(); // 대화 종료
         }
     }
 
@@ -75,7 +92,6 @@ public class NPC : MonoBehaviour
     {
         foreach (var id in quest_ids)
         {
-            // 퀘스트 존재 여부 & 상태 확인
             if (questManager.QuestExists(id) && questManager.IsQuestAvailable(id))
             {
                 return questManager.GetQuestData(id);

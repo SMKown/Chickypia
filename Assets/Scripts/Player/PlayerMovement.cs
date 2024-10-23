@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public CinemachineVirtualCamera[] virtualCameras;
     private int currentCameraIndex = 0;
-    private bool isDialogActive = false;
+    private bool isInteracting = false;
 
     public GameObject DialogBox;
     private Image dialogImage;
@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        if (PlayerInfo.Instance.UnableMove() || isDialogActive)
+        if (PlayerInfo.Instance.UnableMove() || isInteracting)
         {
             if (agent.isActiveAndEnabled) agent.ResetPath();
 
@@ -157,9 +157,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (!isDialogActive)
+            if (!isInteracting)
             {
-                isDialogActive = true;
+                isInteracting = true;
                 ChangeCameraForNPC(UIInteraction.Instance.interactableObj.transform);
 
                 currentNpc = UIInteraction.Instance.interactableObj.GetComponent<NPC>();
@@ -170,10 +170,17 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                isDialogActive = false;
-                ResetCameraForPlayer();
-                UIInteraction.Instance.ImageOff(UIInteraction.Instance.dialog);
-                UIInteraction.Instance.interactableObj = null;
+                // 대화 종료 체크 (현재 대화가 끝났는지 확인)
+                if (currentNpc.dialogueIndex == 0)
+                {
+                    isInteracting = false;
+                    ResetCameraForPlayer();
+                    UIInteraction.Instance.interactableObj = null;
+                }
+                else
+                {
+                    currentNpc.Interact();
+                }
             }
         }
     }
@@ -243,6 +250,15 @@ public class PlayerMovement : MonoBehaviour
                 {
                     Destroy(item);
                     UIInteraction.Instance.ImageOff(UIInteraction.Instance.collection);
+
+                    // 수집한 아이템의 ID를 퀘스트와 비교
+                    foreach (var quest in questManager.questList)
+                    {
+                        if (quest.itemId == inventoryItem.GetItemData().itemId)
+                        {
+                            quest.UpdateItemCount(1);
+                        }
+                    }
                 }
             }
         }
