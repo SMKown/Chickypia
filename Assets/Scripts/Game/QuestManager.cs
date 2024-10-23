@@ -8,22 +8,23 @@ public enum QuestStatus
     Completed
 }
 
+[System.Serializable]
 public class QuestData
 {
     public int id;
     public string title;
     public string description;
-    public bool requiresDialogue;
-    public int? requiresQuestId;
+    public bool npcDialogue;
+    public int requiresQuestId;
     public List<string> questDialogues;
     public QuestStatus status;
 
-    public QuestData(int id, string title, string description, bool requiresDialogue, int? requiresQuestId, List<string> questDialogues = null)
+    public QuestData(int id, string title, string description, bool npcDialogue, int requiresQuestId, List<string> questDialogues = null)
     {
         this.id = id;
         this.title = title;
         this.description = description;
-        this.requiresDialogue = requiresDialogue;
+        this.npcDialogue = npcDialogue;
         this.requiresQuestId = requiresQuestId;
         this.questDialogues = questDialogues ?? new List<string>();
         this.status = QuestStatus.Available;
@@ -36,13 +37,24 @@ public class QuestData
 
 public class QuestManager : MonoBehaviour
 {
-    public Dictionary<int, QuestData> questData;
+    [SerializeField]
+    private List<QuestData> questList = new List<QuestData>();
+    private Dictionary<int, QuestData> questData = new Dictionary<int, QuestData>();
 
     void Start()
     {
-        questData = new Dictionary<int, QuestData>();
         LoadQuestData();
         UpdateAvailableQuests();
+    }
+
+    public bool QuestExists(int questId)
+    {
+        return questData.ContainsKey(questId);
+    }
+
+    public bool IsQuestAvailable(int questId)
+    {
+        return questData[questId].GetQuestStatus() == QuestStatus.Available;
     }
 
     void Update()
@@ -62,11 +74,17 @@ public class QuestManager : MonoBehaviour
 
             string[] data = line.Split(',');
 
+            if (data.Length < 5)
+            {
+                Debug.LogError("Invalid quest data format: " + line);
+                continue;
+            }
+
             int id = int.Parse(data[0]);
             string title = data[1];
             string description = data[2];
-            bool requiresDialogue = bool.Parse(data[3]);
-            int? requiresQuestId = string.IsNullOrWhiteSpace(data[4]) ? (int?)null : int.Parse(data[4]);
+            bool npcDialogue = bool.Parse(data[3]);
+            int requiresQuestId = string.IsNullOrWhiteSpace(data[4]) ? 0 : int.Parse(data[4]);
 
             List<string> questDialogues = new List<string>();
             for (int i = 5; i < data.Length; i++)
@@ -77,8 +95,20 @@ public class QuestManager : MonoBehaviour
                 }
             }
 
-            questData[id] = new QuestData(id, title, description, requiresDialogue, requiresQuestId, questDialogues);
+            var questDataEntry = new QuestData(id, title, description, npcDialogue, requiresQuestId, questDialogues);
+            questList.Add(questDataEntry);
+            questData[id] = questDataEntry;
         }
+    }
+
+    public QuestData GetQuestById(int questId)
+    {
+        if (questData.ContainsKey(questId))
+        {
+            return questData[questId];
+        }
+        Debug.LogError($"Quest ID not found: {questId}");
+        return null;
     }
 
     public void UpdateQuestStatus(int questId, QuestStatus newStatus)
@@ -86,6 +116,11 @@ public class QuestManager : MonoBehaviour
         if (questData.ContainsKey(questId))
         {
             questData[questId].SetQuestStatus(newStatus);
+            Debug.Log($"Quest {questId} status updated to {newStatus}");
+        }
+        else
+        {
+            Debug.LogError($"Quest ID not found: {questId}");
         }
     }
 
@@ -94,45 +129,16 @@ public class QuestManager : MonoBehaviour
         foreach (var quest in questData.Values)
         {
             if (quest.GetQuestStatus() == QuestStatus.Available &&
-                (quest.requiresQuestId == null ||
-                 (questData.ContainsKey(quest.requiresQuestId.Value) &&
-                  questData[quest.requiresQuestId.Value].GetQuestStatus() == QuestStatus.Completed)))
+                (quest.requiresQuestId == 0 ||
+                 (questData.ContainsKey(quest.requiresQuestId) &&
+                  questData[quest.requiresQuestId].GetQuestStatus() == QuestStatus.Completed)))
             {
-                if (!quest.requiresDialogue)
+                if (!quest.npcDialogue)
                 {
                     UpdateQuestStatus(quest.id, QuestStatus.InProgress);
                     Debug.Log($"{quest.title} 퀘스트 자동 진행 중");
                 }
             }
-        }
-    }
-
-    public List<QuestData> GetAvailableQuests()
-    {
-        List<QuestData> availableQuests = new List<QuestData>();
-        foreach (var quest in questData.Values)
-        {
-            if (quest.GetQuestStatus() == QuestStatus.Available &&
-                (quest.requiresQuestId == null ||
-                 (questData.ContainsKey(quest.requiresQuestId.Value) &&
-                  questData[quest.requiresQuestId.Value].GetQuestStatus() == QuestStatus.Completed)))
-            {
-                availableQuests.Add(quest);
-            }
-        }
-        return availableQuests;
-    }
-
-    public QuestData GetQuestById(int quest_id)
-    {
-        if (questData.ContainsKey(quest_id))
-        {
-            return questData[quest_id];
-        }
-        else
-        {
-            Debug.LogError("Quest ID not found: " + quest_id);
-            return null;
         }
     }
 }

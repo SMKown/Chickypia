@@ -1,16 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; // 추가된 네임스페이스
+using UnityEngine.UI;
 
 public class NPC : MonoBehaviour
 {
     public int[] quest_ids; // 해당 NPC 할당 퀘스트
-    public int currentQuestIndex; // 현재 진행 중인 퀘스트 인덱스
     public List<string> generalDialogues; // 일반 대화 리스트
-    public GameObject questIndicator; // 퀘스트 표시 이미지
+    public GameObject questIndicator;
     public Text[] DialogueText;
 
-    private QuestManager questManager; // QuestManager에 대한 참조
+    private QuestManager questManager;
+    private QuestData questData;
 
     private void Start()
     {
@@ -27,17 +27,12 @@ public class NPC : MonoBehaviour
     {
         bool hasAvailableQuest = false;
 
-        foreach (var questId in quest_ids)
+        foreach (var id in quest_ids)
         {
-            QuestData quest = questManager.GetQuestById(questId);
-            if (quest != null && quest.GetQuestStatus() == QuestStatus.Available)
+            if (questManager.QuestExists(id) && questManager.IsQuestAvailable(id))
             {
-                if (quest.requiresQuestId == null ||
-                    (questManager.GetQuestById(quest.requiresQuestId.Value)?.GetQuestStatus() == QuestStatus.Completed))
-                {
-                    hasAvailableQuest = true;
-                    break;
-                }
+                hasAvailableQuest = true;
+                break;
             }
         }
 
@@ -46,26 +41,27 @@ public class NPC : MonoBehaviour
 
     public void Interact()
     {
-        if (transform.parent.name == "Cat") DialogueText[0].text = "삼냥이";
-        else DialogueText[0].text = "강태곰";
+        if (transform.parent.name == "Cat") 
+            DialogueText[0].text = "삼냥이";
+        else
+            DialogueText[0].text = "강태곰";
 
-        if (questIndicator.activeSelf && currentQuestIndex < quest_ids.Length)
+        if (questData != null && questData.npcDialogue)
         {
-            // 퀘스트 대화
-            int questId = quest_ids[currentQuestIndex];
-            QuestData currentQuest = questManager.GetQuestById(questId);
-            if (currentQuest != null && currentQuest.questDialogues.Count > 0)
-            {
-                DialogueText[1].text = currentQuest.questDialogues[0];
-                Debug.Log(currentQuest.questDialogues[0]);
-            }
+            DialogueText[1].text = questData.questDialogues[0];
+            questData.SetQuestStatus(QuestStatus.InProgress);
         }
         else
         {
-            // 일반 대화
-            string randomDialogue = generalDialogues[UnityEngine.Random.Range(0, generalDialogues.Count)];
-            DialogueText[1].text = randomDialogue;
-            Debug.Log(randomDialogue);
+            // 일반 대화 처리
+            DialogueText[1].text = generalDialogues[Random.Range(0, generalDialogues.Count)];
         }
+    }
+
+    private void EndDialogue()
+    {
+        questData.SetQuestStatus(QuestStatus.InProgress);
+        questIndicator.SetActive(false);
+        // 대화 UI 끄기 로직
     }
 }
