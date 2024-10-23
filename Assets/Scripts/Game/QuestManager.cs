@@ -10,13 +10,13 @@ public enum QuestStatus
 
 public class QuestData
 {
-    public int id; // 퀘스트 ID
-    public string title; // 퀘스트 제목
-    public string description; // 퀘스트 설명
-    public bool requiresDialogue; // NPC와의 대화가 필요한지 여부
-    public int? requiresQuestId; // 이전 퀘스트가 완료되어야 하는 경우의 ID
-    public List<string> questDialogues; // 퀘스트 대화 (필요한 경우만 사용)
-    public QuestStatus status; // 퀘스트 상태
+    public int id;
+    public string title;
+    public string description;
+    public bool requiresDialogue;
+    public int? requiresQuestId;
+    public List<string> questDialogues;
+    public QuestStatus status;
 
     public QuestData(int id, string title, string description, bool requiresDialogue, int? requiresQuestId, List<string> questDialogues = null)
     {
@@ -26,18 +26,12 @@ public class QuestData
         this.requiresDialogue = requiresDialogue;
         this.requiresQuestId = requiresQuestId;
         this.questDialogues = questDialogues ?? new List<string>();
-        this.status = QuestStatus.Available; // 초기 상태는 Available
+        this.status = QuestStatus.Available;
     }
 
-    public QuestStatus GetQuestStatus()
-    {
-        return status;
-    }
+    public QuestStatus GetQuestStatus() => status;
 
-    public void SetQuestStatus(QuestStatus newStatus)
-    {
-        status = newStatus;
-    }
+    public void SetQuestStatus(QuestStatus newStatus) => status = newStatus;
 }
 
 public class QuestManager : MonoBehaviour
@@ -75,7 +69,6 @@ public class QuestManager : MonoBehaviour
             int? requiresQuestId = string.IsNullOrWhiteSpace(data[4]) ? (int?)null : int.Parse(data[4]);
 
             List<string> questDialogues = new List<string>();
-
             for (int i = 5; i < data.Length; i++)
             {
                 if (!string.IsNullOrWhiteSpace(data[i]))
@@ -100,16 +93,15 @@ public class QuestManager : MonoBehaviour
     {
         foreach (var quest in questData.Values)
         {
-            // 이전 퀘스트가 완료되었고 현재 퀘스트가 "Available"인 경우
-            if (quest.GetQuestStatus() == QuestStatus.Available && 
-                (quest.requiresQuestId == null || questData[quest.requiresQuestId.Value].GetQuestStatus() == QuestStatus.Completed))
+            if (quest.GetQuestStatus() == QuestStatus.Available &&
+                (quest.requiresQuestId == null ||
+                 (questData.ContainsKey(quest.requiresQuestId.Value) &&
+                  questData[quest.requiresQuestId.Value].GetQuestStatus() == QuestStatus.Completed)))
             {
-                // NPC와 대화가 필요 없는 경우 자동으로 진행 중
                 if (!quest.requiresDialogue)
                 {
                     UpdateQuestStatus(quest.id, QuestStatus.InProgress);
-                    // 퀘스트 창 업데이트 로직 추가 (예: UI에 퀘스트 추가)
-                    Debug.Log($"{quest.title} 퀘스트가 자동으로 진행 중입니다.");
+                    Debug.Log($"{quest.title} 퀘스트 자동 진행 중");
                 }
             }
         }
@@ -118,16 +110,16 @@ public class QuestManager : MonoBehaviour
     public List<QuestData> GetAvailableQuests()
     {
         List<QuestData> availableQuests = new List<QuestData>();
-
         foreach (var quest in questData.Values)
         {
             if (quest.GetQuestStatus() == QuestStatus.Available &&
-                (quest.requiresQuestId == null || questData[quest.requiresQuestId.Value].GetQuestStatus() == QuestStatus.Completed))
+                (quest.requiresQuestId == null ||
+                 (questData.ContainsKey(quest.requiresQuestId.Value) &&
+                  questData[quest.requiresQuestId.Value].GetQuestStatus() == QuestStatus.Completed)))
             {
                 availableQuests.Add(quest);
             }
         }
-
         return availableQuests;
     }
 

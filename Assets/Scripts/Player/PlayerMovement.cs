@@ -117,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
                 if (enemy.CompareTag("Enemy"))
                 {
                     Vector3 knockbackDirection = transform.forward;
-                    float knockbackForce = 4f;
+                    float knockbackForce = 4F;
                     enemy.GetComponent<Enemy>().TakeDamage(attackDamage, knockbackDirection, knockbackForce);
                 }
             }
@@ -167,7 +167,6 @@ public class PlayerMovement : MonoBehaviour
                 {
                     currentNpc.Interact();
                 }
-                else Debug.LogError("NPC가 null입니다.");
             }
             else
             {
