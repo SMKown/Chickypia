@@ -820,6 +820,126 @@ Transform:
   - {fileID: 775914680891151904}
   m_Father: {fileID: 2351325622469080628}
   m_LocalEulerAnglesHint: {x: 15.750337, y: -52.719395, z: 14.156281}
+--- !u!1 &5978169543396220951
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6948759698409354851}
+  - component: {fileID: 5395524335542645208}
+  m_Layer: 0
+  m_Name: Scorpion (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6948759698409354851
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5978169543396220951}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0, y: 0, z: 0.0000000050089}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8537458225860849261}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!137 &5395524335542645208
+SkinnedMeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5978169543396220951}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: e298b51b10ac2344496f8dc6ed330933, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  serializedVersion: 2
+  m_Quality: 0
+  m_UpdateWhenOffscreen: 0
+  m_SkinnedMotionVectors: 1
+  m_Mesh: {fileID: -1808012749157309818, guid: f167c3addd65c1c4f9e6a23af2beaf8c, type: 3}
+  m_Bones:
+  - {fileID: 2351325622469080628}
+  - {fileID: 6846327309295239103}
+  - {fileID: 8755484007779546657}
+  - {fileID: 1553582847653102645}
+  - {fileID: 2225111324816862012}
+  - {fileID: 2069662652649237597}
+  - {fileID: 2479132219357510817}
+  - {fileID: 7718487539540698193}
+  - {fileID: 2513887759135878131}
+  - {fileID: 2968649938495349358}
+  - {fileID: 6989742356915274155}
+  - {fileID: 6868405051445658259}
+  - {fileID: 4769183958640843984}
+  - {fileID: 7431261615355721929}
+  - {fileID: 5816855681793631746}
+  - {fileID: 3946853483435630392}
+  - {fileID: 3684286618510898731}
+  - {fileID: 5901751823959628194}
+  - {fileID: 7216736258408172404}
+  - {fileID: 1203201514183494255}
+  - {fileID: 7613938616391297863}
+  - {fileID: 1098336093262043514}
+  - {fileID: 3322206780148923334}
+  - {fileID: 4486297081473134312}
+  - {fileID: 4502192057592910322}
+  - {fileID: 7867353353313256397}
+  - {fileID: 2023744905148921444}
+  - {fileID: 3404584291092396980}
+  - {fileID: 9222876914871294333}
+  - {fileID: 775914680891151904}
+  - {fileID: 1736523643771527330}
+  - {fileID: 602368759228323683}
+  - {fileID: 1926243771289014426}
+  - {fileID: 320015349836540297}
+  - {fileID: 3187233758551209337}
+  m_BlendShapeWeights: []
+  m_RootBone: {fileID: 6846327309295239103}
+  m_AABB:
+    m_Center: {x: -0.1019257, y: -0.568222, z: -0.0013720393}
+    m_Extent: {x: 0.8096107, y: 0.87077004, z: 0.7211685}
+  m_DirtyAABB: 0
 --- !u!1 &6024345397410834521
 GameObject:
   m_ObjectHideFlags: 0
@@ -1404,6 +1524,7 @@ Transform:
   - {fileID: 472166661750761351}
   - {fileID: 3030708449729438750}
   - {fileID: 808980569575904231}
+  - {fileID: 6948759698409354851}
   - {fileID: 2548989078220647112}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1538,6 +1659,8 @@ MonoBehaviour:
   patrolPoints:
   - {x: -12, y: 0, z: 5}
   - {x: -18, y: 0, z: 5}
+  FleePoints: []
+  FlashTrans: {fileID: 0}
   dropItemData: {fileID: 11400000, guid: 0fa711fdd5109d042b2ed8910215c5ea, type: 2}
   dropItemPrefab: {fileID: 5857909854282709900, guid: a687cccb46f2df342b01697475b13ec7, type: 3}
   projectileSpeed: 3

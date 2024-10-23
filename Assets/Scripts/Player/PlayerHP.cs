@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHP : MonoBehaviour
 {
-    public Vector3[] Heart;
+    public GameObject[] Heart;
+    public Sprite fullHeart;
+    public Sprite halfHeart;
     public GameObject heartBroken;
     private void Start()
     {
@@ -26,17 +30,37 @@ public class PlayerHP : MonoBehaviour
             heartBroken.SetActive(true);
             StartCoroutine(HideHeartBroken());
         }
+        HPUI();
 
         if (PlayerStats.Instance.currentHp <= 0)
         {
             Die();
         }
-        HPUI();
     }
 
     private void HPUI()
     {
+        for(int i =0; i<Heart.Length; i++)
+        {
+            if(i < PlayerStats.Instance.maxHp)
+            {
+                Heart[i].gameObject.SetActive(true);
+                Image heartImage = Heart[i].GetComponent<Image>();
 
+                if (i < PlayerStats.Instance.currentHp)
+                {
+                    heartImage.sprite = fullHeart;
+                }
+                else if (i == PlayerStats.Instance.currentHp)
+                {
+                    heartImage.sprite = halfHeart;
+                }
+            }
+            else
+            {
+                Heart[i].SetActive(false);
+            }
+        }
     }
 
     private void Die()
