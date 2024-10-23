@@ -163,14 +163,9 @@ public class PlayerMovement : MonoBehaviour
                 ChangeCameraForNPC(UIInteraction.Instance.interactableObj.transform);
 
                 currentNpc = UIInteraction.Instance.interactableObj.GetComponent<NPC>();
-                if (currentNpc != null && currentNpc.questIndicator.activeSelf) // 퀘스트 인디케이터가 활성화된 경우
+                if (currentNpc != null)
                 {
                     currentNpc.Interact();
-                }
-                else
-                {
-                    // 일반 대화 처리
-                    // 예: currentNpc.NormalDialogue();
                 }
             }
             else
@@ -182,7 +177,6 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-
 
     private void ChangeCameraForNPC(Transform npcTransform)
     {

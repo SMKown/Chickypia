@@ -3,21 +3,21 @@ using UnityEngine;
 
 public enum QuestStatus
 {
-    Available,
-    InProgress,
-    Completed
+    Available, // 퀘스트 수락 전
+    InProgress, // 퀘스트 진행 중
+    Completed // 퀘스트 완료
 }
 
 [System.Serializable]
 public class QuestData
 {
-    public int id;
-    public string title;
-    public string description;
-    public bool npcDialogue;
-    public int requiresQuestId;
-    public List<string> questDialogues;
-    public QuestStatus status;
+    public int id; // 번호
+    public string title; // 제목
+    public string description; // 설명
+    public bool npcDialogue; // NPC 대화 유무
+    public int requiresQuestId; // 진행하기 위한 전 단계 퀘스트 번호
+    public List<string> questDialogues; // 퀘스트 대화
+    public QuestStatus status; // 퀘스트 상태
 
     public QuestData(int id, string title, string description, bool npcDialogue, int requiresQuestId, List<string> questDialogues = null)
     {
@@ -44,7 +44,12 @@ public class QuestManager : MonoBehaviour
     void Start()
     {
         LoadQuestData();
-        UpdateAvailableQuests();
+        UpdateQuests();
+    }
+
+    public QuestData GetQuestData(int questId)
+    {
+        return questData.ContainsKey(questId) ? questData[questId] : null;
     }
 
     public bool QuestExists(int questId)
@@ -54,12 +59,20 @@ public class QuestManager : MonoBehaviour
 
     public bool IsQuestAvailable(int questId)
     {
-        return questData[questId].GetQuestStatus() == QuestStatus.Available;
+        if (questData.TryGetValue(questId, out var quest))
+        {
+            return quest.GetQuestStatus() == QuestStatus.Available &&
+                   (quest.requiresQuestId == 0 ||
+                    (questData.TryGetValue(quest.requiresQuestId, out var prerequisiteQuest) &&
+                     prerequisiteQuest.GetQuestStatus() == QuestStatus.Completed));
+        }
+        return false;
     }
+
 
     void Update()
     {
-        UpdateAvailableQuests();
+        UpdateQuests();
     }
 
     void LoadQuestData()
@@ -101,16 +114,6 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    public QuestData GetQuestById(int questId)
-    {
-        if (questData.ContainsKey(questId))
-        {
-            return questData[questId];
-        }
-        Debug.LogError($"Quest ID not found: {questId}");
-        return null;
-    }
-
     public void UpdateQuestStatus(int questId, QuestStatus newStatus)
     {
         if (questData.ContainsKey(questId))
@@ -124,7 +127,7 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    public void UpdateAvailableQuests()
+    public void UpdateQuests()
     {
         foreach (var quest in questData.Values)
         {
