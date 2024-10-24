@@ -2594,6 +2594,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7461956541043540597, guid: ca9013b7fe227ea4a9103ed1d7e69cf8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7508616652833082799, guid: ca9013b7fe227ea4a9103ed1d7e69cf8, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -2643,6 +2647,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8030659623076924638, guid: ca9013b7fe227ea4a9103ed1d7e69cf8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8479239055489433606, guid: ca9013b7fe227ea4a9103ed1d7e69cf8, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -4605,8 +4613,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 2037596860}
-  m_Follow: {fileID: 2037596860}
+  m_LookAt: {fileID: 3476775552271969303}
+  m_Follow: {fileID: 3476775552271969303}
   m_Lens:
     FieldOfView: 60.000004
     OrthographicSize: 10
@@ -5245,11 +5253,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1959905276}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &2037596860 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8458808674288783842, guid: ca9013b7fe227ea4a9103ed1d7e69cf8, type: 3}
-  m_PrefabInstance: {fileID: 1428896562}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2060865212
 GameObject:
   m_ObjectHideFlags: 0

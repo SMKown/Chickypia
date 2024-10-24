@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
 {
-    public static SoundManager instance;
+    public static SoundManager Instance;
     public AudioMixer audioMixer;
 
     public Slider masterSlider;
@@ -14,17 +14,14 @@ public class SoundManager : MonoBehaviour
 
     private bool isMuted = false;
 
-    void Awake()
+    private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
+        if (Instance != null)
         {
             Destroy(gameObject);
+            return;
         }
+        Instance = this;
     }
 
     void Start()
