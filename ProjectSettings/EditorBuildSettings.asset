@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Game/MainScene.unity
+    guid: 2988e4ba1145ff549beeca9e056d6af8
+  - enabled: 1
     path: Assets/Scenes/KSM/Village.unity
     guid: 54541330f01d5ca46b2b627a3c9fd6f3
   - enabled: 1
@@ -20,4 +23,28 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/KSM/Flame/Flame01.unity
     guid: 95e151d1b518051499bd26f9f6b13862
+  - enabled: 1
+    path: Assets/Scenes/KSM/Flame/Flame02.unity
+    guid: e04cbc9459129da46bbfe7d1e61bfb50
+  - enabled: 1
+    path: Assets/Scenes/KSM/Flame/Flame03.unity
+    guid: 88a2822c78fa64e43961ae4cfb86b4f1
+  - enabled: 1
+    path: Assets/Scenes/KSM/Desert/Desert01.unity
+    guid: 68d5153c4c8a7814cb862d2a5f8fe5f5
+  - enabled: 1
+    path: Assets/Scenes/KSM/Desert/Desert02.unity
+    guid: 014c18eb377ae794ea9988cc37877a2d
+  - enabled: 1
+    path: Assets/Scenes/KSM/Desert/Desert03.unity
+    guid: b87865c39ef61e94ea20d4885cd85d8b
+  - enabled: 1
+    path: Assets/Scenes/KSM/Jungle/Jungle01.unity
+    guid: 0f769f352e9f34d488892030a188f5b3
+  - enabled: 1
+    path: Assets/Scenes/KSM/Jungle/Jungle02.unity
+    guid: 3de411ff7f5089742940c5b497fd6f7c
+  - enabled: 1
+    path: Assets/Scenes/KSM/Jungle/Jungle03.unity
+    guid: b63b66baed599cc469ba3c4f3fa52c49
   m_configObjects: {}

@@ -424,6 +424,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryManager: {fileID: 0}
   compendiumManager: {fileID: 0}
+  playerstats: {fileID: 0}
 --- !u!4 &85236581
 Transform:
   m_ObjectHideFlags: 0
@@ -2569,9 +2570,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: CloseOptionButton
+      - m_Target: {fileID: 85236580}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: NewGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
