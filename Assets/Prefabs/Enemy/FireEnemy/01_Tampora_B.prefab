@@ -334,7 +334,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 3957689197311996510}
-  player: {fileID: 0}
+  player: {fileID: 766207004619489451, guid: dec0ae9635ffa42fc97e716bfbac69c4, type: 3}
   enemyType: 0
   patrolType: 0
   hasFledOnce: 0
@@ -365,7 +365,7 @@ MonoBehaviour:
   - {x: -8, y: 0.6, z: -13.5}
   - {x: 4, y: 0.6, z: 6}
   - {x: 16, y: 4.6, z: -9}
-  FlashTrans: {fileID: 0}
+  FlashTrans: {fileID: 5346600475781122092}
   dropItemData: {fileID: 11400000, guid: 4b269f3b7120022499b5bd9198577529, type: 2}
   dropItemPrefab: {fileID: 5857909854282709900, guid: a687cccb46f2df342b01697475b13ec7, type: 3}
   damage: 1

@@ -5,6 +5,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+
+    public GameObject option;
+    public GameObject Moption;
+    public GameObject soundOption;
+
+    public GameObject M_option;
+
     private void Awake()
     {
         if (Instance != null)
@@ -14,4 +21,60 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
     }
+
+    private void Start()
+    {
+        option.gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ToggleOptionMenu();
+        }
+    }
+
+    #region 게임씬 옵션창
+    private void ToggleOptionMenu()
+    {
+        option.SetActive(!option.activeSelf);
+    }
+
+    public void OpenOptionButton()
+    {
+        option.SetActive(true);
+    }
+
+    public void CloseOptionButton()
+    {
+        option.SetActive(false);
+    }
+
+    public void ChangeSoundOptionButton()
+    {
+        soundOption.SetActive(true);
+        Moption.SetActive(false);
+    }
+
+    public void ChangeMOptionButton()
+    {
+        Moption.SetActive(true);
+        soundOption.SetActive(false);
+    }
+
+    #endregion
+
+    #region 메인씬 옵션창
+
+    public void M_OpenOptionButton()
+    {
+        M_option.SetActive(true);
+    }
+
+    public void M_CloseOptionButton()
+    {
+        M_option.SetActive(false);
+    }
+    #endregion
 }

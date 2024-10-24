@@ -52,6 +52,15 @@ public class PlayerStats : MonoBehaviour
         SavePlayerState();
     }
 
+    public void ResetPlayerState()
+    {
+        maxHp = 3;
+        currentHp = maxHp;
+        attackDamage = 1;
+        moveSpeed = 1.4f;
+        SavePlayerState();
+    }
+
     public void SavePlayerState()
     {
         PlayerData data = new PlayerData
