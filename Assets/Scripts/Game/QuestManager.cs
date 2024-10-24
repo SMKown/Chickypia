@@ -37,10 +37,13 @@ public class QuestData
 
     public void UpdateItemCount(int amount) // 필요 아이템 수집
     {
-        itemCount += amount;
-        if (itemCount >= itemCountRequired)
+        if (status == QuestStatus.InProgress) // 진행 중인 퀘스트만 수집 체크
         {
-            SetQuestStatus(QuestStatus.Completed);
+            itemCount += amount;
+            if (itemCount >= itemCountRequired)
+            {
+                SetQuestStatus(QuestStatus.Completed);
+            }
         }
     }
 
