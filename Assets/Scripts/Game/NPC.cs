@@ -5,28 +5,24 @@ using UnityEngine.UI;
 public class NPC : MonoBehaviour
 {
     public int[] quest_ids; // NPC 할당 퀘스트
-    public List<string> generalDialogues; // 일반 대화 배열
+    public List<string> generalDialogues; // 일반 대화
     public GameObject questMark;
     public Text[] DialogueText;
-    public int dialogueIndex = 0;
     
     private QuestManager questManager;
-    private bool isInteracting = false;
+    private PlayerMovement playerMovement;
+    private int dialogueIndex = 0;
 
     private void Start()
     {
         questManager = FindObjectOfType<QuestManager>();
-        if (questManager == null)
-        {
-            Debug.LogError("QuestManager not found in the scene.");
-            return;
-        }
+        playerMovement = FindObjectOfType<PlayerMovement>();
         UpdateQuestMark();
     }
 
     private void Update()
     {
-        if (!isInteracting)
+        if (!PlayerInfo.Instance.interacting)
         {
             UpdateQuestMark();
         }
@@ -53,9 +49,8 @@ public class NPC : MonoBehaviour
 
     public void Interact()
     {
-        isInteracting = true; // 대화 시작
         QuestData activeQuest = GetActiveQuest();
-        questMark.SetActive(false); // 대화 중 퀘스트 마크 숨기기
+        questMark.SetActive(false);
 
         if (activeQuest != null)
             DisplayDialogue(activeQuest.questDialogues, activeQuest);
@@ -63,15 +58,23 @@ public class NPC : MonoBehaviour
             DisplayDialogue(generalDialogues);
     }
 
-    private void CloseDialogue()
+    public void CloseDialogue()
     {
-        isInteracting = false;
         UIInteraction.Instance.ImageOff(UIInteraction.Instance.dialog);
         dialogueIndex = 0;
+
+        if (PlayerInfo.Instance.interacting)
+        {
+            PlayerInfo.Instance.interacting = false;
+            playerMovement.ResetCamera();
+            UIInteraction.Instance.interactableObj = null;
+        }
     }
 
     private void DisplayDialogue(List<string> dialogues, QuestData quest = null)
     {
+        DialogueText[0].text = transform.parent.name == "Cat" ? "삼냥이" : "강태곰";
+
         if (dialogueIndex < dialogues.Count)
         {
             DialogueText[1].text = dialogues[dialogueIndex];
@@ -84,7 +87,7 @@ public class NPC : MonoBehaviour
                 quest.SetQuestStatus(QuestStatus.InProgress);
                 quest.UpdateItemCount(0);
             }
-            CloseDialogue(); // 대화 종료
+            CloseDialogue();
         }
     }
 

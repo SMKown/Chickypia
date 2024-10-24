@@ -9,7 +9,6 @@ public class PlayerMovement : MonoBehaviour
 {
     public CinemachineVirtualCamera[] virtualCameras;
     private int currentCameraIndex = 0;
-    private bool isInteracting = false;
 
     public GameObject DialogBox;
     private Image dialogImage;
@@ -27,11 +26,12 @@ public class PlayerMovement : MonoBehaviour
     private InventoryItem inventoryItem;
     private GatherableItem gatherableItem;
 
-    public QuestManager questManager;
+    private QuestManager questManager;
     private NPC currentNpc;
 
     private void Start()
     {
+        questManager = FindObjectOfType<QuestManager>();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         
@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        if (PlayerInfo.Instance.UnableMove() || isInteracting)
+        if (PlayerInfo.Instance.UnableMove())
         {
             if (agent.isActiveAndEnabled) agent.ResetPath();
 
@@ -157,35 +157,20 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (!isInteracting)
+            if (!PlayerInfo.Instance.interacting)
             {
-                isInteracting = true;
-                ChangeCameraForNPC(UIInteraction.Instance.interactableObj.transform);
+                PlayerInfo.Instance.interacting = true;
+                ChangeCamera(UIInteraction.Instance.interactableObj.transform);
 
                 currentNpc = UIInteraction.Instance.interactableObj.GetComponent<NPC>();
-                if (currentNpc != null)
-                {
-                    currentNpc.Interact();
-                }
             }
-            else
-            {
-                // 대화 종료 체크 (현재 대화가 끝났는지 확인)
-                if (currentNpc.dialogueIndex == 0)
-                {
-                    isInteracting = false;
-                    ResetCameraForPlayer();
-                    UIInteraction.Instance.interactableObj = null;
-                }
-                else
-                {
-                    currentNpc.Interact();
-                }
-            }
+
+            if (currentNpc != null)
+                currentNpc.Interact();
         }
     }
 
-    private void ChangeCameraForNPC(Transform npcTransform)
+    private void ChangeCamera(Transform npcTransform)
     {
         currentCameraIndex = 1; 
         SetActiveCamera(currentCameraIndex);
@@ -196,7 +181,7 @@ public class PlayerMovement : MonoBehaviour
         DialogBox.SetActive(true);
     }
 
-    private void ResetCameraForPlayer()
+    public void ResetCamera()
     {
         currentCameraIndex = 0;
         SetActiveCamera(currentCameraIndex);
@@ -221,12 +206,8 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
 
-        imageColor.a = 0;
-        dialogImage.color = imageColor;
         DialogBox.SetActive(false);
-
-        imageColor.a = 1F;
-        dialogImage.color = imageColor;
+        PlayerInfo.Instance.interacting = false;
     }
 
     private void SetActiveCamera(int index)

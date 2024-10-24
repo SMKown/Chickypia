@@ -94,7 +94,7 @@ public class GatherableItem : MonoBehaviour
             if (added)
             {
                 UIInteraction.Instance.interactableObj = null;
-                UIInteraction.Instance.ImageOff(UIInteraction.Instance.collection);
+                UIInteraction.Instance.ImageOff(UIInteraction.Instance.gathering);
 
                 // 수집한 아이템의 ID를 퀘스트와 비교
                 foreach (var quest in questManager.questList)

@@ -13,7 +13,6 @@ public class QuestData
 {
     public int id; // 번호
     public string title; // 제목
-    public string description; // 설명
     public bool npc; // NPC 대화 유무
     public int requiresQuestId; // 진행하기 위한 전 단계 퀘스트 번호
     public int itemId; // 수집해야 할 아이템의 ID
@@ -23,11 +22,10 @@ public class QuestData
     public QuestStatus status; // 퀘스트 상태
     public int itemCount; // 현재 수집한 개수
 
-    public QuestData(int id, string title, string description, bool npc, int requiresQuestId, int itemId = 0, int itemCountRequired = 0, List<string> questDialogues = null)
+    public QuestData(int id, string title, bool npc, int requiresQuestId, int itemId = 0, int itemCountRequired = 0, List<string> questDialogues = null)
     {
         this.id = id;
         this.title = title;
-        this.description = description;
         this.npc = npc;
         this.requiresQuestId = requiresQuestId;
         this.itemId = itemId;
@@ -59,7 +57,6 @@ public class QuestManager : MonoBehaviour
     void Start()
     {
         LoadQuestData();
-        UpdateQuests();
     }
 
     public QuestData GetQuestData(int questId)
@@ -84,12 +81,6 @@ public class QuestManager : MonoBehaviour
         return false;
     }
 
-
-    void Update()
-    {
-        UpdateQuests();
-    }
-
     void LoadQuestData()
     {
         var textAsset = Resources.Load<TextAsset>("CSV/Quest");
@@ -102,22 +93,15 @@ public class QuestManager : MonoBehaviour
 
             string[] data = line.Split(',');
 
-            if (data.Length < 8) // 새로운 데이터 열 수를 반영
-            {
-                Debug.LogError("Invalid quest data format: " + line);
-                continue;
-            }
-
             int id = int.Parse(data[0]);
             string title = data[1];
-            string description = data[2];
-            bool npcDialogue = bool.Parse(data[3]);
-            int requiresQuestId = string.IsNullOrWhiteSpace(data[4]) ? 0 : int.Parse(data[4]);
-            int itemToCollectId = int.Parse(data[5]);
-            int itemCountRequired = int.Parse(data[6]);
+            bool npcDialogue = bool.Parse(data[2]);
+            int requiresQuestId = string.IsNullOrWhiteSpace(data[3]) ? 0 : int.Parse(data[3]);
+            int itemToCollectId = int.Parse(data[4]);
+            int itemCountRequired = int.Parse(data[5]);
 
             List<string> questDialogues = new List<string>();
-            for (int i = 7; i < data.Length; i++)
+            for (int i = 6; i < data.Length; i++)
             {
                 if (!string.IsNullOrWhiteSpace(data[i]))
                 {
@@ -125,7 +109,7 @@ public class QuestManager : MonoBehaviour
                 }
             }
 
-            var questDataEntry = new QuestData(id, title, description, npcDialogue, requiresQuestId, itemToCollectId, itemCountRequired, questDialogues);
+            var questDataEntry = new QuestData(id, title, npcDialogue, requiresQuestId, itemToCollectId, itemCountRequired, questDialogues);
             questList.Add(questDataEntry);
             questData[id] = questDataEntry;
         }
@@ -141,24 +125,6 @@ public class QuestManager : MonoBehaviour
         else
         {
             Debug.LogError($"Quest ID not found: {questId}");
-        }
-    }
-
-    public void UpdateQuests()
-    {
-        foreach (var quest in questData.Values)
-        {
-            if (quest.GetQuestStatus() == QuestStatus.Available &&
-                (quest.requiresQuestId == 0 ||
-                 (questData.ContainsKey(quest.requiresQuestId) &&
-                  questData[quest.requiresQuestId].GetQuestStatus() == QuestStatus.Completed)))
-            {
-                if (!quest.npc)
-                {
-                    UpdateQuestStatus(quest.id, QuestStatus.InProgress);
-                    Debug.Log($"{quest.title} 퀘스트 자동 진행 중");
-                }
-            }
         }
     }
 }
