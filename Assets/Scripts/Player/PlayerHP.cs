@@ -40,9 +40,9 @@ public class PlayerHP : MonoBehaviour
 
     private void HPUI()
     {
-        for(int i =0; i<Heart.Length; i++)
+        for (int i = 0; i < Heart.Length; i++)
         {
-            if(i < PlayerStats.Instance.maxHp)
+            if (i < PlayerStats.Instance.maxHp)
             {
                 Heart[i].gameObject.SetActive(true);
                 Image heartImage = Heart[i].GetComponent<Image>();
@@ -51,9 +51,13 @@ public class PlayerHP : MonoBehaviour
                 {
                     heartImage.sprite = fullHeart;
                 }
-                else if (i == PlayerStats.Instance.currentHp)
+                else if (i == PlayerStats.Instance.currentHp && PlayerStats.Instance.currentHp % 2 == 1)
                 {
                     heartImage.sprite = halfHeart;
+                }
+                else
+                {
+                    heartImage.sprite = null;
                 }
             }
             else
@@ -62,6 +66,7 @@ public class PlayerHP : MonoBehaviour
             }
         }
     }
+
 
     private void Die()
     {
