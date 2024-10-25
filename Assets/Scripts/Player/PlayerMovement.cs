@@ -167,13 +167,22 @@ public class PlayerMovement : MonoBehaviour
             {
                 PlayerInfo.Instance.interacting = true;
                 ChangeCamera(UIInteraction.Instance.interactableObj.transform);
-
                 currentNpc = UIInteraction.Instance.interactableObj.GetComponent<NPC>();
+
+                LookAtNpc(currentNpc.transform);
             }
 
             if (currentNpc != null)
                 currentNpc.Interact();
         }
+    }
+
+    private void LookAtNpc(Transform npcTransform)
+    {
+        Vector3 direction = npcTransform.position - transform.position;
+        direction.y = 0;
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        transform.rotation = rotation;
     }
 
     private void ChangeCamera(Transform npcTransform)
