@@ -34,8 +34,16 @@ public class InvenCompenUI : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            ToggleInventory();
+            if (!FindObjectOfType<CookingSystem>().IsCookingActive())
+            {
+                ToggleInventory();
+            }
+            else
+            {
+                Debug.Log("인벤토리 켜진상태임");
+            }
         }
+
     }
 
     public void ToggleInventory()
