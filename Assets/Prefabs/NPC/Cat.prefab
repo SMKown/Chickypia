@@ -1023,11 +1023,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54b1e90346461432f85320ddcd298ce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest_ids: 01000000
+  quest_ids: 0100000002000000030000000400000005000000
   generalDialogues:
-  - "\uC798 \uC9C0\uB0C8\uC5B4?"
   - "\uC5B4\uB514 \uAC00\uB294 \uAE38\uC774\uC57C?"
-  - "\uC57C\uC639~"
+  - "\uC870\uC2EC\uD788 \uAC00~"
   questMark: {fileID: 2866386844988682385}
   DialogueText:
   - {fileID: 0}
