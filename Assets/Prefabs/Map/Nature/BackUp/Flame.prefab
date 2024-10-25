@@ -29,7 +29,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3608632956747415405}
   - {fileID: 1401883948692957547}
   - {fileID: 4727070402896326505}
   - {fileID: 8818930848958658987}
@@ -56,10 +55,13 @@ Transform:
   - {fileID: 8144095781322159765}
   - {fileID: 6643936376694860844}
   - {fileID: 7909848662068406364}
+  - {fileID: 6045993468240703714}
   - {fileID: 527759171678102205}
   - {fileID: 3353416719397375524}
+  - {fileID: 1383947915825823709}
   - {fileID: 7901704636689742814}
   - {fileID: 3206547898080376266}
+  - {fileID: 4884166221582606050}
   - {fileID: 6925129277877026793}
   - {fileID: 4470082100791421134}
   - {fileID: 4941339093206116777}
@@ -197,6 +199,7 @@ Transform:
   - {fileID: 3223140015868393382}
   - {fileID: 1782028278378115853}
   - {fileID: 2393943426988288646}
+  - {fileID: 3735065138802998328}
   - {fileID: 8108557873735141110}
   - {fileID: 8409587188640664107}
   - {fileID: 9185043379386822840}
@@ -2770,6 +2773,68 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
   m_PrefabInstance: {fileID: 397824387859616178}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &440747707892020892
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5326310494663096380}
+    m_Modifications:
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 78.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.00055933
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -12.599998
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4034978285170774949, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_Name
+      value: Cuv_lava_cubes_5 (63)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+--- !u!4 &1383947915825823709 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+  m_PrefabInstance: {fileID: 440747707892020892}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &445602494322722259
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2970,7 +3035,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.4
+      value: -0.90055937
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3004,25 +3069,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
-      objectReference: {fileID: 0}
     - target: {fileID: 4034978285170774949, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_Name
       value: Cuv_lava_cubes_5 (125)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9868,7 +9917,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.4
+      value: -0.7005593
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -9902,25 +9951,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
-      objectReference: {fileID: 0}
     - target: {fileID: 4034978285170774949, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_Name
       value: Cuv_lava_cubes_5 (184)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11730,7 +11763,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1831137071468070901, guid: 06515bc2a321a2d4ea0afc64511a1877, type: 3}
   m_PrefabInstance: {fileID: 2773682982180195683}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &2827535397364069932
+--- !u!1001 &2809262159757063545
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -11740,15 +11773,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 69.299995
+      value: 75.6
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.4
+      value: 2.0994408
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 24.5
+      value: -22.399996
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -11778,35 +11811,19 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.49999997
-      objectReference: {fileID: 0}
     - target: {fileID: 4034978285170774949, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_Name
       value: Cuv_lava_cubes_5 (174)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
---- !u!4 &3608632956747415405 stripped
+--- !u!4 &3735065138802998328 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-  m_PrefabInstance: {fileID: 2827535397364069932}
+  m_PrefabInstance: {fileID: 2809262159757063545}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2838510842972097096
 PrefabInstance:
@@ -13406,25 +13423,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.49999997
-      objectReference: {fileID: 0}
     - target: {fileID: 4034978285170774949, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_Name
       value: Cuv_lava_cubes_5 (51)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15716,25 +15717,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
-      objectReference: {fileID: 0}
     - target: {fileID: 4034978285170774949, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_Name
       value: Cuv_lava_cubes_5 (48)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.49999997
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16876,7 +16861,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.4
+      value: -0.70055926
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -16910,25 +16895,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
-      objectReference: {fileID: 0}
     - target: {fileID: 4034978285170774949, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_Name
       value: Cuv_lava_cubes_5 (140)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17732,25 +17701,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.49999997
-      objectReference: {fileID: 0}
     - target: {fileID: 4034978285170774949, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_Name
       value: Cuv_lava_cubes_5 (56)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18554,25 +18507,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
-      objectReference: {fileID: 0}
     - target: {fileID: 4034978285170774949, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_Name
       value: Cuv_lava_cubes_5 (58)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.49999997
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -22320,6 +22257,68 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1831137071468070901, guid: 06515bc2a321a2d4ea0afc64511a1877, type: 3}
   m_PrefabInstance: {fileID: 5084473589695572436}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5102213332414871971
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5326310494663096380}
+    m_Modifications:
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 78.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.00055933
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -11.199997
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4034978285170774949, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_Name
+      value: Cuv_lava_cubes_5 (62)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+--- !u!4 &6045993468240703714 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+  m_PrefabInstance: {fileID: 5102213332414871971}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5107434357921918730
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22892,7 +22891,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.4
+      value: -0.50055933
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -22926,25 +22925,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
-      objectReference: {fileID: 0}
     - target: {fileID: 4034978285170774949, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_Name
       value: Cuv_lava_cubes_5 (127)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -23404,7 +23387,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.4
+      value: -0.7005593
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -23438,25 +23421,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
-      objectReference: {fileID: 0}
     - target: {fileID: 4034978285170774949, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_Name
       value: Cuv_lava_cubes_5 (200)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -23482,7 +23449,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.4
+      value: -0.7005593
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -23516,25 +23483,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
-      objectReference: {fileID: 0}
     - target: {fileID: 4034978285170774949, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_Name
       value: Cuv_lava_cubes_5 (186)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -26260,25 +26211,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.49999982
-      objectReference: {fileID: 0}
     - target: {fileID: 4034978285170774949, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_Name
       value: Cuv_lava_cubes_5 (50)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.49999982
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -27172,7 +27107,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.4
+      value: -0.7005593
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -27206,25 +27141,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
-      objectReference: {fileID: 0}
     - target: {fileID: 4034978285170774949, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_Name
       value: Cuv_lava_cubes_5 (137)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -27284,25 +27203,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
-      objectReference: {fileID: 0}
     - target: {fileID: 4034978285170774949, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_Name
       value: Cuv_lava_cubes_5 (188)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -27810,6 +27713,68 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1831137071468070901, guid: 06515bc2a321a2d4ea0afc64511a1877, type: 3}
   m_PrefabInstance: {fileID: 6250200320795955268}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6260311025718695843
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5326310494663096380}
+    m_Modifications:
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 78.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.0005593896
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -8.399998
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4034978285170774949, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+      propertyPath: m_Name
+      value: Cuv_lava_cubes_5 (73)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+--- !u!4 &4884166221582606050 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
+  m_PrefabInstance: {fileID: 6260311025718695843}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6271687135091880402
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27886,7 +27851,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.4
+      value: -0.60055935
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -27920,25 +27885,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
-      objectReference: {fileID: 0}
     - target: {fileID: 4034978285170774949, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_Name
       value: Cuv_lava_cubes_5 (204)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -32428,7 +32377,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.4
+      value: -0.90055937
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -32462,25 +32411,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
-      objectReference: {fileID: 0}
     - target: {fileID: 4034978285170774949, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_Name
       value: Cuv_lava_cubes_5 (145)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -33064,7 +32997,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.4
+      value: -0.40055934
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -33098,25 +33031,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
-      objectReference: {fileID: 0}
     - target: {fileID: 4034978285170774949, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_Name
       value: Cuv_lava_cubes_5 (196)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -33328,7 +33245,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.4
+      value: -0.6005593
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -33362,25 +33279,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
-      objectReference: {fileID: 0}
     - target: {fileID: 4034978285170774949, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_Name
       value: Cuv_lava_cubes_5 (189)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -34026,7 +33927,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.4
+      value: -0.90055937
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -34060,25 +33961,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
-      objectReference: {fileID: 0}
     - target: {fileID: 4034978285170774949, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_Name
       value: Cuv_lava_cubes_5 (203)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -35406,7 +35291,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.4
+      value: -0.80055934
       objectReference: {fileID: 0}
     - target: {fileID: 1524781802500655425, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -35440,25 +35325,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
-      objectReference: {fileID: 0}
     - target: {fileID: 4034978285170774949, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_Name
       value: Cuv_lava_cubes_5 (139)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -38246,25 +38115,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
-      objectReference: {fileID: 0}
     - target: {fileID: 4034978285170774949, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_Name
       value: Cuv_lava_cubes_5 (59)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -38324,25 +38177,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2115969228783388331, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.49999997
-      objectReference: {fileID: 0}
     - target: {fileID: 4034978285170774949, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
       propertyPath: m_Name
       value: Cuv_lava_cubes_5 (198)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7716717187950642521, guid: 280f61631067c4f4d9faf7741a841d8d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4999999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
