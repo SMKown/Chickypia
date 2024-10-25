@@ -726,7 +726,7 @@ MonoBehaviour:
   - {x: 1, y: 0, z: 0}
   FleePoints: []
   FlashTrans: {fileID: 8199860322375861839}
-  dropItemData: {fileID: 0}
+  dropItemData: {fileID: 11400000, guid: afe7f068b04045144862c437dc041542, type: 2}
   dropItemPrefab: {fileID: 5857909854282709900, guid: a687cccb46f2df342b01697475b13ec7, type: 3}
   projectileSpeed: 3
   damage: 1

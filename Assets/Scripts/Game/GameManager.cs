@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
     private void ToggleOptionMenu()
     {
         option.SetActive(!option.activeSelf);
+        Moption.SetActive(true);
+        soundOption.SetActive(false);
     }
 
     public void OpenOptionButton()
