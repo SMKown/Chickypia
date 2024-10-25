@@ -29,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
     private QuestManager questManager;
     private NPC currentNpc;
 
+    public AudioSource AttackSound;
+
     private void Start()
     {
         questManager = FindObjectOfType<QuestManager>();
@@ -109,6 +111,10 @@ public class PlayerMovement : MonoBehaviour
         {
             PlayerInfo.Instance.attacking = true;
             animator.SetTrigger("Attack");
+            if (AttackSound != null)
+            {
+                AttackSound.Play();
+            }
             int attackDamage = PlayerStats.Instance.attackDamage;
 
             Collider[] hitEnemies = Physics.OverlapSphere(transform.position, attackRange);

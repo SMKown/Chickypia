@@ -27,6 +27,8 @@ public abstract class Enemy : MonoBehaviour
     public ItemData dropItemData;
     public GameObject dropItemPrefab;
 
+    public AudioSource damageSound;
+
     protected virtual void Awake()
     {
         player = GameObject.Find("Player_AttackMode").transform;
@@ -39,6 +41,12 @@ public abstract class Enemy : MonoBehaviour
         if (health <= 0) return;
 
         health -= damage;
+
+        if (damageSound != null)
+        {
+            damageSound.Play();
+        }
+
         Knockback(playerForwardDirection, knockbackForce);
         StartCoroutine(FlashTR());
         SetAnimationState(AnimationState.Damage);
