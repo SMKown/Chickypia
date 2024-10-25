@@ -38,6 +38,7 @@ public class CookingSystem : MonoBehaviour
     private bool isCooking = false;
 
     public FoodRecipeData currentRecipe;
+    private QuestManager questManager;
 
 
     private void Awake()
@@ -50,7 +51,7 @@ public class CookingSystem : MonoBehaviour
         foodImage = makePopup.GetChild(0).GetChild(0).GetComponent<Image>();
         inventoryManager = FindObjectOfType<InventoryManager>();
         invenCompenUI = FindObjectOfType<InvenCompenUI>();
-
+        questManager = FindObjectOfType<QuestManager>();
 
         if (choicePopup == null) { Debug.LogError("choicePopup is not assigned."); }
         if (makePopup == null) { Debug.LogError("makePopup is not assigned."); }
@@ -96,7 +97,7 @@ public class CookingSystem : MonoBehaviour
         }
 
         cookButton.onClick.RemoveAllListeners();
-        cookButton.onClick.AddListener(() => Cook(currentRecipe));
+        cookButton.onClick.AddListener(() => Cook(currentRecipe, questManager));
 
         ClearIngredientSlots();
 
@@ -218,7 +219,7 @@ public class CookingSystem : MonoBehaviour
         }
     }
 
-    public void Cook(FoodRecipeData recipe)
+    public void Cook(FoodRecipeData recipe, QuestManager questManager)
     {
         if(isCooking)
         {
@@ -240,7 +241,7 @@ public class CookingSystem : MonoBehaviour
                 }
             }
 
-            StartCoroutine(Cooking(recipe));
+            StartCoroutine(Cooking(recipe, questManager));
         }
         else
         {
@@ -278,10 +279,20 @@ public class CookingSystem : MonoBehaviour
         cookButton.interactable = allIngredientsMet;
     }
 
-    IEnumerator Cooking(FoodRecipeData recipe)
+    IEnumerator Cooking(FoodRecipeData recipe, QuestManager questManager)
     {
         yield return new WaitForSeconds(3f);
         inventoryManager.AddItem(recipe.resultItem, 1);
+
+        // 수집한 아이템의 ID를 퀘스트와 비교
+        foreach (var quest in questManager.questList)
+        {
+            if (quest.itemId == recipe.resultItem.itemId)
+            {
+                quest.UpdateItemCount(1);
+            }
+        }
+
         currentRecipe = null;
         foodName.text = "";
         foodImage.sprite = null;

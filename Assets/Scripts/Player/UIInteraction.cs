@@ -33,10 +33,10 @@ public class UIInteraction : MonoBehaviour
     private void Start()
     {
         // 태그와 이미지 매핑
-        tagToImageMap.Add("Collectible", collection);
-        tagToImageMap.Add("Gatherable", gathering);
-        tagToImageMap.Add("CookingSpot", cooking);
-        tagToImageMap.Add("Dialog", dialog);
+        tagToImageMap.Add("Collectible", collection);   // 0
+        tagToImageMap.Add("Gatherable", gathering);     // 1
+        tagToImageMap.Add("CookingSpot", cooking);      // 2
+        tagToImageMap.Add("Dialog", dialog);            // 3
     }
 
     private void Update()
@@ -54,7 +54,7 @@ public class UIInteraction : MonoBehaviour
         {
             interactableObj = other.gameObject;
             ImageOn(tagToImageMap[other.tag], interactableObj.transform);
-        }
+        }        
     }
 
     private void OnTriggerExit(Collider other)

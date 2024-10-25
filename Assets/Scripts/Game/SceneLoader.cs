@@ -1,10 +1,94 @@
+using System.Collections.Generic;
 using UnityEngine;
+using System;
+using UnityEngine.UI;
+using System.Collections;
 
 public class SceneLoader : MonoBehaviour
 {
     public InventoryManager inventoryManager;
     public CompendiumManager compendiumManager;
     public PlayerStats playerstats;
+
+    public Image Flame;
+    public Image Desert;
+    public Image Jungle;
+
+    public bool isCanLoad = false;
+    public bool isUIReander = false;
+
+    private string SceneName;
+
+    private Dictionary<string, Action> methodDictionary;
+    private Dictionary<string, Image> SceneUIinteraction;
+
+    private float elapsedTime;
+    private float animationDuration = 0.25F;
+
+    private void Start()
+    {
+        methodDictionary = new Dictionary<string, Action>
+        {
+            { "MainScene",      MainScene    },
+            { "NewGame",        NewGame      },
+            { "VillageScene",   VillageScene },
+            { "CustomScene",    CustomScene  },
+            { "FishingScene",   FishingScene },
+            { "Flame01",        Flame01      },
+            { "Flame02",        Flame02      },
+            { "Flame03",        Flame03      },
+            { "Jungle01",       Jungle01     },
+            { "Jungle02",       Jungle02     },
+            { "Jungle03",       Jungle03     },
+            { "Desert01",       Desert01     },
+            { "Desert02",       Desert02     },
+            { "Desert03",       Desert03     }
+        };
+
+       SceneUIinteraction = new Dictionary<string, Image>
+       {
+           { "Flame01", Flame },
+           { "Desert01", Desert },
+           { "Jungle01", Jungle }
+       };
+    }    
+
+    private void Update()
+    {
+        if (isCanLoad && Input.GetKeyDown(KeyCode.E))
+        {
+            if (methodDictionary.TryGetValue(SceneName, out Action method))
+            {
+                method.Invoke();
+            }
+            else
+            {
+                Debug.LogWarning($"No method mapped for scene: {SceneName}");
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        isCanLoad = true;
+        SceneName = other.gameObject.name;
+        if (SceneUIinteraction.TryGetValue(SceneName, out Image image))
+        {
+            isUIReander = true;
+            StartCoroutine(ImageOn(image));
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        isCanLoad = false;
+        SceneName = other.gameObject.name;
+        if (SceneUIinteraction.TryGetValue(SceneName, out Image image))
+        {
+            isUIReander = false;
+            StartCoroutine(ImageOff(image));
+        }
+    }
 
     public void MainScene()
     {
@@ -134,6 +218,50 @@ public class SceneLoader : MonoBehaviour
         if (playerstats != null)
         {
             playerstats.ResetPlayerState();
+        }
+    }
+    
+    private IEnumerator ImageOn(Image image)
+    {
+        if (image == null)
+        {
+            yield break;
+        }
+        image.enabled = true;
+
+        elapsedTime = 0F;
+        while (elapsedTime < animationDuration)
+        {
+            float t = elapsedTime / animationDuration;
+            image.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        image.transform.localScale = Vector3.one;
+    }
+
+    private IEnumerator ImageOff(Image image)
+    {
+        if (image == null)
+        {
+            yield break;
+        }
+        elapsedTime = 0F;
+        while (elapsedTime < animationDuration)
+        {
+            if (image == null)
+            {
+                yield break;
+            }
+            float t = elapsedTime / animationDuration;
+            image.transform.localScale = Vector3.Lerp(Vector3.one, Vector3.zero, t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        if (image != null)
+        {
+            image.transform.localScale = Vector3.zero;
+            image.enabled = false;
         }
     }
 }

@@ -12,7 +12,12 @@ public class PlayerStats : MonoBehaviour
     public int attackDamage = 1;
     public float moveSpeed = 1.4f;
 
+    public GameObject[] FoodEffectFxs;
+
     private string saveFilePath;
+
+    // 000 public FoodRecipeData food;
+    private InventoryManager inventoryManager;
 
     private void Awake()
     {
@@ -25,6 +30,8 @@ public class PlayerStats : MonoBehaviour
         saveFilePath = Path.Combine(Application.persistentDataPath, "playerState.json");
 
         LoadPlayerState();
+        inventoryManager = FindObjectOfType<InventoryManager>();
+        // 00 inventoryManager.AddItem(recipe.resultItem, 1);
     }
 
     public void ChangeMaxHealth(int amount)
@@ -48,6 +55,7 @@ public class PlayerStats : MonoBehaviour
 
     public void ChangeMoveSpeed(float amount)
     {
+        FoodEffectFxs[0].SetActive(true);
         moveSpeed += amount;
         SavePlayerState();
     }
