@@ -71,7 +71,7 @@ public class CookingSystem : MonoBehaviour
             {
                 StopCook();
             }
-            else
+            else if (!invenCompenUI.isInventoryOpen)
             {
                 StartCook();
             }
@@ -227,6 +227,7 @@ public class CookingSystem : MonoBehaviour
             choicePopup.gameObject.SetActive(false);
             makePopup.gameObject.SetActive(false);
             invenCompenUI.SetInventoryActive(false);
+            foodImage.gameObject.SetActive(false);
             cookButton.interactable = false;
             foreach (var ingredient in recipe.ingredients)
             {
@@ -284,14 +285,14 @@ public class CookingSystem : MonoBehaviour
         yield return new WaitForSeconds(3f);
         inventoryManager.AddItem(recipe.resultItem, 1);
 
-        // 수집한 아이템의 ID를 퀘스트와 비교
-        foreach (var quest in questManager.questList)
-        {
-            if (quest.itemId == recipe.resultItem.itemId)
-            {
-                quest.UpdateItemCount(1);
-            }
-        }
+        //// 수집한 아이템의 ID를 퀘스트와 비교
+        //foreach (var quest in questManager.questList)
+        //{
+        //    if (quest.itemId == recipe.resultItem.itemId)
+        //    {
+        //        quest.UpdateItemCount(1);
+        //    }
+        //}
 
         currentRecipe = null;
         foodName.text = "";
