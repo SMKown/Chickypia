@@ -9,6 +9,7 @@ public class SceneLoader : MonoBehaviour
     public InventoryManager inventoryManager;
     public CompendiumManager compendiumManager;
     public PlayerStats playerstats;
+    public QuestManager QuestManager;
 
     public Image Flame;
     public Image Desert;
@@ -199,26 +200,36 @@ public class SceneLoader : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("InventoryManager 없음");
+            Debug.Log("InventoryManager 없음");
         }
 
         //도감 저장
         if (compendiumManager != null)
         {
-            compendiumManager.SaveCompendium(); // 도감 저장
+            compendiumManager.SaveCompendium();
         }
         else
         {
-            Debug.LogWarning("CompendiumManager 없음");
+            Debug.Log("CompendiumManager 없음");
         }
 
+        //스탯 저장
         if(playerstats != null)
         {
             playerstats.SavePlayerState();
         }
         else
         {
-            Debug.LogWarning("PlayerState 없음");
+            Debug.Log("PlayerState 없음");
+        }
+
+        if (QuestManager != null)
+        {
+            QuestManager.SaveQuestProgress();
+        }
+        else
+        {
+            Debug.Log("QuestProgress 없음");  
         }
     }
 
@@ -235,6 +246,10 @@ public class SceneLoader : MonoBehaviour
         if (playerstats != null)
         {
             playerstats.ResetPlayerState();
+        }
+        if (QuestManager != null)
+        {
+            QuestManager.ResetQuestProgress();
         }
     }
     

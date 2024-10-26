@@ -1,6 +1,8 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.VisualScripting;
 
 public enum QuestStatus
 {
@@ -62,9 +64,17 @@ public class QuestManager : MonoBehaviour
     public List<QuestData> questList = new List<QuestData>();
     private Dictionary<int, QuestData> questData = new Dictionary<int, QuestData>();
 
+    private string filePath;
+
+    private void Awake()
+    {
+        filePath = Path.Combine(Application.persistentDataPath, "questData.json");
+    }
+
     void Start()
     {
         LoadQuestData();
+        LoadQuestProgress();
     }
 
     public QuestData GetQuestData(int questId)
@@ -87,6 +97,61 @@ public class QuestManager : MonoBehaviour
                      prerequisiteQuest.GetQuestStatus() == QuestStatus.Completed));
         }
         return false;
+    }
+
+    public void SaveQuestProgress()
+    {
+        List<QuestData> questProgressList = new List<QuestData>();
+
+        foreach (var quest in questList)
+        {
+            if (quest.GetQuestStatus() != QuestStatus.Available)
+            {
+                questProgressList.Add(quest);
+            }
+        }
+        string jsonData = JsonUtility.ToJson(new QuestListWrapper { quests = questProgressList }, true);
+        File.WriteAllText(filePath, jsonData);
+        Debug.Log("@@@@@@@@@@@@@@ 퀘스트 저장 @@@@@@@@@@@@@@");
+    }
+
+    public void LoadQuestProgress()
+    {
+        if (File.Exists(filePath))
+        {
+            string jsonData = File.ReadAllText(filePath);
+            QuestListWrapper questWrapper = JsonUtility.FromJson<QuestListWrapper>(jsonData);
+
+            foreach (var savedQuest in questWrapper.quests)
+            {
+                if (questData.TryGetValue(savedQuest.id, out var quest))
+                {
+                    quest.status = savedQuest.status;
+                    quest.itemCount = savedQuest.itemCount;
+                }
+            }
+            Debug.Log("@@@@@@@@@@@@@@ 퀘스트 진행 불러옴 @@@@@@@@@@@@@@");
+        }
+        else
+        {
+            Debug.Log("퀘스트 데이터 없으요");
+        }
+    }
+
+    public void ResetQuestProgress()
+    {
+        foreach (var quest in questList)
+        {
+            quest.SetQuestStatus(QuestStatus.Available);
+            quest.itemCount = 0;
+        }
+
+        if (File.Exists(filePath))
+        {
+            File.Delete(filePath);
+        }
+
+        Debug.Log("@@@@@@@@@@@@@@ 퀘스트 진행 초기화됨 @@@@@@@@@@@@@@");
     }
 
     void LoadQuestData()
@@ -122,4 +187,11 @@ public class QuestManager : MonoBehaviour
             questData[id] = questDataEntry;
         }
     }
+}
+
+
+[Serializable]
+public class QuestListWrapper
+{
+    public List<QuestData> quests;
 }

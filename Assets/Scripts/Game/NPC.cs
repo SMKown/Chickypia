@@ -143,6 +143,7 @@ public class NPC : MonoBehaviour
                 if (quest.itemCount >= quest.itemCountRequired)
                 {
                     quest.SetQuestStatus(QuestStatus.Completed);
+                    questManager.SaveQuestProgress();
                 }
 
                 DisplayQuestInfo(quest); // 상태 업데이트 후에 호출
