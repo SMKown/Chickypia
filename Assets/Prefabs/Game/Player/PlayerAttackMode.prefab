@@ -2847,6 +2847,7 @@ MonoBehaviour:
   currentHp: 5
   moveSpeed: 1.4
   attackDamage: 1
+  defaultMoveSpeed: 1.4
   useItem: 0
   FoodEffectFxs: []
   CurrentFoodEffectFys: {fileID: 0}
@@ -12656,6 +12657,7 @@ GameObject:
   - component: {fileID: 7758266030467252584}
   - component: {fileID: 1577998325450182664}
   - component: {fileID: 8081182245337730882}
+  - component: {fileID: 8417913086776033224}
   m_Layer: 8
   m_Name: InteractionRange
   m_TagString: Untagged
@@ -12744,6 +12746,27 @@ MonoBehaviour:
   dialog: {fileID: 0}
   gatherProgress: {fileID: 0}
   interactableObj: {fileID: 0}
+--- !u!114 &8417913086776033224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3738143449022790037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ae9fa1b6d7b64b2ca4dddafe0b2bce4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryManager: {fileID: 0}
+  compendiumManager: {fileID: 0}
+  playerstats: {fileID: 3596064333000365569}
+  Flame: {fileID: 0}
+  Desert: {fileID: 0}
+  Jungle: {fileID: 0}
+  Village: {fileID: 0}
+  isCanLoad: 0
+  isUIReander: 0
 --- !u!1 &3758161444517665122
 GameObject:
   m_ObjectHideFlags: 0
