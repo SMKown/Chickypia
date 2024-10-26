@@ -60,9 +60,11 @@ public class NPC : MonoBehaviour
                          (quest.requiresQuestId == 0 || questManager.GetQuestData(quest.requiresQuestId)?.GetQuestStatus() == QuestStatus.Completed))
                 {
                     hasAvailableQuest = true;
+
                     if (questBoxInstance == null)
                     {
                         CreateQuestBox();
+                        DisplayQuestInfo(quest); // 퀘스트 정보 업데이트
                     }
                 }
             }
@@ -114,7 +116,9 @@ public class NPC : MonoBehaviour
     private IEnumerator EnableInteractionDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        UIInteraction.Instance.ImageOn(UIInteraction.Instance.dialog, transform);
+        
+        if (UIInteraction.Instance.interactableObj != null)
+            UIInteraction.Instance.ImageOn(UIInteraction.Instance.dialog, transform);
         PlayerInfo.Instance.canInteract = true;
     }
 
@@ -133,12 +137,20 @@ public class NPC : MonoBehaviour
             {
                 quest.SetQuestStatus(QuestStatus.InProgress);
                 quest.OnItemCountUpdated += () => DisplayQuestInfo(quest); // 이벤트 연결
-                DisplayQuestInfo(quest);
+
                 quest.UpdateItemCount(0);
+
+                if (quest.itemCount >= quest.itemCountRequired)
+                {
+                    quest.SetQuestStatus(QuestStatus.Completed);
+                }
+
+                DisplayQuestInfo(quest); // 상태 업데이트 후에 호출
             }
             CloseDialogue();
         }
     }
+
 
     private QuestData GetActiveQuest()
     {
@@ -158,6 +170,17 @@ public class NPC : MonoBehaviour
 
         QuestTxt[2].text = quest.title;
         QuestTxt[3].text = $"[{quest.explanation}]";
-        QuestTxt[4].text = quest.itemCount != quest.itemCountRequired ? $"[{quest.itemCount}/{quest.itemCountRequired}]" : "퀘스트 완료!";
+
+        Debug.Log($"Quest Status: {quest.status}"); // 디버그 로그 추가
+
+        if (quest.itemId == 100)
+        {
+            string name = transform.parent.name == "Cat" ? "삼냥이" : "강태곰";
+            QuestTxt[4].text = quest.status != QuestStatus.Completed ? $"{name}에게 가볼까?" : "퀘스트 완료!";
+        }
+        else
+        {
+            QuestTxt[4].text = quest.status != QuestStatus.Completed ? $"[{quest.itemCount}/{quest.itemCountRequired}]" : "퀘스트 완료!";
+        }
     }
 }
