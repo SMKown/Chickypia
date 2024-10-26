@@ -38,12 +38,7 @@ public class InvenCompenUI : MonoBehaviour
             {
                 ToggleInventory();
             }
-            else
-            {
-                Debug.Log("인벤토리 켜진상태임");
-            }
         }
-
     }
 
     public void ToggleInventory()

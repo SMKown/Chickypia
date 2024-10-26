@@ -50,7 +50,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-            Debug.Log("Right click detected on item: " + item.itemName);
             UseItem();
         }
     }
@@ -67,17 +66,11 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 InventorySlot parentSlot = transform.parent?.GetComponent<InventorySlot>();
                 if (parentSlot != null)
                 {
-                    Debug.Log("슬롯 색상 변경을 시도합니다.");
-                    parentSlot.slotBackgroundImage.color = new Color(1, 1, 1, 1); // 흰색 강제 설정
+                    parentSlot.slotBackgroundImage.color = new Color(1, 1, 1, 1);
                     parentSlot.slotBackgroundImage.SetAllDirty();
-                }
-                else
-                {
-                    Debug.Log("슬롯을 찾을 수 없습니다.");
                 }
                 if (tooltipUI != null)
                 {
-                    Debug.Log("툴팁숨김");
                     tooltipUI.HideToolTip();
                 }
                 Destroy(gameObject);
@@ -86,10 +79,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             {
                 ItemCount();
             }
-        }
-        else
-        {
-            Debug.Log("This item cannot be consumed.");
         }
     }
 
@@ -100,7 +89,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         PlayerStats.Instance.ChangeAttackDamage(item.attackDamage);
         PlayerStats.Instance.ChangeMoveSpeed(item.moveSpeed);
 
-        Debug.Log($"Used {item.itemName}: MaxHP +{item.hpMax}, CurrentHP +{item.hp}, Attack +{item.attackDamage}, MoveSpeed +{item.moveSpeed}");
+        Debug.Log($"{item.itemName}: 최대체력 +{item.hpMax}, 힐 +{item.hp}, 공격력 +{item.attackDamage}, 이동속도 +{item.moveSpeed}");
     }
 
 
