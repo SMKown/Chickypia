@@ -70,24 +70,30 @@ public class SceneLoader : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        isCanLoad = true;
-        SceneName = other.gameObject.name;
-        if (SceneUIinteraction.TryGetValue(SceneName, out Image image))
+        if(other.gameObject.CompareTag("MoveScene"))
         {
-            isUIReander = true;
-            StartCoroutine(ImageOn(image));
-        }
+            isCanLoad = true;
+            SceneName = other.gameObject.name;
+            if (SceneUIinteraction.TryGetValue(SceneName, out Image image))
+            {
+                isUIReander = true;
+                StartCoroutine(ImageOn(image));
+            }
+        }        
     }
 
     private void OnTriggerExit(Collider other)
     {
-        isCanLoad = false;
-        SceneName = other.gameObject.name;
-        if (SceneUIinteraction.TryGetValue(SceneName, out Image image))
+        if (other.gameObject.CompareTag("MoveScene"))
         {
-            isUIReander = false;
-            StartCoroutine(ImageOff(image));
-        }
+            isCanLoad = false;
+            SceneName = other.gameObject.name;
+            if (SceneUIinteraction.TryGetValue(SceneName, out Image image))
+            {
+                isUIReander = false;
+                StartCoroutine(ImageOff(image));
+            }
+        }            
     }
 
     public void MainScene()
@@ -176,7 +182,7 @@ public class SceneLoader : MonoBehaviour
         if (inventoryManager != null)
         {
             inventoryManager.SaveInventory();
-            Debug.Log("인벤토리 저장");
+            //Debug.Log("인벤토리 저장");
         }
         else
         {
@@ -187,7 +193,7 @@ public class SceneLoader : MonoBehaviour
         if (compendiumManager != null)
         {
             compendiumManager.SaveCompendium(); // 도감 저장
-            Debug.Log("도감 저장");
+            //Debug.Log("도감 저장");
         }
         else
         {
@@ -197,7 +203,7 @@ public class SceneLoader : MonoBehaviour
         if(playerstats != null)
         {
             playerstats.SavePlayerState();
-            Debug.Log("플레이어 스탯 저장");
+            //Debug.Log("플레이어 스탯 저장");
         }
         else
         {
