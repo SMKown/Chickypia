@@ -12,9 +12,9 @@ public class PlayerStats : MonoBehaviour
     public int maxHp = 3;
     public int currentHp;
     public float moveSpeed = 1.4f;
-    public int attackDamage = 1;    
-
-    [HideInInspector]public bool useItem = false;
+    public int attackDamage = 1;
+    [HideInInspector] public float defaultMoveSpeed = 1.4f;
+    [HideInInspector] public bool useItem = false;
 
     public GameObject[] FoodEffectFxs;
     public GameObject CurrentFoodEffectFys;
@@ -39,6 +39,11 @@ public class PlayerStats : MonoBehaviour
 
         LoadPlayerState();
         inventoryManager = FindObjectOfType<InventoryManager>();
+    }
+
+    private void Start()
+    {
+        defaultMoveSpeed = moveSpeed;
     }
 
     public void ChangeHealHealth(int hpAmount)

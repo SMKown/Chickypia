@@ -13,6 +13,7 @@ public class SceneLoader : MonoBehaviour
     public Image Flame;
     public Image Desert;
     public Image Jungle;
+    public Image Village;
 
     public bool isCanLoad = false;
     public bool isUIReander = false;
@@ -49,7 +50,8 @@ public class SceneLoader : MonoBehaviour
        {
            { "Flame01", Flame },
            { "Desert01", Desert },
-           { "Jungle01", Jungle }
+           { "Jungle01", Jungle },
+           { "Village", Village },
        };
     }    
 
@@ -104,10 +106,18 @@ public class SceneLoader : MonoBehaviour
     public void NewGame()
     {
         ResetScene();
+        if (playerstats != null)
+        {
+            playerstats.moveSpeed = 3f;
+        }
         LoadingSceneManager.LoadScene("Village");
     }
     public void VillageScene()
     {
+        if (playerstats != null)
+        {
+            playerstats.moveSpeed = 3f;
+        }
         SaveAllBeforeSceneLoad();
         LoadingSceneManager.LoadScene("Village");
     }
@@ -178,6 +188,10 @@ public class SceneLoader : MonoBehaviour
 
     private void SaveAllBeforeSceneLoad()
     {
+        if (playerstats != null)
+        {
+            playerstats.moveSpeed = playerstats.defaultMoveSpeed;
+        }
         //인벤토리 저장
         if (inventoryManager != null)
         {
