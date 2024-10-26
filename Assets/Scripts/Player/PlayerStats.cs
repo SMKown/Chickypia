@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -16,7 +17,11 @@ public class PlayerStats : MonoBehaviour
     [HideInInspector]public bool useItem = false;
 
     public GameObject[] FoodEffectFxs;
+    public GameObject CurrentFoodEffectFys;
     public GameObject timeManager;
+
+    public GameObject moveSpeedUI;
+    public GameObject attackDamageUI;
 
     private string saveFilePath;
 
@@ -38,14 +43,16 @@ public class PlayerStats : MonoBehaviour
 
     public void ChangeHealHealth(int hpAmount)
     {
-        FoodEffectFxs[0].SetActive(true);
+        CurrentFoodEffectFys = FoodEffectFxs[0];
+        CurrentFoodEffectFys.SetActive(true);
         currentHp = Mathf.Min(currentHp + hpAmount, maxHp);
         SavePlayerState();
     }
 
     public void ChangeMaxHealth(int maxHpAmount)
     {
-        FoodEffectFxs[1].SetActive(true);
+        CurrentFoodEffectFys = FoodEffectFxs[1];
+        CurrentFoodEffectFys.SetActive(true);
         maxHp += maxHpAmount;
         currentHp = Mathf.Min(currentHp + maxHpAmount, maxHp);
         SavePlayerState();
@@ -54,6 +61,7 @@ public class PlayerStats : MonoBehaviour
     public void ChangeMoveSpeed(float speedAmount, float time)
     {
         FoodEffectFxs[2].SetActive(true);
+        moveSpeedUI.SetActive(true);
         moveSpeed += speedAmount;
         SavePlayerState();
         GameObject effecTimer = Instantiate(timeManager, Vector3.zero, Quaternion.identity);
@@ -68,6 +76,7 @@ public class PlayerStats : MonoBehaviour
     public void ChangeAttackDamage(int attckDanageAmount, float time)
     {
         FoodEffectFxs[3].SetActive(true);
+        attackDamageUI.SetActive(true);
         attackDamage += attckDanageAmount;
         SavePlayerState();
         GameObject effecTimer = Instantiate(timeManager, Vector3.zero, Quaternion.identity);
@@ -82,6 +91,7 @@ public class PlayerStats : MonoBehaviour
     public void EndEffect(float amount)
     {
         FoodEffectFxs[2].SetActive(false);
+        moveSpeedUI.SetActive(false);
         moveSpeed -= amount;
 
         SavePlayerState();
@@ -90,6 +100,7 @@ public class PlayerStats : MonoBehaviour
     public void EndEffect(int amount)
     {
         FoodEffectFxs[3].SetActive(false);
+        attackDamageUI.SetActive(false);
         attackDamage -= amount;
 
         SavePlayerState();

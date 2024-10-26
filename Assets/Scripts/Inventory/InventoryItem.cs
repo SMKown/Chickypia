@@ -71,12 +71,10 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 {
                     parentSlot.slotBackgroundImage.color = new Color(1, 1, 1, 1);
                     parentSlot.slotBackgroundImage.SetAllDirty();
-                    Debug.Log("A");
                 }
                 if (tooltipUI != null)
                 {
                     tooltipUI.HideToolTip();
-                    Debug.Log("B");
                 }
                 PlayerStats.Instance.useItem = false;
                 Destroy(gameObject);
@@ -84,7 +82,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             else
             {
                 ItemCount();
-                Debug.Log("C");
             }    
         }
         else
@@ -93,6 +90,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
         yield return new WaitForSeconds(3f);
         PlayerStats.Instance.useItem = false;
+        PlayerStats.Instance.CurrentFoodEffectFys.SetActive(false);
     }
 
     private void ApplyFoodEffect()

@@ -26764,6 +26764,7 @@ Transform:
   - {fileID: 8288674598419317718}
   - {fileID: 1121155020550116275}
   - {fileID: 1954557922050484219}
+  - {fileID: 6880663706577709710}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &8268102467022947428
@@ -26780,6 +26781,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackMode: 1
   moving: 0
+  canInteract: 1
   interacting: 0
   attacking: 0
   casting: 0
@@ -26859,8 +26861,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 5
   currentHp: 5
-  attackDamage: 1
   moveSpeed: 1.4
+<<<<<<< Updated upstream
   useItem: 0
   FoodEffectFxs: []
 --- !u!82 &5182062470592243092
@@ -26959,6 +26961,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+=======
+  attackDamage: 1
+  useItem: 0
+  FoodEffectFxs:
+  - {fileID: 3947158528233692736}
+  - {fileID: 8855672438231536126}
+  - {fileID: 7753668622991171293}
+  - {fileID: 3535721282727334722}
+  CurrentFoodEffectFys: {fileID: 0}
+  timeManager: {fileID: 7771640375752401358, guid: 9fff2d5bb158d2e4c95785e09bb02559, type: 3}
+  moveSpeedUI: {fileID: 0}
+  attackDamageUI: {fileID: 0}
+>>>>>>> Stashed changes
 --- !u!1 &7476361384622233438
 GameObject:
   m_ObjectHideFlags: 0
@@ -34180,4 +34195,98 @@ GameObject:
 Transform:
   m_CorrespondingSourceObject: {fileID: 5167489746015498599, guid: a30414a235296492895560ebc8eba9eb, type: 3}
   m_PrefabInstance: {fileID: 3369723065267541644}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8093510645823148018
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 766207004619489451}
+    m_Modifications:
+    - target: {fileID: 1358209102342003020, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
+      propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1358209102342003020, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
+      propertyPath: prewarm
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4701910615992687792, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8333442252870232795, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
+      propertyPath: m_Name
+      value: FoodEffect
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
+--- !u!1 &3535721282727334722 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4701910615992687792, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
+  m_PrefabInstance: {fileID: 8093510645823148018}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3947158528233692736 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5086519777177129394, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
+  m_PrefabInstance: {fileID: 8093510645823148018}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6880663706577709710 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
+  m_PrefabInstance: {fileID: 8093510645823148018}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7753668622991171293 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2002832470509785391, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
+  m_PrefabInstance: {fileID: 8093510645823148018}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8855672438231536126 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 771318560346840588, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
+  m_PrefabInstance: {fileID: 8093510645823148018}
   m_PrefabAsset: {fileID: 0}
