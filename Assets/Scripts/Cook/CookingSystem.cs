@@ -61,7 +61,7 @@ public class CookingSystem : MonoBehaviour
 
     private void Update()
     {
-        if(isLetsCook)
+        if (isLetsCook && !PlayerInfo.Instance.attackMode)
         {
             StartCook();
         }
@@ -71,7 +71,7 @@ public class CookingSystem : MonoBehaviour
             {
                 StopCook();
             }
-            else if (!invenCompenUI.isInventoryOpen)
+            else if (!invenCompenUI.isInventoryOpen && !PlayerInfo.Instance.attackMode)
             {
                 StartCook();
             }

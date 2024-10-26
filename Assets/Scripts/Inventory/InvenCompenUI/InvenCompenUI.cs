@@ -34,7 +34,7 @@ public class InvenCompenUI : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            if (!FindObjectOfType<CookingSystem>().IsCookingActive())
+            if (!FindObjectOfType<CookingSystem>().IsCookingActive() || PlayerInfo.Instance.attackMode)
             {
                 ToggleInventory();
             }
