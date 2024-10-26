@@ -234,11 +234,14 @@ public class Fishing : MonoBehaviour
         {
             inventoryManager.AddItem(fishItemData, 1);
 
-            foreach (var quest in questManager.questList)
+            if (questManager != null)
             {
-                if (quest.itemId == fishItemData.itemId)
+                foreach (var quest in questManager.questList)
                 {
-                    quest.UpdateItemCount(1);
+                    if (quest.itemId == fishItemData.itemId)
+                    {
+                        quest.UpdateItemCount(1);
+                    }
                 }
             }
         }
