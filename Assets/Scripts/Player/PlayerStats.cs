@@ -12,6 +12,8 @@ public class PlayerStats : MonoBehaviour
     public int attackDamage = 1;
     public float moveSpeed = 1.4f;
 
+    public bool useItem = false;
+
     public GameObject[] FoodEffectFxs;
 
     private string saveFilePath;
@@ -82,7 +84,7 @@ public class PlayerStats : MonoBehaviour
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(saveFilePath, json);
 
-        Debug.Log("상태 저장: " + saveFilePath);
+        // Debug.Log("상태 저장: " + saveFilePath);
     }
     public void LoadPlayerState()
     {
@@ -96,11 +98,11 @@ public class PlayerStats : MonoBehaviour
             this.attackDamage = data.attackDamage;
             this.moveSpeed = data.moveSpeed;
 
-            Debug.Log("상태 불러오기: " + saveFilePath);
+            // Debug.Log("상태 불러오기: " + saveFilePath);
         }
         else
         {
-            Debug.Log("저장파일 X");
+            // Debug.Log("저장파일 X");
         }
     }
 

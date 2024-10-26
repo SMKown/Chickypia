@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -50,14 +51,21 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         if (eventData.button == PointerEventData.InputButton.Right)
         {
+<<<<<<< Updated upstream
             UseItem();
+=======
+            // Debug.Log("Right click detected on item: " + item.itemName);
+            StartCoroutine(UseItem());
+            
+>>>>>>> Stashed changes
         }
     }
 
-    public void UseItem()
+    IEnumerator UseItem()
     {
-        if (item.itemType == ItemType.Food)
+        if (PlayerStats.Instance.useItem == false && item.itemType == ItemType.Food)
         {
+            PlayerStats.Instance.useItem = true;
             ApplyFoodEffect();
 
             count -= 1;
@@ -79,7 +87,17 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             {
                 ItemCount();
             }
+            
+            yield return new WaitForSeconds(3f);
+            PlayerStats.Instance.useItem = false;
         }
+<<<<<<< Updated upstream
+=======
+        else
+        {
+            Debug.LogError("This item cannot be consumed.");
+        }
+>>>>>>> Stashed changes
     }
 
     private void ApplyFoodEffect()
