@@ -163,7 +163,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (!PlayerInfo.Instance.interacting)
+            if (!PlayerInfo.Instance.interacting) // 대화 시작 시
             {
                 PlayerInfo.Instance.interacting = true;
                 ChangeCamera(UIInteraction.Instance.interactableObj.transform);
@@ -173,7 +173,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             if (currentNpc != null)
-                currentNpc.Interact();
+                currentNpc.Interact(); // 대화 진행
         }
     }
 

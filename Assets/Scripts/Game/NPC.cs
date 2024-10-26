@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,39 +14,53 @@ public class NPC : MonoBehaviour
     private PlayerMovement playerMovement;
     private int dialogueIndex = 0;
 
+    public TMP_Text QuestTitleText;
+    public TMP_Text QuestDescriptionText;
+    public TMP_Text CountText;
+    public TMP_Text MainquestCount;
+
     private void Start()
     {
         questManager = FindObjectOfType<QuestManager>();
         playerMovement = FindObjectOfType<PlayerMovement>();
-        UpdateQuestMark();
+        UpdateQuest();
     }
 
     private void Update()
     {
         if (!PlayerInfo.Instance.interacting)
         {
-            UpdateQuestMark();
+            UpdateQuest();
         }
     }
 
-    private void UpdateQuestMark()
+    private void UpdateQuest()
     {
         bool hasAvailableQuest = false;
+        int completedQuestCount = 0;
 
         foreach (int questId in quest_ids)
         {
             QuestData quest = questManager.GetQuestData(questId);
-            if (quest != null && quest.GetQuestStatus() == QuestStatus.Available)
+            if (quest != null)
             {
-                if (quest.requiresQuestId == 0 || questManager.GetQuestData(quest.requiresQuestId)?.GetQuestStatus() == QuestStatus.Completed)
+                if (quest.GetQuestStatus() == QuestStatus.Completed)
                 {
-                    hasAvailableQuest = true;
-                    break;
+                    completedQuestCount++; // 완료된 퀘스트 수
+                }
+                else if (quest.GetQuestStatus() == QuestStatus.Available &&
+                         (quest.requiresQuestId == 0 || questManager.GetQuestData(quest.requiresQuestId)?.GetQuestStatus() == QuestStatus.Completed))
+                {
+                    hasAvailableQuest = true; // 수락 가능한 퀘스트 존재
                 }
             }
         }
+
+        if (MainquestCount != null)
+            MainquestCount.text = $"[{completedQuestCount}/{quest_ids.Length}]";
         questMark.SetActive(hasAvailableQuest);
     }
+
 
     public void Interact()
     {
@@ -85,6 +100,8 @@ public class NPC : MonoBehaviour
             if (quest != null)
             {
                 quest.SetQuestStatus(QuestStatus.InProgress);
+                quest.OnItemCountUpdated += () => DisplayQuestInfo(quest); // 이벤트 연결
+                DisplayQuestInfo(quest);
                 quest.UpdateItemCount(0);
             }
             CloseDialogue();
@@ -101,5 +118,12 @@ public class NPC : MonoBehaviour
             }
         }
         return null;
+    }
+
+    private void DisplayQuestInfo(QuestData quest)
+    {
+        QuestTitleText.text = quest.title;
+        QuestDescriptionText.text = $"[{quest.explanation}]";
+        CountText.text = quest.itemCount != quest.itemCountRequired ? $"[{quest.itemCount}/{quest.itemCountRequired}]" : "퀘스트 완료!";
     }
 }
