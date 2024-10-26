@@ -55,7 +55,7 @@ public class PlayerStats : MonoBehaviour
 
     public void ChangeMoveSpeed(float amount)
     {
-        FoodEffectFxs[0].SetActive(true);
+        //FoodEffectFxs[0].SetActive(true);
         moveSpeed += amount;
         SavePlayerState();
     }

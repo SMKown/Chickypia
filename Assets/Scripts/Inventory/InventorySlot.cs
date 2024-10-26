@@ -35,7 +35,8 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         }
         else
         {
-            slotBackgroundImage.color = Color.white;
+            slotBackgroundImage.color = new Color(1, 1, 1, 1);
         }
+        Debug.Log("UpdateSlotBackground called. Slot color: " + slotBackgroundImage.color);
     }
 }

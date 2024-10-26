@@ -25,6 +25,10 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         {
             tooltipUI = ItemToolTipUI.Instance;
         }
+        if (parentAfterDrag == null)
+        {
+            parentAfterDrag = transform.parent;
+        }
     }
 
     public void InitialiseItem(ItemData newItem, ItemToolTipUI toolTipUIInstance)
@@ -60,6 +64,22 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             count -= 1;
             if (count <= 0)
             {
+                InventorySlot parentSlot = transform.parent?.GetComponent<InventorySlot>();
+                if (parentSlot != null)
+                {
+                    Debug.Log("슬롯 색상 변경을 시도합니다.");
+                    parentSlot.slotBackgroundImage.color = new Color(1, 1, 1, 1); // 흰색 강제 설정
+                    parentSlot.slotBackgroundImage.SetAllDirty();
+                }
+                else
+                {
+                    Debug.Log("슬롯을 찾을 수 없습니다.");
+                }
+                if (tooltipUI != null)
+                {
+                    Debug.Log("툴팁숨김");
+                    tooltipUI.HideToolTip();
+                }
                 Destroy(gameObject);
             }
             else
@@ -89,7 +109,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         image.raycastTarget = false;
         countText.raycastTarget = false;
 
-        parentAfterDrag = transform.parent;
         InventorySlot currentSlot = parentAfterDrag.GetComponent<InventorySlot>();
         if (currentSlot != null)
         {
