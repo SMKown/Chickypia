@@ -1031,6 +1031,8 @@ MonoBehaviour:
   DialogueText:
   - {fileID: 0}
   - {fileID: 0}
+  canvas: {fileID: 0}
+  QuestBoxPrefab: {fileID: 3026333854955645714, guid: e1ef3cea6bc92704d9548c6b025c5947, type: 3}
 --- !u!1 &2007506934982545385
 GameObject:
   m_ObjectHideFlags: 0

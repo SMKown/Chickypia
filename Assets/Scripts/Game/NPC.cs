@@ -10,20 +10,27 @@ public class NPC : MonoBehaviour
     public List<string> generalDialogues; // 일반 대화
     public GameObject questMark;
     public Text[] DialogueText;
-    
+
     private QuestManager questManager;
     private PlayerMovement playerMovement;
     private int dialogueIndex = 0;
 
-    public TMP_Text QuestTitleText;
-    public TMP_Text QuestDescriptionText;
-    public TMP_Text CountText;
-    public TMP_Text MainquestCount;
+    public Transform canvas; // 퀘스트 박스를 넣을 캔버스의 Transform
+    public GameObject QuestBoxPrefab; // QuestBox 프리팹
+    private GameObject questBoxInstance; // 인스턴스화된 QuestBox
+    private TMP_Text[] QuestTxt; // 퀘스트 텍스트 배열
 
     private void Start()
     {
         questManager = FindObjectOfType<QuestManager>();
         playerMovement = FindObjectOfType<PlayerMovement>();
+
+        if (questManager == null || playerMovement == null)
+        {
+            Debug.LogError("QuestManager or PlayerMovement not found!");
+            return;
+        }
+
         UpdateQuest();
     }
 
@@ -47,18 +54,25 @@ public class NPC : MonoBehaviour
             {
                 if (quest.GetQuestStatus() == QuestStatus.Completed)
                 {
-                    completedQuestCount++; // 완료된 퀘스트 수
+                    completedQuestCount++;
                 }
                 else if (quest.GetQuestStatus() == QuestStatus.Available &&
                          (quest.requiresQuestId == 0 || questManager.GetQuestData(quest.requiresQuestId)?.GetQuestStatus() == QuestStatus.Completed))
                 {
-                    hasAvailableQuest = true; // 수락 가능한 퀘스트 존재
+                    hasAvailableQuest = true;
+                    if (questBoxInstance == null)
+                    {
+                        CreateQuestBox();
+                    }
                 }
             }
         }
 
-        if (MainquestCount != null)
-            MainquestCount.text = $"[{completedQuestCount}/{quest_ids.Length}]";
+        if (QuestTxt != null)
+        {
+            QuestTxt[0].text = transform.parent.name == "Cat" ? "치키별 적응기" : "치키별의 강태공";
+            QuestTxt[1].text = $"[{completedQuestCount}/{quest_ids.Length}]";
+        }
         questMark.SetActive(hasAvailableQuest);
     }
 
@@ -73,6 +87,19 @@ public class NPC : MonoBehaviour
             DisplayDialogue(generalDialogues);
     }
 
+    private void CreateQuestBox()
+    {
+        questBoxInstance = Instantiate(QuestBoxPrefab, canvas);
+        QuestTxt = questBoxInstance.GetComponentsInChildren<TMP_Text>();
+
+        if (QuestTxt == null || QuestTxt.Length == 0)
+        {
+            return;
+        }
+
+        UpdateQuest();
+    }
+
     private void CloseDialogue()
     {
         UIInteraction.Instance.ImageOff(UIInteraction.Instance.dialog);
@@ -81,10 +108,10 @@ public class NPC : MonoBehaviour
 
         PlayerInfo.Instance.interacting = false;
         playerMovement.ResetCamera();
-        StartCoroutine(EnableInteractionAfterDelay(2F));
+        StartCoroutine(EnableInteractionDelay(1.5F));
     }
 
-    private IEnumerator EnableInteractionAfterDelay(float delay)
+    private IEnumerator EnableInteractionDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
         UIInteraction.Instance.ImageOn(UIInteraction.Instance.dialog, transform);
@@ -127,8 +154,10 @@ public class NPC : MonoBehaviour
 
     private void DisplayQuestInfo(QuestData quest)
     {
-        QuestTitleText.text = quest.title;
-        QuestDescriptionText.text = $"[{quest.explanation}]";
-        CountText.text = quest.itemCount != quest.itemCountRequired ? $"[{quest.itemCount}/{quest.itemCountRequired}]" : "퀘스트 완료!";
+        if (QuestTxt == null) return;
+
+        QuestTxt[2].text = quest.title;
+        QuestTxt[3].text = $"[{quest.explanation}]";
+        QuestTxt[4].text = quest.itemCount != quest.itemCountRequired ? $"[{quest.itemCount}/{quest.itemCountRequired}]" : "퀘스트 완료!";
     }
 }

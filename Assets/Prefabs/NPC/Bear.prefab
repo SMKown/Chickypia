@@ -1615,14 +1615,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54b1e90346461432f85320ddcd298ce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest_ids: 06000000
+  quest_ids: 0600000007000000
   generalDialogues:
   - "\uB09A\uC2DC\uD558\uB7EC \uC654\uC5B4?"
-  - "\uBB3C\uACE0\uAE30 \uB9CE\uC774 \uC7A1\uC544\uAC00~"
   questMark: {fileID: 1294113040141408636}
   DialogueText:
   - {fileID: 0}
   - {fileID: 0}
+  canvas: {fileID: 0}
+  QuestBoxPrefab: {fileID: 3026333854955645714, guid: e1ef3cea6bc92704d9548c6b025c5947, type: 3}
 --- !u!1 &2628741414091440389
 GameObject:
   m_ObjectHideFlags: 0

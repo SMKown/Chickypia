@@ -26,6 +26,7 @@ public class Fishing : MonoBehaviour
 
     public InventoryManager inventoryManager;
     public InvenCompenUI invenCompenUI;
+    private QuestManager questManager;
 
     private KeyCode fishingKey = KeyCode.E;
     private float maxCastDistance = 5F;
@@ -43,6 +44,8 @@ public class Fishing : MonoBehaviour
         BobberAnim = Bobber.GetComponent<Animator>();
         biteImage = ExImage.GetComponent<Image>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+
+        questManager = FindObjectOfType<QuestManager>();
     }
 
     private void Update()
@@ -230,11 +233,14 @@ public class Fishing : MonoBehaviour
         if (fishItemData != null)
         {
             inventoryManager.AddItem(fishItemData, 1);
-            Debug.Log($"Added {fish.name} to inventory.");
-        }
-        else
-        {
-            Debug.LogWarning($"ItemData for {fish.name} not found in inventory.");
+
+            foreach (var quest in questManager.questList)
+            {
+                if (quest.itemId == fishItemData.itemId)
+                {
+                    quest.UpdateItemCount(1);
+                }
+            }
         }
     }
 
