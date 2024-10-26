@@ -107,18 +107,10 @@ public class SceneLoader : MonoBehaviour
     public void NewGame()
     {
         ResetScene();
-        if (playerstats != null)
-        {
-            playerstats.moveSpeed = 3f;
-        }
         LoadingSceneManager.LoadScene("Village");
     }
     public void VillageScene()
     {
-        if (playerstats != null)
-        {
-            playerstats.moveSpeed = 3f;
-        }
         SaveAllBeforeSceneLoad();
         LoadingSceneManager.LoadScene("Village");
     }
@@ -189,10 +181,6 @@ public class SceneLoader : MonoBehaviour
 
     private void SaveAllBeforeSceneLoad()
     {
-        if (playerstats != null)
-        {
-            playerstats.moveSpeed = playerstats.defaultMoveSpeed;
-        }
         //인벤토리 저장
         if (inventoryManager != null)
         {

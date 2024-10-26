@@ -150,6 +150,7 @@ public class QuestManager : MonoBehaviour
         {
             File.Delete(filePath);
         }
+        SaveQuestProgress();
 
         Debug.Log("@@@@@@@@@@@@@@ 퀘스트 진행 초기화됨 @@@@@@@@@@@@@@");
     }
