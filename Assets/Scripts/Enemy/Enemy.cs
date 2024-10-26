@@ -31,7 +31,7 @@ public abstract class Enemy : MonoBehaviour
 
     protected virtual void Awake()
     {
-        player = GameObject.Find("Player_AttackMode").transform;
+        player = GameObject.Find("PlayerAttackMode").transform;
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
     }
