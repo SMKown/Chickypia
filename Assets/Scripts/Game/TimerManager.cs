@@ -23,7 +23,8 @@ public class TimerManager : MonoBehaviour
             {
                 PlayerStats.Instance.EndEffect(_attckDanageAmount);
             }
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
+        
     }
 }

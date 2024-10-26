@@ -10,8 +10,8 @@ public class PlayerStats : MonoBehaviour
 
     public int maxHp = 3;
     public int currentHp;
-    public int attackDamage = 1;
     public float moveSpeed = 1.4f;
+    public int attackDamage = 1;    
 
     [HideInInspector]public bool useItem = false;
 
@@ -38,21 +38,22 @@ public class PlayerStats : MonoBehaviour
 
     public void ChangeHealHealth(int hpAmount)
     {
+        FoodEffectFxs[0].SetActive(true);
         currentHp = Mathf.Min(currentHp + hpAmount, maxHp);
         SavePlayerState();
-        Debug.Log("ChangeHealHealth Start");
     }
 
     public void ChangeMaxHealth(int maxHpAmount)
     {
+        FoodEffectFxs[1].SetActive(true);
         maxHp += maxHpAmount;
         currentHp = Mathf.Min(currentHp + maxHpAmount, maxHp);
         SavePlayerState();
-        Debug.Log("ChangeMaxHealth Start");
     }
 
     public void ChangeMoveSpeed(float speedAmount, float time)
     {
+        FoodEffectFxs[2].SetActive(true);
         moveSpeed += speedAmount;
         SavePlayerState();
         GameObject effecTimer = Instantiate(timeManager, Vector3.zero, Quaternion.identity);
@@ -62,11 +63,11 @@ public class PlayerStats : MonoBehaviour
             timerManager.effectTime = time;
             timerManager._speedAmount = speedAmount;
         }
-        Debug.Log("ChangeMoveSpeed Start");
     }
 
     public void ChangeAttackDamage(int attckDanageAmount, float time)
     {
+        FoodEffectFxs[3].SetActive(true);
         attackDamage += attckDanageAmount;
         SavePlayerState();
         GameObject effecTimer = Instantiate(timeManager, Vector3.zero, Quaternion.identity);
@@ -76,11 +77,11 @@ public class PlayerStats : MonoBehaviour
             timerManager.effectTime = time;
             timerManager._attckDanageAmount = attckDanageAmount;
         }
-        Debug.Log("ChangeAttackDamage Start");
     }    
 
     public void EndEffect(float amount)
     {
+        FoodEffectFxs[2].SetActive(false);
         moveSpeed -= amount;
 
         SavePlayerState();
@@ -88,6 +89,7 @@ public class PlayerStats : MonoBehaviour
 
     public void EndEffect(int amount)
     {
+        FoodEffectFxs[3].SetActive(false);
         attackDamage -= amount;
 
         SavePlayerState();
@@ -96,9 +98,9 @@ public class PlayerStats : MonoBehaviour
     public void ResetPlayerState()
     {
         maxHp = 3;
-        currentHp = maxHp;
-        attackDamage = 1;
+        currentHp = maxHp;        
         moveSpeed = 1.4f;
+        attackDamage = 1;
         SavePlayerState();
     }
 

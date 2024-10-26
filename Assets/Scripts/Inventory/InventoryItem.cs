@@ -62,7 +62,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         {
             PlayerStats.Instance.useItem = true;
             ApplyFoodEffect();
-
+            
             count -= 1;
             if (count <= 0)
             {
@@ -71,25 +71,28 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 {
                     parentSlot.slotBackgroundImage.color = new Color(1, 1, 1, 1);
                     parentSlot.slotBackgroundImage.SetAllDirty();
+                    Debug.Log("A");
                 }
                 if (tooltipUI != null)
                 {
                     tooltipUI.HideToolTip();
+                    Debug.Log("B");
                 }
+                PlayerStats.Instance.useItem = false;
                 Destroy(gameObject);
             }
             else
             {
                 ItemCount();
-            }
-            
-            yield return new WaitForSeconds(3f);
-            PlayerStats.Instance.useItem = false;
+                Debug.Log("C");
+            }    
         }
         else
         {
             Debug.LogError("This item cannot be consumed.");
         }
+        yield return new WaitForSeconds(3f);
+        PlayerStats.Instance.useItem = false;
     }
 
     private void ApplyFoodEffect()
