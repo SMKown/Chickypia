@@ -51,13 +51,9 @@ public class PlayerHP : MonoBehaviour
                 {
                     heartImage.sprite = fullHeart;
                 }
-                else if (i == PlayerStats.Instance.currentHp && PlayerStats.Instance.currentHp % 2 == 1)
+                else /*if (i == PlayerStats.Instance.currentHp && PlayerStats.Instance.currentHp % 2 == 1)*/
                 {
                     heartImage.sprite = halfHeart;
-                }
-                else
-                {
-                    heartImage.sprite = null;
                 }
             }
             else

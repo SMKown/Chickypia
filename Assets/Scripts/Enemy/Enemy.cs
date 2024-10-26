@@ -58,6 +58,7 @@ public abstract class Enemy : MonoBehaviour
             {
                 if (!enemyAI.hasFledOnce)
                 {
+                    isAttacking = false;
                     enemyAI.SwitchState(new FleeingState(enemyAI));
                 }
             }
