@@ -13,14 +13,15 @@ MonoBehaviour:
   m_Name: Food 4
   m_EditorClassIdentifier: 
   itemType: 0
+  effetType: 1
   itemId: 400
-  itemName: "\uC591\uB150 \uAF2C\uCE58"
-  itemDesc: "\uC591\uB150\uB41C \uAF2C\uCE58"
+  itemName: "\uC57C\uCC44 \uAF2C\uCE58"
+  itemDesc: "\uC57C\uCC44\uAC00 \uCF55\uCF55 \uBC15\uD78C \uAC74\uAC15\uD55C \uAF2C\uCE58"
   stackable: 1
   itemIcon: {fileID: 21300000, guid: e5f921ef0aec2b6448589eb5b2e7527b, type: 3}
   itemModel: {fileID: 0}
   moveSpeed: 0
-  attackDamage: 0
+  attackDamage: 1
   hp: 0
   hpMax: 0
   category: 1

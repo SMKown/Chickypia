@@ -7,6 +7,7 @@ public class ItemData : ScriptableObject
 {
     [Header("# Main Info")]
     public ItemType itemType;
+    public EffetType effetType;
     public int itemId;
     public string itemName;
     public string itemDesc;
@@ -33,6 +34,12 @@ public enum ItemType
 {
     Food,
     Ingredient
+}
+
+public enum EffetType
+{
+    Add,
+    Temporary
 }
 
 public enum ItemCategory

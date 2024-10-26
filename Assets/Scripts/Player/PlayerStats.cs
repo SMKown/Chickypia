@@ -33,7 +33,6 @@ public class PlayerStats : MonoBehaviour
 
         LoadPlayerState();
         inventoryManager = FindObjectOfType<InventoryManager>();
-        // 00 inventoryManager.AddItem(recipe.resultItem, 1);
     }
 
     public void ChangeMaxHealth(int amount)
@@ -84,8 +83,6 @@ public class PlayerStats : MonoBehaviour
 
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(saveFilePath, json);
-
-        // Debug.Log("상태 저장: " + saveFilePath);
     }
     public void LoadPlayerState()
     {
@@ -98,12 +95,10 @@ public class PlayerStats : MonoBehaviour
             this.currentHp = data.currentHp;
             this.attackDamage = data.attackDamage;
             this.moveSpeed = data.moveSpeed;
-
-            // Debug.Log("상태 불러오기: " + saveFilePath);
         }
         else
         {
-            // Debug.Log("저장파일 X");
+            Debug.LogError("저장파일 X");
         }
     }
 

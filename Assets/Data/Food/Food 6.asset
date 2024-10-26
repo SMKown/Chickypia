@@ -13,15 +13,16 @@ MonoBehaviour:
   m_Name: Food 6
   m_EditorClassIdentifier: 
   itemType: 0
+  effetType: 0
   itemId: 600
-  itemName: "\uACFC\uC77C \uAF2C\uCE58"
-  itemDesc: "\uC81C\uCCA0 \uACFC\uC77C"
+  itemName: "\uC0B6\uC740 \uACC4\uB780"
+  itemDesc: "\uBC18\uC219\uC73C\uB85C \uB9DB\uC788\uAC8C \uC0B6\uC740 \uACC4\uB780"
   stackable: 1
-  itemIcon: {fileID: 21300000, guid: adde84842361934409ca2739a1f841bb, type: 3}
+  itemIcon: {fileID: 21300000, guid: 548d2f38d955ac14d96e295ad54738cb, type: 3}
   itemModel: {fileID: 0}
   moveSpeed: 0
   attackDamage: 0
-  hp: 0
+  hp: 1
   hpMax: 0
   category: 1
   isCollected: 0
