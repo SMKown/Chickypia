@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -15,10 +16,10 @@ public class PlayerStats : MonoBehaviour
     [HideInInspector]public bool useItem = false;
 
     public GameObject[] FoodEffectFxs;
+    public GameObject timeManager;
 
     private string saveFilePath;
 
-    // 000 public FoodRecipeData food;
     private InventoryManager inventoryManager;
 
     private void Awake()
@@ -35,29 +36,60 @@ public class PlayerStats : MonoBehaviour
         inventoryManager = FindObjectOfType<InventoryManager>();
     }
 
-    public void ChangeMaxHealth(int amount)
+    public void ChangeHealHealth(int hpAmount)
     {
-        maxHp += amount;
-        currentHp = Mathf.Min(currentHp + amount, maxHp);
+        currentHp = Mathf.Min(currentHp + hpAmount, maxHp);
+        SavePlayerState();
+        Debug.Log("ChangeHealHealth Start");
+    }
+
+    public void ChangeMaxHealth(int maxHpAmount)
+    {
+        maxHp += maxHpAmount;
+        currentHp = Mathf.Min(currentHp + maxHpAmount, maxHp);
+        SavePlayerState();
+        Debug.Log("ChangeMaxHealth Start");
+    }
+
+    public void ChangeMoveSpeed(float speedAmount, float time)
+    {
+        moveSpeed += speedAmount;
+        SavePlayerState();
+        GameObject effecTimer = Instantiate(timeManager, Vector3.zero, Quaternion.identity);
+        TimerManager timerManager = effecTimer.GetComponent<TimerManager>();
+        if (timerManager != null)
+        {
+            timerManager.effectTime = time;
+            timerManager._speedAmount = speedAmount;
+        }
+        Debug.Log("ChangeMoveSpeed Start");
+    }
+
+    public void ChangeAttackDamage(int attckDanageAmount, float time)
+    {
+        attackDamage += attckDanageAmount;
+        SavePlayerState();
+        GameObject effecTimer = Instantiate(timeManager, Vector3.zero, Quaternion.identity);
+        TimerManager timerManager = effecTimer.GetComponent<TimerManager>();
+        if (timerManager != null)
+        {
+            timerManager.effectTime = time;
+            timerManager._attckDanageAmount = attckDanageAmount;
+        }
+        Debug.Log("ChangeAttackDamage Start");
+    }    
+
+    public void EndEffect(float amount)
+    {
+        moveSpeed -= amount;
+
         SavePlayerState();
     }
 
-    public void ChangeHealHealth(int amount)
+    public void EndEffect(int amount)
     {
-        currentHp = Mathf.Min(currentHp + amount, maxHp);
-        SavePlayerState();
-    }
+        attackDamage -= amount;
 
-    public void ChangeAttackDamage(int amount)
-    {
-        attackDamage += amount;
-        SavePlayerState();
-    }
-
-    public void ChangeMoveSpeed(float amount)
-    {
-        //FoodEffectFxs[0].SetActive(true);
-        moveSpeed += amount;
         SavePlayerState();
     }
 
@@ -67,7 +99,6 @@ public class PlayerStats : MonoBehaviour
         currentHp = maxHp;
         attackDamage = 1;
         moveSpeed = 1.4f;
-        Debug.Log("PlayerState Reset");
         SavePlayerState();
     }
 

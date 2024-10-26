@@ -254,7 +254,6 @@ public class InventoryManager : MonoBehaviour
                     inventoryLog += $"Slot {data.slotIndex} : {data.itemName} {data.quantity}°³\n";
                 }
             }
-            Debug.Log(inventoryLog);
         }
     }
 }

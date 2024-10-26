@@ -7,7 +7,7 @@ public class ItemData : ScriptableObject
 {
     [Header("# Main Info")]
     public ItemType itemType;
-    public EffetType effetType;
+    public EffectType effectType;
     public int itemId;
     public string itemName;
     public string itemDesc;
@@ -18,10 +18,12 @@ public class ItemData : ScriptableObject
     public GameObject itemModel;
 
     [Header("# Effect")]
-    public float moveSpeed;
-    public int attackDamage;
+    public float time; 
     public int hp;
     public int hpMax;
+    public float moveSpeed;    
+    public int attackDamage;
+   
 
     [Header("# Category")]
     public ItemCategory category;
@@ -36,10 +38,12 @@ public enum ItemType
     Ingredient
 }
 
-public enum EffetType
+public enum EffectType
 {
-    Add,
-    Temporary
+    Hp,
+    MaxHp,
+    MoveSpeed,
+    AttackDamage,
 }
 
 public enum ItemCategory

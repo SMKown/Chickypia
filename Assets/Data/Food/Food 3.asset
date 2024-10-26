@@ -13,16 +13,17 @@ MonoBehaviour:
   m_Name: Food 3
   m_EditorClassIdentifier: 
   itemType: 0
-  effetType: 1
+  effectType: 1
   itemId: 300
   itemName: "\uC2A4\uCF5C\uD53C \uC8FC\uC2A4"
   itemDesc: "\uC57D\uAC04\uC758 \uB530\uB054\uD55C \uB9DB\uC774 \uB098\uB294 \uC8FC\uC2A4"
   stackable: 1
   itemIcon: {fileID: 21300000, guid: 049717943ff1582409e0362d429b01d4, type: 3}
   itemModel: {fileID: 0}
-  moveSpeed: 0
-  attackDamage: 0
+  time: 0
   hp: 0
   hpMax: 1
+  moveSpeed: 0
+  attackDamage: 0
   category: 1
   isCollected: 0

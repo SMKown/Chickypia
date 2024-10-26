@@ -94,12 +94,21 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private void ApplyFoodEffect()
     {
-        PlayerStats.Instance.ChangeMaxHealth(item.hpMax);
-        PlayerStats.Instance.ChangeHealHealth(item.hp);
-        PlayerStats.Instance.ChangeAttackDamage(item.attackDamage);
-        PlayerStats.Instance.ChangeMoveSpeed(item.moveSpeed);
-
-        Debug.Log($"{item.itemName}: 최대체력 +{item.hpMax}, 힐 +{item.hp}, 공격력 +{item.attackDamage}, 이동속도 +{item.moveSpeed}");
+        switch(item.effectType)
+        {
+            case EffectType.Hp:
+                PlayerStats.Instance.ChangeHealHealth(item.hp);
+                break;
+            case EffectType.MaxHp:        
+                PlayerStats.Instance.ChangeMaxHealth(item.hpMax);
+                break;
+            case EffectType.MoveSpeed:
+                PlayerStats.Instance.ChangeMoveSpeed(item.moveSpeed, item.time);
+                break;
+            case EffectType.AttackDamage:
+                PlayerStats.Instance.ChangeAttackDamage(item.attackDamage, item.time);
+                break;
+        }
     }
 
 
