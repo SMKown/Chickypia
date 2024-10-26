@@ -333,6 +333,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 630233375}
+        m_TargetAssemblyTypeName: PlayerStats, Assembly-CSharp
+        m_MethodName: ResetPlayerState
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &36791590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3211,6 +3223,10 @@ PrefabInstance:
       propertyPath: inventoryManager
       value: 
       objectReference: {fileID: 1952127463}
+    - target: {fileID: 6371406999224080189, guid: dec0ae9635ffa42fc97e716bfbac69c4, type: 3}
+      propertyPath: useItem
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6805488065728773333, guid: dec0ae9635ffa42fc97e716bfbac69c4, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -3940,6 +3956,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: ItemSpawner, Assembly-CSharp
         m_MethodName: PickupItemTest
         m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 630233375}
+        m_TargetAssemblyTypeName: PlayerStats, Assembly-CSharp
+        m_MethodName: ResetPlayerState
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

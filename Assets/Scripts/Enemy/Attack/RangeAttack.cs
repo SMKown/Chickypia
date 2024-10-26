@@ -55,17 +55,27 @@ public class RangeAttack : Enemy // 원거리 공격
 
     public void AttackAnimationEnd()
     {
+        isAttacking = false;
         StartCoroutine(WaitForCooldown());
     }
 
     private IEnumerator WaitForCooldown()
     {
+        Debug.Log("쿨타임중~~~~~~~~~~~~~~~~~~");
         SetAnimationState(AnimationState.Idle);
         agent.isStopped = true;
 
         float elapsedTime = 0f;
         while (elapsedTime < attackCooldown)
         {
+            if (GetComponent<EnemyAI>().CurrentState is FleeingState)
+            {
+                Debug.Log("도망 상태로 전환됨 - 쿨타임 중지");
+                isAttacking = false;
+                agent.isStopped = false;
+                yield break;
+            }
+
             LookAtPlayer();
             elapsedTime += Time.deltaTime;
             yield return null;

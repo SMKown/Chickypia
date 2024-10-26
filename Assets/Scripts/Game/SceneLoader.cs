@@ -182,7 +182,6 @@ public class SceneLoader : MonoBehaviour
         if (inventoryManager != null)
         {
             inventoryManager.SaveInventory();
-            //Debug.Log("인벤토리 저장");
         }
         else
         {
@@ -193,7 +192,6 @@ public class SceneLoader : MonoBehaviour
         if (compendiumManager != null)
         {
             compendiumManager.SaveCompendium(); // 도감 저장
-            //Debug.Log("도감 저장");
         }
         else
         {
@@ -203,7 +201,6 @@ public class SceneLoader : MonoBehaviour
         if(playerstats != null)
         {
             playerstats.SavePlayerState();
-            //Debug.Log("플레이어 스탯 저장");
         }
         else
         {

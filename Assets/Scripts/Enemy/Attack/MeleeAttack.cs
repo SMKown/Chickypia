@@ -68,6 +68,7 @@ public class MeleeAttack : Enemy // 근접 공격
 
     public void AttackAnimationEnd()
     {
+        isAttacking = false;
         StartCoroutine(WaitForCooldown());
     }
 

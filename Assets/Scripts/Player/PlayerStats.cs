@@ -12,7 +12,7 @@ public class PlayerStats : MonoBehaviour
     public int attackDamage = 1;
     public float moveSpeed = 1.4f;
 
-    public bool useItem = false;
+    [HideInInspector]public bool useItem = false;
 
     public GameObject[] FoodEffectFxs;
 
@@ -68,6 +68,7 @@ public class PlayerStats : MonoBehaviour
         currentHp = maxHp;
         attackDamage = 1;
         moveSpeed = 1.4f;
+        Debug.Log("PlayerState Reset");
         SavePlayerState();
     }
 
