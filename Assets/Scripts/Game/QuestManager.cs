@@ -15,7 +15,6 @@ public class QuestData
     public int id; // 번호
     public string title; // 제목
     public string explanation; // 설명
-    public bool npc; // NPC 대화 유무
     public int requiresQuestId; // 진행하기 위한 전 단계 퀘스트 번호
     public int itemId; // 수집해야 할 아이템의 ID
     public int itemCountRequired; // 필요한 수집 개수
@@ -24,12 +23,11 @@ public class QuestData
     public QuestStatus status; // 퀘스트 상태
     public int itemCount; // 현재 수집한 개수
 
-    public QuestData(int id, string title, string explanation, bool npc, int requiresQuestId, int itemId = 0, int itemCountRequired = 0, List<string> questDialogues = null)
+    public QuestData(int id, string title, string explanation, int requiresQuestId, int itemId = 0, int itemCountRequired = 0, List<string> questDialogues = null)
     {
         this.id = id;
         this.title = title;
         this.explanation = explanation;
-        this.npc = npc;
         this.requiresQuestId = requiresQuestId;
         this.itemId = itemId;
         this.itemCountRequired = itemCountRequired;
@@ -106,13 +104,12 @@ public class QuestManager : MonoBehaviour
             int id = int.Parse(data[0]);
             string title = data[1];
             string explanation = data[2];
-            bool npcDialogue = bool.Parse(data[3]);
-            int requiresQuestId = string.IsNullOrWhiteSpace(data[4]) ? 0 : int.Parse(data[4]);
-            int itemToCollectId = int.Parse(data[5]);
-            int itemCountRequired = int.Parse(data[6]);
+            int requiresQuestId = string.IsNullOrWhiteSpace(data[3]) ? 0 : int.Parse(data[3]);
+            int itemToCollectId = int.Parse(data[4]);
+            int itemCountRequired = int.Parse(data[5]);
 
             List<string> questDialogues = new List<string>();
-            for (int i = 7; i < data.Length; i++)
+            for (int i = 6; i < data.Length; i++)
             {
                 if (!string.IsNullOrWhiteSpace(data[i]))
                 {
@@ -120,7 +117,7 @@ public class QuestManager : MonoBehaviour
                 }
             }
 
-            var questDataEntry = new QuestData(id, title, explanation, npcDialogue, requiresQuestId, itemToCollectId, itemCountRequired, questDialogues);
+            var questDataEntry = new QuestData(id, title, explanation, requiresQuestId, itemToCollectId, itemCountRequired, questDialogues);
             questList.Add(questDataEntry);
             questData[id] = questDataEntry;
         }

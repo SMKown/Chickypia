@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -61,7 +62,6 @@ public class NPC : MonoBehaviour
         questMark.SetActive(hasAvailableQuest);
     }
 
-
     public void Interact()
     {
         QuestData activeQuest = GetActiveQuest();
@@ -73,17 +73,22 @@ public class NPC : MonoBehaviour
             DisplayDialogue(generalDialogues);
     }
 
-    public void CloseDialogue()
+    private void CloseDialogue()
     {
         UIInteraction.Instance.ImageOff(UIInteraction.Instance.dialog);
+        PlayerInfo.Instance.canInteract = false;
         dialogueIndex = 0;
 
-        if (PlayerInfo.Instance.interacting)
-        {
-            PlayerInfo.Instance.interacting = false;
-            playerMovement.ResetCamera();
-            UIInteraction.Instance.interactableObj = null;
-        }
+        PlayerInfo.Instance.interacting = false;
+        playerMovement.ResetCamera();
+        StartCoroutine(EnableInteractionAfterDelay(2F));
+    }
+
+    private IEnumerator EnableInteractionAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        UIInteraction.Instance.ImageOn(UIInteraction.Instance.dialog, transform);
+        PlayerInfo.Instance.canInteract = true;
     }
 
     private void DisplayDialogue(List<string> dialogues, QuestData quest = null)

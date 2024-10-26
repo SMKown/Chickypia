@@ -163,6 +163,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
+            if (!PlayerInfo.Instance.canInteract) return;
+
             if (!PlayerInfo.Instance.interacting) // 대화 시작 시
             {
                 PlayerInfo.Instance.interacting = true;
