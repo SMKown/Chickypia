@@ -91,7 +91,6 @@ public class CookingSystem : MonoBehaviour
         makePopup.gameObject.SetActive(true);
         invenCompenUI.SetInventoryActive(true);
         foodImage.gameObject.SetActive(false);
-        foodName.text = "";
         foreach (Transform child in foodRecipeParent)
         {
             Destroy(child.gameObject);
@@ -128,11 +127,23 @@ public class CookingSystem : MonoBehaviour
     void StopCook()
     {
         ResetIngredientSlots();
-        foodName.text = "";
         choicePopup.gameObject.SetActive(false);
         makePopup.gameObject.SetActive(false);
         isCooking = false;
         invenCompenUI.SetInventoryActive(false);
+        if (foodName != null)
+        {
+            foodName.text = "";
+        }
+
+        if (foodImage != null)
+        {
+            foodImage.sprite = null;
+            foodImage.gameObject.SetActive(false);
+        }
+
+        cookButton.interactable = false;
+        currentRecipe = null;
     }
 
     public void ChoiceRecipe(FoodRecipeData recipe)
@@ -140,8 +151,6 @@ public class CookingSystem : MonoBehaviour
         ResetIngredientSlots();
 
         currentRecipe = recipe;
-
-
         UpdateUIRecipe(currentRecipe);
     }
 
