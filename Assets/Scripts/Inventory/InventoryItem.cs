@@ -51,13 +51,8 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-<<<<<<< Updated upstream
-            UseItem();
-=======
             // Debug.Log("Right click detected on item: " + item.itemName);
             StartCoroutine(UseItem());
-            
->>>>>>> Stashed changes
         }
     }
 
@@ -91,13 +86,10 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             yield return new WaitForSeconds(3f);
             PlayerStats.Instance.useItem = false;
         }
-<<<<<<< Updated upstream
-=======
         else
         {
             Debug.LogError("This item cannot be consumed.");
         }
->>>>>>> Stashed changes
     }
 
     private void ApplyFoodEffect()
