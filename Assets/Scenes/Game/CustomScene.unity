@@ -161,7 +161,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 85}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &38641185
 MonoBehaviour:
@@ -612,6 +612,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryManager: {fileID: 0}
   compendiumManager: {fileID: 0}
+  playerstats: {fileID: 0}
+  QuestManager: {fileID: 0}
+  Flame: {fileID: 0}
+  Desert: {fileID: 0}
+  Jungle: {fileID: 0}
+  Village: {fileID: 0}
+  isCanLoad: 0
+  isUIReander: 0
 --- !u!4 &693354872
 Transform:
   m_ObjectHideFlags: 0
@@ -744,10 +752,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1604167756}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 47}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 29.5, y: -25}
+  m_SizeDelta: {x: 59, y: 47}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &734068853
 MonoBehaviour:
@@ -1199,8 +1207,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1233662105}
-  - component: {fileID: 1233662107}
   - component: {fileID: 1233662106}
+  - component: {fileID: 1233662107}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -1251,23 +1259,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1233662104}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 50
-    m_Right: 50
-    m_Top: 40
-    m_Bottom: 40
-  m_ChildAlignment: 1
-  m_Spacing: 20
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 1
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
+    m_Left: 20
+    m_Right: 0
+    m_Top: 30
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 300, y: 150}
+  m_Spacing: {x: 0, y: 0}
+  m_Constraint: 1
+  m_ConstraintCount: 2
 --- !u!1 &1335122193
 GameObject:
   m_ObjectHideFlags: 0

@@ -295,14 +295,17 @@ public class CookingSystem : MonoBehaviour
         yield return new WaitForSeconds(3f);
         inventoryManager.AddItem(recipe.resultItem, 1);
 
-        //// 수집한 아이템의 ID를 퀘스트와 비교
-        //foreach (var quest in questManager.questList)
-        //{
-        //    if (quest.itemId == recipe.resultItem.itemId)
-        //    {
-        //        quest.UpdateItemCount(1);
-        //    }
-        //}
+        // 수집한 아이템의 ID를 퀘스트와 비교
+        if (questManager != null)
+        {
+            foreach (var quest in questManager.questList)
+            {
+                if (quest.itemId == recipe.resultItem.itemId)
+                {
+                    quest.UpdateItemCount(1);
+                }
+            }
+        }
 
         currentRecipe = null;
         foodName.text = "";
