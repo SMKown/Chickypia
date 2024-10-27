@@ -3,6 +3,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
@@ -19,10 +20,11 @@ public class SceneLoader : MonoBehaviour
     public bool isCanLoad = false;
     public bool isUIReander = false;
 
-    private string SceneName;
+    private string sceneName;
+    private string currentScenName;
 
     private Dictionary<string, Action> methodDictionary;
-    private Dictionary<string, Image> SceneUIinteraction;
+    private Dictionary<string, Image> sceneUIinteraction;
 
     private float elapsedTime;
     private float animationDuration = 0.25F;
@@ -47,7 +49,7 @@ public class SceneLoader : MonoBehaviour
             { "Desert03",       Desert03     }
         };
 
-       SceneUIinteraction = new Dictionary<string, Image>
+       sceneUIinteraction = new Dictionary<string, Image>
        {
            { "Flame01", Flame },
            { "Desert01", Desert },
@@ -60,7 +62,7 @@ public class SceneLoader : MonoBehaviour
     {
         if (isUIReander && Input.GetKeyDown(KeyCode.E))
         {
-            if (isCanLoad == true && methodDictionary.TryGetValue(SceneName, out Action method))
+            if (isCanLoad == true && methodDictionary.TryGetValue(sceneName, out Action method))
             {
                 method.Invoke();
             }
@@ -72,19 +74,20 @@ public class SceneLoader : MonoBehaviour
         if(other.gameObject.CompareTag("MoveScene"))
         {
             isCanLoad = true;
-            SceneName = other.gameObject.name;
-            if (SceneUIinteraction.TryGetValue(SceneName, out Image image))
+            sceneName = other.gameObject.name;
+            currentScenName = SceneManager.GetActiveScene().name;
+            if (sceneUIinteraction.TryGetValue(sceneName, out Image image) && currentScenName == "Village")
             {
                 isUIReander = true;
                 StartCoroutine(ImageOn(image));
             }
-            else if (isCanLoad == true && methodDictionary.TryGetValue(SceneName, out Action method))
+            else if (isCanLoad == true && methodDictionary.TryGetValue(sceneName, out Action method))
             {
                 method.Invoke();
             }
             else
             {
-                Debug.LogWarning($"No method mapped for scene: {SceneName}");
+                Debug.LogWarning($"No method mapped for scene: {sceneName}");
             }
         }        
     }
@@ -94,8 +97,8 @@ public class SceneLoader : MonoBehaviour
         if (other.gameObject.CompareTag("MoveScene"))
         {
             isCanLoad = false;
-            SceneName = other.gameObject.name;
-            if (isUIReander == true && SceneUIinteraction.TryGetValue(SceneName, out Image image))
+            sceneName = other.gameObject.name;
+            if (isUIReander == true && sceneUIinteraction.TryGetValue(sceneName, out Image image))
             {
                 isUIReander = false;
                 StartCoroutine(ImageOff(image));
@@ -223,6 +226,9 @@ public class SceneLoader : MonoBehaviour
         {
             Debug.Log("QuestProgress 없음");  
         }
+
+        isCanLoad = false;
+        isUIReander = false;
     }
 
     private void ResetScene() // 리셋
