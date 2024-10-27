@@ -58,15 +58,11 @@ public class SceneLoader : MonoBehaviour
 
     private void Update()
     {
-        if (isCanLoad && Input.GetKeyDown(KeyCode.E))
+        if (isUIReander && Input.GetKeyDown(KeyCode.E))
         {
-            if (methodDictionary.TryGetValue(SceneName, out Action method))
+            if (isCanLoad == true && methodDictionary.TryGetValue(SceneName, out Action method))
             {
                 method.Invoke();
-            }
-            else
-            {
-                Debug.LogWarning($"No method mapped for scene: {SceneName}");
             }
         }
     }
@@ -82,6 +78,14 @@ public class SceneLoader : MonoBehaviour
                 isUIReander = true;
                 StartCoroutine(ImageOn(image));
             }
+            else if (isCanLoad == true && methodDictionary.TryGetValue(SceneName, out Action method))
+            {
+                method.Invoke();
+            }
+            else
+            {
+                Debug.LogWarning($"No method mapped for scene: {SceneName}");
+            }
         }        
     }
 
@@ -91,7 +95,7 @@ public class SceneLoader : MonoBehaviour
         {
             isCanLoad = false;
             SceneName = other.gameObject.name;
-            if (SceneUIinteraction.TryGetValue(SceneName, out Image image))
+            if (isUIReander == true && SceneUIinteraction.TryGetValue(SceneName, out Image image))
             {
                 isUIReander = false;
                 StartCoroutine(ImageOff(image));
