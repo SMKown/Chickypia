@@ -2,28 +2,27 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.VisualScripting;
 
 public enum QuestStatus
 {
-    Available, // 퀘스트 수락 전
-    InProgress, // 퀘스트 진행 중
-    Completed // 퀘스트 완료
+    Available,
+    InProgress,
+    Completed
 }
 
 [Serializable]
 public class QuestData
 {
-    public int id; // 번호
-    public string title; // 제목
-    public string explanation; // 설명
-    public int requiresQuestId; // 진행하기 위한 전 단계 퀘스트 번호
-    public int itemId; // 수집해야 할 아이템의 ID
-    public int itemCountRequired; // 필요한 수집 개수
-    public List<string> questDialogues; // 퀘스트 대화
+    public int id;
+    public string title;
+    public string explanation;
+    public int requiresQuestId;
+    public int itemId;
+    public int itemCountRequired;
+    public List<string> questDialogues;
 
-    public QuestStatus status; // 퀘스트 상태
-    public int itemCount; // 현재 수집한 개수
+    public QuestStatus status;
+    public int itemCount;
 
     public QuestData(int id, string title, string explanation, int requiresQuestId, int itemId = 0, int itemCountRequired = 0, List<string> questDialogues = null)
     {
@@ -38,18 +37,20 @@ public class QuestData
         this.itemCount = 0;
     }
 
-    public Action OnItemCountUpdated; // 수집 개수가 업데이트 될 때 호출할 이벤트
+    public Action OnItemCountUpdated;
 
-    public void UpdateItemCount(int amount) // 필요 아이템 수집
+    public void UpdateItemCount(int amount)
     {
-        if (status == QuestStatus.InProgress) // 진행 중인 퀘스트만 수집 체크
+        if (status == QuestStatus.InProgress)
         {
             itemCount += amount;
-            OnItemCountUpdated?.Invoke(); // 이벤트 호출
-
+            OnItemCountUpdated?.Invoke();
+            QuestManager.Instance.SaveQuestProgress(); // 진행 상황 저장
+            
             if (itemCount >= itemCountRequired)
             {
                 SetQuestStatus(QuestStatus.Completed);
+                QuestManager.Instance.SaveQuestProgress(); // 완료 후 저장
             }
         }
     }
@@ -60,6 +61,8 @@ public class QuestData
 
 public class QuestManager : MonoBehaviour
 {
+    public static QuestManager Instance { get; private set; }
+
     [SerializeField]
     public List<QuestData> questList = new List<QuestData>();
     private Dictionary<int, QuestData> questData = new Dictionary<int, QuestData>();
@@ -68,11 +71,16 @@ public class QuestManager : MonoBehaviour
 
     private void Awake()
     {
-        filePath = Path.Combine(Application.persistentDataPath, "questData.json");
-    }
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
-    void Start()
-    {
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+
+        filePath = Path.Combine(Application.persistentDataPath, "questData.json");
         LoadQuestData();
         LoadQuestProgress();
     }
@@ -101,18 +109,9 @@ public class QuestManager : MonoBehaviour
 
     public void SaveQuestProgress()
     {
-        List<QuestData> questProgressList = new List<QuestData>();
-
-        foreach (var quest in questList)
-        {
-            if (quest.GetQuestStatus() != QuestStatus.Available)
-            {
-                questProgressList.Add(quest);
-            }
-        }
-        string jsonData = JsonUtility.ToJson(new QuestListWrapper { quests = questProgressList }, true);
+        string jsonData = JsonUtility.ToJson(new QuestListWrapper { quests = questList }, true);
         File.WriteAllText(filePath, jsonData);
-        Debug.Log("@@@@@@@@@@@@@@ 퀘스트 저장 @@@@@@@@@@@@@@");
+        Debug.Log("퀘스트 저장 완료");
     }
 
     public void LoadQuestProgress()
@@ -130,11 +129,11 @@ public class QuestManager : MonoBehaviour
                     quest.itemCount = savedQuest.itemCount;
                 }
             }
-            Debug.Log("@@@@@@@@@@@@@@ 퀘스트 진행 불러옴 @@@@@@@@@@@@@@");
+            Debug.Log("퀘스트 진행 불러오기 완료");
         }
         else
         {
-            Debug.Log("퀘스트 데이터 없으요");
+            Debug.Log("저장된 퀘스트 데이터가 없습니다");
         }
     }
 
@@ -152,7 +151,7 @@ public class QuestManager : MonoBehaviour
         }
         SaveQuestProgress();
 
-        Debug.Log("@@@@@@@@@@@@@@ 퀘스트 진행 초기화됨 @@@@@@@@@@@@@@");
+        Debug.Log("퀘스트 진행 초기화 완료");
     }
 
     void LoadQuestData()
@@ -189,7 +188,6 @@ public class QuestManager : MonoBehaviour
         }
     }
 }
-
 
 [Serializable]
 public class QuestListWrapper

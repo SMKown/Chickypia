@@ -249,6 +249,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1674797050}
     - target: {fileID: 5191600072976547646, guid: d5ad88076a4f1d048a288b25c5386634, type: 3}
+      propertyPath: npcType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5191600072976547646, guid: d5ad88076a4f1d048a288b25c5386634, type: 3}
       propertyPath: DialogueText.Array.data[0]
       value: 
       objectReference: {fileID: 845600526}
@@ -3714,9 +3718,11 @@ MonoBehaviour:
   inventoryManager: {fileID: 0}
   compendiumManager: {fileID: 0}
   playerstats: {fileID: 0}
+  QuestManager: {fileID: 0}
   Flame: {fileID: 0}
   Desert: {fileID: 0}
   Jungle: {fileID: 0}
+  Village: {fileID: 0}
   isCanLoad: 0
   isUIReander: 0
 --- !u!4 &7565892767894614199
