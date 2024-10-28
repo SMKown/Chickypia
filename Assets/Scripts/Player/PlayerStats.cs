@@ -147,7 +147,7 @@ public class PlayerStats : MonoBehaviour
         }
         else
         {
-            Debug.LogError("历厘颇老 X");
+            Debug.Log("历厘颇老 X");
         }
     }
 

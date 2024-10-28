@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        option.gameObject.SetActive(false);
+        //option.gameObject.SetActive(false);
     }
 
     private void Update()

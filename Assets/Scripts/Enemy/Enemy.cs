@@ -97,9 +97,9 @@ public abstract class Enemy : MonoBehaviour
         for (int i = 0; i < flashCount; i++)
         {
             FlashTrans.SetActive(false);
-            yield return new WaitForSeconds(0.15f);
+            yield return new WaitForSeconds(0.1f);
             FlashTrans.SetActive(true);
-            yield return new WaitForSeconds(0.15f);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
