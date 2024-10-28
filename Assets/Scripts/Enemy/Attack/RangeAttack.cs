@@ -84,13 +84,16 @@ public class RangeAttack : Enemy // 원거리 공격
         isAttacking = false;
         agent.isStopped = false;
 
-        if (PlayerInAttackRange())
+        if (!(GetComponent<EnemyAI>().CurrentState is FleeingState))
         {
-            Attack();
-        }
-        else
-        {
-            ChasePlayer(player.position);
+            if (PlayerInAttackRange())
+            {
+                Attack();
+            }
+            else
+            {
+                ChasePlayer(player.position);
+            }
         }
     }
 }

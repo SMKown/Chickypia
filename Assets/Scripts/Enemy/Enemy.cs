@@ -131,9 +131,14 @@ public abstract class Enemy : MonoBehaviour
     protected void Die()
     {
         SetAnimationState(AnimationState.Die);
+
+        StopAllCoroutines();
+        isAttacking = false;
+
         if (agent != null && agent.isOnNavMesh)
         {
             agent.isStopped = true;
+            agent.enabled = false;
         }
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
