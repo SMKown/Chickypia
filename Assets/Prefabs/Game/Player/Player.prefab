@@ -11337,6 +11337,7 @@ GameObject:
   - component: {fileID: 6912262688902278683}
   - component: {fileID: 5130339330810500296}
   - component: {fileID: 4262200051682710804}
+  - component: {fileID: 2972219557045834646}
   m_Layer: 0
   m_Name: InteractionRange
   m_TagString: Untagged
@@ -11425,6 +11426,28 @@ MonoBehaviour:
   dialog: {fileID: 0}
   gatherProgress: {fileID: 0}
   interactableObj: {fileID: 0}
+--- !u!114 &2972219557045834646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3299840679337744355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ae9fa1b6d7b64b2ca4dddafe0b2bce4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryManager: {fileID: 0}
+  compendiumManager: {fileID: 0}
+  playerstats: {fileID: 4794300412074554154}
+  QuestManager: {fileID: 0}
+  Flame: {fileID: 0}
+  Desert: {fileID: 0}
+  Jungle: {fileID: 0}
+  Village: {fileID: 0}
+  isCanLoad: 0
+  isUIReander: 0
 --- !u!1 &3308087866589943369
 GameObject:
   m_ObjectHideFlags: 0
@@ -17911,7 +17934,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 5
   currentHp: 5
-  moveSpeed: 3
+  moveSpeed: 1.4
   attackDamage: 1
   defaultMoveSpeed: 1.4
   useItem: 0
