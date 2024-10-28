@@ -86,7 +86,7 @@ public abstract class Enemy : MonoBehaviour
     private IEnumerator ReEnableNavMeshAgent()
     {
         Rigidbody rb = GetComponent<Rigidbody>();
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.6f);
         rb.isKinematic = false;
         agent.isStopped = false;
     }
@@ -131,18 +131,25 @@ public abstract class Enemy : MonoBehaviour
     protected void Die()
     {
         SetAnimationState(AnimationState.Die);
+
+        StopAllCoroutines();
+        isAttacking = false;
+
         if (agent != null && agent.isOnNavMesh)
         {
             agent.isStopped = true;
-            agent.updatePosition = false;
-            agent.updateRotation = false;
+            agent.enabled = false;
         }
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
         {
             rb.isKinematic = true;
         }
-
+        Collider collider = GetComponent<Collider>();
+        if (collider != null)
+        {
+            collider.enabled = false;
+        }
         EnemyAI enemyAI = GetComponent<EnemyAI>();
         if (enemyAI != null)
         {
@@ -150,7 +157,7 @@ public abstract class Enemy : MonoBehaviour
         }
 
         DropItem();
-        Destroy(gameObject, 2f);
+        Destroy(gameObject, 1.5f);
     }
 
     private void DropItem()
@@ -292,6 +299,16 @@ public abstract class Enemy : MonoBehaviour
                 {
                     Gizmos.DrawLine(patrolPoints[i], patrolPoints[0]);
                 }
+            }
+        }
+
+        if (FleePoints != null && FleePoints.Length > 0)
+        {
+            Gizmos.color = Color.yellow;
+
+            for (int i = 0; i < FleePoints.Length; i++)
+            {
+                Gizmos.DrawSphere(FleePoints[i], 0.5f);
             }
         }
     }

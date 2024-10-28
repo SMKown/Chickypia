@@ -329,13 +329,18 @@ public class FleeingState : EnemyState
     private bool reachedFleePoint = false;
     private float idleDuration = 5f;
     private float idleTimer = 0f;
+    private float defaultSpeed;
 
     public FleeingState(EnemyAI enemyAI) : base(enemyAI) { }
 
     public override void EnterState()
     {
         Debug.Log("µµ¸Á»óÅÂ");
-        enemyAI.GetEnemy().ResetAnimationState();
+        enemyAI.GetEnemy().SetAnimationState(AnimationState.Move);
+
+        defaultSpeed = enemyAI.agent.speed;
+        enemyAI.agent.speed = 3f;
+
         enemyAI.FleeFromPlayer();
         enemyAI.hasFledOnce = true;
         reachedFleePoint = false;
@@ -344,12 +349,19 @@ public class FleeingState : EnemyState
 
     public override void UpdateState() 
     {
-        if (!reachedFleePoint && enemyAI.agent.remainingDistance <= enemyAI.agent.stoppingDistance + 0.2f)
+        if (!reachedFleePoint)
         {
-            reachedFleePoint = true;
-            Debug.Log("µµ¸Á Àå¼Ò¿¡ µµÂø");
-            enemyAI.GetEnemy().SetAnimationState(AnimationState.Idle);
-            idleTimer = 0f;
+            if (enemyAI.agent.remainingDistance <= enemyAI.agent.stoppingDistance + 0.2f)
+            {
+                reachedFleePoint = true;
+                Debug.Log("µµ¸Á Àå¼Ò¿¡ µµÂø");
+                enemyAI.GetEnemy().SetAnimationState(AnimationState.Idle);
+                idleTimer = 0f;
+            }
+            else
+            {
+                enemyAI.GetEnemy().SetAnimationState(AnimationState.Move);
+            }
         }
 
         if (reachedFleePoint)
@@ -386,6 +398,7 @@ public class FleeingState : EnemyState
 
     public override void ExitState()
     {
+        enemyAI.agent.speed = defaultSpeed;
         enemyAI.GetEnemy().ResetAnimationState();
     }
 }

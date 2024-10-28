@@ -61,7 +61,7 @@ public class CookingSystem : MonoBehaviour
 
     private void Update()
     {
-        if (isLetsCook && !PlayerInfo.Instance.attackMode)
+        if (isLetsCook && !PlayerInfo.Instance.attackMode && !PlayerInfo.Instance.fishing)
         {
             StartCook();
         }
@@ -71,7 +71,7 @@ public class CookingSystem : MonoBehaviour
             {
                 StopCook();
             }
-            else if (!invenCompenUI.isInventoryOpen && !PlayerInfo.Instance.attackMode)
+            else if (!invenCompenUI.isInventoryOpen && !PlayerInfo.Instance.attackMode && !PlayerInfo.Instance.fishing)
             {
                 StartCook();
             }

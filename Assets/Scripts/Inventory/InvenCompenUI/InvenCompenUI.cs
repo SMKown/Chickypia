@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class InvenCompenUI : MonoBehaviour
 {
     public GameObject MainInventory;
     public GameObject CompendiumUI;
 
+    public GameObject CheckUI;
     public GameObject gatheringUI;
     public GameObject cookingUI;
     public GameObject fishingUI;
@@ -20,13 +23,15 @@ public class InvenCompenUI : MonoBehaviour
     private ItemToolTipUI tooltipUI;
     public CompendiumManager compendiumManager;
 
+    private InventoryItem currentItem;
+
     private void Start()
     {
         MainInventory.SetActive(false);
         CompendiumUI.SetActive(false);
         InventoryOpenButton.SetActive(false);
         CompendiumOpenButton.SetActive(false);
-
+        CheckUI.SetActive(false);
         tooltipUI = ItemToolTipUI.Instance;
     }
 
@@ -38,6 +43,11 @@ public class InvenCompenUI : MonoBehaviour
             {
                 ToggleInventory();
             }
+        }
+
+        if (CheckUI.activeSelf && Input.anyKeyDown && !EventSystem.current.IsPointerOverGameObject())
+        {
+            CloseCheckUI();
         }
     }
 
@@ -110,6 +120,34 @@ public class InvenCompenUI : MonoBehaviour
         if (tooltipUI != null)
         {
             tooltipUI.HideToolTip();
+        }
+    }
+
+    public void SetCurrentItem(InventoryItem item)
+    {
+        currentItem = item;
+    }
+
+    public void CloseCheckUI()
+    {
+        CheckUI.SetActive(false);
+    }
+
+    public void ConfirmUseItem()
+    {
+        if (currentItem != null)
+        {
+            currentItem.UseItemButton();
+            CheckUI.SetActive(false);
+        }
+    }
+
+    public void ConfirmDiscardItem()
+    {
+        if (currentItem != null)
+        {
+            currentItem.DiscardItemButton();
+            CheckUI.SetActive(false);
         }
     }
 }
