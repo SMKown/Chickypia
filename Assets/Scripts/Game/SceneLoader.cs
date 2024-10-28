@@ -35,7 +35,7 @@ public class SceneLoader : MonoBehaviour
         {
             { "MainScene",      MainScene    },
             { "NewGame",        NewGame      },
-            { "VillageScene",   VillageScene },
+            { "Village",        VillageScene },
             { "CustomScene",    CustomScene  },
             { "FishingScene",   FishingScene },
             { "Flame01",        Flame01      },
@@ -105,6 +105,8 @@ public class SceneLoader : MonoBehaviour
             }
         }            
     }
+
+    #region ¾À
 
     public void MainScene()
     {
@@ -185,6 +187,8 @@ public class SceneLoader : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
     }
+
+    #endregion
 
     private void SaveAllBeforeSceneLoad()
     {
