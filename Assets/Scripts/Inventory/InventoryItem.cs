@@ -51,10 +51,63 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-            // Debug.Log("Right click detected on item: " + item.itemName);
-            StartCoroutine(UseItem());
+            ShowCheckUI();
         }
     }
+    private void ShowCheckUI()
+    {
+        InvenCompenUI invenUI = FindObjectOfType<InvenCompenUI>();
+        if (invenUI != null && invenUI.CheckUI != null)
+        {
+            invenUI.CheckUI.SetActive(true);
+            invenUI.SetCurrentItem(this);
+        }
+    }
+
+    public void UseItemButton()
+    {
+        StartCoroutine(UseItem());
+    }
+    public void DiscardItemButton()
+    {
+        if (count > 1)
+        {
+            count -= 1;
+            if (count <= 0)
+            {
+                InventorySlot parentSlot = transform.parent?.GetComponent<InventorySlot>();
+                if (parentSlot != null)
+                {
+                    parentSlot.slotBackgroundImage.color = new Color(1, 1, 1, 1);
+                    parentSlot.slotBackgroundImage.SetAllDirty();
+                }
+                if (tooltipUI != null)
+                {
+                    tooltipUI.HideToolTip();
+                }
+                Destroy(gameObject);
+            }
+            else
+            {
+                ItemCount();
+            }
+        }
+        else
+        {
+            InventorySlot parentSlot = transform.parent?.GetComponent<InventorySlot>();
+            if (parentSlot != null)
+            {
+                parentSlot.slotBackgroundImage.color = new Color(1, 1, 1, 1);
+                parentSlot.slotBackgroundImage.SetAllDirty();
+            }
+            if (tooltipUI != null)
+            {
+                tooltipUI.HideToolTip();
+            }
+            Destroy(gameObject);
+        }
+    }
+
 
     IEnumerator UseItem()
     {
