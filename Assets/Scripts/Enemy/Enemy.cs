@@ -93,13 +93,13 @@ public abstract class Enemy : MonoBehaviour
 
     private IEnumerator FlashTR()
     {
-        int flashCount = 15;
+        int flashCount = 8;
         for (int i = 0; i < flashCount; i++)
         {
             FlashTrans.SetActive(false);
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.1f);
             FlashTrans.SetActive(true);
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 

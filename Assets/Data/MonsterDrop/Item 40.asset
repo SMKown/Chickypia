@@ -13,15 +13,18 @@ MonoBehaviour:
   m_Name: Item 40
   m_EditorClassIdentifier: 
   itemType: 1
+  effectType: 0
   itemId: 40
   itemName: "\uCE58\uD0A4\uB3C4\uB9AC\uC758 \uB2E4\uB9AC"
-  itemDesc: "\uCE58\uD0A4\uB3C4\uB9AC\uC758 \uB2E4\uB9AC"
+  itemDesc: "\uCE58\uD0A4\uB3C4\uB9AC\uC5D0\uAC8C\uC11C \uC5BB\uC740 \uB2E4\uB9AC
+    \uACE0\uAE30"
   stackable: 1
   itemIcon: {fileID: 21300000, guid: b2f8ad8d4b8e1964db35d1503546576e, type: 3}
   itemModel: {fileID: 0}
-  moveSpeed: 0
-  attackDamage: 0
+  time: 0
   hp: 0
   hpMax: 0
+  moveSpeed: 0
+  attackDamage: 0
   category: 3
   isCollected: 0
