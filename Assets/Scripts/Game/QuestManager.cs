@@ -45,18 +45,29 @@ public class QuestData
         {
             itemCount += amount;
             OnItemCountUpdated?.Invoke();
-            QuestManager.Instance.SaveQuestProgress(); // 진행 상황 저장
-            
+            QuestManager.Instance.SaveQuestProgress();
+
             if (itemCount >= itemCountRequired)
             {
                 SetQuestStatus(QuestStatus.Completed);
-                QuestManager.Instance.SaveQuestProgress(); // 완료 후 저장
+                QuestManager.Instance.SaveQuestProgress();
             }
         }
     }
 
     public QuestStatus GetQuestStatus() => status;
+
     public void SetQuestStatus(QuestStatus newStatus) => status = newStatus;
+
+    public bool IsComplete()
+    {
+        return status == QuestStatus.Completed;
+    }
+
+    public bool CanStart()
+    {
+        return status == QuestStatus.Available;
+    }
 }
 
 public class QuestManager : MonoBehaviour
@@ -99,10 +110,10 @@ public class QuestManager : MonoBehaviour
     {
         if (questData.TryGetValue(questId, out var quest))
         {
-            return quest.GetQuestStatus() == QuestStatus.Available &&
+            return quest.CanStart() &&
                    (quest.requiresQuestId == 0 ||
                     (questData.TryGetValue(quest.requiresQuestId, out var prerequisiteQuest) &&
-                     prerequisiteQuest.GetQuestStatus() == QuestStatus.Completed));
+                     prerequisiteQuest.IsComplete()));
         }
         return false;
     }
@@ -154,7 +165,7 @@ public class QuestManager : MonoBehaviour
         Debug.Log("퀘스트 진행 초기화 완료");
     }
 
-    void LoadQuestData()
+    private void LoadQuestData()
     {
         var textAsset = Resources.Load<TextAsset>("CSV/Quest");
         var lines = textAsset.text.Split('\n');
@@ -185,6 +196,31 @@ public class QuestManager : MonoBehaviour
             var questDataEntry = new QuestData(id, title, explanation, requiresQuestId, itemToCollectId, itemCountRequired, questDialogues);
             questList.Add(questDataEntry);
             questData[id] = questDataEntry;
+        }
+    }
+
+    public List<QuestData> GetActiveQuests()
+    {
+        return questList.FindAll(quest => quest.status == QuestStatus.InProgress);
+    }
+
+    public void StartQuest(int questId)
+    {
+        if (IsQuestAvailable(questId) && questData.TryGetValue(questId, out var quest))
+        {
+            quest.SetQuestStatus(QuestStatus.InProgress);
+            SaveQuestProgress();
+            Debug.Log($"퀘스트 시작: {quest.title}");
+        }
+    }
+
+    public void CompleteQuest(int questId)
+    {
+        if (questData.TryGetValue(questId, out var quest) && quest.status == QuestStatus.InProgress)
+        {
+            quest.SetQuestStatus(QuestStatus.Completed);
+            SaveQuestProgress();
+            Debug.Log($"퀘스트 완료: {quest.title}");
         }
     }
 }
