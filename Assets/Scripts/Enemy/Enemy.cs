@@ -86,7 +86,7 @@ public abstract class Enemy : MonoBehaviour
     private IEnumerator ReEnableNavMeshAgent()
     {
         Rigidbody rb = GetComponent<Rigidbody>();
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.6f);
         rb.isKinematic = false;
         agent.isStopped = false;
     }
