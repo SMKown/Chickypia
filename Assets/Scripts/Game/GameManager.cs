@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public GameObject option;
-    public GameObject Moption;
     public GameObject soundOption;
 
     public GameObject M_option;
@@ -24,7 +23,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //option.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -39,8 +37,6 @@ public class GameManager : MonoBehaviour
     private void ToggleOptionMenu()
     {
         option.SetActive(!option.activeSelf);
-        Moption.SetActive(true);
-        soundOption.SetActive(false);
     }
 
     public void OpenOptionButton()
@@ -52,19 +48,6 @@ public class GameManager : MonoBehaviour
     {
         option.SetActive(false);
     }
-
-    public void ChangeSoundOptionButton()
-    {
-        soundOption.SetActive(true);
-        Moption.SetActive(false);
-    }
-
-    public void ChangeMOptionButton()
-    {
-        Moption.SetActive(true);
-        soundOption.SetActive(false);
-    }
-
     #endregion
 
     #region 메인씬 옵션창
