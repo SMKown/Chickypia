@@ -50,7 +50,7 @@ public abstract class Enemy : MonoBehaviour
         Knockback(playerForwardDirection, knockbackForce);
         StartCoroutine(FlashTR());
         SetAnimationState(AnimationState.Damage);
-
+        isAttacking = false;
         if (health > 0)
         {
             EnemyAI enemyAI = GetComponent<EnemyAI>();
@@ -93,13 +93,13 @@ public abstract class Enemy : MonoBehaviour
 
     private IEnumerator FlashTR()
     {
-        int flashCount = 8;
+        int flashCount = 15;
         for (int i = 0; i < flashCount; i++)
         {
             FlashTrans.SetActive(false);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.05f);
             FlashTrans.SetActive(true);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.05f);
         }
     }
 
