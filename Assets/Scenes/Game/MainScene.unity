@@ -429,10 +429,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1789026772130164738, guid: ca3ab0f1d45ed460280bbf2bf6265897, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2972219557045834646, guid: ca3ab0f1d45ed460280bbf2bf6265897, type: 3}
       propertyPath: Flame
       value: 
@@ -473,10 +469,6 @@ PrefabInstance:
       propertyPath: collection
       value: 
       objectReference: {fileID: 1540272374}
-    - target: {fileID: 4328499778957308608, guid: ca3ab0f1d45ed460280bbf2bf6265897, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4794300412074554154, guid: ca3ab0f1d45ed460280bbf2bf6265897, type: 3}
       propertyPath: moveSpeedUI
       value: 
@@ -497,22 +489,6 @@ PrefabInstance:
       propertyPath: inventoryManager
       value: 
       objectReference: {fileID: 93002353}
-    - target: {fileID: 5880364357490600453, guid: ca3ab0f1d45ed460280bbf2bf6265897, type: 3}
-      propertyPath: virtualCameras.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5880364357490600453, guid: ca3ab0f1d45ed460280bbf2bf6265897, type: 3}
-      propertyPath: virtualCameras.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6615639940278106802, guid: ca3ab0f1d45ed460280bbf2bf6265897, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8071771258966476210, guid: ca3ab0f1d45ed460280bbf2bf6265897, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8073137353129288744, guid: ca3ab0f1d45ed460280bbf2bf6265897, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.9
@@ -551,10 +527,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8073137353129288744, guid: ca3ab0f1d45ed460280bbf2bf6265897, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8362938223513213529, guid: ca3ab0f1d45ed460280bbf2bf6265897, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1242,11 +1214,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1156226294761451613, guid: 9b1a9ce8f27a09945a4e0443f232f467, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -487.2
+      value: -1873.5
       objectReference: {fileID: 0}
     - target: {fileID: 1156226294761451613, guid: 9b1a9ce8f27a09945a4e0443f232f467, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 3.3000488
+      value: -45.5
       objectReference: {fileID: 0}
     - target: {fileID: 1156226294761451613, guid: 9b1a9ce8f27a09945a4e0443f232f467, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2703,6 +2675,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa98652deefb7ae4e819f78b72018f47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1186828739 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2972219557045834646, guid: ca3ab0f1d45ed460280bbf2bf6265897, type: 3}
+  m_PrefabInstance: {fileID: 225416731}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ae9fa1b6d7b64b2ca4dddafe0b2bce4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1245561467
 GameObject:
   m_ObjectHideFlags: 0
@@ -2861,7 +2844,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1186828739}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: NewGame
         m_Mode: 1
@@ -3236,7 +3219,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1186828739}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: VillageScene
         m_Mode: 1
@@ -3920,7 +3903,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1186828739}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: ExitGame
         m_Mode: 1
