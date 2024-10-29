@@ -15,6 +15,8 @@ public class GatherableItem : MonoBehaviour
 
     public Slider gatherSlider;
 
+    public Animator playerAnimator;
+
     private void Start()
     {
         inventoryItem = GetComponent<InventoryItem>();
@@ -56,6 +58,7 @@ public class GatherableItem : MonoBehaviour
                 gatherSlider.value = 0F;
                 gatherSlider.gameObject.SetActive(false);
             }
+            playerAnimator.SetFloat("Take", 0);
             PlayerInfo.Instance.interacting = false;
         }
     }
@@ -81,6 +84,7 @@ public class GatherableItem : MonoBehaviour
             if (gatherSlider != null)
             {
                 gatherSlider.value = elapsedTime / gatherTime;
+                playerAnimator.SetFloat("Take", gatherSlider.value);
             }
             yield return null;
         }
@@ -95,6 +99,7 @@ public class GatherableItem : MonoBehaviour
             {
                 UIInteraction.Instance.interactableObj = null;
                 UIInteraction.Instance.ImageOff(UIInteraction.Instance.gathering);
+                playerAnimator.SetFloat("Take", 0);
 
                 // 수집한 아이템의 ID를 퀘스트와 비교
                 foreach (var quest in questManager.questList)
@@ -110,7 +115,7 @@ public class GatherableItem : MonoBehaviour
         if (gatherSlider != null)
         {
             gatherSlider.gameObject.SetActive(false);
-        }
+        }        
         PlayerInfo.Instance.interacting = false;
     }
 }

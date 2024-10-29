@@ -54,6 +54,7 @@ MonoBehaviour:
   gatherTime: 2
   isGathering: 0
   gatherSlider: {fileID: 0}
+  playerAnimator: {fileID: 6068323840325354372, guid: ca3ab0f1d45ed460280bbf2bf6265897, type: 3}
 --- !u!114 &3550824661267902768
 MonoBehaviour:
   m_ObjectHideFlags: 0
