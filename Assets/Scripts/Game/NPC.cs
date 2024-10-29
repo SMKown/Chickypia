@@ -26,6 +26,7 @@ public class NPC : MonoBehaviour
     public Transform canvas;
     public GameObject QuestBoxPrefab;
     private GameObject questBoxInstance;
+    private GameObject completedImage;
     private TMP_Text[] QuestTxt;
 
     private void Start()
@@ -125,6 +126,7 @@ public class NPC : MonoBehaviour
         {
             questBoxInstance = Instantiate(QuestBoxPrefab, canvas);
             QuestTxt = questBoxInstance.GetComponentsInChildren<TMP_Text>();
+            completedImage = questBoxInstance.transform.GetChild(1).gameObject;
         }
     }
 
@@ -195,9 +197,15 @@ public class NPC : MonoBehaviour
             QuestTxt[3].text = $"{quest.explanation}";
 
             if (quest.status == QuestStatus.Completed)
+            {
+                completedImage.SetActive(true);
                 QuestTxt[4].text = "완료";
+            }
             else
+            {
+                completedImage.SetActive(false);
                 QuestTxt[4].text = quest.itemId == 100 ? $"0/1" : $"{quest.itemCount}/{quest.itemCountRequired}";
+            }
         }
     }
 
