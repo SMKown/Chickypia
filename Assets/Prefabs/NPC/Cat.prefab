@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 45707040218301975}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: -0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalPosition: {x: 0, y: 5, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -1023,7 +1023,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54b1e90346461432f85320ddcd298ce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest_ids: 0100000002000000030000000400000005000000
+  npcType: 0
   generalDialogues:
   - "\uC5B4\uB514 \uAC00\uB294 \uAE38\uC774\uC57C?"
   - "\uC870\uC2EC\uD788 \uAC00~"

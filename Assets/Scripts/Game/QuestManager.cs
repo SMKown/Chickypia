@@ -89,7 +89,6 @@ public class QuestManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
 
         filePath = Path.Combine(Application.persistentDataPath, "questData.json");
         LoadQuestData();

@@ -67,30 +67,25 @@ public class NPC : MonoBehaviour
         foreach (int questId in quest_ids)
         {
             QuestData quest = QuestManager.Instance.GetQuestData(questId);
+            QuestData requireQuest = QuestManager.Instance.GetQuestData(quest.requiresQuestId);
+
             if (quest != null)
             {
                 switch (quest.GetQuestStatus())
                 {
+                    // NPC 첫 번째 퀘스트이면서, 이전 퀘스트가 없거나 완료일 경우
+                    case QuestStatus.Available when questId == quest_ids[0] && (requireQuest == null || requireQuest.GetQuestStatus() == QuestStatus.Completed):
+                        hasAvailableQuest = true;
+                        DisplayQuestInfo(quest);
+                        break;
+
+                    case QuestStatus.Available when requireQuest == null || requireQuest.GetQuestStatus() == QuestStatus.Completed:
+                        hasAvailableQuest = true;
+                        break;
+
                     case QuestStatus.Completed:
+                        DisplayQuestInfo(quest);
                         completedQuestCount++;
-                        UpdateQuestBoxText(quest, "퀘스트 완료!");
-                        break;
-
-                    // 고양이의 경우: 첫 번째 퀘스트가 Available 상태일 때
-                    // 곰의 경우: 첫 번째 퀘스트가 Available 상태이거나, 첫 번째 퀘스트의 선행 퀘스트가 완료된 경우
-                    case QuestStatus.Available when questId == quest_ids[0] && npcType == NPCType.Cat:
-                        hasAvailableQuest = true;
-                        DisplayQuestInfo(quest);
-                        break;
-
-                    case QuestStatus.Available when questId == quest_ids[0] && npcType == NPCType.Bear &&
-                        QuestManager.Instance.GetQuestData(quest.requiresQuestId)?.GetQuestStatus() == QuestStatus.Completed:
-                        hasAvailableQuest = true;
-                        DisplayQuestInfo(quest);
-                        break;
-
-                    case QuestStatus.Available when QuestManager.Instance.GetQuestData(quest.requiresQuestId)?.GetQuestStatus() == QuestStatus.Completed:
-                        hasAvailableQuest = true;
                         break;
 
                     case QuestStatus.InProgress:
@@ -198,14 +193,12 @@ public class NPC : MonoBehaviour
         {
             QuestTxt[2].text = quest.title;
             QuestTxt[3].text = $"[{quest.explanation}]";
-            QuestTxt[4].text = quest.itemId == 100 ? $"{npcName}에게 가볼까?" : $"[{quest.itemCount}/{quest.itemCountRequired}]";
-        }
-    }
 
-    private void UpdateQuestBoxText(QuestData quest, string completionText)
-    {
-        CreateQuestBox();
-        QuestTxt[4].text = completionText;
+            if (quest.status == QuestStatus.Completed)
+                QuestTxt[4].text = "퀘스트 완료 !";
+            else
+                QuestTxt[4].text = quest.itemId == 100 ? $"{npcName}에게 가볼까?" : $"[{quest.itemCount}/{quest.itemCountRequired}]";
+        }
     }
 
     private void UpdateQuestCategoryText(int completedQuestCount)
