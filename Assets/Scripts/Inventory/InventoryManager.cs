@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using UnityEditor.Build.Content;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
@@ -195,7 +194,6 @@ public class InventoryManager : MonoBehaviour
             File.Delete(saveFilePath);
         }
     }
-
 
     public void SaveInventory()
     {
