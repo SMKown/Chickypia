@@ -54,13 +54,14 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             ShowCheckUI();
         }
     }
+
     private void ShowCheckUI()
     {
         InvenCompenUI invenUI = FindObjectOfType<InvenCompenUI>();
-        if (invenUI != null && invenUI.CheckUI != null)
+        if (invenUI != null)
         {
-            invenUI.CheckUI.SetActive(true);
             invenUI.SetCurrentItem(this);
+            invenUI.ShowItemOptions(item.itemType);
         }
     }
 
