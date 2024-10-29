@@ -7,6 +7,8 @@ public class Chest : MonoBehaviour
     private Animator animator;
     public GameObject Star;
 
+    public Transform chestCamTransform;
+
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -24,7 +26,7 @@ public class Chest : MonoBehaviour
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         return enemies.Length == 0;
-    }
+    }                                                                                   
 
     public void OpenChest()
     {
@@ -34,5 +36,11 @@ public class Chest : MonoBehaviour
     public void SpawnStar()
     {
         Star.SetActive(true);
+
+        Animator starAnimator = Star.GetComponent<Animator>();
+        if (starAnimator != null)
+        {
+            starAnimator.SetTrigger("StarAppear");
+        }
     }
 }
