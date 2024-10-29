@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +16,10 @@ public class NPC : MonoBehaviour
     public NPCType npcType;
     public List<string> generalDialogues;
     public GameObject questMark;
-    public Text[] DialogueText;
+    public GameObject Dialog;
+
+    private Text[] DialogueText;
+    private GameObject fishingButton;
 
     private PlayerMovement playerMovement;
     private int dialogueIndex = 0;
@@ -32,6 +36,8 @@ public class NPC : MonoBehaviour
     private void Start()
     {
         playerMovement = FindObjectOfType<PlayerMovement>();
+        if (Dialog != null)
+            DialogueText = Dialog.GetComponentsInChildren<Text>();
         InitializeNPC();
         UpdateQuestUI();
     }
@@ -57,6 +63,8 @@ public class NPC : MonoBehaviour
             quest_ids = new int[] { 6, 7 };
             npcName = "강태곰";
             questCategory = "치키별의 강태공";
+            if (Dialog != null)
+                fishingButton = Dialog.transform.GetChild(2).gameObject;
         }
     }
 
@@ -130,16 +138,6 @@ public class NPC : MonoBehaviour
         }
     }
 
-    private void CloseDialogue()
-    {
-        UIInteraction.Instance.ImageOff(UIInteraction.Instance.dialog);
-        PlayerInfo.Instance.canInteract = false;
-        dialogueIndex = 0;
-        PlayerInfo.Instance.interacting = false;
-        playerMovement.ResetCamera();
-        StartCoroutine(EnableInteractionDelay(1.5F));
-    }
-
     private IEnumerator EnableInteractionDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -152,12 +150,19 @@ public class NPC : MonoBehaviour
     {
         DialogueText[0].text = npcName;
 
-        if (dialogueIndex < dialogues.Count)
+        // 곰 NPC  일반 대화일 때 버튼 활성화
+        if (npcType == NPCType.Bear && quest == null)
+        {
+            fishingButton.SetActive(true);
+            return;
+        }
+
+        if (dialogueIndex < dialogues.Count) // 대화 진행
         {
             DialogueText[1].text = dialogues[dialogueIndex];
             dialogueIndex++;
         }
-        else
+        else // 대화 종료
         {
             if (quest != null)
             {
@@ -174,6 +179,16 @@ public class NPC : MonoBehaviour
             UpdateQuestUI();
             CloseDialogue();
         }
+    }
+
+    public void CloseDialogue()
+    {
+        UIInteraction.Instance.ImageOff(UIInteraction.Instance.dialog);
+        PlayerInfo.Instance.canInteract = false;
+        dialogueIndex = 0;
+        PlayerInfo.Instance.interacting = false;
+        playerMovement.ResetCamera();
+        StartCoroutine(EnableInteractionDelay(1.5F));
     }
 
     private QuestData GetActiveQuest()

@@ -1028,9 +1028,7 @@ MonoBehaviour:
   - "\uC5B4\uB514 \uAC00\uB294 \uAE38\uC774\uC57C?"
   - "\uC870\uC2EC\uD788 \uAC00~"
   questMark: {fileID: 2866386844988682385}
-  DialogueText:
-  - {fileID: 0}
-  - {fileID: 0}
+  Dialog: {fileID: 0}
   canvas: {fileID: 0}
   QuestBoxPrefab: {fileID: 3026333854955645714, guid: e1ef3cea6bc92704d9548c6b025c5947, type: 3}
 --- !u!1 &2007506934982545385

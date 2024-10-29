@@ -1617,11 +1617,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   npcType: 1
   generalDialogues:
-  - "\uB09A\uC2DC\uD558\uB7EC \uC654\uC5B4?"
+  - "\uB09A\uC2DC\uD130\uC5D0 \uB4E4\uC5B4\uAC00\uACE0 \uC2F6\uC5B4?"
   questMark: {fileID: 1294113040141408636}
-  DialogueText:
-  - {fileID: 0}
-  - {fileID: 0}
+  Dialog: {fileID: 0}
   canvas: {fileID: 0}
   QuestBoxPrefab: {fileID: 3026333854955645714, guid: e1ef3cea6bc92704d9548c6b025c5947, type: 3}
 --- !u!1 &2628741414091440389
