@@ -4,6 +4,7 @@ using System;
 using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.AI;
 
 public class SceneLoader : MonoBehaviour
 {
@@ -116,26 +117,37 @@ public class SceneLoader : MonoBehaviour
     public void NewGame()
     {
         ResetScene();
+        playerstats.SetMoveSpeed(3.0f);
+        LoadingSceneManager.LoadScene("Village");
+    }
+
+    public void DieScene()
+    {
         LoadingSceneManager.LoadScene("Village");
     }
     public void VillageScene()
     {
         SaveAllBeforeSceneLoad();
+        playerstats.SetMoveSpeed(3.0f);
         LoadingSceneManager.LoadScene("Village");
     }
+
     public void CustomScene()
     {
         SaveAllBeforeSceneLoad();
         LoadingSceneManager.LoadScene("CustomScene");
     }
+
     public void FishingScene()
     {
         SaveAllBeforeSceneLoad();
+        playerstats.ResetMoveSpeed();
         LoadingSceneManager.LoadScene("FishingScene");
     }
     public void Flame01()
     {
         SaveAllBeforeSceneLoad();
+        playerstats.ResetMoveSpeed();
         LoadingSceneManager.LoadScene("Flame01");
     }
     public void Flame02()
@@ -151,6 +163,7 @@ public class SceneLoader : MonoBehaviour
     public void Jungle01()
     {
         SaveAllBeforeSceneLoad();
+        playerstats.ResetMoveSpeed();
         LoadingSceneManager.LoadScene("Jungle01");
     }
     public void Jungle02()
@@ -166,6 +179,7 @@ public class SceneLoader : MonoBehaviour
     public void Desert01()
     {
         SaveAllBeforeSceneLoad();
+        playerstats.ResetMoveSpeed();
         LoadingSceneManager.LoadScene("Desert01");
     }
     public void Desert02()

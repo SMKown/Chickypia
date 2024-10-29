@@ -151,6 +151,19 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+    public void SetMoveSpeed(float speed)
+    {
+        moveSpeed = speed;
+        SavePlayerState();
+    }
+
+    public void ResetMoveSpeed()
+    {
+        moveSpeed = 1.4f;
+        SavePlayerState();
+    }
+
+
     [System.Serializable]
     public class PlayerData
     {
