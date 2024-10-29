@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class LoadingSceneManager : MonoBehaviour
 {
-    public Slider slider;
     public static string loadScene;
 
     private void Start()
@@ -36,16 +35,14 @@ public class LoadingSceneManager : MonoBehaviour
             if (op.progress < 0.9F)
             {
                 progress = Mathf.Lerp(progress, op.progress, timer);
-                slider.value = progress;
                 if (progress >= op.progress)
-                {
+                {                    
                     timer = 0F;
                 }
             }
             else
             {
                 progress = Mathf.Lerp(progress, 1F, timer);
-                slider.value = progress;
                 if (progress == 1.0F)
                 {
                     op.allowSceneActivation = true;

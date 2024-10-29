@@ -35,30 +35,30 @@ public class SceneLoader : MonoBehaviour
 
     private Dictionary<(string, string), string> movePointMapping = new Dictionary<(string, string), string>
     {
-        { ("Village", "Flame01"), "MovePoint01" },
-        { ("Flame01", "Flame02"), "MovePoint01" },
-        { ("Flame02", "Flame03"), "MovePoint01" },
-        { ("Flame01", "Village"), "MovePoint01" },
-        { ("Flame02", "Flame01"), "MovePoint02" },
-        { ("Flame03", "Flame02"), "MovePoint02" },
-        { ("Flame03", "Village"), "MovePoint01" },
-        { ("Village", "Jungle01"), "MovePoint01" },
-        { ("Jungle01", "Jungle02"), "MovePoint01" },
-        { ("Jungle02", "Jungle03"), "MovePoint01" },
-        { ("Jungle01", "Village"), "MovePoint03" },
-        { ("Jungle02", "Jungle01"), "MovePoint02" },
-        { ("Jungle03", "Jungle02"), "MovePoint02" },
-        { ("Jungle03", "Village"), "MovePoint03" },
-        { ("Village", "Desert01"), "MovePoint01" },
-        { ("Desert01", "Desert02"), "MovePoint01" },
-        { ("Desert02", "Desert03"), "MovePoint01" },
-        { ("Desert01", "Village"), "MovePoint02" },
-        { ("Desert02", "Desert01"), "MovePoint02" },
-        { ("Desert03", "Desert02"), "MovePoint02" },
-        { ("Desert03", "Village"), "MovePoint02" },
-        { ("CustomScene", "Village"), "MovePoint04" },
-        { ("FishingScene", "Village"), "MovePoint05" },
-        { ("MainScene", "Village"), "MovePoint00" }
+        { ("Village",       "Flame01"),     "MovePoint01" },
+        { ("Flame01",       "Flame02"),     "MovePoint01" },
+        { ("Flame02",       "Flame03"),     "MovePoint01" },
+        { ("Flame01",       "Village"),     "MovePoint01" },
+        { ("Flame02",       "Flame01"),     "MovePoint02" },
+        { ("Flame03",       "Flame02"),     "MovePoint02" },
+        { ("Flame03",       "Village"),     "MovePoint01" },
+        { ("Village",       "Jungle01"),    "MovePoint01" },
+        { ("Jungle01",      "Jungle02"),    "MovePoint01" },
+        { ("Jungle02",      "Jungle03"),    "MovePoint01" },
+        { ("Jungle01",      "Village"),     "MovePoint03" },
+        { ("Jungle02",      "Jungle01"),    "MovePoint02" },
+        { ("Jungle03",      "Jungle02"),    "MovePoint02" },
+        { ("Jungle03",      "Village"),     "MovePoint03" },
+        { ("Village",       "Desert01"),    "MovePoint01" },
+        { ("Desert01",      "Desert02"),    "MovePoint01" },s
+        { ("Desert02",      "Desert03"),    "MovePoint01" },
+        { ("Desert01",      "Village"),     "MovePoint02" },
+        { ("Desert02",      "Desert01"),    "MovePoint02" },
+        { ("Desert03",      "Desert02"),    "MovePoint02" },
+        { ("Desert03",      "Village"),     "MovePoint02" },
+        { ("CustomScene",   "Village"),     "MovePoint04" },
+        { ("FishingScene",  "Village"),     "MovePoint05" },
+        { ("MainScene",     "Village"),     "MovePoint00" }
     };
 
     private void Start()
@@ -86,10 +86,10 @@ public class SceneLoader : MonoBehaviour
 
        sceneUIinteraction = new Dictionary<string, Image>
        {
-           { "Flame01", Flame },
-           { "Desert01", Desert },
-           { "Jungle01", Jungle },
-           { "Village", Village },
+           { "Flame01",     Flame },
+           { "Desert01",    Desert },
+           { "Jungle01",    Jungle },
+           { "Village",     Village },
        };
         SceneManager.sceneLoaded += OnSceneLoaded;
     }    
