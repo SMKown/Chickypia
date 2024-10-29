@@ -91,7 +91,6 @@ public class InventoryManager : MonoBehaviour
 
             if (amount > 0)
             {
-                Debug.LogWarning("Inventory is full, unable to add remaining items.");
                 return false;
             }
         }
@@ -195,8 +194,6 @@ public class InventoryManager : MonoBehaviour
         {
             File.Delete(saveFilePath);
         }
-
-        Debug.Log("Inventory has been reset.");
     }
 
 

@@ -147,7 +147,7 @@ public class SceneLoader : MonoBehaviour
     public void NewGame()
     {
         ResetScene();
-        playerstats.SetMoveSpeed(3.5f);
+        playerstats.SetMoveSpeed(3.0f);
         LoadingSceneManager.LoadScene("Village");
     }
     public void DieScene()
@@ -157,14 +157,14 @@ public class SceneLoader : MonoBehaviour
         {
             playerstats.ResetPlayerState();
         }
-        playerstats.SetMoveSpeed(3.5f);
+        playerstats.SetMoveSpeed(3.0f);
         LoadingSceneManager.LoadScene("Village");
     }
 
     public void VillageScene()
     {
         SaveAllBeforeSceneLoad();
-        playerstats.SetMoveSpeed(3.5f);
+        playerstats.SetMoveSpeed(3.3f);
         LoadingSceneManager.LoadScene("Village");
     }
 

@@ -121,7 +121,6 @@ public class QuestManager : MonoBehaviour
     {
         string jsonData = JsonUtility.ToJson(new QuestListWrapper { quests = questList }, true);
         File.WriteAllText(filePath, jsonData);
-        Debug.Log("퀘스트 저장 완료");
     }
 
     public void LoadQuestProgress()
@@ -139,11 +138,6 @@ public class QuestManager : MonoBehaviour
                     quest.itemCount = savedQuest.itemCount;
                 }
             }
-            Debug.Log("퀘스트 진행 불러오기 완료");
-        }
-        else
-        {
-            Debug.Log("저장된 퀘스트 데이터가 없습니다");
         }
     }
 
@@ -160,8 +154,6 @@ public class QuestManager : MonoBehaviour
             File.Delete(filePath);
         }
         SaveQuestProgress();
-
-        Debug.Log("퀘스트 진행 초기화 완료");
     }
 
     private void LoadQuestData()
