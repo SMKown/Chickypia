@@ -12763,6 +12763,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ae9fa1b6d7b64b2ca4dddafe0b2bce4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 808903685502392679}
   inventoryManager: {fileID: 0}
   compendiumManager: {fileID: 0}
   playerstats: {fileID: 3596064333000365569}
@@ -17073,6 +17074,7 @@ MonoBehaviour:
   fullHeart: {fileID: 21300000, guid: af21302c819a20545a3e9c0c28cd214c, type: 3}
   halfHeart: {fileID: 21300000, guid: d49fbaa87b11b0343bcd7fc0e640f725, type: 3}
   heartBroken: {fileID: 5633510931304151999}
+  sceneLoader: {fileID: 0}
 --- !u!1 &4824944425678505899
 GameObject:
   m_ObjectHideFlags: 0

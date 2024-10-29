@@ -10,6 +10,7 @@ public class PlayerHP : MonoBehaviour
     public Sprite fullHeart;
     public Sprite halfHeart;
     public GameObject heartBroken;
+    public SceneLoader sceneLoader;
     private void Start()
     {
         HPUI();
@@ -63,10 +64,16 @@ public class PlayerHP : MonoBehaviour
         }
     }
 
-
     private void Die()
     {
-        // 사망 처리
+        if (sceneLoader != null)
+        {
+            sceneLoader.DieScene();
+        }
+        else
+        {
+            Debug.LogWarning("SceneLoader 없으니 넣어야됨");
+        }
     }
 
     private IEnumerator HideHeartBroken()

@@ -8,6 +8,8 @@ using UnityEngine.AI;
 
 public class SceneLoader : MonoBehaviour
 {
+    public GameObject player;
+
     public InventoryManager inventoryManager;
     public CompendiumManager compendiumManager;
     public PlayerStats playerstats;
@@ -57,6 +59,22 @@ public class SceneLoader : MonoBehaviour
            { "Jungle01", Jungle },
            { "Village", Village },
        };
+
+        string currentScene = SceneManager.GetActiveScene().name;
+        Vector3 savedPosition = PlayerPositionManager.instance.GetSavedPosition(currentScene);
+
+        if (savedPosition != Vector3.zero && player != null)
+        {
+            player.transform.position = savedPosition;
+
+            // NavMeshAgent 초기화
+            NavMeshAgent agent = player.GetComponent<NavMeshAgent>();
+            if (agent != null)
+            {
+                agent.ResetPath();
+                agent.destination = player.transform.position;
+            }
+        }
     }    
 
     private void Update()
@@ -120,11 +138,17 @@ public class SceneLoader : MonoBehaviour
         playerstats.SetMoveSpeed(3.0f);
         LoadingSceneManager.LoadScene("Village");
     }
-
     public void DieScene()
     {
+        SaveAllBeforeSceneLoad();
+        if (playerstats != null)
+        {
+            playerstats.ResetPlayerState();
+        }
+        playerstats.SetMoveSpeed(3.0f);
         LoadingSceneManager.LoadScene("Village");
     }
+
     public void VillageScene()
     {
         SaveAllBeforeSceneLoad();
@@ -202,10 +226,22 @@ public class SceneLoader : MonoBehaviour
 #endif
     }
 
+    // Village ↔ Flame01 ↔ Flame02 ↔ Flame03 → Village
+    // Village ↔ Jungle01 ↔ Jungle02 ↔ Jungle03 → Village
+    // Village ↔ Desert01 ↔ Desert02 ↔ Desert03 → Village
+    // FishingScene → Village
+    // CustomScene → Village
     #endregion
 
     private void SaveAllBeforeSceneLoad()
     {
+        if (player != null)
+        {
+            string currentScene = SceneManager.GetActiveScene().name;
+            Vector3 playerPosition = player.transform.position;
+            PlayerPositionManager.instance.SavePosition(currentScene, playerPosition);
+        }
+
         //인벤토리 저장
         if (inventoryManager != null)
         {
@@ -215,7 +251,6 @@ public class SceneLoader : MonoBehaviour
         {
             Debug.Log("InventoryManager 없음");
         }
-
         //도감 저장
         if (compendiumManager != null)
         {
@@ -225,7 +260,6 @@ public class SceneLoader : MonoBehaviour
         {
             Debug.Log("CompendiumManager 없음");
         }
-
         //스탯 저장
         if(playerstats != null)
         {
@@ -235,7 +269,7 @@ public class SceneLoader : MonoBehaviour
         {
             Debug.Log("PlayerState 없음");
         }
-
+        //퀘스트 저장
         if (QuestManager != null)
         {
             QuestManager.SaveQuestProgress();
