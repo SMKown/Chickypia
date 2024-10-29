@@ -192,12 +192,12 @@ public class NPC : MonoBehaviour
         if (QuestTxt != null)
         {
             QuestTxt[2].text = quest.title;
-            QuestTxt[3].text = $"[{quest.explanation}]";
+            QuestTxt[3].text = $"{quest.explanation}";
 
             if (quest.status == QuestStatus.Completed)
-                QuestTxt[4].text = "퀘스트 완료 !";
+                QuestTxt[4].text = "완료";
             else
-                QuestTxt[4].text = quest.itemId == 100 ? $"{npcName}에게 가볼까?" : $"[{quest.itemCount}/{quest.itemCountRequired}]";
+                QuestTxt[4].text = quest.itemId == 100 ? $"0/1" : $"{quest.itemCount}/{quest.itemCountRequired}";
         }
     }
 
@@ -206,7 +206,7 @@ public class NPC : MonoBehaviour
         if (QuestTxt != null)
         {
             QuestTxt[0].text = questCategory;
-            QuestTxt[1].text = $"[{completedQuestCount}/{quest_ids.Length}]";
+            QuestTxt[1].text = $"{completedQuestCount}/{quest_ids.Length}";
         }
     }
 }
