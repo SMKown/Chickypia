@@ -2,13 +2,14 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class LoadingSceneManager : MonoBehaviour
 {
     public static string loadScene;
 
     private void Start()
-    {
+    {      
         StartCoroutine(LoadScene());
     }
 

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.AI;
+using Unity.VisualScripting;
 
 public class SceneLoader : MonoBehaviour
 {
@@ -33,6 +34,12 @@ public class SceneLoader : MonoBehaviour
     private float elapsedTime;
     private float animationDuration = 0.25F;
 
+    public GameObject startTransition;
+    public GameObject endTransition;
+
+    private Animation startAnimation;
+    private Animation endAnimation;
+
     private Dictionary<(string, string), string> movePointMapping = new Dictionary<(string, string), string>
     {
         { ("Village",       "Flame01"),     "MovePoint01" },
@@ -50,7 +57,7 @@ public class SceneLoader : MonoBehaviour
         { ("Jungle03",      "Jungle02"),    "MovePoint02" },
         { ("Jungle03",      "Village"),     "MovePoint03" },
         { ("Village",       "Desert01"),    "MovePoint01" },
-        { ("Desert01",      "Desert02"),    "MovePoint01" },s
+        { ("Desert01",      "Desert02"),    "MovePoint01" },
         { ("Desert02",      "Desert03"),    "MovePoint01" },
         { ("Desert01",      "Village"),     "MovePoint02" },
         { ("Desert02",      "Desert01"),    "MovePoint02" },
@@ -63,6 +70,12 @@ public class SceneLoader : MonoBehaviour
 
     private void Start()
     {
+        startAnimation = startTransition.GetComponent<Animation>();
+        endAnimation = endTransition.GetComponent<Animation>();
+
+        startTransition.SetActive(false);
+        endAnimation.Play();
+
         currentScenName = SceneManager.GetActiveScene().name;
         player = GameObject.FindWithTag("Player");
 
@@ -100,18 +113,18 @@ public class SceneLoader : MonoBehaviour
         {
             if (isCanLoad == true && methodDictionary.TryGetValue(sceneName, out Action method))
             {
-                method.Invoke();
+                StartCoroutine(ExecuteAfterTransition(method));
             }
         }
-    }
+    }  
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("MoveScene"))
         {
+            
             isCanLoad = true;
             sceneName = other.gameObject.name;
-            //currentScenName = SceneManager.GetActiveScene().name;
 
             if (sceneUIinteraction.TryGetValue(sceneName, out Image image) && currentScenName == "Village")
             {
@@ -120,7 +133,7 @@ public class SceneLoader : MonoBehaviour
             }
             else if (isCanLoad == true && methodDictionary.TryGetValue(sceneName, out Action method))
             {
-                method.Invoke();
+                StartCoroutine(ExecuteAfterTransition(method));
             }
             else
             {
@@ -144,9 +157,8 @@ public class SceneLoader : MonoBehaviour
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
+    {        
         string targetScene = scene.name;
-
         if (targetScene == "LoadingScene")
         {
             Debug.Log("LoadingScene loaded, skipping player positioning.");
@@ -173,13 +185,13 @@ public class SceneLoader : MonoBehaviour
             }
         }
 
+
         if (movePointMapping.TryGetValue((currentScenName, targetScene), out string movePointName))
         {
             GameObject movePoint = GameObject.Find(movePointName);
             if (movePoint != null)
             {
                 player.transform.position = movePoint.transform.position;
-                Debug.Log($"현장소 {currentScenName}  이동씬 {targetScene} 이동 포인트{movePointName} 이동포인트 좌표{player.transform.position.x},{player.transform.position.y}, {player.transform.position.z}");
                 if (navMeshAgent != null)
                 {
                     navMeshAgent.Warp(movePoint.transform.position);
@@ -201,6 +213,19 @@ public class SceneLoader : MonoBehaviour
         currentScenName = targetScene;
     }
 
+    IEnumerator ExecuteAfterTransition(Action method)
+    {
+        startTransition.SetActive(true);
+        startAnimation.Play();
+        yield return StartCoroutine(Transitioner());
+
+        method.Invoke(); 
+    }
+
+    IEnumerator Transitioner()
+    {
+        yield return new WaitForSeconds(0.8f);
+    }
 
     #region 씬
 
