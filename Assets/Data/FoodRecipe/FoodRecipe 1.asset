@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   foodType: 1
   foodRecipeId: 100
-  foodName: "\uBE751"
+  foodName: "\uBE75"
   foodDesc: 
   foodIcon: {fileID: 21300000, guid: 7224dc68eb8204f43b091d73c4098ed7, type: 3}
   ingredients:
-  - item: {fileID: 11400000, guid: fc5129e676a4b4749bdc2830a51fed3b, type: 2}
+  - item: {fileID: 11400000, guid: afe7f068b04045144862c437dc041542, type: 2}
     count: 3
   - item: {fileID: 11400000, guid: ffc325a7792d617428408c27afdaf3e8, type: 2}
     count: 1
