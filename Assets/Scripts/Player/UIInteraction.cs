@@ -37,6 +37,7 @@ public class UIInteraction : MonoBehaviour
         tagToImageMap.Add("Gatherable", gathering);     // 1
         tagToImageMap.Add("CookingSpot", cooking);      // 2
         tagToImageMap.Add("Dialog", dialog);            // 3
+        tagToImageMap.Add("Chest", collection);         
     }
 
     private void Update()

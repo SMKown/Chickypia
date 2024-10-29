@@ -156,6 +156,8 @@ public class PlayerMovement : MonoBehaviour
                 Gathering(UIInteraction.Instance.interactableObj);
             else if (UIInteraction.Instance.interactableObj.CompareTag("Dialog"))
                 Dialog();
+            else if (UIInteraction.Instance.interactableObj.CompareTag("Chest"))
+                OpenChest();
         }
     }
 
@@ -278,4 +280,17 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+
+    public void OpenChest()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Chest chest = UIInteraction.Instance.interactableObj.GetComponent<Chest>();
+            if (chest != null)
+            {
+                chest.OpenChest();
+            }
+        }
+    }
+
 }
