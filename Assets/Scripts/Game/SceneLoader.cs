@@ -26,6 +26,7 @@ public class SceneLoader : MonoBehaviour
     private string sceneName;
     private string currentScenName;
 
+    private Dictionary<string, string> movePointMapping;
     private Dictionary<string, Action> methodDictionary;
     private Dictionary<string, Image> sceneUIinteraction;
 
@@ -60,21 +61,32 @@ public class SceneLoader : MonoBehaviour
            { "Village", Village },
        };
 
-        string currentScene = SceneManager.GetActiveScene().name;
-        Vector3 savedPosition = PlayerPositionManager.instance.GetSavedPosition(currentScene);
-
-        if (savedPosition != Vector3.zero && player != null)
+        movePointMapping = new Dictionary<string, string>
         {
-            player.transform.position = savedPosition;
-
-            // NavMeshAgent 초기화
-            NavMeshAgent agent = player.GetComponent<NavMeshAgent>();
-            if (agent != null)
-            {
-                agent.ResetPath();
-                agent.destination = player.transform.position;
-            }
-        }
+            { "Flame01",               "MovePoint01" },
+            { "Flame02",               "MovePoint01" },
+            { "Flame03",               "MovePoint01" },
+            { "Flame01Back",           "MovePoint01" },
+            { "Flame02Back",           "MovePoint02" },
+            { "Flame03Back",           "MovePoint02" },
+            { "Flame03toVillage",      "MovePoint01" },
+            { "Jungle01",              "MovePoint01" },
+            { "Jungle02",              "MovePoint01" },
+            { "Jungle03",              "MovePoint01" },
+            { "Jungle01Back",          "MovePoint02" },
+            { "Jungle02Back",          "MovePoint02" },
+            { "Jungle03Back",          "MovePoint02" },
+            { "Jungle03toVillage",     "MovePoint02" },
+            { "Desert01",              "MovePoint01" },
+            { "Desert02",              "MovePoint01" },
+            { "Desert03",              "MovePoint01" },
+            { "Desert01Back",          "MovePoint03" },
+            { "Desert02Back",          "MovePoint02" },
+            { "Desert03Back",          "MovePoint02" },
+            { "Desert03toVillage",     "MovePoint03" },
+            { "CustomScenetoVillage",  "MovePoint04" },
+            { "FishingScenetoVillage", "MovePoint05" }
+        };
     }    
 
     private void Update()
@@ -152,7 +164,7 @@ public class SceneLoader : MonoBehaviour
     public void VillageScene()
     {
         SaveAllBeforeSceneLoad();
-        playerstats.SetMoveSpeed(3.0f);
+        playerstats.SetMoveSpeed(3.3f);
         LoadingSceneManager.LoadScene("Village");
     }
 
@@ -235,13 +247,6 @@ public class SceneLoader : MonoBehaviour
 
     private void SaveAllBeforeSceneLoad()
     {
-        if (player != null)
-        {
-            string currentScene = SceneManager.GetActiveScene().name;
-            Vector3 playerPosition = player.transform.position;
-            PlayerPositionManager.instance.SavePosition(currentScene, playerPosition);
-        }
-
         //인벤토리 저장
         if (inventoryManager != null)
         {
