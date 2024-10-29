@@ -12764,6 +12764,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 808903685502392679}
+  navMeshAgent: {fileID: 7842938891458459517}
   inventoryManager: {fileID: 0}
   compendiumManager: {fileID: 0}
   playerstats: {fileID: 3596064333000365569}

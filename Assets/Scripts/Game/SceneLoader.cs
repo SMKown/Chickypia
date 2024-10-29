@@ -9,6 +9,7 @@ using UnityEngine.AI;
 public class SceneLoader : MonoBehaviour
 {
     public GameObject player;
+    public NavMeshAgent navMeshAgent;
 
     public InventoryManager inventoryManager;
     public CompendiumManager compendiumManager;
@@ -26,15 +27,45 @@ public class SceneLoader : MonoBehaviour
     private string sceneName;
     private string currentScenName;
 
-    private Dictionary<string, string> movePointMapping;
     private Dictionary<string, Action> methodDictionary;
     private Dictionary<string, Image> sceneUIinteraction;
 
     private float elapsedTime;
     private float animationDuration = 0.25F;
 
+    private Dictionary<(string, string), string> movePointMapping = new Dictionary<(string, string), string>
+    {
+        { ("Village", "Flame01"), "MovePoint01" },
+        { ("Flame01", "Flame02"), "MovePoint01" },
+        { ("Flame02", "Flame03"), "MovePoint01" },
+        { ("Flame01", "Village"), "MovePoint01" },
+        { ("Flame02", "Flame01"), "MovePoint02" },
+        { ("Flame03", "Flame02"), "MovePoint02" },
+        { ("Flame03", "Village"), "MovePoint01" },
+        { ("Village", "Jungle01"), "MovePoint01" },
+        { ("Jungle01", "Jungle02"), "MovePoint01" },
+        { ("Jungle02", "Jungle03"), "MovePoint01" },
+        { ("Jungle01", "Village"), "MovePoint03" },
+        { ("Jungle02", "Jungle01"), "MovePoint02" },
+        { ("Jungle03", "Jungle02"), "MovePoint02" },
+        { ("Jungle03", "Village"), "MovePoint03" },
+        { ("Village", "Desert01"), "MovePoint01" },
+        { ("Desert01", "Desert02"), "MovePoint01" },
+        { ("Desert02", "Desert03"), "MovePoint01" },
+        { ("Desert01", "Village"), "MovePoint02" },
+        { ("Desert02", "Desert01"), "MovePoint02" },
+        { ("Desert03", "Desert02"), "MovePoint02" },
+        { ("Desert03", "Village"), "MovePoint02" },
+        { ("CustomScene", "Village"), "MovePoint04" },
+        { ("FishingScene", "Village"), "MovePoint05" },
+        { ("MainScene", "Village"), "MovePoint00" }
+    };
+
     private void Start()
     {
+        currentScenName = SceneManager.GetActiveScene().name;
+        player = GameObject.FindWithTag("Player");
+
         methodDictionary = new Dictionary<string, Action>
         {
             { "MainScene",      MainScene    },
@@ -60,33 +91,7 @@ public class SceneLoader : MonoBehaviour
            { "Jungle01", Jungle },
            { "Village", Village },
        };
-
-        movePointMapping = new Dictionary<string, string>
-        {
-            { "Flame01",               "MovePoint01" },
-            { "Flame02",               "MovePoint01" },
-            { "Flame03",               "MovePoint01" },
-            { "Flame01Back",           "MovePoint01" },
-            { "Flame02Back",           "MovePoint02" },
-            { "Flame03Back",           "MovePoint02" },
-            { "Flame03toVillage",      "MovePoint01" },
-            { "Jungle01",              "MovePoint01" },
-            { "Jungle02",              "MovePoint01" },
-            { "Jungle03",              "MovePoint01" },
-            { "Jungle01Back",          "MovePoint02" },
-            { "Jungle02Back",          "MovePoint02" },
-            { "Jungle03Back",          "MovePoint02" },
-            { "Jungle03toVillage",     "MovePoint02" },
-            { "Desert01",              "MovePoint01" },
-            { "Desert02",              "MovePoint01" },
-            { "Desert03",              "MovePoint01" },
-            { "Desert01Back",          "MovePoint03" },
-            { "Desert02Back",          "MovePoint02" },
-            { "Desert03Back",          "MovePoint02" },
-            { "Desert03toVillage",     "MovePoint03" },
-            { "CustomScenetoVillage",  "MovePoint04" },
-            { "FishingScenetoVillage", "MovePoint05" }
-        };
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }    
 
     private void Update()
@@ -102,11 +107,12 @@ public class SceneLoader : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("MoveScene"))
+        if (other.gameObject.CompareTag("MoveScene"))
         {
             isCanLoad = true;
             sceneName = other.gameObject.name;
-            currentScenName = SceneManager.GetActiveScene().name;
+            //currentScenName = SceneManager.GetActiveScene().name;
+
             if (sceneUIinteraction.TryGetValue(sceneName, out Image image) && currentScenName == "Village")
             {
                 isUIReander = true;
@@ -120,7 +126,7 @@ public class SceneLoader : MonoBehaviour
             {
                 Debug.LogWarning($"No method mapped for scene: {sceneName}");
             }
-        }        
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -134,8 +140,67 @@ public class SceneLoader : MonoBehaviour
                 isUIReander = false;
                 StartCoroutine(ImageOff(image));
             }
-        }            
+        }
     }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        string targetScene = scene.name;
+
+        if (targetScene == "LoadingScene")
+        {
+            Debug.Log("LoadingScene loaded, skipping player positioning.");
+            return;
+        }
+
+        if (player == null)
+        {
+            player = GameObject.FindWithTag("Player");
+            if (player == null)
+            {
+                Debug.LogWarning("Player object not found in the scene.");
+                return;
+            }
+        }
+
+        if (navMeshAgent == null)
+        {
+            navMeshAgent = player.GetComponent<NavMeshAgent>();
+            if (navMeshAgent == null)
+            {
+                Debug.LogWarning("NavMeshAgent not found on player object.");
+                return;
+            }
+        }
+
+        if (movePointMapping.TryGetValue((currentScenName, targetScene), out string movePointName))
+        {
+            GameObject movePoint = GameObject.Find(movePointName);
+            if (movePoint != null)
+            {
+                player.transform.position = movePoint.transform.position;
+                Debug.Log($"현장소 {currentScenName}  이동씬 {targetScene} 이동 포인트{movePointName} 이동포인트 좌표{player.transform.position.x},{player.transform.position.y}, {player.transform.position.z}");
+                if (navMeshAgent != null)
+                {
+                    navMeshAgent.Warp(movePoint.transform.position);
+                }
+                else
+                {
+                    Debug.LogWarning("NavMeshAgent is null when trying to set destination.");
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"Move point '{movePointName}' not found in scene '{targetScene}'");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"No move point mapping found for transition from '{currentScenName}' to '{targetScene}'");
+        }
+        currentScenName = targetScene;
+    }
+
 
     #region 씬
 
@@ -147,7 +212,7 @@ public class SceneLoader : MonoBehaviour
     public void NewGame()
     {
         ResetScene();
-        playerstats.SetMoveSpeed(3.0f);
+        playerstats.SetMoveSpeed(3.5f);
         LoadingSceneManager.LoadScene("Village");
     }
     public void DieScene()
@@ -157,14 +222,14 @@ public class SceneLoader : MonoBehaviour
         {
             playerstats.ResetPlayerState();
         }
-        playerstats.SetMoveSpeed(3.0f);
+        playerstats.SetMoveSpeed(3.5f);
         LoadingSceneManager.LoadScene("Village");
     }
 
     public void VillageScene()
     {
         SaveAllBeforeSceneLoad();
-        playerstats.SetMoveSpeed(3.3f);
+        playerstats.SetMoveSpeed(3.5f);
         LoadingSceneManager.LoadScene("Village");
     }
 
@@ -237,12 +302,6 @@ public class SceneLoader : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
     }
-
-    // Village ↔ Flame01 ↔ Flame02 ↔ Flame03 → Village
-    // Village ↔ Jungle01 ↔ Jungle02 ↔ Jungle03 → Village
-    // Village ↔ Desert01 ↔ Desert02 ↔ Desert03 → Village
-    // FishingScene → Village
-    // CustomScene → Village
     #endregion
 
     private void SaveAllBeforeSceneLoad()
