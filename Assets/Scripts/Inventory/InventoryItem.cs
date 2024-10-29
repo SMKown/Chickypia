@@ -138,10 +138,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 ItemCount();
             }    
         }
-        else
-        {
-            Debug.LogError("This item cannot be consumed.");
-        }
         yield return new WaitForSeconds(3f);
         PlayerStats.Instance.useItem = false;
         PlayerStats.Instance.CurrentFoodEffectFys.SetActive(false);
