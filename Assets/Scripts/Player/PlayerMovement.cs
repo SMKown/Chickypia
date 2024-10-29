@@ -289,6 +289,7 @@ public class PlayerMovement : MonoBehaviour
             if (chest != null)
             {
                 chest.OpenChest();
+                UIInteraction.Instance.ImageOff(UIInteraction.Instance.collection);
             }
         }
     }

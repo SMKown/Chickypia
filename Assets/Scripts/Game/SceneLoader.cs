@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.AI;
+using Unity.VisualScripting;
 
 public class SceneLoader : MonoBehaviour
 {
@@ -38,7 +39,6 @@ public class SceneLoader : MonoBehaviour
 
     private Animation startAnimation;
     private Animation endAnimation;
-
     private Dictionary<(string, string), string> movePointMapping = new Dictionary<(string, string), string>
     {
         { ("Village",       "Flame01"),     "MovePoint01" },
@@ -69,14 +69,11 @@ public class SceneLoader : MonoBehaviour
 
     private void Start()
     {
-        if (startTransition != null)
-        {
-            startAnimation = startTransition.GetComponent<Animation>();
-            endAnimation = endTransition.GetComponent<Animation>();
+        startAnimation = startTransition.GetComponent<Animation>();
+        endAnimation = endTransition.GetComponent<Animation>();
 
-            startTransition.SetActive(false);
-            endAnimation.Play();
-        }
+        startTransition.SetActive(false);
+        endAnimation.Play();
 
         currentScenName = SceneManager.GetActiveScene().name;
         player = GameObject.FindWithTag("Player");
@@ -167,24 +164,18 @@ public class SceneLoader : MonoBehaviour
             return;
         }
 
+        player = GameObject.FindWithTag("Player");
         if (player == null)
         {
-            player = GameObject.FindWithTag("Player");
-            if (player == null)
-            {
-                Debug.LogWarning("Player object not found in the scene.");
-                return;
-            }
+            Debug.LogWarning("Player object not found in the scene.");
+            return;
         }
 
+        navMeshAgent = player.GetComponent<NavMeshAgent>();
         if (navMeshAgent == null)
         {
-            navMeshAgent = player.GetComponent<NavMeshAgent>();
-            if (navMeshAgent == null)
-            {
-                Debug.LogWarning("NavMeshAgent not found on player object.");
-                return;
-            }
+            Debug.LogWarning("NavMeshAgent not found on player object.");
+            return;
         }
 
 
@@ -194,26 +185,23 @@ public class SceneLoader : MonoBehaviour
             if (movePoint != null)
             {
                 player.transform.position = movePoint.transform.position;
-                if (navMeshAgent != null)
-                {
-                    navMeshAgent.Warp(movePoint.transform.position);
-                }
-                else
-                {
-                    Debug.LogWarning("NavMeshAgent is null when trying to set destination.");
-                }
+                navMeshAgent.Warp(movePoint.transform.position);
+                Debug.Log($"이동 성공: 현재 씬 '{currentScenName}', 이동 씬 '{targetScene}', 이동 포인트 '{movePointName}'");
             }
             else
             {
-                Debug.LogWarning($"Move point '{movePointName}' not found in scene '{targetScene}'");
+                Debug.LogWarning($"이동 실패: 이동 포인트 '{movePointName}'를 씬 '{targetScene}'에서 찾을 수 없음");
             }
         }
         else
         {
-            Debug.LogWarning($"No move point mapping found for transition from '{currentScenName}' to '{targetScene}'");
+            Debug.LogWarning($"매핑 누락: '{currentScenName}'에서 '{targetScene}'으로의 전환에 대한 매핑이 존재하지 않음");
         }
         currentScenName = targetScene;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
+
+
 
     IEnumerator ExecuteAfterTransition(Action method)
     {

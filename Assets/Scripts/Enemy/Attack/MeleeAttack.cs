@@ -44,7 +44,7 @@ public class MeleeAttack : Enemy // 근접 공격
             foreach (var collider in hitColliders)
             {
                 Debug.Log("충돌한 객체: " + collider.gameObject.name);
-                if (collider.CompareTag("Player"))
+                if (collider.transform.parent != null && collider.transform.parent.CompareTag("Player"))
                 {
                     PlayerHP playerHP = collider.GetComponent<PlayerHP>();
                     if (playerHP != null)
