@@ -76,7 +76,10 @@ public class MeleeAttack : Enemy // 근접 공격
     {
         Debug.Log("쿨타임중~~~~~~~~~~~~~~~~~~");
         SetAnimationState(AnimationState.Idle);
-        agent.isStopped = true;
+        if (agent.isOnNavMesh)
+        {
+            agent.isStopped = true;
+        }
 
         float elapsedTime = 0f;
         while (elapsedTime < attackCooldown)
