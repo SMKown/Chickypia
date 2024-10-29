@@ -9,7 +9,9 @@ public class InvenCompenUI : MonoBehaviour
     public GameObject MainInventory;
     public GameObject CompendiumUI;
 
-    public GameObject CheckUI;
+    public GameObject UseUI;
+    public GameObject DelUI;
+
     public GameObject gatheringUI;
     public GameObject cookingUI;
     public GameObject fishingUI;
@@ -31,7 +33,8 @@ public class InvenCompenUI : MonoBehaviour
         CompendiumUI.SetActive(false);
         InventoryOpenButton.SetActive(false);
         CompendiumOpenButton.SetActive(false);
-        CheckUI.SetActive(false);
+        UseUI.SetActive(false);
+        DelUI.SetActive(false);
         tooltipUI = ItemToolTipUI.Instance;
     }
 
@@ -45,7 +48,7 @@ public class InvenCompenUI : MonoBehaviour
             }
         }
 
-        if (CheckUI.activeSelf && Input.anyKeyDown && !EventSystem.current.IsPointerOverGameObject())
+        if (Input.GetMouseButtonDown(0) && !IsPointerOverUIObject())
         {
             CloseCheckUI();
         }
@@ -130,7 +133,8 @@ public class InvenCompenUI : MonoBehaviour
 
     public void CloseCheckUI()
     {
-        CheckUI.SetActive(false);
+        UseUI.SetActive(false);
+        DelUI.SetActive(false);
     }
 
     public void ConfirmUseItem()
@@ -138,7 +142,7 @@ public class InvenCompenUI : MonoBehaviour
         if (currentItem != null)
         {
             currentItem.UseItemButton();
-            CheckUI.SetActive(false);
+            CloseCheckUI();
         }
     }
 
@@ -147,7 +151,38 @@ public class InvenCompenUI : MonoBehaviour
         if (currentItem != null)
         {
             currentItem.DiscardItemButton();
-            CheckUI.SetActive(false);
+            CloseCheckUI();
         }
+    }
+
+    public void ShowItemOptions(ItemType itemType)
+    {
+        if (itemType == ItemType.Food)
+        {
+            UseUI.SetActive(true);
+            DelUI.SetActive(true);
+        }
+        else
+        {
+            UseUI.SetActive(false);
+            DelUI.SetActive(true);
+        }
+    }
+
+    private bool IsPointerOverUIObject()
+    {
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = Input.mousePosition;
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+
+        foreach (var result in results)
+        {
+            if (result.gameObject == UseUI || result.gameObject == DelUI)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
