@@ -150,19 +150,20 @@ public class NPC : MonoBehaviour
     {
         DialogueText[0].text = npcName;
 
-        // 곰 NPC  일반 대화일 때 버튼 활성화
+        // 곰 NPC 일반 대화일 때 버튼 활성화
         if (npcType == NPCType.Bear && quest == null)
         {
+            DialogueText[1].text = dialogues[dialogueIndex];
             fishingButton.SetActive(true);
             return;
         }
 
-        if (dialogueIndex < dialogues.Count) // 대화 진행
+        if (dialogueIndex < dialogues.Count)
         {
             DialogueText[1].text = dialogues[dialogueIndex];
             dialogueIndex++;
         }
-        else // 대화 종료
+        else
         {
             if (quest != null)
             {

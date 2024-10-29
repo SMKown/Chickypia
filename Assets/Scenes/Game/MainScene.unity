@@ -289,10 +289,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1688683090}
-    - target: {fileID: 6157009198624059506, guid: 37ec12477e481ee479755fafb7030b39, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: M_CloseOptionButton
-      objectReference: {fileID: 0}
     - target: {fileID: 9063455916143554194, guid: 37ec12477e481ee479755fafb7030b39, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

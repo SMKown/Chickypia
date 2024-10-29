@@ -197,31 +197,6 @@ public class QuestManager : MonoBehaviour
             questData[id] = questDataEntry;
         }
     }
-
-    public List<QuestData> GetActiveQuests()
-    {
-        return questList.FindAll(quest => quest.status == QuestStatus.InProgress);
-    }
-
-    public void StartQuest(int questId)
-    {
-        if (IsQuestAvailable(questId) && questData.TryGetValue(questId, out var quest))
-        {
-            quest.SetQuestStatus(QuestStatus.InProgress);
-            SaveQuestProgress();
-            Debug.Log($"퀘스트 시작: {quest.title}");
-        }
-    }
-
-    public void CompleteQuest(int questId)
-    {
-        if (questData.TryGetValue(questId, out var quest) && quest.status == QuestStatus.InProgress)
-        {
-            quest.SetQuestStatus(QuestStatus.Completed);
-            SaveQuestProgress();
-            Debug.Log($"퀘스트 완료: {quest.title}");
-        }
-    }
 }
 
 [Serializable]
