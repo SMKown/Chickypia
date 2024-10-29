@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.AI;
-using Unity.VisualScripting;
 
 public class SceneLoader : MonoBehaviour
 {
@@ -70,11 +69,14 @@ public class SceneLoader : MonoBehaviour
 
     private void Start()
     {
-        startAnimation = startTransition.GetComponent<Animation>();
-        endAnimation = endTransition.GetComponent<Animation>();
+        if (startTransition != null)
+        {
+            startAnimation = startTransition.GetComponent<Animation>();
+            endAnimation = endTransition.GetComponent<Animation>();
 
-        startTransition.SetActive(false);
-        endAnimation.Play();
+            startTransition.SetActive(false);
+            endAnimation.Play();
+        }
 
         currentScenName = SceneManager.GetActiveScene().name;
         player = GameObject.FindWithTag("Player");
