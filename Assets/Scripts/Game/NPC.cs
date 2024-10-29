@@ -19,7 +19,6 @@ public class NPC : MonoBehaviour
     public GameObject Dialog;
 
     private Text[] DialogueText;
-    private GameObject fishingButton;
 
     private PlayerMovement playerMovement;
     private int dialogueIndex = 0;
@@ -63,8 +62,6 @@ public class NPC : MonoBehaviour
             quest_ids = new int[] { 6, 7 };
             npcName = "강태곰";
             questCategory = "치키별의 강태공";
-            if (Dialog != null)
-                fishingButton = Dialog.transform.GetChild(2).gameObject;
         }
     }
 
@@ -154,7 +151,7 @@ public class NPC : MonoBehaviour
         if (npcType == NPCType.Bear && quest == null)
         {
             DialogueText[1].text = dialogues[dialogueIndex];
-            fishingButton.SetActive(true);
+            Dialog.transform.GetChild(2).gameObject.SetActive(true);
             return;
         }
 
@@ -185,6 +182,7 @@ public class NPC : MonoBehaviour
     public void CloseDialogue()
     {
         UIInteraction.Instance.ImageOff(UIInteraction.Instance.dialog);
+        Dialog.transform.GetChild(2).gameObject.SetActive(false);
         PlayerInfo.Instance.canInteract = false;
         dialogueIndex = 0;
         PlayerInfo.Instance.interacting = false;
