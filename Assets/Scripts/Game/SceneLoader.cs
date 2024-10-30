@@ -21,8 +21,7 @@ public class SceneLoader : MonoBehaviour
     public Image Desert;
     public Image Jungle;
     public Image Custom;
-    public Image Village_fishing;
-    public Image Village_Last;
+    public Image Village;
 
     public bool isCanLoad = false;
     public bool isUIReander = false;
@@ -104,12 +103,11 @@ public class SceneLoader : MonoBehaviour
 
        sceneUIinteraction = new Dictionary<string, Image>
        {
-           { "Flame01",     Flame },
-           { "Desert01",    Desert },
-           { "Jungle01",    Jungle },
-           { "CustomScene", Custom },
-           { "Village_fishing", Village_fishing },
-           { "Village_Last", Village_Last },
+           { "Flame01",      Flame },
+           { "Desert01",     Desert },
+           { "Jungle01",     Jungle },
+           { "CustomScene",  Custom },
+           { "Village", Village },
        };
         SceneManager.sceneLoaded += OnSceneLoaded;
     }    
@@ -132,12 +130,8 @@ public class SceneLoader : MonoBehaviour
             
             isCanLoad = true;
             sceneName = other.gameObject.name;
-            if (sceneUIinteraction.TryGetValue(sceneName, out Image image) && sceneName == "Village_fishing")
-            {
-                isUIReander = true;
-                StartCoroutine(ImageOn(image));
-            }            
-            else if (sceneUIinteraction.TryGetValue(sceneName, out Image _image) && sceneName == "Village")
+
+            if (sceneUIinteraction.TryGetValue(sceneName, out Image image) && (currentScenName == "Village" || currentScenName == "FishingScene"))
             {
                 isUIReander = true;
                 StartCoroutine(ImageOn(image));
