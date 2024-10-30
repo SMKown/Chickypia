@@ -309,6 +309,7 @@ public class PlayerMovement : MonoBehaviour
                         chest.Star.GetComponent<Star>().StarFly();
 
                         AddChestItem(chest);
+                        GameObject.Destroy(chest);
                     }
                     return;
                 }
