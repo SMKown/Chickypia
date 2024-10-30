@@ -287,6 +287,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void LookAtCamera(Transform ChestCamTransform)
+    {
+        Vector3 direction = ChestCamTransform.position - transform.position;
+        direction.y = 0;
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        transform.rotation = rotation;
+    }
+
     public void OpenChest()
     {
         if (Input.GetKeyDown(KeyCode.E))
@@ -294,10 +302,17 @@ public class PlayerMovement : MonoBehaviour
             Chest chest = UIInteraction.Instance.interactableObj.GetComponent<Chest>();
             if (chest != null)
             {
+                LookAtCamera(chest.chestCamTransform);
+                SetActiveCamera(currentCameraIndex);
+
                 chest.OpenChest();
                 UIInteraction.Instance.ImageOff(UIInteraction.Instance.collection);
             }
         }
     }
 
+    public void PlaySuccessAnimation()
+    {
+        animator.SetTrigger("Success");
+    }
 }

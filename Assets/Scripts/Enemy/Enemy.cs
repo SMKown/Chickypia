@@ -93,7 +93,7 @@ public abstract class Enemy : MonoBehaviour
 
     private IEnumerator FlashTR()
     {
-        int flashCount = 8;
+        int flashCount = 6;
         for (int i = 0; i < flashCount; i++)
         {
             FlashTrans.SetActive(false);
