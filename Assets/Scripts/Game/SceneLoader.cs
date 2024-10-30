@@ -5,8 +5,6 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.AI;
-using Unity.VisualScripting;
-using UnityEditor.ShaderKeywordFilter;
 
 public class SceneLoader : MonoBehaviour
 {
@@ -82,7 +80,6 @@ public class SceneLoader : MonoBehaviour
             endAnimation = endTransition.GetComponent<Animation>();
 
             startTransition.SetActive(false);
-
             endAnimation.Play();
         }
         if (f_startTransition != null || c_startTransition != null)
@@ -222,23 +219,6 @@ public class SceneLoader : MonoBehaviour
         method.Invoke(); 
     }
 
-    IEnumerator ExeduteAfterTransition(int num)
-    {
-        if (num == 0)
-        {
-            f_startTransition.SetActive(true);
-            f_startAnimation.Play();
-            Debug.Log("Fish");
-        }
-        else if (num == 1)
-        {
-            c_startTransition.SetActive(true);
-            c_startAnimation.Play();
-            Debug.Log("Custom");
-        }
-        yield return null;
-    }
-
     IEnumerator Transitioner()
     {
         yield return new WaitForSeconds(0.8f);
@@ -272,16 +252,23 @@ public class SceneLoader : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "CustomScene")
         {
-            ExeduteAfterTransition(1);
             StartCoroutine(Transitioner());
         }
-        else if(SceneManager.GetActiveScene().name == "FishingScene")
-        {
-            StartCoroutine(AfterTransition(VillageScene));
-        }
+
         SaveAllBeforeSceneLoad();
+
         if (playerstats != null)
-            playerstats.SetMoveSpeed(3.5f);
+            playerstats.SetMoveSpeed(3.5F);
+
+        StartCoroutine(LoadVillageScene());
+    }
+
+    private IEnumerator LoadVillageScene()
+    {
+        startTransition.SetActive(true);
+        startAnimation.Play();
+        yield return StartCoroutine(Transitioner());
+
         LoadingSceneManager.LoadScene("Village");
     }
 
@@ -294,12 +281,23 @@ public class SceneLoader : MonoBehaviour
 
     public void FishingScene()
     {
-        ExeduteAfterTransition(0);
         StartCoroutine(Transitioner());
+
         SaveAllBeforeSceneLoad();
         playerstats.ResetMoveSpeed();
+
+        StartCoroutine(LoadFishingScene());
+    }
+
+    private IEnumerator LoadFishingScene()
+    {
+        startTransition.SetActive(true);
+        startAnimation.Play();
+        yield return StartCoroutine(Transitioner());
+
         LoadingSceneManager.LoadScene("FishingScene");
     }
+
     public void Flame01()
     {
         SaveAllBeforeSceneLoad();
