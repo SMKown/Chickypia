@@ -11,9 +11,9 @@ public class PlayerStats : MonoBehaviour
 
     public int maxHp = 3;
     public int currentHp;
-    public float moveSpeed = 1.4f;
+    public float moveSpeed = 1.5f;
     public int attackDamage = 1;
-    [HideInInspector] public float defaultMoveSpeed = 1.4f;
+    [HideInInspector] public float defaultMoveSpeed = 1.5f;
     [HideInInspector] public bool useItem = false;
 
     public GameObject[] FoodEffectFxs;
@@ -115,7 +115,7 @@ public class PlayerStats : MonoBehaviour
     {
         maxHp = 3;
         currentHp = maxHp;        
-        moveSpeed = 1.4f;
+        moveSpeed = 1.5f;
         attackDamage = 1;
         SavePlayerState();
     }
@@ -159,7 +159,7 @@ public class PlayerStats : MonoBehaviour
 
     public void ResetMoveSpeed()
     {
-        moveSpeed = 1.4f;
+        moveSpeed = 1.5f;
         SavePlayerState();
     }
 

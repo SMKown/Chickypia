@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c2febac446cda843a398f3da80a3970, type: 3}
-  m_Name: Item 42
+  m_Name: Item 888
   m_EditorClassIdentifier: 
   itemType: 1
-  effectType: 0
-  itemId: 42
-  itemName: "\uC528\uB4DC\uB8E8\uC758 \uC78E"
-  itemDesc: "\uC528\uB4DC\uB8E8\uC758 \uC2DD\uC6A9\uD560 \uC218 \uC788\uB294 \uC78E"
+  effectType: 3
+  itemId: 888
+  itemName: "\uC815\uAE00\uC9C0\uC5ED \uBCC4\uC870\uAC01"
+  itemDesc: "\uC815\uAE00\uC9C0\uC5ED \uBCC4\uC870\uAC01"
   stackable: 1
-  itemIcon: {fileID: 21300000, guid: e67e581297677254b867d6a7deb9d91a, type: 3}
+  itemIcon: {fileID: 21300000, guid: 55da56c1024b47347a7713ed791042f6, type: 3}
   itemModel: {fileID: 0}
   time: 0
   hp: 0
   hpMax: 0
   moveSpeed: 0
   attackDamage: 0
-  category: 3
-  isCollected: 1
+  category: 0
+  isCollected: 0

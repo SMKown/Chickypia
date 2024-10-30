@@ -330,7 +330,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (added)
         {
-            Debug.Log($"{chest.itemData.itemName}이(가) 인벤토리에 추가되었습니다.");
             UIInteraction.Instance.ImageOff(UIInteraction.Instance.collection);
 
             foreach (var quest in questManager.questList)
