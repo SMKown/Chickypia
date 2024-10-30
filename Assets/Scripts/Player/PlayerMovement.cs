@@ -327,20 +327,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void AddChestItem(Chest chest)
     {
-        bool added = inventoryManager.AddItem(chest.itemData);
-
-        if (added)
+        UIInteraction.Instance.ImageOff(UIInteraction.Instance.collection);
+        foreach (var quest in questManager.questList)
         {
-            UIInteraction.Instance.ImageOff(UIInteraction.Instance.collection);
-
-            foreach (var quest in questManager.questList)
+            if (!chest.itemData.isCollected && (chest.itemData.itemId == 777 || chest.itemData.itemId == 888 || chest.itemData.itemId == 999))
             {
-                if (quest.itemId == chest.itemData.itemId)
-                {
-                    quest.UpdateItemCount(1);
-                }
+                quest.UpdateItemCount(1);
             }
         }
+
+        bool added = inventoryManager.AddItem(chest.itemData);
     }
 
     private IEnumerator PlaySuccessWithDelay(float delay)
