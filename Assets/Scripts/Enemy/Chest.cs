@@ -6,8 +6,9 @@ public class Chest : MonoBehaviour
 {
     private Animator animator;
     public GameObject Star;
-
+    public PlayerMovement playerMovement;
     public Transform chestCamTransform;
+    public ItemData itemData;
 
     private void Start()
     {
@@ -36,11 +37,5 @@ public class Chest : MonoBehaviour
     public void SpawnStar()
     {
         Star.SetActive(true);
-
-        Animator starAnimator = Star.GetComponent<Animator>();
-        if (starAnimator != null)
-        {
-            starAnimator.SetTrigger("StarAppear");
-        }
     }
 }
