@@ -105,11 +105,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Attack()
     {
-        if (!PlayerInfo.Instance.attackMode || PlayerInfo.Instance.moving || PlayerInfo.Instance.attacking) return;
+        if (!PlayerInfo.Instance.attackMode || PlayerInfo.Instance.attacking) return;
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
             PlayerInfo.Instance.attacking = true;
+
             animator.SetTrigger("Attack");
             if (AttackSound != null)
             {
