@@ -6,6 +6,7 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.AI;
 using Unity.VisualScripting;
+using UnityEditor.ShaderKeywordFilter;
 
 public class SceneLoader : MonoBehaviour
 {
@@ -19,9 +20,9 @@ public class SceneLoader : MonoBehaviour
 
     public Image Flame;
     public Image Desert;
-    public Image Jungle;
-    public Image Custom;
+    public Image Jungle;    
     public Image Village;
+    public Image Custom;
 
     public bool isCanLoad = false;
     public bool isUIReander = false;
@@ -37,9 +38,13 @@ public class SceneLoader : MonoBehaviour
 
     public GameObject startTransition;
     public GameObject endTransition;
+    public GameObject f_startTransition;
+    public GameObject c_startTransition;
 
     private Animation startAnimation;
     private Animation endAnimation;
+    private Animation f_startAnimation;
+    private Animation c_startAnimation;
 
     private Dictionary<(string, string), string> movePointMapping = new Dictionary<(string, string), string>
     {
@@ -77,7 +82,16 @@ public class SceneLoader : MonoBehaviour
             endAnimation = endTransition.GetComponent<Animation>();
 
             startTransition.SetActive(false);
+
             endAnimation.Play();
+        }
+        if (f_startTransition != null || c_startTransition != null)
+        {
+            f_startAnimation = f_startTransition.GetComponent<Animation>();
+            c_startAnimation = c_startTransition.GetComponent<Animation>();
+
+            f_startTransition.SetActive(false);
+            c_startTransition.SetActive(false);
         }
 
         currentScenName = SceneManager.GetActiveScene().name;
@@ -107,7 +121,7 @@ public class SceneLoader : MonoBehaviour
            { "Desert01",     Desert },
            { "Jungle01",     Jungle },
            { "CustomScene",  Custom },
-           { "Village", Village },
+           { "Village",      Village },
        };
         SceneManager.sceneLoaded += OnSceneLoaded;
     }    
@@ -118,7 +132,7 @@ public class SceneLoader : MonoBehaviour
         {
             if (isCanLoad == true && methodDictionary.TryGetValue(sceneName, out Action method))
             {
-                StartCoroutine(ExecuteAfterTransition(method));
+                StartCoroutine(AfterTransition(method));
             }
         }
     }  
@@ -127,7 +141,6 @@ public class SceneLoader : MonoBehaviour
     {
         if (other.gameObject.CompareTag("MoveScene"))
         {
-            
             isCanLoad = true;
             sceneName = other.gameObject.name;
 
@@ -138,7 +151,7 @@ public class SceneLoader : MonoBehaviour
             }
             else if (isCanLoad == true && methodDictionary.TryGetValue(sceneName, out Action method))
             {
-                StartCoroutine(ExecuteAfterTransition(method));
+                StartCoroutine(AfterTransition(method));
             }
             else
             {
@@ -164,11 +177,6 @@ public class SceneLoader : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {        
         string targetScene = scene.name;
-        if (targetScene == "LoadingScene")
-        {
-            Debug.Log("LoadingScene loaded, skipping player positioning.");
-            return;
-        }
 
         player = GameObject.FindWithTag("Player");
         if (player == null)
@@ -184,7 +192,6 @@ public class SceneLoader : MonoBehaviour
             return;
         }
 
-
         if (movePointMapping.TryGetValue((currentScenName, targetScene), out string movePointName))
         {
             GameObject movePoint = GameObject.Find(movePointName);
@@ -192,7 +199,6 @@ public class SceneLoader : MonoBehaviour
             {
                 player.transform.position = movePoint.transform.position;
                 navMeshAgent.Warp(movePoint.transform.position);
-                Debug.Log($"이동 성공: 현재 씬 '{currentScenName}', 이동 씬 '{targetScene}', 이동 포인트 '{movePointName}'");
             }
             else
             {
@@ -207,13 +213,30 @@ public class SceneLoader : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    IEnumerator ExecuteAfterTransition(Action method)
+    IEnumerator AfterTransition(Action method)
     {
         startTransition.SetActive(true);
         startAnimation.Play();
         yield return StartCoroutine(Transitioner());
 
         method.Invoke(); 
+    }
+
+    IEnumerator ExeduteAfterTransition(int num)
+    {
+        if (num == 0)
+        {
+            f_startTransition.SetActive(true);
+            f_startAnimation.Play();
+            Debug.Log("Fish");
+        }
+        else if (num == 1)
+        {
+            c_startTransition.SetActive(true);
+            c_startAnimation.Play();
+            Debug.Log("Custom");
+        }
+        yield return null;
     }
 
     IEnumerator Transitioner()
@@ -247,6 +270,15 @@ public class SceneLoader : MonoBehaviour
 
     public void VillageScene()
     {
+        if (SceneManager.GetActiveScene().name == "CustomScene")
+        {
+            ExeduteAfterTransition(1);
+            StartCoroutine(Transitioner());
+        }
+        else if(SceneManager.GetActiveScene().name == "FishingScene")
+        {
+            StartCoroutine(AfterTransition(VillageScene));
+        }
         SaveAllBeforeSceneLoad();
         if (playerstats != null)
             playerstats.SetMoveSpeed(3.5f);
@@ -255,12 +287,15 @@ public class SceneLoader : MonoBehaviour
 
     public void CustomScene()
     {
+        StartCoroutine(AfterTransition(CustomScene));
         SaveAllBeforeSceneLoad();
         LoadingSceneManager.LoadScene("CustomScene");
     }
 
     public void FishingScene()
     {
+        ExeduteAfterTransition(0);
+        StartCoroutine(Transitioner());
         SaveAllBeforeSceneLoad();
         playerstats.ResetMoveSpeed();
         LoadingSceneManager.LoadScene("FishingScene");
