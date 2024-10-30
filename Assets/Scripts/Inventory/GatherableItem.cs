@@ -14,8 +14,12 @@ public class GatherableItem : MonoBehaviour
     private Coroutine gatherCoroutine;
 
     public Slider gatherSlider;
-
     public Animator playerAnimator;
+
+    private Collider collider;
+    private GameObject model;
+    private Vector3 modelPos;
+    private Animation anim;
 
     private void Start()
     {
@@ -24,6 +28,11 @@ public class GatherableItem : MonoBehaviour
         {
             gatherSlider.gameObject.SetActive(false);
         }
+
+        collider = GetComponent<Collider>();
+        model = transform.GetChild(0).gameObject;
+        modelPos = model.transform.position;
+        anim = model.GetComponent<Animation>();
     }
 
     public void StartGathering(InventoryManager inventoryManager, QuestManager questManager)
@@ -99,9 +108,13 @@ public class GatherableItem : MonoBehaviour
             {
                 UIInteraction.Instance.interactableObj = null;
                 UIInteraction.Instance.ImageOff(UIInteraction.Instance.gathering);
+                collider.enabled = false;
                 playerAnimator.SetFloat("Take", 0);
 
-                // 수집한 아이템의 ID를 퀘스트와 비교
+                anim.Play();
+                StartCoroutine(CheckAnimEnd());
+
+                // 수집한 아이템 ID를 퀘스트와 비교
                 foreach (var quest in questManager.questList)
                 {
                     if (quest.itemId == inventoryItem.GetItemData().itemId)
@@ -115,7 +128,21 @@ public class GatherableItem : MonoBehaviour
         if (gatherSlider != null)
         {
             gatherSlider.gameObject.SetActive(false);
-        }        
+        }
+
         PlayerInfo.Instance.interacting = false;
+    }
+
+    private IEnumerator CheckAnimEnd()
+    {
+        yield return new WaitForSeconds(anim.clip.length);
+        model.SetActive(false);
+
+        yield return new WaitForSeconds(3F);
+
+        model.transform.position = modelPos;
+        model.transform.localScale = Vector3.one;
+        model.SetActive(true);
+        collider.enabled = true;
     }
 }

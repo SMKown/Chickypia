@@ -11379,7 +11379,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1.3
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &5130339330810500296
 Rigidbody:
@@ -11447,6 +11447,7 @@ MonoBehaviour:
   Flame: {fileID: 0}
   Desert: {fileID: 0}
   Jungle: {fileID: 0}
+  Custom: {fileID: 0}
   Village: {fileID: 0}
   isCanLoad: 0
   isUIReander: 0
