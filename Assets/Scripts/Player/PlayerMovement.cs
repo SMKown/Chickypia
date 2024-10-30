@@ -283,6 +283,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
+                LookAtNpc(item.transform);
                 gatherableItem.StartGathering(inventoryManager, questManager);
             }
             else if (Input.GetKeyUp(KeyCode.E))
