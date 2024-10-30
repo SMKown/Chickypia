@@ -52,6 +52,10 @@ public class InvenCompenUI : MonoBehaviour
         {
             CloseCheckUI();
         }
+        if (Input.anyKey && !IsPointerOverUIObject())
+        {
+            CloseCheckUI();
+        }
     }
 
     public void ToggleInventory()
