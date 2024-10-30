@@ -63,6 +63,7 @@ public class MeleeAttack : Enemy // 근접 공격
         {
             Debug.Log("플레이어가 공격 범위 밖에 있습니다.");
         }
+        isAttacking = false;
     }
 
 
@@ -74,6 +75,7 @@ public class MeleeAttack : Enemy // 근접 공격
 
     private IEnumerator WaitForCooldown()
     {
+        isAttacking = false;
         Debug.Log("쿨타임중~~~~~~~~~~~~~~~~~~");
         SetAnimationState(AnimationState.Idle);
         if (agent.isOnNavMesh)
