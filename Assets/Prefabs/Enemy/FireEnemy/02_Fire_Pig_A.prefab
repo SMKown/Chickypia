@@ -310,9 +310,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 3348611266779478724}
-  player: {fileID: 766207004619489451, guid: dec0ae9635ffa42fc97e716bfbac69c4, type: 3}
+  player: {fileID: 0}
   enemyType: 1
-  patrolType: 1
+  patrolType: 0
   hasFledOnce: 0
 --- !u!114 &4187377309646902311
 MonoBehaviour:
@@ -327,19 +327,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 4
-  sightRange: 6
-  attackRange: 2
-  attackCooldown: 3
+  sightRange: 5
+  attackRange: 1.5
+  attackCooldown: 2
   isAttacking: 0
   agent: {fileID: 0}
   patrolPoints:
-  - {x: -7, y: 0, z: 5}
-  - {x: -20, y: 0, z: 5}
+  - {x: -25, y: 0.6, z: -15}
+  - {x: -30, y: 0.6, z: -22}
+  - {x: -28.5, y: 0.6, z: -13}
+  - {x: -32.78, y: 0.6, z: -18.74}
   FleePoints: []
-  FlashTrans: {fileID: 362886522607802446}
+  FlashTrans: {fileID: 2677318093132303371}
   dropItemData: {fileID: 11400000, guid: 34763663429b3524bb7f3677f8f1c6a1, type: 2}
   dropItemPrefab: {fileID: 5857909854282709900, guid: a687cccb46f2df342b01697475b13ec7, type: 3}
-  damageSound: {fileID: 0}
+  damageSound: {fileID: 1404145138387260278}
   damage: 1
 --- !u!54 &1271100826935906998
 Rigidbody:

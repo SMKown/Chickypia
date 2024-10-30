@@ -292,7 +292,6 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-
     public void OpenChest()
     {
         if (Input.GetKeyDown(KeyCode.E))
@@ -308,10 +307,12 @@ public class PlayerMovement : MonoBehaviour
                     if (chest.Star != null)
                     {
                         chest.Star.GetComponent<Star>().StarFly();
+
+                        AddChestItem(chest);
                     }
                     return;
                 }
-                
+
                 LookAtNpc(chest.chestCamTransform);
                 SetActiveCamera(currentCameraIndex);
                 ChangeCamera(chest.transform);
@@ -319,6 +320,25 @@ public class PlayerMovement : MonoBehaviour
                 chest.OpenChest();
                 UIInteraction.Instance.ImageOff(UIInteraction.Instance.collection);
                 StartCoroutine(PlaySuccessWithDelay(1f));
+            }
+        }
+    }
+
+    private void AddChestItem(Chest chest)
+    {
+        bool added = inventoryManager.AddItem(chest.itemData);
+
+        if (added)
+        {
+            Debug.Log($"{chest.itemData.itemName}이(가) 인벤토리에 추가되었습니다.");
+            UIInteraction.Instance.ImageOff(UIInteraction.Instance.collection);
+
+            foreach (var quest in questManager.questList)
+            {
+                if (quest.itemId == chest.itemData.itemId)
+                {
+                    quest.UpdateItemCount(1);
+                }
             }
         }
     }
