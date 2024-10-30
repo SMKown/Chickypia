@@ -116,30 +116,34 @@ public class PlayerMovement : MonoBehaviour
             {
                 AttackSound.Play();
             }
-            int attackDamage = PlayerStats.Instance.attackDamage;
-
-            Collider[] hitEnemies = Physics.OverlapSphere(transform.position, attackRange);
-            foreach (Collider enemy in hitEnemies)
-            {
-                if (enemy.CompareTag("Enemy"))
-                {
-                    Vector3 directionToEnemy = (enemy.transform.position - transform.position).normalized;
-                    float angleToEnemy = Vector3.Angle(transform.forward, directionToEnemy);
-
-                    if (angleToEnemy <= 90)
-                    {
-                        Vector3 knockbackDirection = transform.forward;
-                        float knockbackForce = 4F;
-                        enemy.GetComponent<Enemy>().TakeDamage(attackDamage, knockbackDirection, knockbackForce);
-                    }
-                }
-            }
         }
     }
 
     private void Particle()
     {
         particle.SetActive(true);
+        AttackPoint();
+    }
+
+    private void AttackPoint()
+    {
+        int attackDamage = PlayerStats.Instance.attackDamage;
+        Collider[] hitEnemies = Physics.OverlapSphere(transform.position, attackRange);
+        foreach (Collider enemy in hitEnemies)
+        {
+            if (enemy.CompareTag("Enemy"))
+            {
+                Vector3 directionToEnemy = (enemy.transform.position - transform.position).normalized;
+                float angleToEnemy = Vector3.Angle(transform.forward, directionToEnemy);
+
+                if (angleToEnemy <= 90)
+                {
+                    Vector3 knockbackDirection = transform.forward;
+                    float knockbackForce = 4F;
+                    enemy.GetComponent<Enemy>().TakeDamage(attackDamage, knockbackDirection, knockbackForce);
+                }
+            }
+        }
     }
 
     private void AnimEnd()
