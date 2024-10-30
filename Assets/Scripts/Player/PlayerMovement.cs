@@ -310,6 +310,7 @@ public class PlayerMovement : MonoBehaviour
 
                         AddChestItem(chest);
                         GameObject.Destroy(chest);
+                        chest.gameObject.tag = "";
                     }
                     return;
                 }

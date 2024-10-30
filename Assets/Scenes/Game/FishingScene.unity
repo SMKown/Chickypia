@@ -465,6 +465,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6157009198624059506, guid: 37ec12477e481ee479755fafb7030b39, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 111308493}
+    - target: {fileID: 6157009198624059506, guid: 37ec12477e481ee479755fafb7030b39, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: M_CloseOptionButton
+      objectReference: {fileID: 0}
     - target: {fileID: 6240575178523644437, guid: 37ec12477e481ee479755fafb7030b39, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -2554,6 +2562,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 28429534}
     m_Modifications:
+    - target: {fileID: 849487968671526334, guid: 9b1a9ce8f27a09945a4e0443f232f467, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 9180394553868841969}
+    - target: {fileID: 849487968671526334, guid: 9b1a9ce8f27a09945a4e0443f232f467, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MainScene
+      objectReference: {fileID: 0}
     - target: {fileID: 1156226294761451613, guid: 9b1a9ce8f27a09945a4e0443f232f467, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2649,6 +2665,22 @@ PrefabInstance:
     - target: {fileID: 4472941885017564354, guid: 9b1a9ce8f27a09945a4e0443f232f467, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 111308493}
+    - target: {fileID: 4472941885017564354, guid: 9b1a9ce8f27a09945a4e0443f232f467, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseOptionButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 4472941885017564354, guid: 9b1a9ce8f27a09945a4e0443f232f467, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6305168208761635291, guid: 9b1a9ce8f27a09945a4e0443f232f467, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 9180394553868841969}
+    - target: {fileID: 6305168208761635291, guid: 9b1a9ce8f27a09945a4e0443f232f467, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ExitGame
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
