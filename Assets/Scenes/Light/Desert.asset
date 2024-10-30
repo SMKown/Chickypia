@@ -46,7 +46,7 @@ MonoBehaviour:
   bladeRotation:
     m_OverrideState: 0
     m_Value: 0
---- !u!114 &-1690149888371263681
+--- !u!114 &-4249705728170457353
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -61,65 +61,14 @@ MonoBehaviour:
   active: 1
   lift:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 0.9664757, z: 0.94837475, w: 0}
+    m_Value: {x: 0.8878207, y: 0.9384785, z: 1, w: -0.026490066}
   gamma:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 0.99933964, z: 0.84552485, w: 0}
+    m_Value: {x: 0.9351535, y: 1, z: 0.97840285, w: -0.052980132}
   gain:
     m_OverrideState: 1
-    m_Value: {x: 0.95774555, y: 0.87995416, z: 1, w: 0}
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
-  m_Name: Desert
-  m_EditorClassIdentifier: 
-  components:
-  - {fileID: 3679912146340930752}
-  - {fileID: -8078432893825793271}
-  - {fileID: 288737824372109257}
-  - {fileID: -1690149888371263681}
---- !u!114 &288737824372109257
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 558a8e2b6826cf840aae193990ba9f2e, type: 3}
-  m_Name: ShadowsMidtonesHighlights
-  m_EditorClassIdentifier: 
-  active: 1
-  shadows:
-    m_OverrideState: 1
-    m_Value: {x: 0.77463716, y: 1, z: 0.7983169, w: -0.16977932}
-  midtones:
-    m_OverrideState: 1
-    m_Value: {x: 1, y: 0.99273133, z: 0.84990007, w: -0.08488966}
-  highlights:
-    m_OverrideState: 1
-    m_Value: {x: 0.9021005, y: 1, z: 0.8325523, w: 0.03395586}
-  shadowsStart:
-    m_OverrideState: 0
-    m_Value: 0
-  shadowsEnd:
-    m_OverrideState: 0
-    m_Value: 0.3
-  highlightsStart:
-    m_OverrideState: 0
-    m_Value: 0.55
-  highlightsEnd:
-    m_OverrideState: 0
-    m_Value: 1
---- !u!114 &3679912146340930752
+    m_Value: {x: 1, y: 0.99124086, z: 0.98002505, w: 0}
+--- !u!114 &-2645570890476678880
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -137,10 +86,10 @@ MonoBehaviour:
     m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 0.58
+    m_Value: 0.9
   intensity:
     m_OverrideState: 1
-    m_Value: 0.28
+    m_Value: 0.6
   scatter:
     m_OverrideState: 0
     m_Value: 0.7
@@ -148,8 +97,8 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 65472
   tint:
-    m_OverrideState: 1
-    m_Value: {r: 0.3915094, g: 0.4585894, b: 1, a: 1}
+    m_OverrideState: 0
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
   highQualityFiltering:
     m_OverrideState: 0
     m_Value: 0
@@ -166,3 +115,54 @@ MonoBehaviour:
   dirtIntensity:
     m_OverrideState: 0
     m_Value: 0
+--- !u!114 &-2024706040287430677
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 558a8e2b6826cf840aae193990ba9f2e, type: 3}
+  m_Name: ShadowsMidtonesHighlights
+  m_EditorClassIdentifier: 
+  active: 1
+  shadows:
+    m_OverrideState: 1
+    m_Value: {x: 0.67838347, y: 0.7438179, z: 1, w: 0.0794702}
+  midtones:
+    m_OverrideState: 0
+    m_Value: {x: 0.9277651, y: 1, z: 0.96090746, w: 0}
+  highlights:
+    m_OverrideState: 0
+    m_Value: {x: 1, y: 0.93248296, z: 0.90012264, w: 0.026490066}
+  shadowsStart:
+    m_OverrideState: 0
+    m_Value: 0
+  shadowsEnd:
+    m_OverrideState: 0
+    m_Value: 0.3
+  highlightsStart:
+    m_OverrideState: 0
+    m_Value: 0.55
+  highlightsEnd:
+    m_OverrideState: 0
+    m_Value: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
+  m_Name: Desert
+  m_EditorClassIdentifier: 
+  components:
+  - {fileID: -2645570890476678880}
+  - {fileID: -8078432893825793271}
+  - {fileID: -4249705728170457353}
+  - {fileID: -2024706040287430677}
