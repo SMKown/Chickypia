@@ -1,7 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,6 +32,8 @@ public class NPC : MonoBehaviour
     private GameObject completedImage;
     private TMP_Text[] QuestTxt;
 
+    private Animation animation;
+
     private void Start()
     {
         playerMovement = FindObjectOfType<PlayerMovement>();
@@ -39,6 +41,7 @@ public class NPC : MonoBehaviour
             DialogueText = Dialog.GetComponentsInChildren<Text>();
         InitializeNPC();
         UpdateQuestUI();
+
     }
 
     private void Update()
@@ -132,6 +135,7 @@ public class NPC : MonoBehaviour
             questBoxInstance = Instantiate(QuestBoxPrefab, canvas);
             QuestTxt = questBoxInstance.GetComponentsInChildren<TMP_Text>();
             completedImage = questBoxInstance.transform.GetChild(1).gameObject;
+            animation = questBoxInstance.GetComponent<Animation>();
         }
     }
 
@@ -167,6 +171,7 @@ public class NPC : MonoBehaviour
                 quest.SetQuestStatus(QuestStatus.InProgress);
                 quest.OnItemCountUpdated += () => DisplayQuestInfo(quest);
                 quest.UpdateItemCount(0);
+                animation.Play("QuestUpdate");
 
                 if (quest.itemCount >= quest.itemCountRequired)
                 {

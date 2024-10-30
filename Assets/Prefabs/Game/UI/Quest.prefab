@@ -565,7 +565,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8950369954794718392}
   - {fileID: 5491750147134089592}
@@ -626,6 +626,7 @@ Animation:
   m_Animation: {fileID: 7400000, guid: 6ef40f7cfab00104e9adcf73fc92f5e2, type: 2}
   m_Animations:
   - {fileID: 7400000, guid: 6ef40f7cfab00104e9adcf73fc92f5e2, type: 2}
+  - {fileID: 7400000, guid: 1b6824c1637fcc44c8cfb66f3f170a52, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
@@ -699,10 +700,10 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6493559445885143922}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 160.74709}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -120, y: -18}
@@ -755,9 +756,9 @@ Animation:
   m_GameObject: {fileID: 5974333756891167359}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 6ef40f7cfab00104e9adcf73fc92f5e2, type: 2}
+  m_Animation: {fileID: 7400000, guid: 5e898378780dcfd48acbb957ba7f963d, type: 2}
   m_Animations:
-  - {fileID: 7400000, guid: 6ef40f7cfab00104e9adcf73fc92f5e2, type: 2}
+  - {fileID: 7400000, guid: 5e898378780dcfd48acbb957ba7f963d, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
