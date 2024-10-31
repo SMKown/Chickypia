@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private int currentCameraIndex = 0;
 
     public GameObject DialogBox;
+    public GameObject DialogEnd;
     private Image dialogImage;
 
     public GameObject particle;
@@ -330,6 +331,7 @@ public class PlayerMovement : MonoBehaviour
                     {
                         chest.Star.GetComponent<Star>().StarFly();
                         AddChestItem(chest);
+
                         chest.itemData.isCollected = true;
                     }
                     return;
@@ -358,8 +360,12 @@ public class PlayerMovement : MonoBehaviour
                 if (quest.itemCount == quest.itemCountRequired)
                 {
                     // 모든 별 다 모음!
+                    DialogEnd.SetActive(true);
+                    if (Input.GetKeyDown(KeyCode.E))
+                    {
+                        DialogEnd.SetActive(false);
+                    }
                 }
-
             }
         }
 
