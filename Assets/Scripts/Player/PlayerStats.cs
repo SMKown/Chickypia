@@ -38,9 +38,6 @@ public class PlayerStats : MonoBehaviour
         Instance = this;
         saveFilePath = Path.Combine(Application.persistentDataPath, "playerState.json");
 
-        DontDestroyOnLoad(moveSpeedUI.transform.root.gameObject);
-        DontDestroyOnLoad(attackDamageUI.transform.root.gameObject);
-
         LoadPlayerState();
         inventoryManager = FindObjectOfType<InventoryManager>();
     }
@@ -53,7 +50,6 @@ public class PlayerStats : MonoBehaviour
     public void ChangeHealHealth(int hpAmount)
     {
         CurrentFoodEffectFys = FoodEffectFxs[0];
-        DontDestroyOnLoad(FoodEffectFxs[0]);
         CurrentFoodEffectFys.SetActive(true);
         currentHp = Mathf.Min(currentHp + hpAmount, maxHp);
         SavePlayerState();
@@ -62,7 +58,6 @@ public class PlayerStats : MonoBehaviour
     public void ChangeMaxHealth(int maxHpAmount)
     {
         CurrentFoodEffectFys = FoodEffectFxs[1];
-        DontDestroyOnLoad(FoodEffectFxs[1]);
         CurrentFoodEffectFys.SetActive(true);
         maxHp += maxHpAmount;
         currentHp = Mathf.Min(currentHp + maxHpAmount, maxHp);
@@ -72,9 +67,7 @@ public class PlayerStats : MonoBehaviour
     public void ChangeMoveSpeed(float speedAmount, float time)
     {
         FoodEffectFxs[2].SetActive(true);
-        DontDestroyOnLoad(FoodEffectFxs[2]);
         moveSpeedUI.SetActive(true);
-        DontDestroyOnLoad(moveSpeedUI);
         moveSpeed += speedAmount;
         SavePlayerState();
         GameObject effecTimer = Instantiate(timeManager, Vector3.zero, Quaternion.identity);
@@ -89,9 +82,7 @@ public class PlayerStats : MonoBehaviour
     public void ChangeAttackDamage(int attckDanageAmount, float time)
     {
         FoodEffectFxs[3].SetActive(true);
-        DontDestroyOnLoad(FoodEffectFxs[3]);
         attackDamageUI.SetActive(true);
-        DontDestroyOnLoad(attackDamageUI);
         attackDamage += attckDanageAmount;
         SavePlayerState();
         GameObject effecTimer = Instantiate(timeManager, Vector3.zero, Quaternion.identity);
