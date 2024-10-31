@@ -9,15 +9,23 @@ public class Chest : MonoBehaviour
     public PlayerMovement playerMovement;
     public Transform chestCamTransform;
     public ItemData itemData;
-
     private void Start()
     {
         animator = GetComponent<Animator>();
+
+        if(itemData.isCollected)
+        {
+            CleardChest();
+        }
     }
 
     private void Update()
     {
         if (EnemyAllDead())
+        {
+            animator.SetTrigger("ChestSpawn");
+        }
+        else if(itemData.isCollected)
         {
             animator.SetTrigger("ChestSpawn");
         }
@@ -37,5 +45,11 @@ public class Chest : MonoBehaviour
     public void SpawnStar()
     {
         Star.SetActive(true);
+    }
+
+    public void CleardChest()
+    {
+        gameObject.tag = "MoveScene";
+        animator.SetTrigger("ChestClear");
     }
 }

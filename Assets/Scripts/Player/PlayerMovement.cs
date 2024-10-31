@@ -304,36 +304,44 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+
     public void OpenChest()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        Chest chest = UIInteraction.Instance.interactableObj.GetComponent<Chest>();
+
+        if (chest != null)
         {
-            Chest chest = UIInteraction.Instance.interactableObj.GetComponent<Chest>();
-            if (chest != null)
+            if (chest.itemData.isCollected)
+            {
+                Debug.Log("이미 수집한 박스입니다.");
+                UIInteraction.Instance.interactableObj = null;
+                return;
+            }
+
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 if (DialogBox.activeSelf)
                 {
                     DialogBox.SetActive(false);
                     ResetCamera();
                     PlayerInfo.Instance.interacting = false;
+
                     if (chest.Star != null)
                     {
                         chest.Star.GetComponent<Star>().StarFly();
-
                         AddChestItem(chest);
-                        GameObject.Destroy(chest);
-                        chest.gameObject.tag = "";
+                        chest.itemData.isCollected = true;
                     }
                     return;
                 }
-
                 LookAtNpc(chest.chestCamTransform);
                 SetActiveCamera(currentCameraIndex);
                 ChangeCamera(chest.transform);
 
                 chest.OpenChest();
-                UIInteraction.Instance.ImageOff(UIInteraction.Instance.collection);
                 StartCoroutine(PlaySuccessWithDelay(1f));
+
+                UIInteraction.Instance.interactableObj = null;
             }
         }
     }
