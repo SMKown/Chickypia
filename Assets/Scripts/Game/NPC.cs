@@ -142,7 +142,7 @@ public class NPC : MonoBehaviour
 
     private void CreateQuestBox()
     {
-        if (questBoxInstance == null)
+        if (questBoxInstance == null && !completed)
         {
             questBoxInstance = Instantiate(QuestBoxPrefab, canvas);
             QuestTxt = questBoxInstance.GetComponentsInChildren<TMP_Text>();
@@ -221,7 +221,7 @@ public class NPC : MonoBehaviour
     private void DisplayQuestInfo(QuestData quest)
     {
         CreateQuestBox();
-        if (QuestTxt != null)
+        if (questBoxInstance != null)
         {
             QuestTxt[2].text = quest.title;
             QuestTxt[3].text = $"{quest.explanation}";
@@ -241,7 +241,7 @@ public class NPC : MonoBehaviour
 
     private void UpdateQuestCategoryText(int completedQuestCount)
     {
-        if (QuestTxt != null)
+        if (questBoxInstance != null)
         {
             QuestTxt[0].text = questCategory;
             QuestTxt[1].text = $"{completedQuestCount}/{quest_ids.Length}";
