@@ -38,6 +38,9 @@ public class PlayerStats : MonoBehaviour
         Instance = this;
         saveFilePath = Path.Combine(Application.persistentDataPath, "playerState.json");
 
+        DontDestroyOnLoad(moveSpeedUI.transform.root.gameObject);
+        DontDestroyOnLoad(attackDamageUI.transform.root.gameObject);
+
         LoadPlayerState();
         inventoryManager = FindObjectOfType<InventoryManager>();
     }
