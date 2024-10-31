@@ -183,15 +183,6 @@ public class SceneLoader : MonoBehaviour
             return;
         }
 
-        if (targetScene == "Village")
-        {
-            navMeshAgent.speed += 2;
-        }
-        else if (currentScenName == "Village" && (targetScene == "Flame01" || targetScene == "Jungle01" || targetScene == "Desert01"))
-        {
-            navMeshAgent.speed -= 2;
-        }
-
         if (movePointMapping.TryGetValue((currentScenName, targetScene), out string movePointName))
         {
             GameObject movePoint = GameObject.Find(movePointName);
@@ -230,6 +221,7 @@ public class SceneLoader : MonoBehaviour
     {
         ResetScene();
         LoadingSceneManager.LoadScene("Village");
+        playerstats.SetMoveSpeed(playerstats.moveSpeed + 2);
     }
     public void DieScene()
     {
@@ -239,6 +231,7 @@ public class SceneLoader : MonoBehaviour
             playerstats.ResetPlayerState();
         }
         LoadingSceneManager.LoadScene("Village");
+        playerstats.SetMoveSpeed(playerstats.moveSpeed + 2);
     }
 
     public void VillageScene()
@@ -249,8 +242,6 @@ public class SceneLoader : MonoBehaviour
         }
 
         SaveAllBeforeSceneLoad();
-
-        if (playerstats != null)
         StartCoroutine(LoadVillageScene());
     }
 
@@ -261,6 +252,7 @@ public class SceneLoader : MonoBehaviour
         yield return StartCoroutine(Transitioner());
 
         LoadingSceneManager.LoadScene("Village");
+        playerstats.SetMoveSpeed(playerstats.moveSpeed + 2);
     }
 
     public void CustomScene()
@@ -268,6 +260,7 @@ public class SceneLoader : MonoBehaviour
         StartCoroutine(AfterTransition(CustomScene));
         SaveAllBeforeSceneLoad();
         LoadingSceneManager.LoadScene("CustomScene");
+        playerstats.SetMoveSpeed(playerstats.moveSpeed - 2);
     }
 
     public void FishingScene()
@@ -275,8 +268,9 @@ public class SceneLoader : MonoBehaviour
         StartCoroutine(Transitioner());
 
         SaveAllBeforeSceneLoad();
-
         StartCoroutine(LoadFishingScene());
+        playerstats.SetMoveSpeed(playerstats.moveSpeed - 2);
+
     }
 
     private IEnumerator LoadFishingScene()
@@ -292,6 +286,7 @@ public class SceneLoader : MonoBehaviour
     {
         SaveAllBeforeSceneLoad();
         LoadingSceneManager.LoadScene("Flame01");
+        LeavingVillage();
     }
     public void Flame02()
     {
@@ -307,6 +302,7 @@ public class SceneLoader : MonoBehaviour
     {
         SaveAllBeforeSceneLoad();
         LoadingSceneManager.LoadScene("Jungle01");
+        LeavingVillage();
     }
     public void Jungle02()
     {
@@ -322,6 +318,7 @@ public class SceneLoader : MonoBehaviour
     {
         SaveAllBeforeSceneLoad();
         LoadingSceneManager.LoadScene("Desert01");
+        LeavingVillage();
     }
     public void Desert02()
     {
@@ -344,6 +341,14 @@ public class SceneLoader : MonoBehaviour
     }
     #endregion
 
+    private void LeavingVillage()
+    {
+        if (currentScenName == "Village")
+        {
+            playerstats.SetMoveSpeed(playerstats.moveSpeed - 2);
+        }
+    }
+
     private void SaveAllBeforeSceneLoad()
     {
         //인벤토리 저장
@@ -351,20 +356,36 @@ public class SceneLoader : MonoBehaviour
         {
             inventoryManager.SaveInventory();
         }
+        else
+        {
+            Debug.Log("InventoryManager 없음");
+        }
         //도감 저장
         if (compendiumManager != null)
         {
             compendiumManager.SaveCompendium();
+        }
+        else
+        {
+            Debug.Log("CompendiumManager 없음");
         }
         //스탯 저장
         if(playerstats != null)
         {
             playerstats.SavePlayerState();
         }
+        else
+        {
+            Debug.Log("PlayerState 없음");
+        }
         //퀘스트 저장
         if (QuestManager != null)
         {
             QuestManager.SaveQuestProgress();
+        }
+        else
+        {
+            Debug.Log("QuestProgress 없음");  
         }
 
         isCanLoad = false;
