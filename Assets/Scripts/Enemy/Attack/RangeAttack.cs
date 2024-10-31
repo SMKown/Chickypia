@@ -61,7 +61,6 @@ public class RangeAttack : Enemy // 원거리 공격
 
     private IEnumerator WaitForCooldown()
     {
-        Debug.Log("쿨타임중~~~~~~~~~~~~~~~~~~");
         SetAnimationState(AnimationState.Idle);
         agent.isStopped = true;
 
@@ -70,7 +69,6 @@ public class RangeAttack : Enemy // 원거리 공격
         {
             if (GetComponent<EnemyAI>().CurrentState is FleeingState)
             {
-                Debug.Log("도망 상태로 전환됨 - 쿨타임 중지");
                 isAttacking = false;
                 agent.isStopped = false;
                 yield break;

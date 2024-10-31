@@ -68,7 +68,6 @@ public abstract class Enemy : MonoBehaviour
 
     private void Knockback(Vector3 playerForwardDirection, float force)
     {
-        Debug.Log("넉백");
         if (health > 0)
         {
             Rigidbody rb = GetComponent<Rigidbody>();
@@ -223,13 +222,11 @@ public abstract class Enemy : MonoBehaviour
         EnemyAI enemyAI = GetComponent<EnemyAI>();
         if (enemyAI.enemyType != EnemyType.Runtype)
         {
-            Debug.Log("싸움타입적");
             return;
         }
 
         if (FleePoints == null || FleePoints.Length == 0)
         {
-            Debug.LogError("도망 포인트 필요");
             return;
         }
         Vector3 furthestFleePoint = FleePoints[0];

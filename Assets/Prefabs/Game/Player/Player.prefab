@@ -17881,10 +17881,11 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   DialogBox: {fileID: 0}
+  DialogEnd: {fileID: 0}
   particle: {fileID: 0}
   attackRange: 0
   inventoryManager: {fileID: 0}
-  AttackSound: {fileID: 7133965140903923194}
+  Audio: {fileID: 7133965140903923194}
 --- !u!95 &6068323840325354372
 Animator:
   serializedVersion: 5

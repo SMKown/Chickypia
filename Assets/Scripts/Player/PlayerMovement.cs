@@ -314,37 +314,41 @@ public class PlayerMovement : MonoBehaviour
         {
             if (chest.itemData.isCollected)
             {
-                Debug.Log("이미 수집한 박스입니다.");
-                UIInteraction.Instance.interactableObj = null;
                 return;
             }
 
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if (DialogBox.activeSelf)
+                if(!DialogBox.activeSelf)
                 {
-                    ResetCamera();
-                    PlayerInfo.Instance.interacting = false;
+                    LookAtNpc(chest.chestCamTransform);
+                    SetActiveCamera(currentCameraIndex);
+                    ChangeCamera(chest.transform);
 
-                    if (chest.Star != null)
-                    {
-                        chest.Star.GetComponent<Star>().StarFly();
-                        AddChestItem(chest);
-
-                        chest.itemData.isCollected = true;
-                    }
-                    return;
+                    PlayerInfo.Instance.moving = false;
+                    chest.OpenChest();
+                    UIInteraction.Instance.ImageOn(UIInteraction.Instance.dialog, chest.transform);
+                    StartCoroutine(PlaySuccessWithDelay(1f));
                 }
-                LookAtNpc(chest.chestCamTransform);
-                SetActiveCamera(currentCameraIndex);
-                ChangeCamera(chest.transform);
+                else if (DialogBox.activeSelf)
+                {
+                    PlayerInfo.Instance.moving = true;
+                    AddChestItem(chest);
+                    UIInteraction.Instance.ImageOff(UIInteraction.Instance.dialog);
 
-                chest.OpenChest();
-                StartCoroutine(PlaySuccessWithDelay(1f));
-
+                    chest.itemData.isCollected = true;
+                    StartCoroutine(DeInteractableObj());
+                }
                 UIInteraction.Instance.interactableObj = null;
             }
         }
+    }
+
+    private IEnumerator DeInteractableObj()
+    {
+        UIInteraction.Instance.interactableObj.SetActive(false);
+        yield return new WaitForSeconds(1f);
+        UIInteraction.Instance.interactableObj.SetActive(true);
     }
 
     private void AddChestItem(Chest chest)
@@ -359,16 +363,22 @@ public class PlayerMovement : MonoBehaviour
                 if (quest.itemCount == quest.itemCountRequired)
                 {
                     // 모든 별 다 모음!
-                    DialogEnd.SetActive(true);
-                    if (Input.GetKeyDown(KeyCode.E))
-                    {
-                        DialogEnd.SetActive(false);
-                    }
+                    UIInteraction.Instance.ImageOn(UIInteraction.Instance.dialog, DialogEnd.transform);
+                    StartCoroutine(WaitForDialogEndClose());
                 }
             }
         }
 
         bool added = inventoryManager.AddItem(chest.itemData);
+    }
+
+    private IEnumerator WaitForDialogEndClose()
+    {
+        while (!Input.GetKeyDown(KeyCode.E))
+        {
+            yield return null;
+        }
+        UIInteraction.Instance.ImageOff(UIInteraction.Instance.dialog);
     }
 
     private IEnumerator PlaySuccessWithDelay(float delay)

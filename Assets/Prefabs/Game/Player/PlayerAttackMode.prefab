@@ -2785,10 +2785,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   virtualCameras: []
   DialogBox: {fileID: 0}
+  DialogEnd: {fileID: 0}
   particle: {fileID: 4462114884111317698}
   attackRange: 2
   inventoryManager: {fileID: 0}
-  AttackSound: {fileID: 1678505814525655556}
+  Audio: {fileID: 1678505814525655556}
 --- !u!95 &5898476836428610082
 Animator:
   serializedVersion: 5

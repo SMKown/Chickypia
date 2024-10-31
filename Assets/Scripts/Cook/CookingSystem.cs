@@ -250,17 +250,9 @@ public class CookingSystem : MonoBehaviour
                 {
                     ingredientSlot.ResetSlot();
                 }
-                else
-                {
-                    Debug.LogWarning("IngredientSlot or currentItemData is null for " + ingredient.item.itemName);
-                }
             }
 
             StartCoroutine(Cooking(recipe, questManager));
-        }
-        else
-        {
-            Debug.Log("Please Choice Recipe!");
         }
     }
 

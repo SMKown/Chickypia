@@ -150,10 +150,6 @@ public class SceneLoader : MonoBehaviour
             {
                 StartCoroutine(AfterTransition(method));
             }
-            else
-            {
-                Debug.LogWarning($"No method mapped for scene: {sceneName}");
-            }
         }
     }
 
@@ -178,15 +174,22 @@ public class SceneLoader : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         if (player == null)
         {
-            Debug.LogWarning("Player object not found in the scene.");
             return;
         }
 
         navMeshAgent = player.GetComponent<NavMeshAgent>();
         if (navMeshAgent == null)
         {
-            Debug.LogWarning("NavMeshAgent not found on player object.");
             return;
+        }
+
+        if (targetScene == "Village")
+        {
+            navMeshAgent.speed += 2;
+        }
+        else if (currentScenName == "Village" && (targetScene == "Flame01" || targetScene == "Jungle01" || targetScene == "Desert01"))
+        {
+            navMeshAgent.speed -= 2;
         }
 
         if (movePointMapping.TryGetValue((currentScenName, targetScene), out string movePointName))
@@ -197,14 +200,6 @@ public class SceneLoader : MonoBehaviour
                 player.transform.position = movePoint.transform.position;
                 navMeshAgent.Warp(movePoint.transform.position);
             }
-            else
-            {
-                Debug.LogWarning($"이동 실패: 이동 포인트 '{movePointName}'를 씬 '{targetScene}'에서 찾을 수 없음");
-            }
-        }
-        else
-        {
-            Debug.LogWarning($"매핑 누락: '{currentScenName}'에서 '{targetScene}'으로의 전환에 대한 매핑이 존재하지 않음");
         }
         currentScenName = targetScene;
         SceneManager.sceneLoaded -= OnSceneLoaded;
@@ -234,7 +229,6 @@ public class SceneLoader : MonoBehaviour
     public void NewGame()
     {
         ResetScene();
-        playerstats.moveSpeed += 2;
         LoadingSceneManager.LoadScene("Village");
     }
     public void DieScene()
@@ -244,7 +238,6 @@ public class SceneLoader : MonoBehaviour
         {
             playerstats.ResetPlayerState();
         }
-        playerstats.moveSpeed += 2;
         LoadingSceneManager.LoadScene("Village");
     }
 
@@ -258,8 +251,6 @@ public class SceneLoader : MonoBehaviour
         SaveAllBeforeSceneLoad();
 
         if (playerstats != null)
-            playerstats.moveSpeed += 2;
-
         StartCoroutine(LoadVillageScene());
     }
 
@@ -284,7 +275,6 @@ public class SceneLoader : MonoBehaviour
         StartCoroutine(Transitioner());
 
         SaveAllBeforeSceneLoad();
-        playerstats.moveSpeed -= 2;
 
         StartCoroutine(LoadFishingScene());
     }
@@ -301,7 +291,6 @@ public class SceneLoader : MonoBehaviour
     public void Flame01()
     {
         SaveAllBeforeSceneLoad();
-        playerstats.moveSpeed -= 2;
         LoadingSceneManager.LoadScene("Flame01");
     }
     public void Flame02()
@@ -317,7 +306,6 @@ public class SceneLoader : MonoBehaviour
     public void Jungle01()
     {
         SaveAllBeforeSceneLoad();
-        playerstats.moveSpeed -= 2;
         LoadingSceneManager.LoadScene("Jungle01");
     }
     public void Jungle02()
@@ -333,7 +321,6 @@ public class SceneLoader : MonoBehaviour
     public void Desert01()
     {
         SaveAllBeforeSceneLoad();
-        playerstats.moveSpeed -= 2;
         LoadingSceneManager.LoadScene("Desert01");
     }
     public void Desert02()
@@ -364,36 +351,20 @@ public class SceneLoader : MonoBehaviour
         {
             inventoryManager.SaveInventory();
         }
-        else
-        {
-            Debug.Log("InventoryManager 없음");
-        }
         //도감 저장
         if (compendiumManager != null)
         {
             compendiumManager.SaveCompendium();
-        }
-        else
-        {
-            Debug.Log("CompendiumManager 없음");
         }
         //스탯 저장
         if(playerstats != null)
         {
             playerstats.SavePlayerState();
         }
-        else
-        {
-            Debug.Log("PlayerState 없음");
-        }
         //퀘스트 저장
         if (QuestManager != null)
         {
             QuestManager.SaveQuestProgress();
-        }
-        else
-        {
-            Debug.Log("QuestProgress 없음");  
         }
 
         isCanLoad = false;
