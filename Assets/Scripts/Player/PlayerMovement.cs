@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private int currentCameraIndex = 0;
 
     public GameObject DialogBox;
-    public GameObject DialogEnd;
+    //public GameObject DialogEnd;
     private Image dialogImage;
 
     public GameObject particle;
@@ -315,7 +315,8 @@ public class PlayerMovement : MonoBehaviour
             if (chest.itemData.isCollected)
             {
                 Debug.Log("이미 수집한 박스입니다.");
-                UIInteraction.Instance.interactableObj = null;
+                UIInteraction.Instance.interactableObj.name = "Village";
+                UIInteraction.Instance.interactableObj.tag = "MoveScene";
                 return;
             }
 
@@ -340,8 +341,6 @@ public class PlayerMovement : MonoBehaviour
 
                 chest.OpenChest();
                 StartCoroutine(PlaySuccessWithDelay(chest.transform));
-
-                UIInteraction.Instance.interactableObj = null;
             }
         }
     }
@@ -357,9 +356,10 @@ public class PlayerMovement : MonoBehaviour
 
                 if (quest.itemCount >= quest.itemCountRequired)
                 {
-                    UIInteraction.Instance.ImageOn(UIInteraction.Instance.dialog, DialogEnd.transform);
-                    DialogEnd.SetActive(true);
-                    StartCoroutine(WaitForDialogEndClose());
+                    // 프롤로그 퀘스트 완료
+                    // UIInteraction.Instance.ImageOn(UIInteraction.Instance.dialog, DialogEnd.transform);
+                    // DialogEnd.SetActive(true);
+                    // StartCoroutine(WaitForDialogEndClose());
                 }
             }
         }
@@ -378,14 +378,14 @@ public class PlayerMovement : MonoBehaviour
         PlayerInfo.Instance.interacting = false;
         UIInteraction.Instance.ImageOn(UIInteraction.Instance.collection, chestTransform);
     }
-    private IEnumerator WaitForDialogEndClose()
-    {
-        while (!Input.GetKeyDown(KeyCode.E))
-        {
-            yield return null;
-        }
-        UIInteraction.Instance.ImageOff(UIInteraction.Instance.dialog);
-        DialogEnd.SetActive(false);
-    }
 
+    // private IEnumerator WaitForDialogEndClose()
+    // {
+    //     while (!Input.GetKeyDown(KeyCode.E))
+    //     {
+    //         yield return null;
+    //     }
+    //     UIInteraction.Instance.ImageOff(UIInteraction.Instance.dialog);
+    //     DialogEnd.SetActive(false);
+    // }
 }
