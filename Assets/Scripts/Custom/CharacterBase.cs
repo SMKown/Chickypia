@@ -230,5 +230,20 @@ public class CharacterBase : MonoBehaviour
             SetItem(PartsType.Shoes, characterData.ShoesIndex);
             SetItem(PartsType.Glove, characterData.GloveIndex);
         }
+        else
+        {
+            SetItem(PartsType.Top, 8); // 기본 상의 인덱스
+            SetItem(PartsType.Bottom, 47); // 기본 하의 인덱스
+            SetItem(PartsType.Bag, 8); // 기본 가방 인덱스
+            SetItem(PartsType.Shoes, 23); // 기본 신발 인덱스
+        }
+    }
+
+    public void ClearInfo()
+    {
+        if (File.Exists(filePath))
+        {
+            File.Delete(filePath);
+        }
     }
 }

@@ -418,6 +418,11 @@ public class SceneLoader : MonoBehaviour
         {
             QuestManager.ResetQuestProgress();
         }
+
+        if (CharacterBase.Instance != null)
+        {
+            CharacterBase.Instance.ClearInfo();
+        }
     }
     
     private IEnumerator ImageOn(Image image)
