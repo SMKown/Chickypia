@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class TimerManager : MonoBehaviour
 {
-    public float timer;
+    public float timer = 0f;
     public float effectTime;
     public float _speedAmount;
     public int _attckDanageAmount;
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);        
+    }
 
     private void Update()
     {
@@ -26,5 +31,15 @@ public class TimerManager : MonoBehaviour
             Destroy(gameObject);
         }
         
+    }
+
+    public float TimerValue
+    {
+        get { return timer; }
+    }
+
+    public void ResetTimer()
+    {
+        timer = 0f;
     }
 }

@@ -19,6 +19,7 @@ public class PlayerStats : MonoBehaviour
     public GameObject[] FoodEffectFxs;
     public GameObject CurrentFoodEffectFys;
     public GameObject timeManager;
+    private List<GameObject> timerList = new List<GameObject>();
 
     public GameObject moveSpeedUI;
     public GameObject attackDamageUI;
@@ -49,6 +50,7 @@ public class PlayerStats : MonoBehaviour
     public void ChangeHealHealth(int hpAmount)
     {
         CurrentFoodEffectFys = FoodEffectFxs[0];
+        DontDestroyOnLoad(FoodEffectFxs[0]);
         CurrentFoodEffectFys.SetActive(true);
         currentHp = Mathf.Min(currentHp + hpAmount, maxHp);
         SavePlayerState();
@@ -57,6 +59,7 @@ public class PlayerStats : MonoBehaviour
     public void ChangeMaxHealth(int maxHpAmount)
     {
         CurrentFoodEffectFys = FoodEffectFxs[1];
+        DontDestroyOnLoad(FoodEffectFxs[1]);
         CurrentFoodEffectFys.SetActive(true);
         maxHp += maxHpAmount;
         currentHp = Mathf.Min(currentHp + maxHpAmount, maxHp);
@@ -66,7 +69,9 @@ public class PlayerStats : MonoBehaviour
     public void ChangeMoveSpeed(float speedAmount, float time)
     {
         FoodEffectFxs[2].SetActive(true);
+        DontDestroyOnLoad(FoodEffectFxs[2]);
         moveSpeedUI.SetActive(true);
+        DontDestroyOnLoad(moveSpeedUI);
         moveSpeed += speedAmount;
         SavePlayerState();
         GameObject effecTimer = Instantiate(timeManager, Vector3.zero, Quaternion.identity);
@@ -81,10 +86,13 @@ public class PlayerStats : MonoBehaviour
     public void ChangeAttackDamage(int attckDanageAmount, float time)
     {
         FoodEffectFxs[3].SetActive(true);
+        DontDestroyOnLoad(FoodEffectFxs[3]);
         attackDamageUI.SetActive(true);
+        DontDestroyOnLoad(attackDamageUI);
         attackDamage += attckDanageAmount;
         SavePlayerState();
         GameObject effecTimer = Instantiate(timeManager, Vector3.zero, Quaternion.identity);
+        timerList.Add(effecTimer);
         TimerManager timerManager = effecTimer.GetComponent<TimerManager>();
         if (timerManager != null)
         {
@@ -98,6 +106,7 @@ public class PlayerStats : MonoBehaviour
         FoodEffectFxs[2].SetActive(false);
         moveSpeedUI.SetActive(false);
         moveSpeed -= amount;
+        Debug.Log(amount);
 
         SavePlayerState();
     }
@@ -109,6 +118,14 @@ public class PlayerStats : MonoBehaviour
         attackDamage -= amount;
 
         SavePlayerState();
+    }
+
+    public void ResetALLTimer()
+    {
+        foreach (GameObject timer in timerList)
+        {
+            timer.GetComponent<TimerManager>().ResetTimer();
+        }
     }
 
     public void ResetPlayerState()

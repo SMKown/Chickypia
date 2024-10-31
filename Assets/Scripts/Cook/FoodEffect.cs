@@ -16,8 +16,6 @@ public class FoodEffect : MonoBehaviour
 
     IEnumerator Eat(ItemData itemData)
     {
-        yield return new WaitForSeconds(5f); // 애니메이션으로 추후 변경
-
-        //playerAbility.
+        yield return new WaitForSeconds(5f);
     }
 }
