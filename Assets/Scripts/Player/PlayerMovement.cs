@@ -372,13 +372,12 @@ public class PlayerMovement : MonoBehaviour
         PlayerInfo.Instance.interacting = true;
         DialogBox.SetActive(true);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         animator.SetTrigger("Success");
-        UIInteraction.Instance.ImageOff(UIInteraction.Instance.collection);
-        yield return new WaitForSeconds(1f);
-        UIInteraction.Instance.ImageOn(UIInteraction.Instance.collection, chestTransform);
+
         PlayerInfo.Instance.canInteract = true;
         PlayerInfo.Instance.interacting = false;
+        UIInteraction.Instance.ImageOn(UIInteraction.Instance.collection, chestTransform);
     }
     private IEnumerator WaitForDialogEndClose()
     {
