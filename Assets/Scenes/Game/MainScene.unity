@@ -4135,6 +4135,10 @@ PrefabInstance:
       propertyPath: virtualCameras.Array.data[1]
       value: 
       objectReference: {fileID: 1908981659}
+    - target: {fileID: 7133965140903923194, guid: ca3ab0f1d45ed460280bbf2bf6265897, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -6177741910791633749, guid: 51af9ba097d794f43bdaaa684fe50156, type: 2}
     - target: {fileID: 8073137353129288744, guid: ca3ab0f1d45ed460280bbf2bf6265897, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.5

@@ -39,7 +39,7 @@ public class CookingSystem : MonoBehaviour
 
     public FoodRecipeData currentRecipe;
     private QuestManager questManager;
-
+    private PlayerMovement PlayerMovement;
 
     private void Awake()
     {
@@ -57,6 +57,10 @@ public class CookingSystem : MonoBehaviour
         if (makePopup == null) { Debug.LogError("makePopup is not assigned."); }
         if (foodRecipeParent == null) { Debug.LogError("foodRecipeParent is not assigned."); }
         if (ingredientParent == null) { Debug.LogError("ingredientParent is not assigned."); }        
+    }
+    private void Start()
+    {
+        PlayerMovement = FindObjectOfType<PlayerMovement>();
     }
 
     private void Update()
@@ -233,11 +237,11 @@ public class CookingSystem : MonoBehaviour
     {
         if(isCooking)
         {
-            Debug.Log("Cooking...");
             choicePopup.gameObject.SetActive(false);
             makePopup.gameObject.SetActive(false);
             invenCompenUI.SetInventoryActive(false);
             foodImage.gameObject.SetActive(false);
+            PlayerMovement.CookAniStart();
             cookButton.interactable = false;
             foreach (var ingredient in recipe.ingredients)
             {
@@ -315,7 +319,7 @@ public class CookingSystem : MonoBehaviour
         choicePopup.gameObject.SetActive(true);
         makePopup.gameObject.SetActive(true);
         invenCompenUI.SetInventoryActive(true);
-
+        PlayerMovement.CookAniEnd();
         cookButton.interactable = true;
     }
 }
