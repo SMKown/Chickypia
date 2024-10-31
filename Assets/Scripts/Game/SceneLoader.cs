@@ -234,7 +234,7 @@ public class SceneLoader : MonoBehaviour
     public void NewGame()
     {
         ResetScene();
-        playerstats.SetMoveSpeed(3.5f);
+        playerstats.moveSpeed += 2;
         LoadingSceneManager.LoadScene("Village");
     }
     public void DieScene()
@@ -244,7 +244,7 @@ public class SceneLoader : MonoBehaviour
         {
             playerstats.ResetPlayerState();
         }
-        playerstats.SetMoveSpeed(3.5f);
+        playerstats.moveSpeed += 2;
         LoadingSceneManager.LoadScene("Village");
     }
 
@@ -258,7 +258,7 @@ public class SceneLoader : MonoBehaviour
         SaveAllBeforeSceneLoad();
 
         if (playerstats != null)
-            playerstats.SetMoveSpeed(3.5F);
+            playerstats.moveSpeed += 2;
 
         StartCoroutine(LoadVillageScene());
     }
@@ -284,7 +284,7 @@ public class SceneLoader : MonoBehaviour
         StartCoroutine(Transitioner());
 
         SaveAllBeforeSceneLoad();
-        playerstats.ResetMoveSpeed();
+        playerstats.moveSpeed -= 2;
 
         StartCoroutine(LoadFishingScene());
     }
@@ -301,7 +301,7 @@ public class SceneLoader : MonoBehaviour
     public void Flame01()
     {
         SaveAllBeforeSceneLoad();
-        playerstats.ResetMoveSpeed();
+        playerstats.moveSpeed -= 2;
         LoadingSceneManager.LoadScene("Flame01");
     }
     public void Flame02()
@@ -317,7 +317,7 @@ public class SceneLoader : MonoBehaviour
     public void Jungle01()
     {
         SaveAllBeforeSceneLoad();
-        playerstats.ResetMoveSpeed();
+        playerstats.moveSpeed -= 2;
         LoadingSceneManager.LoadScene("Jungle01");
     }
     public void Jungle02()
@@ -333,7 +333,7 @@ public class SceneLoader : MonoBehaviour
     public void Desert01()
     {
         SaveAllBeforeSceneLoad();
-        playerstats.ResetMoveSpeed();
+        playerstats.moveSpeed -= 2;
         LoadingSceneManager.LoadScene("Desert01");
     }
     public void Desert02()
