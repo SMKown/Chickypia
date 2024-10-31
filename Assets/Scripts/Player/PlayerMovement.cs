@@ -323,7 +323,6 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (DialogBox.activeSelf)
                 {
-                    DialogBox.SetActive(false);
                     ResetCamera();
                     PlayerInfo.Instance.interacting = false;
 
