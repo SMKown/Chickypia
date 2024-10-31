@@ -11,6 +11,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public Text countText;
     public ItemData item;
     public ItemToolTipUI tooltipUI;
+    public InventoryManager inventoryManager;
 
     [HideInInspector] public int count = 1;
     [HideInInspector] public Transform parentAfterDrag;
@@ -109,7 +110,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
     }
 
-
     IEnumerator UseItem()
     {
         if (PlayerStats.Instance.useItem == false && item.itemType == ItemType.Food)
@@ -161,7 +161,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
                 break;
         }
     }
-
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -229,7 +228,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         tooltipUI.HideToolTip();
     }
 
-
     private void SetTooltipPosition()
     {
         RectTransform slotRectTransform = GetComponent<RectTransform>();
@@ -237,7 +235,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         RectTransform canvasRectTransform = tooltipUI.transform.parent.GetComponent<RectTransform>();
 
         Vector3 slotPosition = slotRectTransform.position;
-        Vector3 offset = new Vector3(slotRectTransform.rect.width / 4, -slotRectTransform.rect.height / 5, 0);
+        Vector3 offset = new Vector3(slotRectTransform.rect.width / 3, -slotRectTransform.rect.height / 3, 0);
 
         Vector2 anchoredPosition;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
@@ -304,3 +302,4 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         return item;
     }
 }
+
