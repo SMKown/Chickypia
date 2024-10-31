@@ -334,6 +334,12 @@ public class PlayerMovement : MonoBehaviour
             if (!chest.itemData.isCollected && (chest.itemData.itemId == 777 || chest.itemData.itemId == 888 || chest.itemData.itemId == 999))
             {
                 quest.UpdateItemCount(1);
+
+                if (quest.itemCount == quest.itemCountRequired)
+                {
+                    // 모든 별 다 모음!
+                }
+
             }
         }
 
