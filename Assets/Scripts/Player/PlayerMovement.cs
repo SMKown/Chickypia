@@ -40,9 +40,12 @@ public class PlayerMovement : MonoBehaviour
         if (DialogBox != null)
             dialogImage = DialogBox.GetComponent<Image>();
 
-        for (int i = 0; i < virtualCameras.Length; i++)
+        if (virtualCameras != null)
         {
-            virtualCameras[i].gameObject.SetActive(i == 0);
+            for (int i = 0; i < virtualCameras.Length; i++)
+            {
+                virtualCameras[i].gameObject.SetActive(i == 0);
+            }
         }
     }
 
