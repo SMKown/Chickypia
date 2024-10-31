@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     private QuestManager questManager;
     private NPC currentNpc;
 
-    public AudioSource AttackSound;
+    public AudioSource Audio;
 
     private void Start()
     {
@@ -112,11 +112,20 @@ public class PlayerMovement : MonoBehaviour
             PlayerInfo.Instance.attacking = true;
 
             animator.SetTrigger("Attack");
-            if (AttackSound != null)
+            if (Audio != null)
             {
-                AttackSound.Play();
+                Audio.Play();
             }
         }
+    }
+
+    public void CookAniStart()
+    {
+        animator.SetBool("Cook", true);
+    }
+    public void CookAniEnd()
+    {
+        animator.SetBool("Cook", false);
     }
 
     private void Particle()
