@@ -260,7 +260,6 @@ public class SceneLoader : MonoBehaviour
         StartCoroutine(AfterTransition(CustomScene));
         SaveAllBeforeSceneLoad();
         LoadingSceneManager.LoadScene("CustomScene");
-        playerstats.SetMoveSpeed(playerstats.moveSpeed - 2);
     }
 
     public void FishingScene()
