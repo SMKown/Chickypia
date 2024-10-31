@@ -41,6 +41,8 @@ public class CookingSystem : MonoBehaviour
     private QuestManager questManager;
     private PlayerMovement PlayerMovement;
 
+    private AudioSource audioSource;
+
     private void Awake()
     {
         choicePopup = transform.GetChild(0);
@@ -52,6 +54,8 @@ public class CookingSystem : MonoBehaviour
         inventoryManager = FindObjectOfType<InventoryManager>();
         invenCompenUI = FindObjectOfType<InvenCompenUI>();
         questManager = FindObjectOfType<QuestManager>();
+
+        audioSource = GetComponent<AudioSource>();
 
         if (choicePopup == null) { Debug.LogError("choicePopup is not assigned."); }
         if (makePopup == null) { Debug.LogError("makePopup is not assigned."); }
@@ -288,7 +292,9 @@ public class CookingSystem : MonoBehaviour
 
     IEnumerator Cooking(FoodRecipeData recipe, QuestManager questManager)
     {
+        audioSource.Play();
         yield return new WaitForSeconds(3f);
+        audioSource.Stop();
         inventoryManager.AddItem(recipe.resultItem, 1);
 
         // 수집한 아이템의 ID를 퀘스트와 비교

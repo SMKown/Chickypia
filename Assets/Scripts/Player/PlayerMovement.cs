@@ -7,6 +7,8 @@ using UnityEngine.AI;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static PlayerMovement instance;
+
     public CinemachineVirtualCamera[] virtualCameras;
     private int currentCameraIndex = 0;
 
@@ -30,14 +32,23 @@ public class PlayerMovement : MonoBehaviour
     private QuestManager questManager;
     private NPC currentNpc;
 
-    public AudioSource Audio;
+    public AudioSource playerAudio;
+    public AudioClip[] playerAudioSFXclip;
 
     private void Start()
     {
+        if(instance != null)
+        {
+            Destroy(this);
+            return;
+        }
+        instance = this;
+
         questManager = FindObjectOfType<QuestManager>();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        
+        playerAudio = GetComponent<AudioSource>();
+
         if (DialogBox != null)
             dialogImage = DialogBox.GetComponent<Image>();
 
@@ -106,6 +117,11 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+    public void OnJumpAnimationEnd()
+    {
+        playerAudio.clip = playerAudioSFXclip[3];
+        playerAudio.Play();
+    }
 
     private void Attack()
     {
@@ -116,10 +132,11 @@ public class PlayerMovement : MonoBehaviour
             PlayerInfo.Instance.attacking = true;
 
             animator.SetTrigger("Attack");
-            if (Audio != null)
+            if (playerAudio != null)
             {
-                Audio.Play();
-            }
+                playerAudio.clip = playerAudioSFXclip[0];
+                playerAudio.Play();
+            }            
         }
     }
 
@@ -296,11 +313,15 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
+                playerAudio.clip = playerAudioSFXclip[1];
+                playerAudio.Play();
                 LookAtNpc(item.transform);
                 gatherableItem.StartGathering(inventoryManager, questManager);
             }
             else if (Input.GetKeyUp(KeyCode.E))
             {
+                playerAudio.clip = playerAudioSFXclip[1];
+                playerAudio.Stop();
                 gatherableItem.StopGathering();
             }
         }

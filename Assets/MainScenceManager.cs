@@ -6,6 +6,8 @@ public class MainSceneManager : MonoBehaviour
 {
     public GameObject sceneLoader;
 
+    private AudioSource mainBGM;
+
     public GameObject mainPenal;
     public GameObject introPenal;
 
@@ -18,6 +20,8 @@ public class MainSceneManager : MonoBehaviour
         play.onClick.AddListener(PlayGame);
         reStart.onClick.AddListener(ReStartGame);
         exit.onClick.AddListener(ExitGame);
+
+        mainBGM = SoundManager.Instance.GetComponent<AudioSource>();
     }
 
     private void PlayGame()
@@ -48,6 +52,7 @@ public class MainSceneManager : MonoBehaviour
     {
         mainPenal.SetActive(false);
         introPenal.SetActive(true);
+        mainBGM.mute = true;
 
         float timer = 0f;
         while (timer < 10f)

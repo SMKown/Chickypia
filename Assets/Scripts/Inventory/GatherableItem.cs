@@ -33,6 +33,7 @@ public class GatherableItem : MonoBehaviour
         model = transform.GetChild(0).gameObject;
         modelPos = model.transform.position;
         anim = model.GetComponent<Animation>();
+        
     }
 
     public void StartGathering(InventoryManager inventoryManager, QuestManager questManager)
@@ -77,6 +78,8 @@ public class GatherableItem : MonoBehaviour
         elapsedTime = 0F;
         UIInteraction.Instance.ShowGatherProgress(gatherTime);
 
+        
+
         while (elapsedTime < gatherTime)
         {
             if (!isGathering)
@@ -104,6 +107,8 @@ public class GatherableItem : MonoBehaviour
         if (inventoryItem != null && inventoryManager != null)
         {
             bool added = inventoryManager.AddItem(inventoryItem.GetItemData());
+            PlayerMovement.instance.playerAudio.Stop();
+            
             if (added)
             {
                 UIInteraction.Instance.interactableObj = null;

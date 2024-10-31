@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour
@@ -40,7 +41,10 @@ public class PlayerStats : MonoBehaviour
         Instance = this;
         saveFilePath = Path.Combine(Application.persistentDataPath, "playerState.json");
 
-        CheckedEffect();
+        if (SceneManager.GetActiveScene().name != "LoadingScene")
+        {
+            CheckedEffect();
+        }
         LoadPlayerState();
         inventoryManager = FindObjectOfType<InventoryManager>();
     }
@@ -54,7 +58,6 @@ public class PlayerStats : MonoBehaviour
     {
         if (EffectManager.instance != null)
         {
-            Debug.Log("Check");
             if (EffectManager.instance.isSpeed == true)
             {
                 FoodEffectFxs[2].SetActive(true);

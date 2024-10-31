@@ -15,6 +15,8 @@ public class InventoryManager : MonoBehaviour
     private string saveFilePath;
     public CompendiumManager compendiumManager;
 
+    private AudioSource audioSource;
+
     private void Awake()
     {
         saveFilePath = Application.persistentDataPath + "/inventoryData.json";
@@ -22,6 +24,7 @@ public class InventoryManager : MonoBehaviour
     }
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -43,6 +46,7 @@ public class InventoryManager : MonoBehaviour
 
     public bool AddItem(ItemData item, int amount = 1)
     {
+        audioSource.Play();
         foreach (InventorySlot slot in inventorySlots)
         {
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
@@ -169,6 +173,7 @@ public class InventoryManager : MonoBehaviour
         {
             if (existingItem.item == draggedItem.item)
             {
+                audioSource.Play();
                 int combinedCount = existingItem.count + draggedItem.count;
                 if (combinedCount <= maxStack)
                 {
@@ -191,6 +196,7 @@ public class InventoryManager : MonoBehaviour
             else
             {
                 // 자리 교체 로직: 서로의 부모 슬롯을 교환
+                audioSource.Play();
                 existingItem.transform.SetParent(oldSlot.transform);
                 existingItem.transform.localPosition = Vector3.zero;
                 existingItem.parentAfterDrag = oldSlot.transform;
@@ -203,6 +209,7 @@ public class InventoryManager : MonoBehaviour
         else
         {
             // 대상 슬롯이 비어 있는 경우, 드래그된 아이템을 이동
+            audioSource.Play();
             draggedItem.transform.SetParent(newSlot.transform);
             draggedItem.transform.localPosition = Vector3.zero;
             draggedItem.parentAfterDrag = newSlot.transform;
