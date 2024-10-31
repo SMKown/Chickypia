@@ -33,6 +33,7 @@ public class NPC : MonoBehaviour
     private TMP_Text[] QuestTxt;
 
     private Animation animation;
+    private bool completed = false;
 
     private void Start()
     {
@@ -46,7 +47,7 @@ public class NPC : MonoBehaviour
 
     private void Update()
     {
-        if (!PlayerInfo.Instance.interacting)
+        if (!PlayerInfo.Instance.interacting && !completed)
         {
             UpdateQuestUI();
         }
@@ -82,7 +83,6 @@ public class NPC : MonoBehaviour
             {
                 switch (quest.GetQuestStatus())
                 {
-                    // NPC 첫 번째 퀘스트이면서, 이전 퀘스트가 없거나 완료일 경우
                     case QuestStatus.Available when questId == quest_ids[0] && (requireQuest == null || requireQuest.GetQuestStatus() == QuestStatus.Completed):
                         hasAvailableQuest = true;
                         DisplayQuestInfo(quest);
@@ -109,8 +109,20 @@ public class NPC : MonoBehaviour
 
         if (questBoxInstance != null)
         {
-            questBoxInstance.SetActive(hasAvailableQuest || completedQuestCount < quest_ids.Length);
+            completed = completedQuestCount >= quest_ids.Length;
+
+            if (completed)
+            {
+                animation.Play("QuestClear");
+                StartCoroutine(DestroyQuestBoxAfterAnimation(1.2F));
+            }
         }
+    }
+
+    private IEnumerator DestroyQuestBoxAfterAnimation(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Destroy(questBoxInstance);
     }
 
     public void Interact()
