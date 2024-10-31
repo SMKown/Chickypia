@@ -355,9 +355,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 quest.UpdateItemCount(1);
 
-                if (quest.itemCount == quest.itemCountRequired)
+                if (quest.itemCount >= quest.itemCountRequired)
                 {
                     UIInteraction.Instance.ImageOn(UIInteraction.Instance.dialog, DialogEnd.transform);
+                    DialogEnd.SetActive(true);
                     StartCoroutine(WaitForDialogEndClose());
                 }
             }
@@ -368,14 +369,12 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator PlaySuccessWithDelay(Transform chestTransform)
     {
         PlayerInfo.Instance.moving = false;
-        PlayerInfo.Instance.canInteract = false;
         PlayerInfo.Instance.interacting = true;
         DialogBox.SetActive(true);
 
         yield return new WaitForSeconds(2f);
         animator.SetTrigger("Success");
 
-        PlayerInfo.Instance.canInteract = true;
         PlayerInfo.Instance.interacting = false;
         UIInteraction.Instance.ImageOn(UIInteraction.Instance.collection, chestTransform);
     }
@@ -386,7 +385,7 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
         UIInteraction.Instance.ImageOff(UIInteraction.Instance.dialog);
-        DialogBox.SetActive(false);
+        DialogEnd.SetActive(false);
     }
 
 }
