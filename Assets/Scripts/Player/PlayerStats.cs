@@ -28,6 +28,8 @@ public class PlayerStats : MonoBehaviour
 
     private InventoryManager inventoryManager;
 
+    
+
     private void Awake()
     {
         if(Instance != null)
@@ -38,6 +40,7 @@ public class PlayerStats : MonoBehaviour
         Instance = this;
         saveFilePath = Path.Combine(Application.persistentDataPath, "playerState.json");
 
+        CheckedEffect();
         LoadPlayerState();
         inventoryManager = FindObjectOfType<InventoryManager>();
     }
@@ -45,6 +48,24 @@ public class PlayerStats : MonoBehaviour
     private void Start()
     {
         defaultMoveSpeed = moveSpeed;
+    }
+
+    private void CheckedEffect()
+    {
+        if (EffectManager.instance != null)
+        {
+            Debug.Log("Check");
+            if (EffectManager.instance.isSpeed == true)
+            {
+                FoodEffectFxs[2].SetActive(true);
+                moveSpeedUI.SetActive(true);
+            }
+            if (EffectManager.instance.isPower == true)
+            {
+                FoodEffectFxs[3].SetActive(true);
+                attackDamageUI.SetActive(true);
+            }
+        }        
     }
 
     public void ChangeHealHealth(int hpAmount)
@@ -66,6 +87,7 @@ public class PlayerStats : MonoBehaviour
 
     public void ChangeMoveSpeed(float speedAmount, float time)
     {
+        EffectManager.instance.isSpeed = true;
         FoodEffectFxs[2].SetActive(true);
         moveSpeedUI.SetActive(true);
         moveSpeed += speedAmount;
@@ -81,6 +103,7 @@ public class PlayerStats : MonoBehaviour
 
     public void ChangeAttackDamage(int attckDanageAmount, float time)
     {
+        EffectManager.instance.isPower = true;
         FoodEffectFxs[3].SetActive(true);
         attackDamageUI.SetActive(true);
         attackDamage += attckDanageAmount;
@@ -97,6 +120,7 @@ public class PlayerStats : MonoBehaviour
 
     public void EndEffect(float amount)
     {
+        EffectManager.instance.isSpeed = false;
         FoodEffectFxs[2].SetActive(false);
         moveSpeedUI.SetActive(false);
         moveSpeed -= amount;
@@ -107,6 +131,7 @@ public class PlayerStats : MonoBehaviour
 
     public void EndEffect(int amount)
     {
+        EffectManager.instance.isPower = false;
         FoodEffectFxs[3].SetActive(false);
         attackDamageUI.SetActive(false);
         attackDamage -= amount;
