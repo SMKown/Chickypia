@@ -321,12 +321,9 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.E))
             {
-                PlayerInfo.Instance.moving = false;
                 if (DialogBox.activeSelf)
                 {
                     ResetCamera();
-                    PlayerInfo.Instance.interacting = false;
-
                     if (chest.Star != null)
                     {
                         chest.Star.GetComponent<Star>().StarFly();
@@ -334,14 +331,15 @@ public class PlayerMovement : MonoBehaviour
 
                         chest.itemData.isCollected = true;
                     }
+                    PlayerInfo.Instance.moving = true;
+                    PlayerInfo.Instance.interacting = false;
                     return;
                 }
                 LookAtNpc(chest.chestCamTransform);
-                SetActiveCamera(currentCameraIndex);
                 ChangeCamera(chest.transform);
 
                 chest.OpenChest();
-                StartCoroutine(PlaySuccessWithDelay(1f));
+                StartCoroutine(PlaySuccessWithDelay(chest.transform));
 
                 UIInteraction.Instance.interactableObj = null;
             }
@@ -367,10 +365,20 @@ public class PlayerMovement : MonoBehaviour
         bool added = inventoryManager.AddItem(chest.itemData);
     }
 
-    private IEnumerator PlaySuccessWithDelay(float delay)
+    private IEnumerator PlaySuccessWithDelay(Transform chestTransform)
     {
-        yield return new WaitForSeconds(delay);
+        PlayerInfo.Instance.moving = false;
+        PlayerInfo.Instance.canInteract = false;
+        PlayerInfo.Instance.interacting = true;
+        DialogBox.SetActive(true);
+
+        yield return new WaitForSeconds(1f);
         animator.SetTrigger("Success");
+        UIInteraction.Instance.ImageOff(UIInteraction.Instance.collection);
+        yield return new WaitForSeconds(1f);
+        UIInteraction.Instance.ImageOn(UIInteraction.Instance.collection, chestTransform);
+        PlayerInfo.Instance.canInteract = true;
+        PlayerInfo.Instance.interacting = false;
     }
     private IEnumerator WaitForDialogEndClose()
     {
@@ -379,6 +387,7 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
         UIInteraction.Instance.ImageOff(UIInteraction.Instance.dialog);
+        DialogBox.SetActive(false);
     }
 
 }
