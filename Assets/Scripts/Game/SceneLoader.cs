@@ -355,36 +355,20 @@ public class SceneLoader : MonoBehaviour
         {
             inventoryManager.SaveInventory();
         }
-        else
-        {
-            Debug.Log("InventoryManager 없음");
-        }
         //도감 저장
         if (compendiumManager != null)
         {
             compendiumManager.SaveCompendium();
-        }
-        else
-        {
-            Debug.Log("CompendiumManager 없음");
         }
         //스탯 저장
         if(playerstats != null)
         {
             playerstats.SavePlayerState();
         }
-        else
-        {
-            Debug.Log("PlayerState 없음");
-        }
         //퀘스트 저장
         if (QuestManager != null)
         {
             QuestManager.SaveQuestProgress();
-        }
-        else
-        {
-            Debug.Log("QuestProgress 없음");  
         }
 
         isCanLoad = false;
