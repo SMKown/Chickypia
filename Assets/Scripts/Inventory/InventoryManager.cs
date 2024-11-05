@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-    public FoodEffect foodEffect;
     public int maxStack = 10;
     public InventorySlot[] inventorySlots;
     public GameObject inventoryItemPrefab;
