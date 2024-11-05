@@ -352,8 +352,6 @@ public class PlayerMovement : MonoBehaviour
                     {
                         chest.Star.GetComponent<Star>().StarFly();
                         AddChestItem(chest);
-
-                        chest.itemData.isCollected = true;
                     }
                     PlayerInfo.Instance.moving = true;
                     PlayerInfo.Instance.interacting = false;
