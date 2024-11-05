@@ -18,7 +18,7 @@ MonoBehaviour:
   itemName: "\uD654\uC5FC\uC9C0\uC5ED \uBCC4\uC870\uAC01"
   itemDesc: "\uD654\uC5FC\uC9C0\uC5ED \uBCC4\uC870\uAC01"
   stackable: 1
-  itemIcon: {fileID: 21300000, guid: aeee7157787dc324c99550d35decbd74, type: 3}
+  itemIcon: {fileID: 21300000, guid: 2015bfacc36579548877821a1d2f5e30, type: 3}
   itemModel: {fileID: 0}
   time: 0
   hp: 0
@@ -26,4 +26,4 @@ MonoBehaviour:
   moveSpeed: 0
   attackDamage: 0
   category: 0
-  isCollected: 1
+  isCollected: 0
