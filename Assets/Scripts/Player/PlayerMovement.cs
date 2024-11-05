@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     private NPC currentNpc;
 
     public AudioSource playerAudio;
+    [Tooltip("0.Attack 1.Gathering 2.Jump 3.JumpEnd")]
     public AudioClip[] playerAudioSFXclip;
 
     private void Start()
@@ -112,6 +113,8 @@ public class PlayerMovement : MonoBehaviour
             if (!Jumping)
             {
                 Jumping = true;
+                playerAudio.clip = playerAudioSFXclip[2];
+                playerAudio.Play();
                 animator.SetTrigger("Jump");
             }
         }
