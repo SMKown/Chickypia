@@ -116,8 +116,8 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         if (PlayerStats.Instance.useItem == false && item.itemType == ItemType.Food)
         {
             PlayerStats.Instance.useItem = true;
-            //FoodEffect.GetFood();
-            
+            FoodEffect.instance.GetFood(this);
+
             count -= 1;
             if (count <= 0)
             {
