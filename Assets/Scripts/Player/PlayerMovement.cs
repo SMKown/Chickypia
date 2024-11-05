@@ -83,12 +83,11 @@ public class PlayerMovement : MonoBehaviour
         float v = Input.GetAxis("Vertical");
 
         Vector3 dir = new Vector3(h, 0, v);
-
         agent.speed = PlayerStats.Instance.moveSpeed;
 
         if (h != 0 || v != 0)
         {
-            agent.Move(dir * Time.deltaTime * agent.speed);
+            agent.Move(dir.normalized * Time.deltaTime * agent.speed);
             agent.SetDestination(transform.position + dir);
 
             float angle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
