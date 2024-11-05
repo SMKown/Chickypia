@@ -462,11 +462,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9063455916143554194, guid: 37ec12477e481ee479755fafb7030b39, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9063455916143554194, guid: 37ec12477e481ee479755fafb7030b39, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 21
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9063455916143554194, guid: 37ec12477e481ee479755fafb7030b39, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4042,6 +4042,7 @@ MonoBehaviour:
   option: {fileID: 723545955}
   soundOption: {fileID: 723545953}
   M_option: {fileID: 109840386}
+  isOptionActive: 0
 --- !u!114 &1688683091
 MonoBehaviour:
   m_ObjectHideFlags: 0

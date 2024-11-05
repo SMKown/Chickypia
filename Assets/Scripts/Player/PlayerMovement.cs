@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private int currentCameraIndex = 0;
 
     public GameObject DialogBox;
-    //public GameObject DialogEnd;
+    public GameObject C_Dialog;
     private Image dialogImage;
 
     public GameObject particle;
@@ -375,12 +375,9 @@ public class PlayerMovement : MonoBehaviour
             {
                 quest.UpdateItemCount(1);
 
-                if (quest.itemCount >= quest.itemCountRequired)
+                if (quest.id == 5 && quest.itemCount >= quest.itemCountRequired && quest.IsComplete())
                 {
-                    // 프롤로그 퀘스트 완료
-                    // UIInteraction.Instance.ImageOn(UIInteraction.Instance.dialog, DialogEnd.transform);
-                    // DialogEnd.SetActive(true);
-                    // StartCoroutine(WaitForDialogEndClose());
+                    StartCoroutine(ShowCDialogAfterDelay());
                 }
             }
         }
@@ -400,13 +397,11 @@ public class PlayerMovement : MonoBehaviour
         UIInteraction.Instance.ImageOn(UIInteraction.Instance.collection, chestTransform);
     }
 
-    // private IEnumerator WaitForDialogEndClose()
-    // {
-    //     while (!Input.GetKeyDown(KeyCode.E))
-    //     {
-    //         yield return null;
-    //     }
-    //     UIInteraction.Instance.ImageOff(UIInteraction.Instance.dialog);
-    //     DialogEnd.SetActive(false);
-    // }
+    private IEnumerator ShowCDialogAfterDelay()
+    {
+        yield return new WaitForSeconds(2f);
+        C_Dialog.SetActive(true);
+        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.E));
+        C_Dialog.SetActive(false);
+    }
 }

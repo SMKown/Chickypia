@@ -21,7 +21,7 @@ public class Chest : MonoBehaviour
 
     private void Update()
     {
-        if (EnemyAllDead())
+        if (SpawnChest())
         {
             animator.SetTrigger("ChestSpawn");
         }
@@ -29,6 +29,13 @@ public class Chest : MonoBehaviour
         {
             animator.SetTrigger("ChestSpawn");
         }
+    }
+
+    private bool SpawnChest()
+    {
+        bool enemiesDead = EnemyAllDead();
+        bool questInProgress = QuestManager.Instance.GetQuestData(5)?.status == QuestStatus.InProgress;
+        return enemiesDead && questInProgress;
     }
 
     private bool EnemyAllDead()

@@ -56,6 +56,7 @@ public class Fishing : MonoBehaviour
 
     private void HandleInput()
     {
+        if (GameManager.Instance.isOptionActive) return;
         if (PlayerInfo.Instance.moving) return;
 
         if (invenCompenUI.isInventoryOpen == false)
