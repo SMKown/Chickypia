@@ -4442,6 +4442,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a2f2d57fb29dd48aaff9f5aba8ef12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  foodEffect: {fileID: 0}
   maxStack: 10
   inventorySlots:
   - {fileID: 1436507489}
@@ -4606,7 +4607,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 13e98666bfa91b647a4d75cce3da3883, type: 2}
+  - {fileID: 2100000, guid: f94a71a1f924bcc4d8b94a6d543a2ba6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

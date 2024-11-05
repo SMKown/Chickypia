@@ -137,6 +137,7 @@ public class CompendiumManager : MonoBehaviour
         }
         SaveCompendium();
         LoadCompendium();
+        Debug.Log("Compendium has been reset.");
     }
     private void ResetCategoryContent(Transform contentParent, ItemCategory category)
     {

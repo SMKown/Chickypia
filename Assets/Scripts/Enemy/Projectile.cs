@@ -28,12 +28,14 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Projectile hit: " + other.gameObject.name);
         if (other.gameObject.name == "TakeDamageRange")
         {
             PlayerHP playerhp = other.GetComponent<PlayerHP>();
             if (playerhp != null)
             {
                 playerhp.TakeDamage(damage);
+                Debug.Log("Player hit, dealing damage: " + damage);
             }
             Destroy(gameObject);
         }
