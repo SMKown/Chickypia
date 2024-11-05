@@ -24,7 +24,7 @@ public class PlayerHP : MonoBehaviour
             return;
         }
         Debug.Log("플레이어가 데미지를 받았습니다: " + damage);
-        PlayerStats.Instance.ChangeHealHealth(-damage);
+        PlayerStats.Instance.currentHp -= 1;
 
         if (heartBroken != null)
         {

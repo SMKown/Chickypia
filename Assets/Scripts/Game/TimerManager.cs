@@ -22,11 +22,11 @@ public class TimerManager : MonoBehaviour
             timer = 0;
             if (_speedAmount > 0)
             {
-                PlayerStats.Instance.EndEffect(_speedAmount);
+                FoodEffect.instance.EndEffect(_speedAmount);
             }
             else
             {
-                PlayerStats.Instance.EndEffect(_attckDanageAmount);
+                FoodEffect.instance.EndEffect(_attckDanageAmount);
             }
             Destroy(gameObject);
         }

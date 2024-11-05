@@ -9,27 +9,21 @@ using UnityEngine.UI;
 public class PlayerStats : MonoBehaviour
 {
     public static PlayerStats Instance;
+    private InventoryManager inventoryManager;
 
     public int maxHp = 3;
+    public int FullMaxHp = 7;
     public int currentHp;
     public float moveSpeed = 1.5f;
     public int attackDamage = 1;
+
     [HideInInspector] public float defaultMoveSpeed = 1.5f;
     [HideInInspector] public bool useItem = false;
 
-    public GameObject[] FoodEffectFxs;
-    public GameObject CurrentFoodEffectFys;
-    public GameObject timeManager;
-    private List<GameObject> timerList = new List<GameObject>();
-
-    public GameObject moveSpeedUI;
-    public GameObject attackDamageUI;
+    public GameObject CurrentFoodEffectFxs;
+    public GameObject CurrentFoodEffectUI;
 
     private string saveFilePath;
-
-    private InventoryManager inventoryManager;
-
-    
 
     private void Awake()
     {
@@ -41,10 +35,6 @@ public class PlayerStats : MonoBehaviour
         Instance = this;
         saveFilePath = Path.Combine(Application.persistentDataPath, "playerState.json");
 
-        if (SceneManager.GetActiveScene().name != "LoadingScene")
-        {
-            CheckedEffect();
-        }
         LoadPlayerState();
         inventoryManager = FindObjectOfType<InventoryManager>();
     }
@@ -52,102 +42,6 @@ public class PlayerStats : MonoBehaviour
     private void Start()
     {
         defaultMoveSpeed = moveSpeed;
-    }
-
-    private void CheckedEffect()
-    {
-        if (EffectManager.instance != null)
-        {
-            if (EffectManager.instance.isSpeed == true)
-            {
-                FoodEffectFxs[2].SetActive(true);
-                moveSpeedUI.SetActive(true);
-            }
-            if (EffectManager.instance.isPower == true)
-            {
-                FoodEffectFxs[3].SetActive(true);
-                attackDamageUI.SetActive(true);
-            }
-        }        
-    }
-
-    public void ChangeHealHealth(int hpAmount)
-    {
-        CurrentFoodEffectFys = FoodEffectFxs[0];
-        CurrentFoodEffectFys.SetActive(true);
-        currentHp = Mathf.Min(currentHp + hpAmount, maxHp);
-        SavePlayerState();
-    }
-
-    public void ChangeMaxHealth(int maxHpAmount)
-    {
-        CurrentFoodEffectFys = FoodEffectFxs[1];
-        CurrentFoodEffectFys.SetActive(true);
-        maxHp += maxHpAmount;
-        currentHp = Mathf.Min(currentHp + maxHpAmount, maxHp);
-        SavePlayerState();
-    }
-
-    public void ChangeMoveSpeed(float speedAmount, float time)
-    {
-        EffectManager.instance.isSpeed = true;
-        FoodEffectFxs[2].SetActive(true);
-        moveSpeedUI.SetActive(true);
-        moveSpeed += speedAmount;
-        SavePlayerState();
-        GameObject effecTimer = Instantiate(timeManager, Vector3.zero, Quaternion.identity);
-        TimerManager timerManager = effecTimer.GetComponent<TimerManager>();
-        if (timerManager != null)
-        {
-            timerManager.effectTime = time;
-            timerManager._speedAmount = speedAmount;
-        }
-    }
-
-    public void ChangeAttackDamage(int attckDanageAmount, float time)
-    {
-        EffectManager.instance.isPower = true;
-        FoodEffectFxs[3].SetActive(true);
-        attackDamageUI.SetActive(true);
-        attackDamage += attckDanageAmount;
-        SavePlayerState();
-        GameObject effecTimer = Instantiate(timeManager, Vector3.zero, Quaternion.identity);
-        timerList.Add(effecTimer);
-        TimerManager timerManager = effecTimer.GetComponent<TimerManager>();
-        if (timerManager != null)
-        {
-            timerManager.effectTime = time;
-            timerManager._attckDanageAmount = attckDanageAmount;
-        }
-    }    
-
-    public void EndEffect(float amount)
-    {
-        EffectManager.instance.isSpeed = false;
-        FoodEffectFxs[2].SetActive(false);
-        moveSpeedUI.SetActive(false);
-        moveSpeed -= amount;
-        Debug.Log(amount);
-
-        SavePlayerState();
-    }
-
-    public void EndEffect(int amount)
-    {
-        EffectManager.instance.isPower = false;
-        FoodEffectFxs[3].SetActive(false);
-        attackDamageUI.SetActive(false);
-        attackDamage -= amount;
-
-        SavePlayerState();
-    }
-
-    public void ResetALLTimer()
-    {
-        foreach (GameObject timer in timerList)
-        {
-            timer.GetComponent<TimerManager>().ResetTimer();
-        }
     }
 
     public void ResetPlayerState()

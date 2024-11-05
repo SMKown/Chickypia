@@ -70,6 +70,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         StartCoroutine(UseItem());
     }
+
     public void DiscardItemButton()
     {
         if (count > 1)
@@ -115,7 +116,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         if (PlayerStats.Instance.useItem == false && item.itemType == ItemType.Food)
         {
             PlayerStats.Instance.useItem = true;
-            ApplyFoodEffect();
+            //FoodEffect.GetFood();
             
             count -= 1;
             if (count <= 0)
@@ -140,26 +141,6 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
         yield return new WaitForSeconds(3f);
         PlayerStats.Instance.useItem = false;
-        PlayerStats.Instance.CurrentFoodEffectFys.SetActive(false);
-    }
-
-    private void ApplyFoodEffect()
-    {
-        switch(item.effectType)
-        {
-            case EffectType.Hp:
-                PlayerStats.Instance.ChangeHealHealth(item.hp);
-                break;
-            case EffectType.MaxHp:        
-                PlayerStats.Instance.ChangeMaxHealth(item.hpMax);
-                break;
-            case EffectType.MoveSpeed:
-                PlayerStats.Instance.ChangeMoveSpeed(item.moveSpeed, item.time);
-                break;
-            case EffectType.AttackDamage:
-                PlayerStats.Instance.ChangeAttackDamage(item.attackDamage, item.time);
-                break;
-        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
