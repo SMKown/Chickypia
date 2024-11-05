@@ -14,12 +14,14 @@ public class PlayerStats : MonoBehaviour
     public int currentHp;
     public float moveSpeed = 1.5f;
     public int attackDamage = 1;
+
     [HideInInspector] public float defaultMoveSpeed = 1.5f;
     [HideInInspector] public bool useItem = false;
 
     public GameObject[] FoodEffectFxs;
     public GameObject CurrentFoodEffectFys;
     public GameObject timeManager;
+
     private List<GameObject> timerList = new List<GameObject>();
 
     public GameObject moveSpeedUI;

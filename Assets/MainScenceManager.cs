@@ -13,13 +13,11 @@ public class MainSceneManager : MonoBehaviour
 
     public Button play;
     public Button reStart;
-    public Button exit;
 
     void Start()
     {
         play.onClick.AddListener(PlayGame);
         reStart.onClick.AddListener(ReStartGame);
-        exit.onClick.AddListener(ExitGame);
 
         mainBGM = SoundManager.Instance.GetComponent<AudioSource>();
     }
@@ -37,14 +35,6 @@ public class MainSceneManager : MonoBehaviour
         StartCoroutine(PlayOpeningVideo(() =>
         {
             sceneLoader.GetComponent<SceneLoader>().NewGame();
-        }));
-    }
-
-    private void ExitGame()
-    {
-        StartCoroutine(PlayOpeningVideo(() =>
-        {
-            sceneLoader.GetComponent<SceneLoader>().ExitGame();
         }));
     }
 
