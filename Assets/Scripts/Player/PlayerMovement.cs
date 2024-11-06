@@ -26,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
 
     private bool Jumping = false;
 
+    private bool isChestOpening = false;
+
     public InventoryManager inventoryManager;
     private InventoryItem inventoryItem;
     private GatherableItem gatherableItem;
@@ -348,7 +350,7 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.E))
             {
-                if (DialogBox.activeSelf)
+                if (DialogBox.activeSelf && !isChestOpening)
                 {
                     ResetCamera();
                     if (chest.Star != null)
@@ -389,6 +391,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator PlaySuccessWithDelay(Transform chestTransform)
     {
+        isChestOpening = true;
         UIInteraction.Instance.ImageOff(UIInteraction.Instance.collection);
         PlayerInfo.Instance.moving = false;
         PlayerInfo.Instance.interacting = true;
@@ -396,7 +399,7 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
         animator.SetTrigger("Success");
-
+        isChestOpening = false;
         UIInteraction.Instance.ImageOn(UIInteraction.Instance.collection, chestTransform);
     }
 
