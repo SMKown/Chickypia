@@ -38,13 +38,16 @@ public class Fishing : MonoBehaviour
 
     private Coroutine fishingCoroutine;
 
+    public AudioSource playerAudio;
+    public AudioClip[] playerAudioSFXclip;
+
     private void Start()
     {
         animator = GetComponent<Animator>();
         BobberAnim = Bobber.GetComponent<Animator>();
         biteImage = ExImage.GetComponent<Image>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-
+        playerAudio = GetComponent<AudioSource>();
         questManager = FindObjectOfType<QuestManager>();
     }
 
@@ -95,6 +98,8 @@ public class Fishing : MonoBehaviour
             animator.SetBool("Break", false);
             animator.SetBool("Nice", false);
             animator.SetBool("isFishing", true);
+            playerAudio.clip = playerAudioSFXclip[1];
+            playerAudio.Play();
             FxShine.SetActive(false);
 
             PlayerInfo.Instance.casting = true;
@@ -137,6 +142,8 @@ public class Fishing : MonoBehaviour
         }
 
         Bobber.transform.position = targetPos;
+        playerAudio.clip = playerAudioSFXclip[0];
+        playerAudio.Play();
         CastLine();
     }
 

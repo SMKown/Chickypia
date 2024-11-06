@@ -783,7 +783,6 @@ MonoBehaviour:
   ClickPanel: {fileID: 641287314}
   M_option: {fileID: 51716106}
   License: {fileID: 51716107}
-
   isOptionActive: 0
 --- !u!114 &111308494
 MonoBehaviour:
@@ -4573,7 +4572,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -2147542694952034001, guid: 51af9ba097d794f43bdaaa684fe50156, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 3b9aa6fe5ef0f724c8d952e4a9263f18, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 8867c73d3a1c3b84592ba66ea36030e4, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -57672,6 +57671,7 @@ MonoBehaviour:
   moving: 0
   canInteract: 1
   interacting: 0
+  cooking: 0
   attacking: 0
   casting: 0
   fishing: 0
@@ -57698,6 +57698,10 @@ MonoBehaviour:
   fishImage: {fileID: 1560733688}
   inventoryManager: {fileID: 1956408122}
   invenCompenUI: {fileID: 1766934777}
+  playerAudio: {fileID: 0}
+  playerAudioSFXclip:
+  - {fileID: 8300000, guid: c5897544d87f6374ca57d9871b61b0a4, type: 3}
+  - {fileID: 8300000, guid: d49494031772798408e2ae25bccb5547, type: 3}
 --- !u!195 &8711882649658896094
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -57739,8 +57743,6 @@ MonoBehaviour:
   attackDamage: 1
   defaultMoveSpeed: 1.4
   useItem: 0
-  CurrentFoodEffectFxs: {fileID: 0}
-  CurrentFoodEffectUI: {fileID: 0}
 --- !u!82 &8711882649658896096
 AudioSource:
   m_ObjectHideFlags: 0

@@ -403,8 +403,10 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator ShowCDialogAfterDelay()
     {
         yield return new WaitForSeconds(1f);
+        PlayerInfo.Instance.interacting = true;
         C_Dialog.SetActive(true);
         yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.E));
+        PlayerInfo.Instance.interacting = false;
         StartCoroutine(FadeOutDialogBox(C_Dialog, C_dialogImage));
     }
 }
