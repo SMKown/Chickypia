@@ -349,9 +349,9 @@ public class PlayerMovement : MonoBehaviour
                 return;
             }
 
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) && !isChestOpening)
             {
-                if (DialogBox.activeSelf && !isChestOpening)
+                if (DialogBox.activeSelf)
                 {
                     ResetCamera();
                     if (chest.Star != null)

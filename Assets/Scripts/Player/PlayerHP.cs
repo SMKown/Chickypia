@@ -39,7 +39,7 @@ public class PlayerHP : MonoBehaviour
         }
     }
 
-    private void HPUI()
+    public void HPUI()
     {
         for (int i = 0; i < Heart.Length; i++)
         {

@@ -11,6 +11,7 @@ public class FoodEffect : MonoBehaviour
 
     public GameObject[] FoodEffectFxs;
     public GameObject[] FoodEffectUI;
+    public PlayerHP playerHp;
 
     public GameObject timeManager;
     public List<TimerManager> activeSpeedTimers = new List<TimerManager>();
@@ -39,6 +40,7 @@ public class FoodEffect : MonoBehaviour
             Debug.LogError("PlayerStats instance is null in CheckedEffect().");
             return;
         }
+        
 
         if (SceneManager.GetActiveScene().name != "LoadingScene")
         {
@@ -79,9 +81,14 @@ public class FoodEffect : MonoBehaviour
                 timerManager.value = value;
             }
         }
+        else
+        {
+            FoodEffectFxs[value].SetActive(true);
+        }
 
         CheckedEffect();
         UpdatePlayerStatus(itemData);
+        playerHp.HPUI();
     }
 
     private void CheckedEffect()
