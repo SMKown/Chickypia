@@ -94,7 +94,7 @@ public class CookingSystem : MonoBehaviour
 
     void StartCook()
     {
-        PlayerInfo.Instance.interacting = true;
+        PlayerInfo.Instance.cooking = true;
 
         isCooking = true;
         choicePopup.gameObject.SetActive(true);
@@ -136,7 +136,7 @@ public class CookingSystem : MonoBehaviour
 
     void StopCook()
     {
-        PlayerInfo.Instance.interacting = false;
+        PlayerInfo.Instance.cooking = false;
 
         ResetIngredientSlots();
         choicePopup.gameObject.SetActive(false);
