@@ -43,7 +43,7 @@ public class NPC : MonoBehaviour
 
         InitializeNPC();
 
-        completed = IsAllQuestsCompleted();
+        completed = AllQuestComplete();
         UpdateQuestUI();
     }
 
@@ -55,6 +55,7 @@ public class NPC : MonoBehaviour
         }
     }
 
+    // NPC 구분
     private void InitializeNPC()
     {
         if (npcType == NPCType.Cat)
@@ -72,7 +73,7 @@ public class NPC : MonoBehaviour
     }
 
     // 해당 NPC의 전체 퀘스트 완료 여부
-    private bool IsAllQuestsCompleted()
+    private bool AllQuestComplete()
     {
         foreach (int questId in quest_ids)
         {
@@ -85,6 +86,7 @@ public class NPC : MonoBehaviour
         return true;
     }
 
+    // 퀘스트 박스 UI 업데이트
     private void UpdateQuestUI()
     {
         if (completed) return;
@@ -132,17 +134,19 @@ public class NPC : MonoBehaviour
             if (completed)
             {
                 animation.Play("QuestClear");
-                StartCoroutine(DestroyQuestBoxAfterAnimation(1.2F));
+                StartCoroutine(DestroyQuestBox(1.2F));
             }
         }
     }
 
-    private IEnumerator DestroyQuestBoxAfterAnimation(float delay)
+    // 딜레이 후 퀘스트 박스 삭제
+    private IEnumerator DestroyQuestBox(float delay)
     {
         yield return new WaitForSeconds(delay);
         Destroy(questBoxInstance);
     }
 
+    // NPC 상호작용
     public void Interact()
     {
         QuestData activeQuest = GetActiveQuest();
@@ -158,6 +162,7 @@ public class NPC : MonoBehaviour
         }
     }
 
+    // 퀘스트 박스 UI 생성
     private void CreateQuestBox()
     {
         if (questBoxInstance == null)
@@ -169,6 +174,7 @@ public class NPC : MonoBehaviour
         }
     }
 
+    // 다시 상호작용하기 위해 걸리는 시간
     private IEnumerator EnableInteractionDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -177,6 +183,7 @@ public class NPC : MonoBehaviour
         PlayerInfo.Instance.canInteract = true;
     }
 
+    // 대화 창
     private void DisplayDialogue(List<string> dialogues, QuestData quest = null)
     {
         DialogueText[0].text = npcName;
@@ -213,6 +220,7 @@ public class NPC : MonoBehaviour
         }
     }
 
+    // 대화 창 닫기
     public void CloseDialogue()
     {
         UIInteraction.Instance.ImageOff(UIInteraction.Instance.dialog);
