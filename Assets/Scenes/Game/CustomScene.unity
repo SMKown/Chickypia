@@ -777,6 +777,7 @@ MonoBehaviour:
   soundOption: {fileID: 1451173949}
   ClickPanel: {fileID: 1847497069}
   M_option: {fileID: 1550131244}
+  License: {fileID: 1550131245}
   isOptionActive: 0
 --- !u!1 &708688273
 GameObject:
@@ -1988,6 +1989,11 @@ RectTransform:
 --- !u!1 &1550131244 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5391374846685621715, guid: 37ec12477e481ee479755fafb7030b39, type: 3}
+  m_PrefabInstance: {fileID: 1550131242}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1550131245 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4275275609685024547, guid: 37ec12477e481ee479755fafb7030b39, type: 3}
   m_PrefabInstance: {fileID: 1550131242}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1695233980

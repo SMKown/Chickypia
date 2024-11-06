@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public GameObject ClickPanel;
     [Header("¸ÞÀÎ¾À ¿É¼Ç")]
     public GameObject M_option;
+    public GameObject License;
 
     [HideInInspector]public bool isOptionActive = false;
 
@@ -73,6 +74,14 @@ public class GameManager : MonoBehaviour
     {
         isOptionActive = false;
         M_option.SetActive(false);
+    }
+    public void LicenseButton()
+    {
+        License.SetActive(true);
+    }
+    public void Close_LicenseButton()
+    {
+        License.SetActive(false);
     }
     #endregion
 }
