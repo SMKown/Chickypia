@@ -40,14 +40,16 @@ public class NPC : MonoBehaviour
         playerMovement = FindObjectOfType<PlayerMovement>();
         if (Dialog != null)
             DialogueText = Dialog.GetComponentsInChildren<Text>();
-        InitializeNPC();
-        UpdateQuestUI();
 
+        InitializeNPC();
+
+        completed = IsAllQuestsCompleted();
+        UpdateQuestUI();
     }
 
     private void Update()
     {
-        if (!PlayerInfo.Instance.interacting && !completed)
+        if (!PlayerInfo.Instance.interacting)
         {
             UpdateQuestUI();
         }
@@ -69,8 +71,24 @@ public class NPC : MonoBehaviour
         }
     }
 
+    // 해당 NPC의 전체 퀘스트 완료 여부
+    private bool IsAllQuestsCompleted()
+    {
+        foreach (int questId in quest_ids)
+        {
+            QuestData quest = QuestManager.Instance.GetQuestData(questId);
+            if (quest != null && quest.GetQuestStatus() != QuestStatus.Completed)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private void UpdateQuestUI()
     {
+        if (completed) return;
+
         bool hasAvailableQuest = false;
         int completedQuestCount = 0;
 
@@ -142,7 +160,7 @@ public class NPC : MonoBehaviour
 
     private void CreateQuestBox()
     {
-        if (questBoxInstance == null && !completed)
+        if (questBoxInstance == null)
         {
             questBoxInstance = Instantiate(QuestBoxPrefab, canvas);
             QuestTxt = questBoxInstance.GetComponentsInChildren<TMP_Text>();
