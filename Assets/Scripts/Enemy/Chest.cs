@@ -56,7 +56,8 @@ public class Chest : MonoBehaviour
 
     public void CleardChest()
     {
-        gameObject.tag = "MoveScene";
+        UIInteraction.Instance.interactableObj.name = "Village";
+        UIInteraction.Instance.interactableObj.tag = "MoveScene";
         animator.SetTrigger("ChestClear");
     }
 }
