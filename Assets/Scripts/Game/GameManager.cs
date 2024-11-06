@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [Header("¸ÞÀÎ¾À ¿É¼Ç")]
     public GameObject M_option;
 
-    [HideInInspector]public bool isOptionActive = false;
+    public bool isOptionActive = false;
 
     private void Awake()
     {
@@ -70,24 +70,14 @@ public class GameManager : MonoBehaviour
 
     public void M_OpenOptionButton()
     {
+        isOptionActive = true;
         M_option.SetActive(true);
     }
 
     public void M_CloseOptionButton()
     {
+        isOptionActive = false;
         M_option.SetActive(false);
     }
     #endregion
 }
-
-/*
-    private void ToggleOptionMenu()
-    {
-        bool isOptionActive = !option.activeSelf;
-        option.SetActive(isOptionActive);
-        if (isOptionActive)
-            Time.timeScale = 0;
-        else
-            Time.timeScale = 1;
-    }
- */
