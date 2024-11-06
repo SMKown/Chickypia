@@ -88,7 +88,9 @@ public class FoodEffect : MonoBehaviour
 
         CheckedEffect();
         UpdatePlayerStatus(itemData);
-        playerHp.HPUI();
+        
+        if (playerHp != null)
+            playerHp.HPUI();
     }
 
     private void CheckedEffect()
