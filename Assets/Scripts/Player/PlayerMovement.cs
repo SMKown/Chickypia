@@ -389,6 +389,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator PlaySuccessWithDelay(Transform chestTransform)
     {
+        UIInteraction.Instance.ImageOff(UIInteraction.Instance.collection);
         PlayerInfo.Instance.moving = false;
         PlayerInfo.Instance.interacting = true;
         DialogBox.SetActive(true);
