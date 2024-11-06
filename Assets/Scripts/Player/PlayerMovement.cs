@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject DialogBox;
     public GameObject C_Dialog;
     private Image dialogImage;
+    private Image C_dialogImage;
 
     public GameObject particle;
     public float attackRange;
@@ -52,6 +53,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (DialogBox != null)
             dialogImage = DialogBox.GetComponent<Image>();
+        if (C_Dialog != null)
+            C_dialogImage = C_Dialog.GetComponent<Image>();
 
         if (virtualCameras != null)
         {
@@ -251,10 +254,10 @@ public class PlayerMovement : MonoBehaviour
         virtualCameras[currentCameraIndex].LookAt = transform;
         virtualCameras[currentCameraIndex].Follow = transform;
 
-        StartCoroutine(FadeOutDialogBox());
+        StartCoroutine(FadeOutDialogBox(DialogBox, dialogImage));
     }
 
-    private IEnumerator FadeOutDialogBox()
+    private IEnumerator FadeOutDialogBox(GameObject dialogObject, Image dialogImage)
     {
         Color imageColor = dialogImage.color;
         float fadeDuration = 0.5F;
@@ -268,7 +271,7 @@ public class PlayerMovement : MonoBehaviour
             yield return null;
         }
 
-        DialogBox.SetActive(false);
+        dialogObject.SetActive(false);
         PlayerInfo.Instance.interacting = false;
     }
 
@@ -402,6 +405,6 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(2f);
         C_Dialog.SetActive(true);
         yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.E));
-        C_Dialog.SetActive(false);
+        StartCoroutine(FadeOutDialogBox(C_Dialog, C_dialogImage));
     }
 }
