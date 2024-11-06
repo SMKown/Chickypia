@@ -4,6 +4,7 @@ using Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -378,7 +379,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 quest.UpdateItemCount(1);
 
-                if (quest.id == 5 && quest.itemCount >= quest.itemCountRequired && quest.IsComplete())
+                if (quest.id == 5 && quest.itemCount >= quest.itemCountRequired && quest.IsComplete()/* && SceneManager.GetActiveScene().name == "Village"*/)
                 {
                     StartCoroutine(ShowCDialogAfterDelay());
                 }
@@ -397,7 +398,6 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(2f);
         animator.SetTrigger("Success");
 
-        PlayerInfo.Instance.interacting = false;
         UIInteraction.Instance.ImageOn(UIInteraction.Instance.collection, chestTransform);
     }
 
