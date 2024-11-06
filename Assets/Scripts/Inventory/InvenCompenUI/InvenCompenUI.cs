@@ -40,7 +40,7 @@ public class InvenCompenUI : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab) && !GameManager.Instance.isOptionActive)
         {
             if (!FindObjectOfType<CookingSystem>().IsCookingActive() || PlayerInfo.Instance.attackMode)
             {

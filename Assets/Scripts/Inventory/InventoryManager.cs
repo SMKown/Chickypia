@@ -111,57 +111,6 @@ public class InventoryManager : MonoBehaviour
         return invItem;
     }
 
-    //public void OnItemSwapped(InventoryItem draggedItem, InventorySlot newSlot)
-    //{
-    //    if (draggedItem == null || newSlot == null) return;
-    //    InventorySlot oldSlot = draggedItem.parentAfterDrag.GetComponent<InventorySlot>();
-    //    InventoryItem existingItem = newSlot.GetComponentInChildren<InventoryItem>();
-    //    if (existingItem != null)
-    //    {
-    //        if (existingItem.item == draggedItem.item)
-    //        {
-    //            int combinedCount = existingItem.count + draggedItem.count;
-    //            if (combinedCount <= maxStack)
-    //            {
-    //                existingItem.count = combinedCount;
-    //                existingItem.ItemCount();
-    //                Destroy(draggedItem.gameObject);
-    //            }
-    //            else
-    //            {
-    //                int remaining = combinedCount - maxStack;
-    //                existingItem.count = maxStack;
-    //                existingItem.ItemCount();
-    //                draggedItem.count = remaining;
-    //                draggedItem.ItemCount();
-    //                draggedItem.transform.SetParent(draggedItem.parentAfterDrag);
-    //                draggedItem.transform.localPosition = Vector3.zero;
-    //            }
-    //        }
-    //        else
-    //        {
-    //            existingItem.transform.SetParent(draggedItem.parentAfterDrag);
-    //            existingItem.transform.localPosition = Vector3.zero;
-    //            existingItem.ItemCount();
-
-    //            draggedItem.transform.SetParent(newSlot.transform);
-    //            draggedItem.transform.localPosition = Vector3.zero;
-    //            draggedItem.parentAfterDrag = newSlot.transform;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        draggedItem.transform.SetParent(newSlot.transform);
-    //        draggedItem.transform.localPosition = Vector3.zero;
-    //        draggedItem.parentAfterDrag = newSlot.transform;
-    //    }
-    //    newSlot.UpdateSlotBackground();
-    //    if (oldSlot != null)
-    //    {
-    //        oldSlot.UpdateSlotBackground();
-    //    }
-    //}
-
     public void OnItemSwapped(InventoryItem draggedItem, InventorySlot newSlot)
     {
         if (draggedItem == null || newSlot == null) return;
@@ -195,7 +144,6 @@ public class InventoryManager : MonoBehaviour
             }
             else
             {
-                // 자리 교체 로직: 서로의 부모 슬롯을 교환
                 audioSource.Play();
                 existingItem.transform.SetParent(oldSlot.transform);
                 existingItem.transform.localPosition = Vector3.zero;
@@ -208,7 +156,6 @@ public class InventoryManager : MonoBehaviour
         }
         else
         {
-            // 대상 슬롯이 비어 있는 경우, 드래그된 아이템을 이동
             audioSource.Play();
             draggedItem.transform.SetParent(newSlot.transform);
             draggedItem.transform.localPosition = Vector3.zero;

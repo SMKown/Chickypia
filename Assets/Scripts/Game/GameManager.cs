@@ -9,10 +9,11 @@ public class GameManager : MonoBehaviour
     [Header("게임씬 옵션")]
     public GameObject option;
     public GameObject soundOption;
+    public GameObject ClickPanel;
     [Header("메인씬 옵션")]
     public GameObject M_option;
 
-    public bool isOptionActive = false;
+    [HideInInspector]public bool isOptionActive = false;
 
     private void Awake()
     {
@@ -30,14 +31,6 @@ public class GameManager : MonoBehaviour
         {
             ToggleOptionMenu();
         }
-
-        if (isOptionActive)
-        {
-            if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject == null)
-            {
-                Input.ResetInputAxes();
-            }
-        }
     }
 
     #region 게임씬 옵션창
@@ -46,7 +39,7 @@ public class GameManager : MonoBehaviour
         //option.SetActive(!option.activeSelf);
         isOptionActive = !isOptionActive;
         option.SetActive(isOptionActive);
-
+        ClickPanel.SetActive(isOptionActive);
         if (isOptionActive)
         {
             EventSystem.current.SetSelectedGameObject(null);
@@ -57,12 +50,14 @@ public class GameManager : MonoBehaviour
     {
         isOptionActive = true;
         option.SetActive(true);
+        ClickPanel.SetActive(true);
     }
 
     public void CloseOptionButton()
     {
         isOptionActive = false;
         option.SetActive(false);
+        ClickPanel.SetActive(false);
     }
     #endregion
 
