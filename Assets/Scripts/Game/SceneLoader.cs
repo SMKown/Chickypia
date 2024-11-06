@@ -141,7 +141,8 @@ public class SceneLoader : MonoBehaviour
             isCanLoad = true;
             sceneName = other.gameObject.name;
 
-            if (sceneUIinteraction.TryGetValue(sceneName, out Image image) && (currentScenName == "Village" || currentScenName == "FishingScene"))
+            if (sceneUIinteraction.TryGetValue(sceneName, out Image image) && 
+                (currentScenName == "Village" || currentScenName == "FishingScene" || currentScenName == "Flame03" || currentScenName == "Jungle03" || currentScenName == "Desert03"))
             {
                 isUIReander = true;
                 StartCoroutine(ImageOn(image));
