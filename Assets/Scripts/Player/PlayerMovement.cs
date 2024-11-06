@@ -4,7 +4,6 @@ using Cinemachine;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AI;
-using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
