@@ -93,7 +93,6 @@ public class NPC : MonoBehaviour
 
         bool hasAvailableQuest = false;
         int completedQuestCount = 0;
-        int QuestCount = 1;
 
         foreach (int questId in quest_ids)
         {
@@ -120,14 +119,10 @@ public class NPC : MonoBehaviour
 
                     case QuestStatus.InProgress:
                         DisplayQuestInfo(quest);
-                        QuestCount++;
                         break;
                 }
             }
         }
-
-        UpdateQuestCategoryText(QuestCount);
-        questMark.SetActive(hasAvailableQuest);
 
         if (questBoxInstance != null)
         {
@@ -139,6 +134,9 @@ public class NPC : MonoBehaviour
                 StartCoroutine(DestroyQuestBox(1.2F));
             }
         }
+
+        UpdateQuestCategoryText(completedQuestCount + 1);
+        questMark.SetActive(hasAvailableQuest);
     }
 
     // 딜레이 후 퀘스트 박스 삭제

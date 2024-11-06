@@ -402,7 +402,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator ShowCDialogAfterDelay()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         C_Dialog.SetActive(true);
         yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.E));
         StartCoroutine(FadeOutDialogBox(C_Dialog, C_dialogImage));
