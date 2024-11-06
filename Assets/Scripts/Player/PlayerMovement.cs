@@ -379,7 +379,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 quest.UpdateItemCount(1);
 
-                if (quest.id == 5 && quest.itemCount >= quest.itemCountRequired && quest.IsComplete()/* && SceneManager.GetActiveScene().name == "Village"*/)
+                if (quest.id == 5 && quest.itemCount >= quest.itemCountRequired && quest.IsComplete())
                 {
                     StartCoroutine(ShowCDialogAfterDelay());
                 }
