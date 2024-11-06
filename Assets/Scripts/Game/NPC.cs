@@ -135,7 +135,7 @@ public class NPC : MonoBehaviour
             }
         }
 
-        UpdateQuestCategoryText(completedQuestCount + 1);
+        UpdateQuestCategoryText(completedQuestCount);
         questMark.SetActive(hasAvailableQuest);
     }
 
