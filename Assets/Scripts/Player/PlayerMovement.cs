@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject DialogBox;
     public GameObject C_Dialog;
+    public GameObject[] Confetti;
     private Image dialogImage;
     private Image C_dialogImage;
 
@@ -408,6 +409,9 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(1f);
         PlayerInfo.Instance.interacting = true;
         C_Dialog.SetActive(true);
+        Confetti[0].SetActive(true);
+        yield return new WaitForSeconds(0.3f);
+        Confetti[1].SetActive(true);
         yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.E));
         PlayerInfo.Instance.interacting = false;
         StartCoroutine(FadeOutDialogBox(C_Dialog, C_dialogImage));
