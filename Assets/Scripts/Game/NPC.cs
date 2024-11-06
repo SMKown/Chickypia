@@ -93,6 +93,7 @@ public class NPC : MonoBehaviour
 
         bool hasAvailableQuest = false;
         int completedQuestCount = 0;
+        int QuestCount = 1;
 
         foreach (int questId in quest_ids)
         {
@@ -119,12 +120,13 @@ public class NPC : MonoBehaviour
 
                     case QuestStatus.InProgress:
                         DisplayQuestInfo(quest);
+                        QuestCount++;
                         break;
                 }
             }
         }
 
-        UpdateQuestCategoryText(completedQuestCount);
+        UpdateQuestCategoryText(QuestCount);
         questMark.SetActive(hasAvailableQuest);
 
         if (questBoxInstance != null)
@@ -265,12 +267,12 @@ public class NPC : MonoBehaviour
         }
     }
 
-    private void UpdateQuestCategoryText(int completedQuestCount)
+    private void UpdateQuestCategoryText(int QuestCount)
     {
         if (questBoxInstance != null)
         {
             QuestTxt[0].text = questCategory;
-            QuestTxt[1].text = $"{completedQuestCount}/{quest_ids.Length}";
+            QuestTxt[1].text = $"{QuestCount}/{quest_ids.Length}";
         }
     }
 }
