@@ -400,6 +400,7 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
         animator.SetTrigger("Success");
+        yield return new WaitForSeconds(1.3f);
         isChestOpening = false;
         UIInteraction.Instance.ImageOn(UIInteraction.Instance.collection, chestTransform);
     }
