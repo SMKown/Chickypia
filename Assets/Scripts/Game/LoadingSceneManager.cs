@@ -46,6 +46,7 @@ public class LoadingSceneManager : MonoBehaviour
                 progress = Mathf.Lerp(progress, 1F, timer);
                 if (progress == 1.0F)
                 {
+                    yield return new WaitForSeconds(3f);
                     op.allowSceneActivation = true;
                     yield break;
                 }
