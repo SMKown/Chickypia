@@ -20,9 +20,6 @@ public class PlayerStats : MonoBehaviour
     [HideInInspector] public float defaultMoveSpeed = 1.5f;
     [HideInInspector] public bool useItem = false;
 
-    public GameObject CurrentFoodEffectFxs;
-    public GameObject CurrentFoodEffectUI;
-
     private string saveFilePath;
 
     private void Awake()
@@ -80,7 +77,7 @@ public class PlayerStats : MonoBehaviour
         }
         else
         {
-            Debug.Log("저장파일 X");
+            Debug.Log(" No have SaveFile");
         }
     }
 

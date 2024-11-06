@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 public class TimerManager : MonoBehaviour
@@ -9,9 +10,11 @@ public class TimerManager : MonoBehaviour
     public float _speedAmount;
     public int _attckDanageAmount;
 
+    public int value;
+
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);        
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Update()
@@ -29,8 +32,7 @@ public class TimerManager : MonoBehaviour
                 FoodEffect.instance.EndEffect(_attckDanageAmount);
             }
             Destroy(gameObject);
-        }
-        
+        }        
     }
 
     public float TimerValue

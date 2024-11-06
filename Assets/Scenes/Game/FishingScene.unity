@@ -782,7 +782,10 @@ MonoBehaviour:
   soundOption: {fileID: 35654800}
   ClickPanel: {fileID: 641287314}
   M_option: {fileID: 51716106}
+<<<<<<< Updated upstream
   License: {fileID: 51716107}
+=======
+>>>>>>> Stashed changes
   isOptionActive: 0
 --- !u!114 &111308494
 MonoBehaviour:
@@ -3442,80 +3445,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa98652deefb7ae4e819f78b72018f47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &1273626369
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 4380931271816048783}
-    m_Modifications:
-    - target: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.5000001
-      objectReference: {fileID: 0}
-    - target: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.5000001
-      objectReference: {fileID: 0}
-    - target: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.3923817
-      objectReference: {fileID: 0}
-    - target: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3.3500001
-      objectReference: {fileID: 0}
-    - target: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 36.001915
-      objectReference: {fileID: 0}
-    - target: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.000107616186
-      objectReference: {fileID: 0}
-    - target: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8333442252870232795, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
-      propertyPath: m_Name
-      value: FoodEffect
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
---- !u!4 &1273626371 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
-  m_PrefabInstance: {fileID: 1273626369}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1294942089
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27722,7 +27651,6 @@ Transform:
   - {fileID: 1638484356}
   - {fileID: 527687212}
   - {fileID: 3967023630498612412}
-  - {fileID: 1273626371}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 2.547398, y: -29.0172, z: -0.2015001}
 --- !u!137 &4387803919842941198
