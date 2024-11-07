@@ -11451,6 +11451,7 @@ MonoBehaviour:
   Custom: {fileID: 0}
   isCanLoad: 0
   isUIReander: 0
+  isMoveScene: 0
   startTransition: {fileID: 0}
   endTransition: {fileID: 0}
   f_startTransition: {fileID: 0}
@@ -17862,6 +17863,7 @@ MonoBehaviour:
   moving: 0
   canInteract: 1
   interacting: 0
+  cooking: 0
   attacking: 0
   casting: 0
   fishing: 0
@@ -17881,6 +17883,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   DialogBox: {fileID: 0}
+  C_Dialog: {fileID: 0}
+  Confetti: []
   particle: {fileID: 0}
   attackRange: 0
   inventoryManager: {fileID: 0}
@@ -17930,7 +17934,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0
+  m_BaseOffset: -0.2
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
 --- !u!114 &4794300412074554154
@@ -17946,20 +17950,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHp: 5
+  FullMaxHp: 7
   currentHp: 5
   moveSpeed: 3.5
   attackDamage: 1
   defaultMoveSpeed: 1.4
   useItem: 0
-  FoodEffectFxs:
-  - {fileID: 2390066922315486123}
-  - {fileID: 7856967012055079957}
-  - {fileID: 8968556366528009014}
-  - {fileID: 2809473422671945385}
-  CurrentFoodEffectFys: {fileID: 0}
-  timeManager: {fileID: 7771640375752401358, guid: 9fff2d5bb158d2e4c95785e09bb02559, type: 3}
-  moveSpeedUI: {fileID: 0}
-  attackDamageUI: {fileID: 0}
 --- !u!82 &7133965140903923194
 AudioSource:
   m_ObjectHideFlags: 0
@@ -33980,28 +33976,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
---- !u!1 &2390066922315486123 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5086519777177129394, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
-  m_PrefabInstance: {fileID: 7475355232376111641}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2809473422671945385 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4701910615992687792, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
-  m_PrefabInstance: {fileID: 7475355232376111641}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5228997857389832037 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3399349252778698108, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
-  m_PrefabInstance: {fileID: 7475355232376111641}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &7856967012055079957 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 771318560346840588, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
-  m_PrefabInstance: {fileID: 7475355232376111641}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8968556366528009014 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2002832470509785391, guid: e9a3740e566266142b1cbe32b24ec0cd, type: 3}
   m_PrefabInstance: {fileID: 7475355232376111641}
   m_PrefabAsset: {fileID: 0}
