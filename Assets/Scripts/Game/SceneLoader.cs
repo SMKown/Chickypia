@@ -24,6 +24,7 @@ public class SceneLoader : MonoBehaviour
 
     public bool isCanLoad = false;
     public bool isUIReander = false;
+    public bool isMoveScene = false;
 
     private string sceneName;
     private string currentScenName;
@@ -125,10 +126,11 @@ public class SceneLoader : MonoBehaviour
 
     private void Update()
     {
-        if (isUIReander && Input.GetKeyDown(KeyCode.E))
+        if (isUIReander && Input.GetKeyDown(KeyCode.E) && !isMoveScene)
         {
             if (isCanLoad == true && methodDictionary.TryGetValue(sceneName, out Action method))
             {
+                isMoveScene = true;
                 StartCoroutine(AfterTransition(method));
             }
         }
@@ -203,7 +205,8 @@ public class SceneLoader : MonoBehaviour
         startAnimation.Play();
         yield return StartCoroutine(Transitioner());
 
-        method.Invoke(); 
+        method.Invoke();
+        isMoveScene = false;
     }
 
     IEnumerator Transitioner()
@@ -222,7 +225,7 @@ public class SceneLoader : MonoBehaviour
     {
         ResetScene();
         LoadingSceneManager.LoadScene("Village");
-        playerstats.SetMoveSpeed(playerstats.moveSpeed + 2);
+        playerstats.SetMoveSpeed(playerstats.moveSpeed = 3.5f);
     }
     public void DieScene()
     {
@@ -265,12 +268,13 @@ public class SceneLoader : MonoBehaviour
 
     public void FishingScene()
     {
+        if (isMoveScene) return;
+        isMoveScene = true;
         StartCoroutine(Transitioner());
 
         SaveAllBeforeSceneLoad();
         StartCoroutine(LoadFishingScene());
         playerstats.SetMoveSpeed(playerstats.moveSpeed - 2);
-
     }
 
     private IEnumerator LoadFishingScene()
@@ -280,6 +284,7 @@ public class SceneLoader : MonoBehaviour
         yield return StartCoroutine(Transitioner());
 
         LoadingSceneManager.LoadScene("FishingScene");
+        isMoveScene = false;
     }
 
     public void Flame01()
