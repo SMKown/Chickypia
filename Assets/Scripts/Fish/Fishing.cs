@@ -79,7 +79,7 @@ public class Fishing : MonoBehaviour
                     }
                 }
             }
-        }        
+        }
     }
 
     private void TryCastLine(Vector3 hitPoint)
@@ -110,6 +110,9 @@ public class Fishing : MonoBehaviour
             RotatePlayerToTarget(hitPoint);
 
             navMeshAgent.enabled = false;
+
+            // 중복되지 않도록 코루틴 실행 시작
+            StartUpdateBobberPosition();
         }
     }
 
@@ -122,13 +125,16 @@ public class Fishing : MonoBehaviour
 
     private void StartUpdateBobberPosition()
     {
-        StartCoroutine(UpdateBobberCoroutine());
+        // 실행중인 코루틴이 있다면 중단
+        if (fishingCoroutine != null)
+            return;
+        fishingCoroutine = StartCoroutine(UpdateBobberCoroutine());
     }
 
     private IEnumerator UpdateBobberCoroutine()
     {
         float t = 0;
-        
+
         initialPos = Bobber.transform.position;
         Bobber.SetActive(true);
         Bobber.transform.SetParent(null);
@@ -144,6 +150,7 @@ public class Fishing : MonoBehaviour
         Bobber.transform.position = targetPos;
         playerAudio.clip = playerAudioSFXclip[0];
         playerAudio.Play();
+
         CastLine();
     }
 
@@ -151,6 +158,13 @@ public class Fishing : MonoBehaviour
     {
         PlayerInfo.Instance.casting = false;
         PlayerInfo.Instance.fishing = true;
+
+        // 중복되지 않도록 코루틴 실행
+        if (fishingCoroutine != null)
+        {
+            StopCoroutine(fishingCoroutine);
+            fishingCoroutine = null;
+        }
         fishingCoroutine = StartCoroutine(WaitForNibble(10));
     }
 
@@ -180,7 +194,7 @@ public class Fishing : MonoBehaviour
         Bobber.transform.position = originPos.position;
         Bobber.transform.SetParent(originPos);
         BobberAnim.SetBool("Bite", false);
-        
+
         navMeshAgent.enabled = true;
     }
 
@@ -193,9 +207,9 @@ public class Fishing : MonoBehaviour
 
         nibble = true;
         BobberAnim.SetBool("Bite", true);
-        fishingCoroutine = StartCoroutine(LineBreak(1.5F));
-    }
 
+        StartCoroutine(LineBreak(1.5F));
+    }
 
     private IEnumerator LineBreak(float lineBreakTime)
     {
