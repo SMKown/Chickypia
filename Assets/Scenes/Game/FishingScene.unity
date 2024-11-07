@@ -1437,7 +1437,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 998869a10171b454da6840b165bcacd2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 88f845fba3bb44f45ba612fced915a05, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -25354,6 +25354,7 @@ MonoBehaviour:
   virtualCameras: []
   DialogBox: {fileID: 826631513}
   C_Dialog: {fileID: 0}
+  Confetti: []
   particle: {fileID: 0}
   attackRange: 0
   inventoryManager: {fileID: 1956408122}
@@ -59530,6 +59531,7 @@ MonoBehaviour:
   Custom: {fileID: 0}
   isCanLoad: 0
   isUIReander: 0
+  isMoveScene: 0
   startTransition: {fileID: 4995344005741382847}
   endTransition: {fileID: 6042102515530544789}
   f_startTransition: {fileID: 0}
