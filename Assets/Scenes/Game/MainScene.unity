@@ -3459,6 +3459,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 568223195844551305, guid: ca3ab0f1d45ed460280bbf2bf6265897, type: 3}
+      propertyPath: interacting
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2972219557045834646, guid: ca3ab0f1d45ed460280bbf2bf6265897, type: 3}
       propertyPath: Flame
       value: 
@@ -3538,6 +3542,10 @@ PrefabInstance:
     - target: {fileID: 5880364357490600453, guid: ca3ab0f1d45ed460280bbf2bf6265897, type: 3}
       propertyPath: virtualCameras.Array.data[1]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880364357490600453, guid: ca3ab0f1d45ed460280bbf2bf6265897, type: 3}
+      propertyPath: playerAudioSFXclip.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7133965140903923194, guid: ca3ab0f1d45ed460280bbf2bf6265897, type: 3}
       propertyPath: OutputAudioMixerGroup
@@ -3824,6 +3832,7 @@ MonoBehaviour:
   Custom: {fileID: 0}
   isCanLoad: 0
   isUIReander: 0
+  isMoveScene: 0
   startTransition: {fileID: 0}
   endTransition: {fileID: 0}
   f_startTransition: {fileID: 0}

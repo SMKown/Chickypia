@@ -29,7 +29,7 @@ public class SoundManager : MonoBehaviour
 
         masterSlider.value = PlayerPrefs.GetFloat("Master", 1f);
         bgmSlider.value = PlayerPrefs.GetFloat("BGM", 1f);
-        sfxSlider.value = PlayerPrefs.GetFloat("SFXV", 1f);
+        sfxSlider.value = PlayerPrefs.GetFloat("SFX", 1f);
     }
 
     // 전체 볼륨 조절
