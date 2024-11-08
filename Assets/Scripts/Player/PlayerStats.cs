@@ -11,13 +11,13 @@ public class PlayerStats : MonoBehaviour
     public static PlayerStats Instance;
     private InventoryManager inventoryManager;
 
-    public int maxHp = 3;
+    public int maxHp = 4;
     public int FullMaxHp = 7;
     public int currentHp;
-    public float moveSpeed = 1.5f;
+    public float moveSpeed = 2f;
     public int attackDamage = 1;
 
-    [HideInInspector] public float defaultMoveSpeed = 1.5f;
+    [HideInInspector] public float defaultMoveSpeed = 2f;
     [HideInInspector] public bool useItem = false;
 
     private string saveFilePath;
@@ -43,9 +43,9 @@ public class PlayerStats : MonoBehaviour
 
     public void ResetPlayerState()
     {
-        maxHp = 3;
+        maxHp = 4;
         currentHp = maxHp;        
-        moveSpeed = 1.5f;
+        moveSpeed = 2f;
         attackDamage = 1;
         SavePlayerState();
     }
@@ -89,7 +89,7 @@ public class PlayerStats : MonoBehaviour
 
     public void ResetMoveSpeed()
     {
-        moveSpeed = 1.5f;
+        moveSpeed = 2f;
         SavePlayerState();
     }
 

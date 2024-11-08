@@ -52,12 +52,14 @@ public class SceneLoader : MonoBehaviour
         { ("Flame02",       "Flame03"),     "MovePoint01" },
         { ("Flame01",       "Village"),     "MovePoint01" },
         { ("Flame02",       "Flame01"),     "MovePoint02" },
+        { ("Flame02",       "Village"),     "MovePoint01" },
         { ("Flame03",       "Flame02"),     "MovePoint02" },
         { ("Flame03",       "Village"),     "MovePoint01" },
         { ("Village",       "Jungle01"),    "MovePoint01" },
         { ("Jungle01",      "Jungle02"),    "MovePoint01" },
         { ("Jungle02",      "Jungle03"),    "MovePoint01" },
         { ("Jungle01",      "Village"),     "MovePoint03" },
+        { ("Jungle02",      "Village"),     "MovePoint03" },
         { ("Jungle02",      "Jungle01"),    "MovePoint02" },
         { ("Jungle03",      "Jungle02"),    "MovePoint02" },
         { ("Jungle03",      "Village"),     "MovePoint03" },
@@ -65,6 +67,7 @@ public class SceneLoader : MonoBehaviour
         { ("Desert01",      "Desert02"),    "MovePoint01" },
         { ("Desert02",      "Desert03"),    "MovePoint01" },
         { ("Desert01",      "Village"),     "MovePoint02" },
+        { ("Desert02",      "Village"),     "MovePoint02" },
         { ("Desert02",      "Desert01"),    "MovePoint02" },
         { ("Desert03",      "Desert02"),    "MovePoint02" },
         { ("Desert03",      "Village"),     "MovePoint02" },
@@ -235,7 +238,7 @@ public class SceneLoader : MonoBehaviour
             playerstats.ResetPlayerState();
         }
         LoadingSceneManager.LoadScene("Village");
-        playerstats.SetMoveSpeed(playerstats.moveSpeed + 2);
+        playerstats.SetMoveSpeed(playerstats.moveSpeed = 3.5f);
     }
 
     public void VillageScene()
@@ -256,7 +259,7 @@ public class SceneLoader : MonoBehaviour
         yield return StartCoroutine(Transitioner());
 
         LoadingSceneManager.LoadScene("Village");
-        playerstats.SetMoveSpeed(playerstats.moveSpeed + 2);
+        playerstats.SetMoveSpeed(playerstats.moveSpeed = 3.5f);
     }
 
     public void CustomScene()
@@ -274,7 +277,7 @@ public class SceneLoader : MonoBehaviour
 
         SaveAllBeforeSceneLoad();
         StartCoroutine(LoadFishingScene());
-        playerstats.SetMoveSpeed(playerstats.moveSpeed - 2);
+        playerstats.SetMoveSpeed(playerstats.moveSpeed = 1.5f);
     }
 
     private IEnumerator LoadFishingScene()
@@ -291,49 +294,62 @@ public class SceneLoader : MonoBehaviour
     {
         SaveAllBeforeSceneLoad();
         LoadingSceneManager.LoadScene("Flame01");
-        LeavingVillage();
+        CombatScene();
     }
     public void Flame02()
     {
         SaveAllBeforeSceneLoad();
         LoadingSceneManager.LoadScene("Flame02");
+        CombatScene();
+
     }
     public void Flame03()
     {
         SaveAllBeforeSceneLoad();
         LoadingSceneManager.LoadScene("Flame03");
+        CombatScene();
+
     }
     public void Jungle01()
     {
         SaveAllBeforeSceneLoad();
         LoadingSceneManager.LoadScene("Jungle01");
-        LeavingVillage();
+        CombatScene();
+
     }
     public void Jungle02()
     {
         SaveAllBeforeSceneLoad();
         LoadingSceneManager.LoadScene("Jungle02");
+        CombatScene();
+
     }
     public void Jungle03()
     {
         SaveAllBeforeSceneLoad();
         LoadingSceneManager.LoadScene("Jungle03");
+        CombatScene();
+
     }
     public void Desert01()
     {
         SaveAllBeforeSceneLoad();
         LoadingSceneManager.LoadScene("Desert01");
-        LeavingVillage();
+        CombatScene();
     }
     public void Desert02()
     {
         SaveAllBeforeSceneLoad();
         LoadingSceneManager.LoadScene("Desert02");
+        CombatScene();
+
     }
     public void Desert03()
     {
         SaveAllBeforeSceneLoad();
         LoadingSceneManager.LoadScene("Desert03");
+        CombatScene();
+
     }
 
     public void ExitGame()
@@ -346,12 +362,9 @@ public class SceneLoader : MonoBehaviour
     }
     #endregion
 
-    private void LeavingVillage()
+    private void CombatScene()
     {
-        if (currentScenName == "Village")
-        {
-            playerstats.SetMoveSpeed(playerstats.moveSpeed - 2);
-        }
+        playerstats.SetMoveSpeed(playerstats.moveSpeed = 2);
     }
 
     private void SaveAllBeforeSceneLoad()

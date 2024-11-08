@@ -97,6 +97,7 @@ public class CookingSystem : MonoBehaviour
         PlayerInfo.Instance.cooking = true;
 
         isCooking = true;
+        cookButton.interactable = false;
         choicePopup.gameObject.SetActive(true);
         makePopup.gameObject.SetActive(true);
         invenCompenUI.SetInventoryActive(true);
