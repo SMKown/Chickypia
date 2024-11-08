@@ -135,7 +135,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!PlayerInfo.Instance.attackMode || PlayerInfo.Instance.attacking) return;
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && !Jumping)
         {
             PlayerInfo.Instance.attacking = true;
 
@@ -319,7 +319,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (gatherableItem != null)
         {
-            if (Input.GetKeyDown(KeyCode.E)&& !CookingSystem.isCooking)
+            if (Input.GetKeyDown(KeyCode.E) && !CookingSystem.isCooking && !Jumping)
             {
                 playerAudio.clip = playerAudioSFXclip[1];
                 playerAudio.Play();
