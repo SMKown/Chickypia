@@ -16,6 +16,7 @@ public class PlayerStats : MonoBehaviour
     public int currentHp;
     public float moveSpeed = 2f;
     public int attackDamage = 1;
+    public int MaxAttackDamage = 5;
 
     [HideInInspector] public float defaultMoveSpeed = 2f;
     [HideInInspector] public bool useItem = false;

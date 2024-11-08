@@ -14,15 +14,13 @@ public class FoodEffect : MonoBehaviour
     public PlayerHP playerHp;
 
     public GameObject timeManager;
-    public List<TimerManager> activeSpeedTimers = new List<TimerManager>();
-    public List<TimerManager> activeAttackTimers = new List<TimerManager>();
+    public List<TimerManager> Timers = new List<TimerManager>();
 
     private static readonly Dictionary<string, int> Effect = new Dictionary<string, int>()
     {
         {"HealHp", 0 },
         {"MaxHP", 1 },
-        {"MoveSpeed", 2 },
-        {"AttackDamage", 3 },
+        {"AttackDamage", 2 },
     };
 
     private void Start()
@@ -37,7 +35,7 @@ public class FoodEffect : MonoBehaviour
         var playerStats = PlayerStats.Instance;
         if (playerStats == null)
         {
-            Debug.LogError("PlayerStats instance is null in CheckedEffect().");
+            Debug.LogError("PlayerStats instance");
             return;
         }
         
@@ -68,15 +66,9 @@ public class FoodEffect : MonoBehaviour
             {
                 if(value == 2)
                 {
-                    timerManager._speedAmount = itemData.moveSpeed;
-                    activeSpeedTimers.Add(timerManager);
+                    timerManager._speedAmount = itemData.attackDamage;
+                    Timers.Add(timerManager);
                 }
-                if(value == 3)
-                {
-                    timerManager._attckDanageAmount = itemData.attackDamage;
-                    activeAttackTimers.Add(timerManager);
-                }
-                
                 timerManager.effectTime = itemData.time;
                 timerManager.value = value;
             }
@@ -133,36 +125,16 @@ public class FoodEffect : MonoBehaviour
         var playerStats = PlayerStats.Instance;
         playerStats.currentHp = Mathf.Min(playerStats.currentHp + (itemData.hp != 0 ? itemData.hp : 0), playerStats.maxHp);
         playerStats.maxHp = Mathf.Min(playerStats.maxHp + (itemData.hpMax != 0 ? itemData.hpMax : 0), playerStats.FullMaxHp);
-        playerStats.moveSpeed += (itemData.moveSpeed != 0 ? itemData.moveSpeed : 0);
-        playerStats.attackDamage += (itemData.attackDamage != 0 ? itemData.attackDamage : 0);
-    }
-
-    public void EndEffect(float amount)
-    {
-        var playerStats = PlayerStats.Instance;
-        playerStats.moveSpeed -= amount;
-        if (activeSpeedTimers.Count > 0)
-        {
-            activeSpeedTimers.RemoveAt(activeSpeedTimers.Count - 1);
-        }
-
-        if (activeSpeedTimers.Count == 0)
-        {
-            ResetEffect(playerStats, 2);
-        }
+        playerStats.attackDamage = Mathf.Min(playerStats.attackDamage + (itemData.attackDamage != 0 ? itemData.attackDamage : 0), playerStats.MaxAttackDamage);
     }
 
     public void EndEffect(int amount)
     {
         var playerStats = PlayerStats.Instance;
         playerStats.attackDamage -= amount;
-        if (activeAttackTimers.Count > 0)
+        if (Timers.Count > 0)
         {
-            activeAttackTimers.RemoveAt(activeAttackTimers.Count - 1);
-        }
-
-        if (activeAttackTimers.Count == 0)
-        {
+            Timers.RemoveAt(Timers.Count - 1);
             ResetEffect(playerStats, 3);
         }
     }

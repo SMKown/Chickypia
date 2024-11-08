@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TimerManager : MonoBehaviour
 {
     public float timer = 0f;
+    public float saveTimer = 0f;
+
     public float effectTime;
     public float _speedAmount;
     public int _attckDanageAmount;
@@ -19,15 +22,20 @@ public class TimerManager : MonoBehaviour
 
     private void Update()
     {
-        timer += Time.deltaTime;
+        if(SceneManager.GetActiveScene().name != "LoadingScene")
+        {
+            timer += Time.deltaTime;
+            saveTimer = timer;
+        }
+        else
+        {
+            timer = saveTimer;
+        }
+        
         if (timer >= effectTime)
         {
             timer = 0;
             if (_speedAmount > 0)
-            {
-                FoodEffect.instance.EndEffect(_speedAmount);
-            }
-            else
             {
                 FoodEffect.instance.EndEffect(_attckDanageAmount);
             }
