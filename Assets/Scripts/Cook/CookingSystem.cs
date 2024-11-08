@@ -35,7 +35,8 @@ public class CookingSystem : MonoBehaviour
     public Button cookButton;
     private Transform recipeTransform;
 
-    private bool isCooking = false;
+    [HideInInspector] public static bool isCooking = false;
+    [HideInInspector] private bool isCookingFood = false;
 
     public FoodRecipeData currentRecipe;
     private QuestManager questManager;
@@ -69,6 +70,10 @@ public class CookingSystem : MonoBehaviour
 
     private void Update()
     {
+        if(isCookingFood)
+        {
+            return;
+        }
         if (isLetsCook && !PlayerInfo.Instance.attackMode && !PlayerInfo.Instance.fishing && !GameManager.Instance.isOptionActive)
         {
             StartCook();
@@ -246,6 +251,7 @@ public class CookingSystem : MonoBehaviour
     {
         if(isCooking)
         {
+            isCookingFood = true;
             choicePopup.gameObject.SetActive(false);
             makePopup.gameObject.SetActive(false);
             invenCompenUI.SetInventoryActive(false);
@@ -324,5 +330,6 @@ public class CookingSystem : MonoBehaviour
         invenCompenUI.SetInventoryActive(true);
         PlayerMovement.CookAniEnd();
         cookButton.interactable = true;
+        isCookingFood = false;
     }
 }

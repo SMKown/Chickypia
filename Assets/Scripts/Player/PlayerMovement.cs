@@ -319,7 +319,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (gatherableItem != null)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E)&& !CookingSystem.isCooking)
             {
                 playerAudio.clip = playerAudioSFXclip[1];
                 playerAudio.Play();
