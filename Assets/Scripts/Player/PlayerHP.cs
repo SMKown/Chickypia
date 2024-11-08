@@ -20,10 +20,8 @@ public class PlayerHP : MonoBehaviour
     {
         if (PlayerStats.Instance == null)
         {
-            Debug.LogError("PlayerStats.Instance가 null입니다.");
             return;
         }
-        Debug.Log("플레이어가 데미지를 받았습니다: " + damage);
         PlayerStats.Instance.currentHp -= 1;
 
         if (heartBroken != null)
@@ -69,10 +67,6 @@ public class PlayerHP : MonoBehaviour
         if (sceneLoader != null)
         {
             sceneLoader.DieScene();
-        }
-        else
-        {
-            Debug.LogWarning("SceneLoader 없으니 넣어야됨");
         }
     }
 
