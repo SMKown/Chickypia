@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class InventoryManager : MonoBehaviour
     public CookingSystem cookingSystem;
     private string saveFilePath;
     public CompendiumManager compendiumManager;
-
+    public Text FullSlotText; 
     private AudioSource audioSource;
 
     private void Awake()
@@ -47,6 +48,13 @@ public class InventoryManager : MonoBehaviour
     public bool AddItem(ItemData item, int amount = 1)
     {
         audioSource.Play();
+
+        if (!HasEmptySlot(item))
+        {
+            Debug.Log("인벤토리가 가득 찼습니다!");
+            return false;
+        }
+
         foreach (InventorySlot slot in inventorySlots)
         {
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
@@ -99,6 +107,38 @@ public class InventoryManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    private bool HasEmptySlot(ItemData item)
+    {
+        foreach (InventorySlot slot in inventorySlots)
+        {
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+            if (itemInSlot == null || (itemInSlot.item == item && itemInSlot.count < maxStack))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void ShowWarningMessage(string message)
+    {
+        if (FullSlotText != null)
+        {
+            FullSlotText.text = message;
+            FullSlotText.gameObject.SetActive(true);
+            StartCoroutine(ShowEmptySlotText());
+        }
+    }
+
+    private IEnumerator ShowEmptySlotText()
+    {
+        yield return new WaitForSeconds(1.5f);
+        if (FullSlotText != null)
+        {
+            FullSlotText.gameObject.SetActive(false);
+        }
     }
 
     public InventoryItem SpawnNewItem(ItemData item, InventorySlot slot, int count = 1)
