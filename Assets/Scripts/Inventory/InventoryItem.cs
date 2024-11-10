@@ -145,6 +145,11 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            return;
+        }
+
         image.raycastTarget = false;
         countText.raycastTarget = false;
 
@@ -162,18 +167,33 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (eventData.button != PointerEventData.InputButton.Left)
+        {
+            return;
+        }
+
         if (isDragging)
         {
             Vector3 globalMousePos;
-            if (RectTransformUtility.ScreenPointToWorldPointInRectangle(rectTransform, eventData.position, eventData.pressEventCamera, out globalMousePos))
+            if (RectTransformUtility.ScreenPointToWorldPointInRectangle(
+                    rectTransform, eventData.position, eventData.pressEventCamera, out globalMousePos))
             {
                 rectTransform.position = globalMousePos;
             }
         }
     }
 
+
+
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (eventData.button != PointerEventData.InputButton.Left)
+        {
+            //transform.SetParent(parentAfterDrag);
+            //transform.localPosition = Vector3.zero;
+            return;
+        }
+
         image.raycastTarget = true;
         countText.raycastTarget = true;
 
@@ -183,13 +203,12 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         InventorySlot targetSlot = parentAfterDrag.GetComponent<InventorySlot>();
         if (targetSlot != null)
         {
-            transform.SetParent(parentAfterDrag);
-            transform.localPosition = Vector3.zero;
             targetSlot.UpdateSlotBackground();
         }
 
         isDragging = false;
     }
+
 
     public void OnPointerEnter(PointerEventData eventData)
     {

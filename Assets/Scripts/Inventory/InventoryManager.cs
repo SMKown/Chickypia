@@ -155,6 +155,11 @@ public class InventoryManager : MonoBehaviour
     {
         if (draggedItem == null || newSlot == null) return;
 
+        if (Input.GetMouseButton(1))
+        {
+            return;
+        }
+
         InventorySlot oldSlot = draggedItem.parentAfterDrag.GetComponent<InventorySlot>();
         InventoryItem existingItem = newSlot.GetComponentInChildren<InventoryItem>();
 
