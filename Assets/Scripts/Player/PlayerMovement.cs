@@ -290,6 +290,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
+            if (!inventoryManager.HasEmptySlot(item.GetComponent<InventoryItem>().GetItemData()))
+            {
+                inventoryManager.FullText();
+                return;
+            }
             inventoryItem = item.GetComponent<InventoryItem>();
 
             if (inventoryItem != null && inventoryManager != null)
@@ -321,6 +326,11 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E) && !CookingSystem.isCooking && !Jumping)
             {
+                if (!inventoryManager.HasEmptySlot(item.GetComponent<InventoryItem>().GetItemData()))
+                {
+                    inventoryManager.FullText();
+                    return;
+                }
                 playerAudio.clip = playerAudioSFXclip[1];
                 playerAudio.Play();
                 LookAtNpc(item.transform);
@@ -348,9 +358,15 @@ public class PlayerMovement : MonoBehaviour
                 UIInteraction.Instance.interactableObj.tag = "MoveScene";
                 return;
             }
+            
 
             if (Input.GetKeyDown(KeyCode.E) && !isChestOpening)
             {
+                if (!inventoryManager.HasEmptySlot(chest.itemData))
+                {
+                    inventoryManager.FullText();
+                    return;
+                }
                 if (DialogBox.activeSelf)
                 {
                     ResetCamera();

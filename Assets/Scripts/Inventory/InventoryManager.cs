@@ -52,6 +52,7 @@ public class InventoryManager : MonoBehaviour
         if (!HasEmptySlot(item))
         {
             Debug.Log("인벤토리가 가득 찼습니다!");
+            FullText();
             return false;
         }
 
@@ -109,7 +110,7 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
-    private bool HasEmptySlot(ItemData item)
+    public bool HasEmptySlot(ItemData item)
     {
         foreach (InventorySlot slot in inventorySlots)
         {
@@ -122,11 +123,10 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
-    public void ShowWarningMessage(string message)
+    public void FullText()
     {
         if (FullSlotText != null)
         {
-            FullSlotText.text = message;
             FullSlotText.gameObject.SetActive(true);
             StartCoroutine(ShowEmptySlotText());
         }
@@ -134,7 +134,7 @@ public class InventoryManager : MonoBehaviour
 
     private IEnumerator ShowEmptySlotText()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(3f);
         if (FullSlotText != null)
         {
             FullSlotText.gameObject.SetActive(false);

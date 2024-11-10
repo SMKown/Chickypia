@@ -249,7 +249,13 @@ public class CookingSystem : MonoBehaviour
 
     public void Cook(FoodRecipeData recipe, QuestManager questManager)
     {
-        if(isCooking)
+        if (!inventoryManager.HasEmptySlot(recipe.resultItem))
+        {
+            inventoryManager.FullText();
+            return;
+        }
+
+        if (isCooking)
         {
             isCookingFood = true;
             choicePopup.gameObject.SetActive(false);

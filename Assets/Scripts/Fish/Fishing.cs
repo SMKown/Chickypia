@@ -66,6 +66,12 @@ public class Fishing : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0) && !PlayerInfo.Instance.casting && !PlayerInfo.Instance.fishing)
             {
+                if (!inventoryManager.HasEmptySlot(null))
+                {
+                    inventoryManager.FullText();
+                    return;
+                }
+
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
 
