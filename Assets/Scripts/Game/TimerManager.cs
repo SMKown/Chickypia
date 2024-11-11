@@ -35,7 +35,13 @@ public class TimerManager : MonoBehaviour
         {
             FoodEffect.instance.EndEffect(_attckDanageAmount);
             Destroy(gameObject);
-        }        
+        }
+        
+        if(PlayerStats.Instance.currentHp == 0)
+        {
+            FoodEffect.instance.EndEffect(0);
+            Destroy(gameObject);
+        }
     }
 
     public float TimerValue

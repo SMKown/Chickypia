@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -47,7 +48,6 @@ public class PlayerStats : MonoBehaviour
         maxHp = 4;
         currentHp = maxHp;        
         moveSpeed = 2f;
-        attackDamage = 1;
         SavePlayerState();
     }
 

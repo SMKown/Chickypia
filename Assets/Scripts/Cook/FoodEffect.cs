@@ -152,4 +152,10 @@ public class FoodEffect : MonoBehaviour
             FoodEffectUI[value - 2].SetActive(false);
         }
     }
+
+    public void ResetAllEffect()
+    {
+        var playerStats = PlayerStats.Instance;
+        ResetEffect(playerStats, 2);
+    }
 }
