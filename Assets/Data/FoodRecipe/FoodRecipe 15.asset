@@ -16,10 +16,10 @@ MonoBehaviour:
   foodRecipeId: 1500
   foodName: "\uBB34\uC9C0\uAC1C \uB4DC\uB9C1\uD06C"
   foodDesc: 
-  foodIcon: {fileID: 21300000, guid: c6620951b0d01ef42b6c7a75e764f942, type: 3}
+  foodIcon: {fileID: 21300000, guid: 57ba988fdec71674dbfd68878d42c938, type: 3}
   ingredients:
-  - item: {fileID: 11400000, guid: 80333d065fe3222478814f3d17556130, type: 2}
+  - item: {fileID: 11400000, guid: 206aa91a8305e9343a7454e840b74ca3, type: 2}
     count: 2
-  - item: {fileID: 11400000, guid: 401afd2d5bf9500449b790e91f434554, type: 2}
+  - item: {fileID: 11400000, guid: 2f9455c3ea0600044ba42c63c5e57d17, type: 2}
     count: 2
   resultItem: {fileID: 11400000, guid: 36913577995f9434abf21f195b10a278, type: 2}

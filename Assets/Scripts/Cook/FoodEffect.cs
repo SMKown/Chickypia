@@ -135,12 +135,13 @@ public class FoodEffect : MonoBehaviour
         if (Timers.Count > 0)
         {
             Timers.RemoveAt(Timers.Count - 1);
-            ResetEffect(playerStats, 3);
+            ResetEffect(playerStats, 2);
         }
     }
 
     private void ResetEffect(PlayerStats playerStats, int value)
     {
+        Debug.Log(value);
         if (FoodEffectFxs[value] != null)
         {
             FoodEffectFxs[value].SetActive(false);

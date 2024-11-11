@@ -34,11 +34,7 @@ public class TimerManager : MonoBehaviour
         
         if (timer >= effectTime)
         {
-            timer = 0;
-            if (_speedAmount > 0)
-            {
-                FoodEffect.instance.EndEffect(_attckDanageAmount);
-            }
+            FoodEffect.instance.EndEffect(_attckDanageAmount);
             Destroy(gameObject);
         }        
     }

@@ -260,7 +260,7 @@ public class NPC : MonoBehaviour
             else
             {
                 completedImage.SetActive(false);
-                QuestTxt[4].text = quest.itemId == 100 ? $"0/1" : $"{quest.itemCount}/{quest.itemCountRequired}";
+                QuestTxt[4].text = quest.itemId == 5000 ? $"0/1" : $"{quest.itemCount}/{quest.itemCountRequired}";
             }
         }
     }

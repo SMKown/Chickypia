@@ -212,7 +212,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Dialog()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && !CookingSystem.isCooking)
         {
             if (!PlayerInfo.Instance.canInteract) return;
 

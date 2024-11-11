@@ -360,6 +360,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1688683090}
+    - target: {fileID: 5391082750596708628, guid: 37ec12477e481ee479755fafb7030b39, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c3873362d95c99249b80592abfdfbe2a, type: 3}
+    - target: {fileID: 5391082750596708628, guid: 37ec12477e481ee479755fafb7030b39, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5391374846685621715, guid: 37ec12477e481ee479755fafb7030b39, type: 3}
       propertyPath: m_Name
       value: M_Option
