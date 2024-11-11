@@ -66,7 +66,7 @@ public class FoodEffect : MonoBehaviour
             {
                 if(value == 2)
                 {
-                    timerManager._speedAmount = itemData.attackDamage;
+                    timerManager._attckDanageAmount = itemData.attackDamage;
                     Timers.Add(timerManager);
                 }
                 timerManager.effectTime = itemData.time;

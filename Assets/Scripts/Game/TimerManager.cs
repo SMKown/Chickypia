@@ -10,7 +10,6 @@ public class TimerManager : MonoBehaviour
     public float saveTimer = 0f;
 
     public float effectTime;
-    public float _speedAmount;
     public int _attckDanageAmount;
 
     public int value;
