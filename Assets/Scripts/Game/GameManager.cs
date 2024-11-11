@@ -13,8 +13,12 @@ public class GameManager : MonoBehaviour
     [Header("메인씬 옵션")]
     public GameObject M_option;
     public GameObject License;
+    [Header("조작키")]
+    public GameObject open_Button;
+    public GameObject operationKey;
 
     [HideInInspector]public bool isOptionActive = false;
+    [HideInInspector]public bool isOperationKeys = false;
 
     private void Awake()
     {
@@ -33,6 +37,21 @@ public class GameManager : MonoBehaviour
             ToggleOptionMenu();
         }
     }
+
+    #region 조작키
+    public void OpenOperationKeys()
+    {
+        isOperationKeys = true;
+        operationKey.SetActive(true);
+        open_Button.SetActive(true);
+    }
+
+    public void CloseOperationKeys()
+    {
+        isOperationKeys = false;
+        operationKey.SetActive(false);
+    }
+    #endregion
 
     #region 게임씬 옵션창
     private void ToggleOptionMenu()
