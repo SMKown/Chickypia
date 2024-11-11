@@ -15,7 +15,7 @@ public class InventoryManager : MonoBehaviour
     public CookingSystem cookingSystem;
     private string saveFilePath;
     public CompendiumManager compendiumManager;
-    public Text FullSlotText; 
+    public GameObject FullSlotText; 
     private AudioSource audioSource;
 
     private void Awake()
@@ -134,7 +134,7 @@ public class InventoryManager : MonoBehaviour
 
     private IEnumerator ShowEmptySlotText()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         if (FullSlotText != null)
         {
             FullSlotText.gameObject.SetActive(false);
