@@ -18,6 +18,10 @@ MonoBehaviour:
   foodDesc: 
   foodIcon: {fileID: 21300000, guid: 6c666b4b1e82b6a468e9682409ca36a0, type: 3}
   ingredients:
+  - item: {fileID: 11400000, guid: fc5129e676a4b4749bdc2830a51fed3b, type: 2}
+    count: 1
+  - item: {fileID: 11400000, guid: c1ff3b96dab08d647975c8cf80ec7c9a, type: 2}
+    count: 1
   - item: {fileID: 11400000, guid: 6fa8d8f929c47a7489e75d16a6613c43, type: 2}
     count: 1
   resultItem: {fileID: 11400000, guid: ebbbdbbf6b556514e997192784de5ce3, type: 2}

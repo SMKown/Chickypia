@@ -10,20 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c2febac446cda843a398f3da80a3970, type: 3}
-  m_Name: Item 8
+  m_Name: Food 13
   m_EditorClassIdentifier: 
-  itemType: 1
-  effectType: 0
-  itemId: 8
-  itemName: "\uB538\uAE30"
-  itemDesc: "\uB2EC\uCF64\uD55C \uC81C\uCCA0 \uB538\uAE30"
+  itemType: 0
+  effectType: 3
+  itemId: 1300
+  itemName: "\uD53C\uADF8\uB9C8 \uC2A4\uD14C\uC774\uD06C"
+  itemDesc: "40\uCD08 \uB3D9\uC548 1 \uAC15\uD574\uC9C0\uB294 \uAC74\uAC15 \uC0B0\uC801"
   stackable: 1
-  itemIcon: {fileID: 21300000, guid: cf397dfe8857e5d4db722bd84bf110be, type: 3}
+  itemIcon: {fileID: 21300000, guid: c6620951b0d01ef42b6c7a75e764f942, type: 3}
   itemModel: {fileID: 0}
-  time: 0
+  time: 40
   hp: 0
   hpMax: 0
-  moveSpeed: 0
-  attackDamage: 0
-  category: 0
+  attackDamage: 1
+  category: 1
   isCollected: 0

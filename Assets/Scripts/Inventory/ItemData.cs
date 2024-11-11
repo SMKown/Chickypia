@@ -21,7 +21,6 @@ public class ItemData : ScriptableObject
     public float time; 
     public int hp;
     public int hpMax;
-    public float moveSpeed;    
     public int attackDamage;
    
 

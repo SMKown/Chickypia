@@ -14,12 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   foodType: 1
   foodRecipeId: 400
-  foodName: "\uC57C\uCC44 \uAF2C\uCE58"
+  foodName: "\uC5B4\uBB35 \uAF2C\uCE58"
   foodDesc: 
   foodIcon: {fileID: 21300000, guid: e5f921ef0aec2b6448589eb5b2e7527b, type: 3}
   ingredients:
   - item: {fileID: 11400000, guid: 1a6ecd19c2c5fe048b93ff566f7ebe5b, type: 2}
     count: 1
   - item: {fileID: 11400000, guid: ffc325a7792d617428408c27afdaf3e8, type: 2}
+    count: 1
+  - item: {fileID: 11400000, guid: 3ee03cb100693574f9ee25a04097b064, type: 2}
     count: 1
   resultItem: {fileID: 11400000, guid: a7ddfd5d287dd7e41a4f9c9b6c46f63f, type: 2}

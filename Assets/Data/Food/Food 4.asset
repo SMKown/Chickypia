@@ -15,15 +15,15 @@ MonoBehaviour:
   itemType: 0
   effectType: 3
   itemId: 400
-  itemName: "\uC57C\uCC44 \uAF2C\uCE58"
-  itemDesc: "10\uCD08 \uB3D9\uC548 \uD798\uC774 \uC138\uC9C0\uB294 \uAC74\uAC15 \uAF2C\uCE58"
+  itemName: "\uC5B4\uBB35 \uAF2C\uCE58"
+  itemDesc: "120\uCD08 \uB3D9\uC548 \uD798\uC774 \uC138\uC9C0\uB294 \uAC74\uAC15
+    \uAF2C\uCE58"
   stackable: 1
   itemIcon: {fileID: 21300000, guid: e5f921ef0aec2b6448589eb5b2e7527b, type: 3}
   itemModel: {fileID: 0}
-  time: 10
+  time: 120
   hp: 0
   hpMax: 0
-  moveSpeed: 0
-  attackDamage: 1
+  attackDamage: 2
   category: 1
   isCollected: 0
